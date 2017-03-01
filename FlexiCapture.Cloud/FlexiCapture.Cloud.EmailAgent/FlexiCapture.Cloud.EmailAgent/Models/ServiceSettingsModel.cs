@@ -29,6 +29,7 @@ namespace FlexiCapture.Cloud.EmailAgent.Models
 
         
         #region fields
+        public string Name { get; set; }
         #endregion
     }
 }
