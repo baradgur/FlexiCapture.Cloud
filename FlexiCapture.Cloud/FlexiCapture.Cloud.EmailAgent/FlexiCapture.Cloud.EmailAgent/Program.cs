@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FlexiCapture.Cloud.EmailAgent
+﻿namespace FlexiCapture.Cloud.EmailAgent
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        ///     The main entry point for the application.
         /// </summary>
-        static void Main()
+
+        public static FCCEmailAgent Agent;
+        private static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-            { 
-                new FCCEmailAgent() 
-            };
-            ServiceBase.Run(ServicesToRun);
+            #if DEBUG
+            //execute operations in debug mode
+            Agent = new FCCEmailAgent();
+            Agent.OnDebug();
+            #else
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[] 
+                { 
+                    new FCCEmailAgent() 
+                };
+                ServiceBase.Run(ServicesToRun);
+            #endif
         }
     }
 }

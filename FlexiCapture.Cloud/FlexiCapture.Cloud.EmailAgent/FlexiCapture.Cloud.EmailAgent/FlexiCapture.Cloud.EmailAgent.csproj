@@ -32,10 +32,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImapX">
+      <HintPath>E:\Downloads\ImapX Sample application 2.0.0.16 Binaries\ImapX.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,13 +58,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBHelpers\LogHelper.cs" />
+    <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\UsersHelper.cs" />
     <Compile Include="FCCEmailAgent.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FCCEmailAgent.Designer.cs">
       <DependentUpon>FCCEmailAgent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EmailGeneratorHelpers\EmailGeneratorHelper.cs" />
+    <Compile Include="Helpers\EmailHelpers\EmailHelper.cs" />
+    <Compile Include="Helpers\IOHelpers\IOHelper.cs" />
+    <Compile Include="Helpers\ServiceSettingsHelpers\ServiceSettingHelper.cs" />
+    <Compile Include="Interfaces\IEmailProtocol.cs" />
+    <Compile Include="Models\EmailCredentials.cs" />
+    <Compile Include="Models\EmailMessageModel.cs" />
+    <Compile Include="Models\IMAPConnectionProtocolModel.cs" />
     <Compile Include="Models\ServiceSettingsModel.cs" />
+    <Compile Include="Models\POPConnectionProtocolModel.cs" />
+    <Compile Include="Models\SMTPConnectionProtocolModel.cs" />
+    <Compile Include="Models\SystemSettingsModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -62,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FCCEmailAgent.resx">
@@ -72,7 +102,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DB\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
