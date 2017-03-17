@@ -58,9 +58,73 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBHelpers\EmailHelper.cs" />
+    <Compile Include="DBHelpers\EmailTransactionsHelper.cs" />
     <Compile Include="DBHelpers\LogHelper.cs" />
+    <Compile Include="DBHelpers\QueueHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\TaskHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
+    <Compile Include="DB\EmailContents.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Emails.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\EmailStates.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\EmailTransactions.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\EmailTransactionStates.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\EmailTypes.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FCCEmailAgentModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCEmailAgentModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FCCEmailAgentModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FCCEmailAgentModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Log.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Queue.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\QueueStates.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Settings.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sysdiagrams.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Tasks.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\TaskStates.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\TaskTypes.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Users.cs">
+      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FCCEmailAgent.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -70,11 +134,19 @@
     <Compile Include="Helpers\EmailGeneratorHelpers\EmailGeneratorHelper.cs" />
     <Compile Include="Helpers\EmailHelpers\EmailHelper.cs" />
     <Compile Include="Helpers\IOHelpers\IOHelper.cs" />
+    <Compile Include="Helpers\ProcessorHelpers\ProcessorHelper.cs" />
+    <Compile Include="Helpers\QueueHelpers\QueueHelper.cs" />
     <Compile Include="Helpers\ServiceSettingsHelpers\ServiceSettingHelper.cs" />
     <Compile Include="Interfaces\IEmailProtocol.cs" />
+    <Compile Include="Models\EmailContentModel.cs" />
+    <Compile Include="Models\EmailContentElementModel.cs" />
     <Compile Include="Models\EmailCredentials.cs" />
     <Compile Include="Models\EmailMessageModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IMAPConnectionProtocolModel.cs" />
+    <Compile Include="Models\QueueModel.cs" />
+    <Compile Include="Models\QueuePackageModel.cs" />
+    <Compile Include="Models\QueuePackageTaskModel.cs" />
     <Compile Include="Models\ServiceSettingsModel.cs" />
     <Compile Include="Models\POPConnectionProtocolModel.cs" />
     <Compile Include="Models\SMTPConnectionProtocolModel.cs" />
@@ -91,6 +163,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="DB\FCCEmailAgentModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FCCEmailAgentModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DB\FCCEmailAgentModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
+      <LastGenOutput>FCCEmailAgentModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DB\FCCEmailAgentModel.edmx.diagram">
+      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
+    </None>
+    <None Include="DB\FCCEmailAgentModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
+      <LastGenOutput>FCCEmailAgentModel.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -104,9 +193,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DB\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,6 @@
-﻿namespace FlexiCapture.Cloud.EmailAgent
+﻿using System.ServiceProcess;
+
+namespace FlexiCapture.Cloud.EmailAgent
 {
     internal static class Program
     {
@@ -9,18 +11,19 @@
         public static FCCEmailAgent Agent;
         private static void Main()
         {
-            #if DEBUG
-            //execute operations in debug mode
             Agent = new FCCEmailAgent();
-            Agent.OnDebug();
-            #else
+//#if DEBUG
+//            //execute operations in debug mode
+//            Agent = new FCCEmailAgent();
+//            Agent.OnDebug();
+//#else
                 ServiceBase[] ServicesToRun;
                 ServicesToRun = new ServiceBase[] 
                 { 
-                    new FCCEmailAgent() 
+                    Agent 
                 };
                 ServiceBase.Run(ServicesToRun);
-            #endif
+//#endif
         }
     }
 }
