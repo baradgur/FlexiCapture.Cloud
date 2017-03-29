@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.EmailAge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.EmailAgentTester", "FlexiCapture.Cloud.EmailAgentTester\FlexiCapture.Cloud.EmailAgentTester.csproj", "{DE4E8D03-402B-489C-B51B-C8B47F9750E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.Portal.Api", "FlexiCapture.Cloud.Portal.Api\FlexiCapture.Cloud.Portal.Api.csproj", "{EE1DC1A0-4C7F-4811-8A56-1C4A172E1D8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.Portal.Web", "FlexiCapture.Cloud.Portal.Web\FlexiCapture.Cloud.Portal.Web.csproj", "{53620421-B711-4150-B4D8-5262A24AF50B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DE4E8D03-402B-489C-B51B-C8B47F9750E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4E8D03-402B-489C-B51B-C8B47F9750E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE4E8D03-402B-489C-B51B-C8B47F9750E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE1DC1A0-4C7F-4811-8A56-1C4A172E1D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE1DC1A0-4C7F-4811-8A56-1C4A172E1D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE1DC1A0-4C7F-4811-8A56-1C4A172E1D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE1DC1A0-4C7F-4811-8A56-1C4A172E1D8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53620421-B711-4150-B4D8-5262A24AF50B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53620421-B711-4150-B4D8-5262A24AF50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53620421-B711-4150-B4D8-5262A24AF50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53620421-B711-4150-B4D8-5262A24AF50B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

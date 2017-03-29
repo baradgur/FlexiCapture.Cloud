@@ -69,6 +69,7 @@ namespace FlexiCapture.Cloud.EmailAgent
 
                 SystemSettings = new SystemSettingsModel();
                 ServiceSettings = ServiceSettingHelper.InitServiceSettings(SystemSettings.SettingsPath);
+                
                 LogHelper.AddLog("Settings Path "+SystemSettings.SettingsPath);
                 Timer.Start();
                 // ProcessorHelper.MakeProcessing();
@@ -90,6 +91,11 @@ namespace FlexiCapture.Cloud.EmailAgent
             try
             {
                 Timer.Stop();
+                if (ServiceSettings == null)
+                {
+                    SystemSettings = new SystemSettingsModel();
+                    ServiceSettings = ServiceSettingHelper.InitServiceSettings(SystemSettings.SettingsPath);
+                }
                 ProcessorHelper.MakeProcessing();
                 Timer.Start();
             }
@@ -115,6 +121,7 @@ namespace FlexiCapture.Cloud.EmailAgent
                 Emails email = new Emails()
                 {
                     FromEmail = ServiceSettings.AgentEmail,
+                    Subject = "Service Email Agent has been stopped",
                     ReceiverUserId = UsersHelper.CheckExistsUserByEmail(ServiceSettings.AdminCredentials.UserName),
                     TypeId = 4,
                     Host = Program.Agent.ServiceSettings.SMTPSettings.Server,

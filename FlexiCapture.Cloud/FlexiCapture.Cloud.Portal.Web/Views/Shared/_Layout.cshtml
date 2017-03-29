@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/favicon.ico"/>
+    <title>FCC Portal</title>
+      <base href="@Url.Action("Index","Home")">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/sbadmin")
+    @Scripts.Render("~/bundles/angular")
+
+    @Scripts.Render("~/bundles/bootstrap-table")
+
+
+
+    @Scripts.Render("~/bundles/fccApp")
+    @Scripts.Render("~/bundles/fccServices")
+<body>
+
+
+
+
+    <div ng-app="fccApp">
+        @RenderBody()
+    </div>
+
+
+<div>
+    @RenderSection("scripts", false)
+</div>
+</body>
+</html>

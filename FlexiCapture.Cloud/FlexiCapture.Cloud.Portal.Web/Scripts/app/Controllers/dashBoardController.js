@@ -1,0 +1,102 @@
+﻿(function () {
+    var dashBoardController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
+
+
+        var dash = function () {
+//            $scope.khingalFactory = khingalFactory;
+          // $scope.authData = JSON.parse($window.sessionStorage.getItem("AuthData"));
+           $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
+           //$scope.khingalFactory.phoneMask = JSON.parse($window.sessionStorage.getItem("PhoneMask"));
+          //alert(JSON.stringify($scope.authData));
+           //alert(JSON.stringify($scope.userData.UserData));
+
+           switch ($scope.userData.UserData.UserRoleId) {
+               case 1:
+                   $state.go("main.dashboard.users");
+                   break
+
+               case 2:
+               case 4:
+                   //$state.go("main.dashboard.orders");
+                   break;
+
+               default:
+                  //$state.go("main.login");
+                   break;
+                       }
+            $scope.loadData = false;
+
+        };
+        dash();
+
+        $scope.exitQuestion = function () {
+           var dialog = BootstrapDialog.confirm({
+                title: 'Warning',
+                message: 'Do you really want to quit?',
+                type: BootstrapDialog.TYPE_WARNING,
+                size: BootstrapDialog.SIZE_SMALL,
+                closable: true,
+                btnCancelLabel: 'No',
+                btnOKLabel: 'OK',
+                btnOKClass: 'btn-warning',
+                callback: function (result) {
+                    if (result) {
+                        $scope.exitApp();
+                    }
+                }
+           });
+           dialog.setSize(BootstrapDialog.SIZE_SMALL);
+        };
+
+        $scope.exitApp = function () {
+
+            for (var key in $rootScope.sockets) {
+                $rootScope.sockets[key].emit('dis');
+                    $rootScope.sockets[key].disconnect(true);
+            }
+
+            $rootScope.sockets = undefined;
+            $rootScope.socketsActive = false;
+            $cookies.remove("AuthData", {path:"/"});
+            $cookies.remove("UserData", { path: "/" });
+            $window.sessionStorage.clear();
+            $state.go('main.login');
+        }
+        /// add a session timeout
+        $scope.started = false;
+
+        function closeModals() {
+            if ($scope.warning) {
+                $scope.warning.close();
+                $scope.warning = null;
+            }
+        }
+
+        $scope.$on('IdleStart', function () {
+            closeModals();
+            $scope.warning = $uibModal.open({
+                templateUrl: 'warning-dialog.html',
+                windowClass: 'modal-danger'
+            });
+        });
+
+        $scope.$on('IdleEnd', function () {
+            closeModals();
+        });
+
+        $scope.$on('IdleTimeout', function () {
+            closeModals();
+            $scope.exitApp();
+        });
+
+        $scope.start = function () {
+            closeModals();
+            Idle.watch();
+            $scope.started = true;
+        };
+        $scope.start();
+        
+    };
+
+    fccApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal",  dashBoardController]);
+} ())

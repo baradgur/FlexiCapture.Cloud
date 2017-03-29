@@ -1,0 +1,152 @@
+﻿<head>
+    <link rel="stylesheet" type="text/css" href="./Content/sb-admin-2.css">
+    <link rel="stylesheet" type="text/css" href="./Content/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./Content/metisMenu.min.css">
+
+    <script>
+        function test() {
+            $('.projectsUl').collapse()
+        }
+    </script>
+</head>
+<div ng-controller="dashBoardController">
+
+
+
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed; width: 100%;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="color: #3914AF" ng-click="exitQuestion();"><img border="0" alt="FCC Portal" src="Content/puzzle.png" width="24" height="24"> FCC Portal</a>
+            </div>
+            <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-left" ng-show="userData.UserData.UserRoleId==3">
+                <!--
+                        <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Services <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li ng-show="userData.ServiceData.SingleFileConversionService">
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-file-o fa-fw"></i> Single File Conversion
+                                    <span class="pull-right text-muted small">Active</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider" ng-show="userData.ServiceData.SingleFileConversionService"></li>
+
+                        <li ng-show="userData.ServiceData.BatchFileConversionService">
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-file-archive-o fa-fw"></i> Batch File Conversion
+                                    <span class="pull-right text-muted small">Active</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider" ng-show="userData.ServiceData.BatchFileConversionService"></li>
+
+                        <li ng-show="userData.ServiceData.EmailAttachmentFileConversionService">
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion
+                                    <span class="pull-right text-muted small">Active</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider" ng-show="userData.ServiceData.EmailAttachmentFileConversionService"></li>
+
+                        <li ng-show="userData.ServiceData.FTPFileConversionService">
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-hdd-o fa-fw"></i> FTP Conversion
+                                    <span class="pull-right text-muted small">Active</span>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+
+                <!-- /.dropdown -->
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
+
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+
+                            <a href="#" ui-sref="main.dashboard.userInfo"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b>                                </a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+
+            <!-- /.navbar-top-links -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==1">
+
+                        <li>
+                            <a ui-sref="main.dashboard.users"><i class="fa fa-users"></i> Users</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.adminSettings"><i class="fa fa-gear"></i> Settings</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.systemSettings"><i class="fa fa-database"></i> System Settings</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.adminStatistics"><i class="fa fa-pie-chart"></i> Statistics</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+    </div>
+    <div id="page-wrapper" class="dashboard-container">
+        <span us-spinner spinner-key="spinner-1" spinner-start-active="false"></span>
+        <div ui-view></div>
+
+
+    </div>
+    <script type="text/ng-template" id="warning-dialog.html">
+        <div class="modal-header">
+            <h3>Вы не ничего не делаете!</h3>
+        </div>
+        <div idle-countdown="countdown" ng-init="countdown=30" class="modal-body">
+            Выход через {{countdown}} с.
+            <uib-progressbar max="30" value="countdown" animate="true" class="progress-striped active"></uib-progressbar>
+        </div>
+
+    </script>
+</div>

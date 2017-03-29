@@ -1,0 +1,34 @@
+﻿<div ng-controller="usersController">
+
+    <div class="container">
+
+        <div class="row" ng-show="!loading">
+            <div id="toolbar">
+                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User"  data-placement="bottom">
+                    
+                    <span class="glyphicon glyphicon-plus" ></span>
+                    </button>
+
+            </div>
+
+            <!--<div class="alert alert-success" id="eventsResult">
+                Here is the result of event.
+            </div>-->
+            <div class="form-inline">
+                <table  id="table" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true"
+                    data-height="300" data-toggle="table">
+                    <thead>
+                        <tr>
+                            <th data-field="userId" data-sortable="true">Id</th>
+                            <th data-field="userName" data-sortable="true">First Name</th>
+                            <th data-field="userLastName" data-sortable="true">LastName</th>
+                            <th data-field="roleName" data-sortable="true">User Role</th>
+                            <th data-field="lastActivityDate" data-sortable="true">Last Activity</th>
+                            <th data-field="action" data-formatter="actionFormatterUser" data-events="actionEventsUser" data-width="5%" style="text-align:center;"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
