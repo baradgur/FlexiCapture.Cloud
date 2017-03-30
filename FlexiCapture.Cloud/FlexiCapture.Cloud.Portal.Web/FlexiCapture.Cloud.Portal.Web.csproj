@@ -190,6 +190,7 @@
     <Content Include="Scripts\app\Scripts\app.js" />
     <Content Include="Scripts\app\Scripts\mapAreaConfigurator.js" />
     <Content Include="Scripts\app\Scripts\routeConfigurator.js" />
+    <Content Include="Scripts\app\Services\manageFilesHttpService.js" />
     <Content Include="Scripts\app\Services\usersHttpService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

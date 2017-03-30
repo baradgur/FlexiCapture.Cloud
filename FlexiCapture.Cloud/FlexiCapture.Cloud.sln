@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.Portal.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.Portal.Web", "FlexiCapture.Cloud.Portal.Web\FlexiCapture.Cloud.Portal.Web.csproj", "{53620421-B711-4150-B4D8-5262A24AF50B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.OCR.Assist", "FlexiCapture.Cloud.OCR.Assist\FlexiCapture.Cloud.OCR.Assist.csproj", "{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.OCR.AssistTester", "FlexiCapture.Cloud.OCR.AssistTester\FlexiCapture.Cloud.OCR.AssistTester.csproj", "{1A96663E-683A-44CA-928A-53657E2B0C2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{53620421-B711-4150-B4D8-5262A24AF50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53620421-B711-4150-B4D8-5262A24AF50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53620421-B711-4150-B4D8-5262A24AF50B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A96663E-683A-44CA-928A-53657E2B0C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A96663E-683A-44CA-928A-53657E2B0C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A96663E-683A-44CA-928A-53657E2B0C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A96663E-683A-44CA-928A-53657E2B0C2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

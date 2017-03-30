@@ -30,12 +30,12 @@
                 <!--
                         <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
                         Services <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
                         <li ng-show="userData.ServiceData.SingleFileConversionService">
-                            <a href="#">
+                            <a href="" ng-click="selectService(1);">
                                 <div>
                                     <i class="fa fa-file-o fa-fw"></i> Single File Conversion
                                     <span class="pull-right text-muted small">Active</span>
@@ -45,7 +45,7 @@
                         <li class="divider" ng-show="userData.ServiceData.SingleFileConversionService"></li>
 
                         <li ng-show="userData.ServiceData.BatchFileConversionService">
-                            <a href="#">
+                            <a href="" ng-click="selectService(2);">
                                 <div>
                                     <i class="fa fa-file-archive-o fa-fw"></i> Batch File Conversion
                                     <span class="pull-right text-muted small">Active</span>
@@ -55,7 +55,7 @@
                         <li class="divider" ng-show="userData.ServiceData.BatchFileConversionService"></li>
 
                         <li ng-show="userData.ServiceData.EmailAttachmentFileConversionService">
-                            <a href="#">
+                            <a href="" ng-click="selectService(4);">
                                 <div>
                                     <i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion
                                     <span class="pull-right text-muted small">Active</span>
@@ -65,7 +65,7 @@
                         <li class="divider" ng-show="userData.ServiceData.EmailAttachmentFileConversionService"></li>
 
                         <li ng-show="userData.ServiceData.FTPFileConversionService">
-                            <a href="#">
+                            <a ng-click="selectService(3);">
                                 <div>
                                     <i class="fa fa-hdd-o fa-fw"></i> FTP Conversion
                                     <span class="pull-right text-muted small">Active</span>
@@ -107,6 +107,7 @@
             <!-- /.navbar-top-links -->
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
+                    <!-- ADMIN -->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==1">
 
                         <li>
@@ -124,9 +125,81 @@
                         <li>
                             <a ui-sref="main.dashboard.adminStatistics"><i class="fa fa-pie-chart"></i> Statistics</a>
                         </li>
-
-
                     </ul>
+                    <!--end ADMIN-->
+
+                    <!-- SINGLE FILE Conversion -->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==1">
+
+                        <li>
+                            <a ui-sref="main.dashboard.single"><i class="fa fa-eye"></i> Convert Document</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.singlelibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt"></i> Load Conversion Profile</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear"></i> Settings</a>
+                        </li>
+                    </ul>
+                    <!--end SFC-->
+
+                    <!-- BATCH Conversion -->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==2">
+
+                        <li>
+                            <a ui-sref="main.dashboard.batch"><i class="fa fa-file-archive-o"></i> Load Batch</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.batchlibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt"></i> Load Conversion Profile</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.batchsettings"><i class="fa fa-gear"></i> Settings</a>
+                        </li>
+                    </ul>
+                    <!--end BATCh-->
+
+                    <!-- email Attachment -->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==4">
+
+
+                        <li>
+                            <a ui-sref="main.dashboard.emaillibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear"></i> Settings</a>
+                        </li>
+                    </ul>
+                    <!--end EMAIL-->
+
+                    <!-- FTP -->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==3">
+
+
+                        <li>
+                            <a ui-sref="main.dashboard.ftplibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                        </li>
+
+                        <li>
+                            <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear"></i> Settings</a>
+                        </li>
+                    </ul>
+                    <!--end FTP-->
+
+
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>

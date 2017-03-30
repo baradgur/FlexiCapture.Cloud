@@ -85,6 +85,143 @@
                 $window.document.title = "Admin Statistics";
             }
         })
+
+         .state("main.dashboard.single", {
+            url: "/single",
+            templateUrl: "PartialViews/SingleFileConversion.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Single File Conversion";
+            }
+        })
+
+        .state("main.dashboard.singlelibrary", {
+            url: "/singlelibrary",
+            templateUrl: "PartialViews/SingleLibrary.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Single File Library";
+            }
+        })
+
+        .state("main.dashboard.singlesettings", {
+            url: "/singlesettings",
+            templateUrl: "PartialViews/SingleSettings.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Single File Settings";
+            }
+        })
+
+        .state("main.dashboard.singleprofile", {
+            url: "/singleprofile",
+            templateUrl: "PartialViews/SingleProfile.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Single File Profile";
+            }
+        })
+
+         .state("main.dashboard.batch", {
+            url: "/batch",
+            templateUrl: "PartialViews/BatchConversion.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Batch File Conversion";
+            }
+        })
+
+        .state("main.dashboard.batchlibrary", {
+            url: "/batchlibrary",
+            templateUrl: "PartialViews/BatchLibrary.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Batch File Library";
+            }
+        })
+
+        .state("main.dashboard.batchsettings", {
+            url: "/batchsettings",
+            templateUrl: "PartialViews/BatchSettings.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Batch File Settings";
+            }
+        })
+
+        .state("main.dashboard.batchprofile", {
+            url: "/batchprofile",
+            templateUrl: "PartialViews/BatchProfile.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Batch File Profile";
+            }
+        })
+
+
+        
+
+        .state("main.dashboard.emaillibrary", {
+            url: "/emaillibrary",
+            templateUrl: "PartialViews/EmailLibrary.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Email File Library";
+            }
+        })
+
+        .state("main.dashboard.emailsettings", {
+            url: "/emailsettings",
+            templateUrl: "PartialViews/EmailSettings.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Email File Settings";
+            }
+        })
+
+       
+        .state("main.dashboard.ftplibrary", {
+            url: "/ftplibrary",
+            templateUrl: "PartialViews/FtpLibrary.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "FTP File Library";
+            }
+        })
+
+        .state("main.dashboard.ftpsettings", {
+            url: "/ftpsettings",
+            templateUrl: "PartialViews/FtpSettings.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "FTP File Settings";
+            }
+        })
+
     //        .state("main.dashboard.addUser", {
     //            url: "/adduser",
     //            params: { operation: "add", userId: null },

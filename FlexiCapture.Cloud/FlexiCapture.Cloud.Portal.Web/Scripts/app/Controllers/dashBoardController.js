@@ -3,34 +3,36 @@
 
 
         var dash = function () {
-//            $scope.khingalFactory = khingalFactory;
-          // $scope.authData = JSON.parse($window.sessionStorage.getItem("AuthData"));
-           $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
-           //$scope.khingalFactory.phoneMask = JSON.parse($window.sessionStorage.getItem("PhoneMask"));
-          //alert(JSON.stringify($scope.authData));
-           //alert(JSON.stringify($scope.userData.UserData));
+            $scope.serviceStateId = 1;
+            //            $scope.khingalFactory = khingalFactory;
+            // $scope.authData = JSON.parse($window.sessionStorage.getItem("AuthData"));
+            $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
+            //$scope.khingalFactory.phoneMask = JSON.parse($window.sessionStorage.getItem("PhoneMask"));
+            //alert(JSON.stringify($scope.authData));
+            //alert(JSON.stringify($scope.userData.UserData));
 
-           switch ($scope.userData.UserData.UserRoleId) {
-               case 1:
-                   $state.go("main.dashboard.users");
-                   break
+            switch ($scope.userData.UserData.UserRoleId) {
+                case 1:
+                    $state.go("main.dashboard.users");
+                    $scope.serviceStateId = -1;
+                    break
 
-               case 2:
-               case 4:
-                   //$state.go("main.dashboard.orders");
-                   break;
+                case 2:
+                case 3:
+                    $state.go("main.dashboard.single");
+                    break;
 
-               default:
-                  //$state.go("main.login");
-                   break;
-                       }
+                default:
+                    //$state.go("main.login");
+                    break;
+            }
             $scope.loadData = false;
 
         };
         dash();
 
         $scope.exitQuestion = function () {
-           var dialog = BootstrapDialog.confirm({
+            var dialog = BootstrapDialog.confirm({
                 title: 'Warning',
                 message: 'Do you really want to quit?',
                 type: BootstrapDialog.TYPE_WARNING,
@@ -44,20 +46,20 @@
                         $scope.exitApp();
                     }
                 }
-           });
-           dialog.setSize(BootstrapDialog.SIZE_SMALL);
+            });
+            dialog.setSize(BootstrapDialog.SIZE_SMALL);
         };
 
         $scope.exitApp = function () {
 
             for (var key in $rootScope.sockets) {
                 $rootScope.sockets[key].emit('dis');
-                    $rootScope.sockets[key].disconnect(true);
+                $rootScope.sockets[key].disconnect(true);
             }
 
             $rootScope.sockets = undefined;
             $rootScope.socketsActive = false;
-            $cookies.remove("AuthData", {path:"/"});
+            $cookies.remove("AuthData", { path: "/" });
             $cookies.remove("UserData", { path: "/" });
             $window.sessionStorage.clear();
             $state.go('main.login');
@@ -95,8 +97,32 @@
             $scope.started = true;
         };
         $scope.start();
-        
+
+        //navigate
+        $scope.selectService = function (serviceId) {
+            if (serviceId == $scope.serviceStateId) return;
+            $scope.serviceStateId = serviceId;
+            switch (serviceId) {
+                case 1:
+                    $state.go("main.dashboard.single");
+                    break;
+
+                case 2:
+                    $state.go("main.dashboard.batch");
+                    break;
+
+                case 3:
+                    $state.go("main.dashboard.ftplibrary");
+                    break;
+
+                case 4:
+                    $state.go("main.dashboard.emaillibrary");
+                    break;
+
+            }
+        };
     };
 
-    fccApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal",  dashBoardController]);
-} ())
+
+    fccApp.controller("dashBoardController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", dashBoardController]);
+}())

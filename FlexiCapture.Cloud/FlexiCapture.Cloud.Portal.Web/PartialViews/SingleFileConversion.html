@@ -1,0 +1,42 @@
+﻿<div ng-controller="singleFileConversionController">
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Загрузка файлов</strong> <small>Загрузка галереи</small></div>
+            <div class="panel-body" id="tformdiv">
+
+                <!-- Standar Form -->
+                <h4>Select files</h4>
+                <form id="lForm" action="" method="post" enctype="multipart/form-data">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="file" name="filesToUpload" onchange="angular.element(this).scope().addThruChoice(this)" id="js-upload-files"
+                                accept=".png,.jpg,.jpeg,.bmp,.tif,.tiff,.pdf">
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Drop Zone -->
+                <h4>Or drop file</h4>
+                <div class="upload-drop-zone" id="drop-zone">
+                    Drop here
+                </div>
+                <div class="progress" ng-show="showProgressBar">
+                    <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <span class="sr-only">0% Done</span>
+                    </div>
+                </div>
+                <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:darkred" ng-click="removeFromFiles(index)"></span></div>
+
+                <div class="row">
+                    <button class="btn btn-sm btn-primary" ng-click="uploadImages()">Загрузить файлы</button>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</div>

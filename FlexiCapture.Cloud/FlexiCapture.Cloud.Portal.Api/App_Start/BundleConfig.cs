@@ -9,7 +9,7 @@ namespace FlexiCapture.Cloud.Portal.Api
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            
+            //string hash = MD5Helper.GetMD5HashFromFile("d://164305872312.kwm");
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 

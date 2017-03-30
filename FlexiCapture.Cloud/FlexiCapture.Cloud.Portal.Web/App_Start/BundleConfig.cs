@@ -82,12 +82,31 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Scripts/mapAreaConfigurator.js",
                 "~/Scripts/app/Controllers/loginController.js",
                 "~/Scripts/app/Controllers/dashBoardController.js",
-                "~/Scripts/app/Controllers/usersController.js"
+                "~/Scripts/app/Controllers/usersController.js",
+                "~/Scripts/app/Controllers/singleFileConversionController.js",
+                "~/Scripts/app/Controllers/singleProfileController.js",
+                "~/Scripts/app/Controllers/singleLibraryController.js",
+                "~/Scripts/app/Controllers/singleSettingsController.js",
+                "~/Scripts/app/Controllers/batchConversionController.js",
+                "~/Scripts/app/Controllers/batchProfileController.js",
+                "~/Scripts/app/Controllers/batchLibraryController.js",
+                "~/Scripts/app/Controllers/batchSettingsController.js",
+
+                  "~/Scripts/app/Controllers/ftpLibraryController.js",
+                "~/Scripts/app/Controllers/ftpSettingsController.js",
+
+
+                  "~/Scripts/app/Controllers/emailLibraryController.js",
+                "~/Scripts/app/Controllers/emailSettingsController.js"
+
+
                 )
                 );
 
             bundles.Add(new ScriptBundle("~/bundles/fccServices").Include(
-                "~/Scripts/app/Services/usersHttpService.js"
+                "~/Scripts/app/Services/usersHttpService.js",
+                "~/Scripts/app/Services/manageFilesHttpService.js"
+                //manageFilesHttpService
                 )
                 );
         }
