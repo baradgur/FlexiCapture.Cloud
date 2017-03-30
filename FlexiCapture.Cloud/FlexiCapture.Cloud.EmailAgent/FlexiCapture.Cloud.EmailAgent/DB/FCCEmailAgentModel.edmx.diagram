@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8532c92f74074923b4c98c8a70b52c3a" Name="Diagram1">
+        <EntityTypeShape EntityType="FCCEmailAgentModel.EmailContents" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.Emails" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.EmailStates" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.EmailTransactions" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.EmailTransactionStates" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.EmailTypes" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.Log" Width="1.5" PointX="7.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.Queue" Width="1.5" PointX="10" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.QueueStates" Width="1.5" PointX="7.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.Settings" Width="1.5" PointX="9.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.Tasks" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.TaskStates" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.TaskTypes" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.Users" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_EmailContents_Emails" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_Emails_EmailStates" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_Emails_EmailTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_Emails_Tasks" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_Emails_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_EmailTransactions_Emails" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_EmailTransactions_EmailTransactionStates" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_Queue_Queue" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_Tasks_Tasks" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCEmailAgentModel.FK_Tasks_TaskTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

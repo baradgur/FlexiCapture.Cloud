@@ -1,0 +1,818 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FCCEmailAgentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EmailContents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailId" Type="int" Nullable="false" />
+          <Property Name="EmailContent" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Emails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ReceiverUserId" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="500" />
+          <Property Name="Body" Type="nvarchar(max)" />
+          <Property Name="Host" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Port" Type="int" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="TaskId" Type="int" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailId" Type="int" Nullable="false" />
+          <Property Name="ExecutionDate" Type="datetime" />
+          <Property Name="State" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailTransactionStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TemplateName" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsSend" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Queue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QueueStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SettingName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="SettingValue" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExecutionTime" Type="datetime" />
+          <Property Name="TaskTypeId" Type="int" Nullable="false" />
+          <Property Name="Interval" Type="int" />
+          <Property Name="DayNumber" Type="int" />
+          <Property Name="TaskStateId" Type="int" />
+        </EntityType>
+        <EntityType Name="TaskStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="TaskTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" />
+          <Property Name="UserEmail" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EmailContents_Emails">
+          <End Role="Emails" Type="Self.Emails" Multiplicity="1" />
+          <End Role="EmailContents" Type="Self.EmailContents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailContents">
+              <PropertyRef Name="EmailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_EmailStates">
+          <End Role="EmailStates" Type="Self.EmailStates" Multiplicity="1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_EmailTypes">
+          <End Role="EmailTypes" Type="Self.EmailTypes" Multiplicity="1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="ReceiverUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailTransactions_Emails">
+          <End Role="Emails" Type="Self.Emails" Multiplicity="1" />
+          <End Role="EmailTransactions" Type="Self.EmailTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailTransactions">
+              <PropertyRef Name="EmailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailTransactions_EmailTransactionStates">
+          <End Role="EmailTransactionStates" Type="Self.EmailTransactionStates" Multiplicity="1" />
+          <End Role="EmailTransactions" Type="Self.EmailTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailTransactionStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailTransactions">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Queue_Queue">
+          <End Role="QueueStates" Type="Self.QueueStates" Multiplicity="1" />
+          <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueueStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Queue">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Tasks">
+          <End Role="TaskStates" Type="Self.TaskStates" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="TaskStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_TaskTypes">
+          <End Role="TaskTypes" Type="Self.TaskTypes" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FCCEmailAgentModelStoreContainer">
+          <EntitySet Name="EmailContents" EntityType="Self.EmailContents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emails" EntityType="Self.Emails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailStates" EntityType="Self.EmailStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTransactions" EntityType="Self.EmailTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTransactionStates" EntityType="Self.EmailTransactionStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTypes" EntityType="Self.EmailTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Queue" EntityType="Self.Queue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QueueStates" EntityType="Self.QueueStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskStates" EntityType="Self.TaskStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskTypes" EntityType="Self.TaskTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EmailContents_Emails" Association="Self.FK_EmailContents_Emails">
+            <End Role="Emails" EntitySet="Emails" />
+            <End Role="EmailContents" EntitySet="EmailContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_EmailStates" Association="Self.FK_Emails_EmailStates">
+            <End Role="EmailStates" EntitySet="EmailStates" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_EmailTypes" Association="Self.FK_Emails_EmailTypes">
+            <End Role="EmailTypes" EntitySet="EmailTypes" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_Tasks" Association="Self.FK_Emails_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_Users" Association="Self.FK_Emails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailTransactions_Emails" Association="Self.FK_EmailTransactions_Emails">
+            <End Role="Emails" EntitySet="Emails" />
+            <End Role="EmailTransactions" EntitySet="EmailTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailTransactions_EmailTransactionStates" Association="Self.FK_EmailTransactions_EmailTransactionStates">
+            <End Role="EmailTransactionStates" EntitySet="EmailTransactionStates" />
+            <End Role="EmailTransactions" EntitySet="EmailTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Queue_Queue" Association="Self.FK_Queue_Queue">
+            <End Role="QueueStates" EntitySet="QueueStates" />
+            <End Role="Queue" EntitySet="Queue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Tasks" Association="Self.FK_Tasks_Tasks">
+            <End Role="TaskStates" EntitySet="TaskStates" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_TaskTypes" Association="Self.FK_Tasks_TaskTypes">
+            <End Role="TaskTypes" EntitySet="TaskTypes" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FCCEmailAgentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EmailContents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="Int32" Nullable="false" />
+          <Property Name="EmailContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Emails" Relationship="Self.FK_EmailContents_Emails" FromRole="EmailContents" ToRole="Emails" />
+        </EntityType>
+        <EntityType Name="Emails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReceiverUserId" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Host" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Port" Type="Int32" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmailContents" Relationship="Self.FK_EmailContents_Emails" FromRole="Emails" ToRole="EmailContents" />
+          <NavigationProperty Name="EmailStates" Relationship="Self.FK_Emails_EmailStates" FromRole="Emails" ToRole="EmailStates" />
+          <NavigationProperty Name="EmailTypes" Relationship="Self.FK_Emails_EmailTypes" FromRole="Emails" ToRole="EmailTypes" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Emails_Tasks" FromRole="Emails" ToRole="Tasks" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Emails_Users" FromRole="Emails" ToRole="Users" />
+          <NavigationProperty Name="EmailTransactions" Relationship="Self.FK_EmailTransactions_Emails" FromRole="Emails" ToRole="EmailTransactions" />
+        </EntityType>
+        <EntityType Name="EmailStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="State" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Emails" Relationship="Self.FK_Emails_EmailStates" FromRole="EmailStates" ToRole="Emails" />
+        </EntityType>
+        <EntityType Name="EmailTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="Int32" Nullable="false" />
+          <Property Name="ExecutionDate" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Emails" Relationship="Self.FK_EmailTransactions_Emails" FromRole="EmailTransactions" ToRole="Emails" />
+          <NavigationProperty Name="EmailTransactionStates" Relationship="Self.FK_EmailTransactions_EmailTransactionStates" FromRole="EmailTransactions" ToRole="EmailTransactionStates" />
+        </EntityType>
+        <EntityType Name="EmailTransactionStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="EmailTransactions" Relationship="Self.FK_EmailTransactions_EmailTransactionStates" FromRole="EmailTransactionStates" ToRole="EmailTransactions" />
+        </EntityType>
+        <EntityType Name="EmailTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TemplateName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsSend" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Emails" Relationship="Self.FK_Emails_EmailTypes" FromRole="EmailTypes" ToRole="Emails" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Queue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QueueStates" Relationship="Self.FK_Queue_Queue" FromRole="Queue" ToRole="QueueStates" />
+        </EntityType>
+        <EntityType Name="QueueStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Queue" Relationship="Self.FK_Queue_Queue" FromRole="QueueStates" ToRole="Queue" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SettingName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SettingValue" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExecutionTime" Type="DateTime" Precision="3" />
+          <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Interval" Type="Int32" />
+          <Property Name="DayNumber" Type="Int32" />
+          <Property Name="TaskStateId" Type="Int32" />
+          <NavigationProperty Name="Emails" Relationship="Self.FK_Emails_Tasks" FromRole="Tasks" ToRole="Emails" />
+          <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_Tasks" FromRole="Tasks" ToRole="TaskStates" />
+          <NavigationProperty Name="TaskTypes" Relationship="Self.FK_Tasks_TaskTypes" FromRole="Tasks" ToRole="TaskTypes" />
+        </EntityType>
+        <EntityType Name="TaskStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Tasks" FromRole="TaskStates" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="TaskTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskTypes" FromRole="TaskTypes" ToRole="Tasks" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Emails" Relationship="Self.FK_Emails_Users" FromRole="Users" ToRole="Emails" />
+        </EntityType>
+        <Association Name="FK_EmailContents_Emails">
+          <End Role="Emails" Type="Self.Emails" Multiplicity="1" />
+          <End Role="EmailContents" Type="Self.EmailContents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailContents">
+              <PropertyRef Name="EmailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_EmailStates">
+          <End Role="EmailStates" Type="Self.EmailStates" Multiplicity="1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_EmailTypes">
+          <End Role="EmailTypes" Type="Self.EmailTypes" Multiplicity="1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="0..1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emails_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emails">
+              <PropertyRef Name="ReceiverUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailTransactions_Emails">
+          <End Role="Emails" Type="Self.Emails" Multiplicity="1" />
+          <End Role="EmailTransactions" Type="Self.EmailTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailTransactions">
+              <PropertyRef Name="EmailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailTransactions_EmailTransactionStates">
+          <End Role="EmailTransactionStates" Type="Self.EmailTransactionStates" Multiplicity="1" />
+          <End Role="EmailTransactions" Type="Self.EmailTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailTransactionStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailTransactions">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Queue_Queue">
+          <End Role="QueueStates" Type="Self.QueueStates" Multiplicity="1" />
+          <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QueueStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Queue">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_Tasks">
+          <End Role="TaskStates" Type="Self.TaskStates" Multiplicity="0..1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="TaskStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tasks_TaskTypes">
+          <End Role="TaskTypes" Type="Self.TaskTypes" Multiplicity="1" />
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FCCEmailAgentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EmailContents" EntityType="Self.EmailContents" />
+          <EntitySet Name="Emails" EntityType="Self.Emails" />
+          <EntitySet Name="EmailStates" EntityType="Self.EmailStates" />
+          <EntitySet Name="EmailTransactions" EntityType="Self.EmailTransactions" />
+          <EntitySet Name="EmailTransactionStates" EntityType="Self.EmailTransactionStates" />
+          <EntitySet Name="EmailTypes" EntityType="Self.EmailTypes" />
+          <EntitySet Name="Log" EntityType="Self.Log" />
+          <EntitySet Name="Queue" EntityType="Self.Queue" />
+          <EntitySet Name="QueueStates" EntityType="Self.QueueStates" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tasks" EntityType="Self.Tasks" />
+          <EntitySet Name="TaskStates" EntityType="Self.TaskStates" />
+          <EntitySet Name="TaskTypes" EntityType="Self.TaskTypes" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_EmailContents_Emails" Association="Self.FK_EmailContents_Emails">
+            <End Role="Emails" EntitySet="Emails" />
+            <End Role="EmailContents" EntitySet="EmailContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_EmailStates" Association="Self.FK_Emails_EmailStates">
+            <End Role="EmailStates" EntitySet="EmailStates" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_EmailTypes" Association="Self.FK_Emails_EmailTypes">
+            <End Role="EmailTypes" EntitySet="EmailTypes" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_Tasks" Association="Self.FK_Emails_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emails_Users" Association="Self.FK_Emails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Emails" EntitySet="Emails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailTransactions_Emails" Association="Self.FK_EmailTransactions_Emails">
+            <End Role="Emails" EntitySet="Emails" />
+            <End Role="EmailTransactions" EntitySet="EmailTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailTransactions_EmailTransactionStates" Association="Self.FK_EmailTransactions_EmailTransactionStates">
+            <End Role="EmailTransactionStates" EntitySet="EmailTransactionStates" />
+            <End Role="EmailTransactions" EntitySet="EmailTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Queue_Queue" Association="Self.FK_Queue_Queue">
+            <End Role="QueueStates" EntitySet="QueueStates" />
+            <End Role="Queue" EntitySet="Queue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_Tasks" Association="Self.FK_Tasks_Tasks">
+            <End Role="TaskStates" EntitySet="TaskStates" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tasks_TaskTypes" Association="Self.FK_Tasks_TaskTypes">
+            <End Role="TaskTypes" EntitySet="TaskTypes" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FCCEmailAgentModelStoreContainer" CdmEntityContainer="FCCEmailAgentEntities">
+          <EntitySetMapping Name="EmailContents">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.EmailContents">
+              <MappingFragment StoreEntitySet="EmailContents">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="EmailContent" ColumnName="EmailContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emails">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.Emails">
+              <MappingFragment StoreEntitySet="Emails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FromEmail" ColumnName="FromEmail" />
+                <ScalarProperty Name="ReceiverUserId" ColumnName="ReceiverUserId" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailStates">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.EmailStates">
+              <MappingFragment StoreEntitySet="EmailStates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTransactions">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.EmailTransactions">
+              <MappingFragment StoreEntitySet="EmailTransactions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="ExecutionDate" ColumnName="ExecutionDate" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTransactionStates">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.EmailTransactionStates">
+              <MappingFragment StoreEntitySet="EmailTransactionStates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTypes">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.EmailTypes">
+              <MappingFragment StoreEntitySet="EmailTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TemplateName" ColumnName="TemplateName" />
+                <ScalarProperty Name="IsSend" ColumnName="IsSend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Queue">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.Queue">
+              <MappingFragment StoreEntitySet="Queue">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmailContent" ColumnName="EmailContent" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QueueStates">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.QueueStates">
+              <MappingFragment StoreEntitySet="QueueStates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.Settings">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+                <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.Tasks">
+              <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ExecutionTime" ColumnName="ExecutionTime" />
+                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+                <ScalarProperty Name="Interval" ColumnName="Interval" />
+                <ScalarProperty Name="DayNumber" ColumnName="DayNumber" />
+                <ScalarProperty Name="TaskStateId" ColumnName="TaskStateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskStates">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.TaskStates">
+              <MappingFragment StoreEntitySet="TaskStates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskTypes">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.TaskTypes">
+              <MappingFragment StoreEntitySet="TaskTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FCCEmailAgentModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
