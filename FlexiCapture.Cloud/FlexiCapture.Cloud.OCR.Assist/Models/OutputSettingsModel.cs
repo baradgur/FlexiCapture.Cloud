@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace FlexiCapture.Cloud.OCR.Assist.Models
 {
@@ -28,8 +29,12 @@ namespace FlexiCapture.Cloud.OCR.Assist.Models
         #endregion
 
         #region fields
-//          "exportFormat": "Text;PDF"
 
+        /// <summary>
+        /// exportFormat
+        /// </summary>
+        [JsonProperty("exportFormat")]
+        public string ExportFormat { get; set; }
         #endregion
     }
 }

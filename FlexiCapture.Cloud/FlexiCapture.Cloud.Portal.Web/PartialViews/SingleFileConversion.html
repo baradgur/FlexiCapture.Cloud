@@ -2,11 +2,11 @@
 
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading"><strong>Загрузка файлов</strong> <small>Загрузка галереи</small></div>
+            <div class="panel-heading"><strong>Upload file to recognize</strong> <small>Load file</small></div>
             <div class="panel-body" id="tformdiv">
 
                 <!-- Standar Form -->
-                <h4>Select files</h4>
+                <h4>Select file</h4>
                 <form id="lForm" action="" method="post" enctype="multipart/form-data">
                     <div class="form-inline">
                         <div class="form-group">
@@ -26,14 +26,42 @@
                         <span class="sr-only">0% Done</span>
                     </div>
                 </div>
-                <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:darkred" ng-click="removeFromFiles(index)"></span></div>
+                <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
 
                 <div class="row">
-                    <button class="btn btn-sm btn-primary" ng-click="uploadImages()">Загрузить файлы</button>
+                    <button class="btn btn-sm btn-primary " style="margin-left: 16px;" ng-click="uploadImages()">Conversion</button>
                 </div>
 
 
             </div>
+
+            <ul>
+                <li><input type="checkbox" id="cb1" />
+                    <label for="cb1"><img src="./Content/icons/doc.png" /></label>
+                </li>
+                <li><input type="checkbox" id="cb2" />
+                    <label for="cb2"><img src="./Content/icons/xls.png" /></label>
+                </li>
+                <li><input type="checkbox" id="cb3" />
+                    <label for="cb3"><img src="./Content/icons/ppt.png" /></label>
+                </li>
+                <li><input type="checkbox" id="cb4" />
+                    <label for="cb4"><img src="./Content/icons/pdf.png" /></label>
+                </li>
+
+                <li><input type="checkbox" id="cb5" />
+                    <label for="cb5"><img src="./Content/icons/csv.png" /></label>
+                </li>
+                <li><input type="checkbox" id="cb6" />
+                    <label for="cb6"><img src="./Content/icons/xml.png" /></label>
+                </li>
+                <li><input type="checkbox" id="cb7" />
+                    <label for="cb7"><img src="./Content/icons/rtf.png" /></label>
+                </li>
+                <li><input type="checkbox" id="cb8" />
+                    <label for="cb8"><img src="./Content/icons/txt.png" /></label>
+                </li>
+            </ul>
         </div>
 
     </div>

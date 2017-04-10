@@ -10,8 +10,32 @@ using Newtonsoft.Json;
 namespace FlexiCapture.Cloud.OCR.Assist.Models
 {
     
+    /// <summary>
+    /// ocr request model
+    /// </summary>
     public class OcrRequestModel
     {
+        #region constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        public OcrRequestModel()
+        {
+            try
+            {
+                CleanupSettings = new CleanupSettingsModel();
+                OcrSettings = new OcrSettingsModel();
+                OutputSettings = new OutputSettingsModel();
+                InputFiles = new List<InputFileModel>();
+                NotifyUrl = "";
+            }
+            catch (Exception)
+            {
+            }
+
+        }
+        #endregion
+        #region fields
         /// <summary>
         ///apiKey 
         /// </summary>
@@ -42,6 +66,13 @@ namespace FlexiCapture.Cloud.OCR.Assist.Models
         /// </summary>
         [JsonProperty("outputSettings")]
         public OutputSettingsModel OutputSettings { get; set; }
+
+        /// <summary>
+        /// files
+        /// </summary>
+        [JsonProperty("inputFiles")]
+        public List<InputFileModel> InputFiles { get; set; }
+        #endregion
 
     }
 }

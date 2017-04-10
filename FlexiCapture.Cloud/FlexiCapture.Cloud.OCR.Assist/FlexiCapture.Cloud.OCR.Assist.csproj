@@ -44,10 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssistProcessor.cs" />
+    <Compile Include="Helpers\PostHelper.cs" />
     <Compile Include="Models\CleanupSettingsModel.cs" />
+    <Compile Include="Models\DownloadFilesModel.cs" />
+    <Compile Include="Models\DownloadModel.cs" />
     <Compile Include="Models\InputFileModel.cs" />
     <Compile Include="Models\OcrRequestModel.cs" />
+    <Compile Include="Models\OcrResponseStatisticModel.cs" />
     <Compile Include="Models\OcrResponseModel.cs" />
+    <Compile Include="Models\OcrResponseStatisticFileModel.cs" />
     <Compile Include="Models\OcrSettingsModel.cs" />
     <Compile Include="Models\OutputSettingsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

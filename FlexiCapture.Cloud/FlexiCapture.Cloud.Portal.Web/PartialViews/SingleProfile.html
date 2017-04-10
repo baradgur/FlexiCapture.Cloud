@@ -1,16 +1,119 @@
 ﻿<div ng-controller="singleProfileController">
 
-    <div class="container">
+    <div class="container" >
 
-        <div class="row" ng-show="!loading">
+        <div class="row" ng-show="!loadData">
             <div id="toolbar">
-                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User"  data-placement="bottom">
+                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User"
+                    data-placement="bottom">
                     
-                    <span class="glyphicon glyphicon-plus" ></span>
+                    <span class="glyphicon glyphicon-plus" ></span>  New Profile
                     </button>
-
+                    <button type="button" ng-show="profileIsChanged" class="btn btn-success" ng-click="updateSettings();" data-toggle="tooltip" title="Save Profile" data-placement="bottom">
+                    
+                    <span class="glyphicon glyphicon-check" ></span> Update Profile
+                    </button>
             </div>
-                    HELLO SingleProfile!!!!
+
+
+            </br>
+            <div class="panel panel-info">
+                <div class="panel-heading">Profiles</div>
+                <div class="panel-body">
+                    <select style="width:100%" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id" ng-model="currentProfile"></select>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Cleanup Settings</div>
+                        <div class="panel-body">
+                            <label>Deskew:
+                        <input style="float:right" type="checkbox" ng-model="currentProfile.Deskew">
+                    </label>
+
+                            <label>Remove Garbage:
+                        <input style="float:right"  type="checkbox" ng-model="currentProfile.RemoveGarbage">
+                    </label>
+
+                            <label>Remove Texture:
+                        <input  style="float:right" type="checkbox" ng-model="currentProfile.RemoveTexture">
+                    </label>
+
+                            <label>Split Dual Page:
+                        <input  style="float:right" type="checkbox" ng-model="currentProfile.SplitDualPage">
+                    </label>
+
+                            <label>Rotation Type:
+                    <select  style="float:right"   ng-options="rotation as rotation.Name for rotation in currentProfile.AvailableRotationTypes track by rotation.Id" ng-model="currentProfile.SelectedRotationType"></select>
+                            </label>
+
+                            <label>Output format:
+                        <input type="textbox"  style="float:right" ng-model="currentProfile.OutputFormat">
+                    </label>
+
+
+
+                            <label>Resolution:
+                        <input type="textbox" style="float:right" ng-model="currentProfile.Resolution">
+                    </label>
+
+                            <label>Jpeg Quality:
+                        <input type="textbox" style="float:right" ng-model="currentProfile.JpegQuality">
+                    </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">OCR Settings</div>
+                        <div class="panel-body">
+                            <label>Speed OCR:
+                        <input style="float:right" type="checkbox" ng-model="currentProfile.SpeedOcr">
+                    </label>
+
+                            <label>Look For Barcodes:
+                        <input style="float:right" type="checkbox" ng-model="currentProfile.LookForBarCodes">
+                    </label>
+
+                            <label>Analysis Mode:
+                    <select  style="float:right"   ng-options="aMode as aMode.Name for aMode in currentProfile.AvailableAnalysisModes track by aMode.Id" ng-model="currentProfile.SelectedAnalysisModel"></select>
+                            </label>
+
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Print Types</div>
+                                <label ng-repeat="print in currentProfile.AvailablePrintTypes">
+                               {{print.Name}} <input style="float:right" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id" checklist-change="imChanged()"/>
+                            </label>
+                            </div>
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Languages</div>
+                                <label ng-repeat="lang in currentProfile.AvailableLanguages">
+                               {{lang.Name}} <input style="float:right" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id" checklist-change="imChanged()"/>
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Output Settings</div>
+                        <div class="panel-body">
+                            <label ng-repeat="format in currentProfile.AvailableExportFormats">
+                               {{format.Name}} <input style="float:right" type="checkbox" checklist-model="currentProfile.SelectedExportFormats" checklist-value="format" checklist-comparator=".Id" checklist-change="imChanged()"/>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
     </div>
+
 </div>

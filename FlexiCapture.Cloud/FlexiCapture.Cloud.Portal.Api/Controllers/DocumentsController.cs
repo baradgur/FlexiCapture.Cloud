@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers;
 
 namespace FlexiCapture.Cloud.Portal.Api.Controllers
 {
@@ -17,7 +18,14 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // GET api/documents/5
-        public string Get(int id)
+        public string Get(int userId, int serviceId)
+        {
+            String baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority)
+ + Configuration.VirtualPathRoot;
+            return DBHelpers.DocumentsHelper.GetDocumentsByUserServiceId(baseUrl,userId,serviceId);
+        }
+
+        public string Get(int documentId)
         {
             return "value";
         }
@@ -33,13 +41,14 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
                 int serviceId = 0;
                 int userId = 0;
 
-                if (string.IsNullOrEmpty(sServiceId)) serviceId = Convert.ToInt32(sServiceId);
-                if (string.IsNullOrEmpty(sUserId)) userId = Convert.ToInt32(sUserId);
+                if (!string.IsNullOrEmpty(sServiceId)) serviceId = Convert.ToInt32(sServiceId);
+                if (!string.IsNullOrEmpty(sUserId)) userId = Convert.ToInt32(sUserId);
                 System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
                 if (hfc.Count > 0)
                 {
-                    HttpPostedFile t = hfc[0];
-                    return Ok("File Uploads");
+                    HttpPostedFile file = hfc[0];
+                    DocumentsHelper.ProcessFile(userId, serviceId, file);
+                    return Ok("File Upload Completely");
 
                 }
                 return BadRequest("No files");

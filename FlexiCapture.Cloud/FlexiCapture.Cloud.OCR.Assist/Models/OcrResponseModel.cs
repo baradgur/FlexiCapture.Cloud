@@ -9,6 +9,18 @@ namespace FlexiCapture.Cloud.OCR.Assist.Models
 {
     public class OcrResponseModel
     {
+
+        public OcrResponseModel()
+        {
+            try
+            {
+                Download = new List<DownloadFilesModel>();
+                Statistics =new OcrResponseStatisticModel();
+            }
+            catch (Exception)
+            {
+            }
+        }
         /// <summary>
         /// Job Url
         /// </summary>
@@ -23,5 +35,13 @@ namespace FlexiCapture.Cloud.OCR.Assist.Models
         [JsonProperty("status")]
         
         public string Status { get; set; }
+
+        [JsonProperty("download")]
+        public List<DownloadFilesModel> Download { get; set; }
+
+        [JsonProperty("statistics")]
+        public OcrResponseStatisticModel Statistics { get; set; }
+
+
     }
 }

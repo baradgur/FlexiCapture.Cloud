@@ -15,10 +15,11 @@
                     var data = new FormData();
 
                     //for (var i = 0; i < $scope.files.length; i++) {
-                        
+                        //alert("UserId "+$scope.userData.UserData.Id+"ServiceId: "+$scope.serviceStateId);
+
                         data.append("uploadedFile0" , $scope.files[0]);
-                        data.append("serviceId",2);
-                        data.append("userId",2);
+                        data.append("serviceId",$scope.serviceStateId);
+                        data.append("userId",$scope.userData.UserData.Id);
                    // }
                     var fUrl = url;
                     manageFilesHttpService.uploadFiles($http, $scope, $state, fUrl, usSpinnerService, data);

@@ -1,9 +1,9 @@
 (function () {
-    var singleLibraryController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
-
-        
+    var singleLibraryController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
+        var data = [];
+        var url = $$ApiUrl + "/documents";
         var singleLibrary = function () {
-           
+            documentsHttpService.getToDocuments($http, $scope, $state, data, url, usSpinnerService);
             $scope.loadData = false;
 
         };
@@ -12,5 +12,5 @@
     };
 
 
-    fccApp.controller("singleLibraryController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", singleLibraryController]);
+    fccApp.controller("singleLibraryController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal","documentsHttpService", singleLibraryController]);
 }())

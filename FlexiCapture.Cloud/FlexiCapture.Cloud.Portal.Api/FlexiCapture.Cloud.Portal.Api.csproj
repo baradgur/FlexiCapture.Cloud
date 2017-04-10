@@ -146,12 +146,22 @@
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ManageUserProfileController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DBHelpers\DocumentsHelper.cs" />
+    <Compile Include="DBHelpers\DocumentTypesHelper.cs" />
     <Compile Include="DBHelpers\LogHelper.cs" />
     <Compile Include="DBHelpers\LoginHelper.cs" />
+    <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
+    <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
+    <Compile Include="DB\AnalysisModeCatalog.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Documents.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -159,6 +169,9 @@
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\DocumentTypes.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ExportFormatsCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\FCCPortalModel.Context.cs">
@@ -176,7 +189,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\LanguagesCatalog.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Log.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\PrintTypeCatalog.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\RotationTypeCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ServiceTypes.cs">
@@ -200,6 +222,18 @@
     <Compile Include="DB\UserLoginStates.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\UserProfileExportFormats.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserProfileLanguages.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserProfilePrintTypes.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserProfiles.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\UserRoleTypes.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -218,13 +252,25 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CatalogsHelpers\CatalogHelper.cs" />
     <Compile Include="Helpers\CryptHelpers\MD5Helper.cs" />
     <Compile Include="Helpers\CryptHelpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\DocumentsHelpers\DocumentsHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\LoginHelpers\LoginHelper.cs" />
+    <Compile Include="Helpers\ManageUserHelpers\ManageUserHelper.cs" />
+    <Compile Include="Helpers\ManageUserHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
     <Compile Include="Models\Areas\AreaMapModel.cs" />
+    <Compile Include="Models\Catalogs\RotationTypeModel.cs" />
+    <Compile Include="Models\Catalogs\AnalysisModeModel.cs" />
+    <Compile Include="Models\Catalogs\ExportFormatModel.cs" />
+    <Compile Include="Models\Catalogs\PrintTypeModel.cs" />
+    <Compile Include="Models\Catalogs\LanguageModel.cs" />
+    <Compile Include="Models\Documents\DocumentModel.cs" />
     <Compile Include="Models\Errors\ErrorModel.cs" />
+    <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
+    <Compile Include="Models\UserProfiles\UserProfile.cs" />
     <Compile Include="Models\Users\AuthUserModel.cs" />
     <Compile Include="Models\Users\UserLoginModel.cs" />
     <Compile Include="Models\Users\UserLoginStatesModel.cs" />

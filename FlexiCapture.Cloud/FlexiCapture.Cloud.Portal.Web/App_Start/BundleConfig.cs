@@ -105,7 +105,9 @@ namespace FlexiCapture.Cloud.Portal.Web
 
             bundles.Add(new ScriptBundle("~/bundles/fccServices").Include(
                 "~/Scripts/app/Services/usersHttpService.js",
-                "~/Scripts/app/Services/manageFilesHttpService.js"
+                "~/Scripts/app/Services/manageFilesHttpService.js",
+                "~/Scripts/app/Services/documentsHttpService.js",
+                "~/Scripts/app/Services/manageUserProfileHttpService.js"
                 //manageFilesHttpService
                 )
                 );

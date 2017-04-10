@@ -1,6 +1,8 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
+using FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers;
 
 namespace FlexiCapture.Cloud.Portal.Api
 {
@@ -9,6 +11,7 @@ namespace FlexiCapture.Cloud.Portal.Api
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            ManageUserHelper.GetToManageUserProfile(1);
             //string hash = MD5Helper.GetMD5HashFromFile("d://164305872312.kwm");
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));

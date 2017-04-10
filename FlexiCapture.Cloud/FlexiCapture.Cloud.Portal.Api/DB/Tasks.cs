@@ -23,8 +23,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public System.DateTime CreationDate { get; set; }
         public int TaskStateId { get; set; }
         public int UserId { get; set; }
+        public int ServiceId { get; set; }
     
         public virtual ICollection<Documents> Documents { get; set; }
+        public virtual ServiceTypes ServiceTypes { get; set; }
         public virtual TaskStates TaskStates { get; set; }
         public virtual Users Users { get; set; }
     }

@@ -26,10 +26,15 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AnalysisModeCatalog> AnalysisModeCatalog { get; set; }
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<DocumentStates> DocumentStates { get; set; }
         public virtual DbSet<DocumentTypes> DocumentTypes { get; set; }
+        public virtual DbSet<ExportFormatsCatalog> ExportFormatsCatalog { get; set; }
+        public virtual DbSet<LanguagesCatalog> LanguagesCatalog { get; set; }
         public virtual DbSet<Log> Log { get; set; }
+        public virtual DbSet<PrintTypeCatalog> PrintTypeCatalog { get; set; }
+        public virtual DbSet<RotationTypeCatalog> RotationTypeCatalog { get; set; }
         public virtual DbSet<ServiceTypes> ServiceTypes { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
@@ -37,6 +42,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<TaskStates> TaskStates { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserLoginStates> UserLoginStates { get; set; }
+        public virtual DbSet<UserProfileExportFormats> UserProfileExportFormats { get; set; }
+        public virtual DbSet<UserProfileLanguages> UserProfileLanguages { get; set; }
+        public virtual DbSet<UserProfilePrintTypes> UserProfilePrintTypes { get; set; }
+        public virtual DbSet<UserProfiles> UserProfiles { get; set; }
         public virtual DbSet<UserRoleTypes> UserRoleTypes { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserServiceSubscribes> UserServiceSubscribes { get; set; }
