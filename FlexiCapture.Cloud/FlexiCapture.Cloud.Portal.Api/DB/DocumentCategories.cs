@@ -12,20 +12,16 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class ServiceTypes
+    public partial class DocumentCategories
     {
-        public ServiceTypes()
+        public DocumentCategories()
         {
-            this.Tasks = new HashSet<Tasks>();
-            this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
-            this.UserProfileServiceDefault = new HashSet<UserProfileServiceDefault>();
+            this.Documents = new HashSet<Documents>();
         }
     
         public int Id { get; set; }
-        public string ServiceName { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<Tasks> Tasks { get; set; }
-        public virtual ICollection<UserServiceSubscribes> UserServiceSubscribes { get; set; }
-        public virtual ICollection<UserProfileServiceDefault> UserProfileServiceDefault { get; set; }
+        public virtual ICollection<Documents> Documents { get; set; }
     }
 }

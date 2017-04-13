@@ -32,11 +32,11 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
         /// get to user profile by Id
         /// </summary>
         /// <returns></returns>
-        public static string GetToProfileById(int profileId)
+        public static string GetToProfileById(int profileId, int serviceId)
         {
             try
             {
-                ManageUserProfileModel model = ManageUserProfileHelper.GetToUserProfileById(profileId);
+                ManageUserProfileModel model = ManageUserProfileHelper.GetToUserProfileById(profileId,serviceId);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(model);
             }
@@ -49,7 +49,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
         /// get to manage user profile
         /// </summary>
         /// <returns></returns>
-        public static string GetToManageUserProfile(int profileId)
+        public static string GetToManageUserProfile(int profileId,int serviceId)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
                         return "";
 
                     default:
-                        return GetToProfileById(profileId);
+                        return GetToProfileById(profileId,serviceId);
                         return "";
                 }
                 

@@ -52,6 +52,11 @@
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceStates_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserSettings_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceSubscribes_UserServiceSubscribeStates" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FCCPortalModel.DocumentCategories" Width="1.5" PointX="6" PointY="21" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserProfileServiceDefault" Width="1.5" PointX="8.25" PointY="16.375" />
+        <AssociationConnector Association="FCCPortalModel.FK_Documents_DocumentCategories" />
+        <AssociationConnector Association="FCCPortalModel.FK_UserProfileServiceDefault_ServiceTypes" />
+        <AssociationConnector Association="FCCPortalModel.FK_UserProfileServiceDefault_UserProfiles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

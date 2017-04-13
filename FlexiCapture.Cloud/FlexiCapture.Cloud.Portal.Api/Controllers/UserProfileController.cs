@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 
 namespace FlexiCapture.Cloud.Portal.Api.Controllers
@@ -18,21 +19,22 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // GET api/userprofile/5
-        public string Get(int userId)
+        public string Get(int userId, int serviceId)
         {
-            return ManageUserProfileHelper.GetToAllUserProfiles(userId);
+            return ManageUserProfileHelper.GetToAllUserProfiles(userId, serviceId);
         }
 
         // POST api/userprofile
-        public void Post([FromBody]ManageUserProfileModel data)
+        public string Post(NewProfileModel data)
         {
-            string n = "";
+
+            return DBHelpers.ManageUserProfileHelper.CreateNewProfile(data);
         }
 
         // PUT api/userprofile/5
-        public void Put([FromBody]ManageUserProfileModel data)
+        public string Put([FromBody]ManageUserProfileModel data)
         {
-            DBHelpers.ManageUserProfileHelper.UpdateUserProfile(data);
+           return DBHelpers.ManageUserProfileHelper.UpdateUserProfile(data);
         }
 
         // DELETE api/userprofile/5

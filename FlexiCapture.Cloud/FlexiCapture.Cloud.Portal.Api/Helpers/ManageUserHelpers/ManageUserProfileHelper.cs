@@ -15,7 +15,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
         /// get to profile by id
         /// </summary>
         /// <returns></returns>
-        public static ManageUserProfileModel GetToUserProfileById(int profileId)
+        public static ManageUserProfileModel GetToUserProfileById(int profileId, int serviceId=-1)
         {
             try
             {
@@ -48,7 +48,14 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
                 model.SpeedOcr = profile.SpeedOcr;
                 model.SplitDualPage = profile.SplitDualPage;
                 model.UserId = profile.UserId;
+                var defaultServiceId = profile.UserProfileServiceDefault.FirstOrDefault(x => x.ServiceTypeId == serviceId && x.UserProfileId == profileId);
 
+                model.DefaultServiceId = -1;
+
+                if (defaultServiceId != null)
+                {
+                    model.DefaultServiceId = defaultServiceId.ServiceTypeId;
+                }
                 foreach (var format in profile.UserProfileExportFormats)
                 {
                     model.SelectedExportFormats.Add(new ExportFormatModel() {Id =format.ExportFormatsCatalog.Id, Name = format.ExportFormatsCatalog.Name});
@@ -76,7 +83,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
         /// get to all profiles
         /// </summary>
         /// <returns></returns>
-        public static string GetToAllUserProfiles(int userId)
+        public static string GetToAllUserProfiles(int userId,int serviceId)
         {
             try
             {
@@ -88,12 +95,13 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
 
                 foreach (var id in ids)
                 {
-                    models.Add(GetToUserProfileById(id));  
+                    models.Add(GetToUserProfileById(id,serviceId));  
                 }
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-
-                return serializer.Serialize(models);
+                serializer.MaxJsonLength = Int32.MaxValue;
+                string s = serializer.Serialize(models);
+                return s;
             }
             catch (Exception)
             {

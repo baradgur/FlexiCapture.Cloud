@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers;
+using System.Web.Script.Serialization;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 
 namespace FlexiCapture.Cloud.Portal.Api.Controllers
 {
@@ -14,15 +13,15 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         // GET api/documents
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] {"value1", "value2"};
         }
 
         // GET api/documents/5
         public string Get(int userId, int serviceId)
         {
-            String baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority)
- + Configuration.VirtualPathRoot;
-            return DBHelpers.DocumentsHelper.GetDocumentsByUserServiceId(baseUrl,userId,serviceId);
+            var baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority)
+                          + Configuration.VirtualPathRoot;
+            return DocumentsHelper.GetDocumentsByUserServiceId(baseUrl, userId, serviceId);
         }
 
         public string Get(int documentId)
@@ -35,21 +34,24 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         {
             try
             {
-                string sServiceId = System.Web.HttpContext.Current.Request.Form.Get("serviceId");
-                string sUserId = System.Web.HttpContext.Current.Request.Form.Get("userId");
+                var sServiceId = HttpContext.Current.Request.Form.Get("serviceId");
+                var sUserId = HttpContext.Current.Request.Form.Get("userId");
+                string sProfile = HttpContext.Current.Request.Form.Get("profile");
 
-                int serviceId = 0;
-                int userId = 0;
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                ManageUserProfileModel model =serializer.Deserialize<ManageUserProfileModel>(sProfile);
+                var serviceId = 0;
+                var userId = 0;
 
                 if (!string.IsNullOrEmpty(sServiceId)) serviceId = Convert.ToInt32(sServiceId);
                 if (!string.IsNullOrEmpty(sUserId)) userId = Convert.ToInt32(sUserId);
-                System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
+                var hfc = HttpContext.Current.Request.Files;
                 if (hfc.Count > 0)
                 {
-                    HttpPostedFile file = hfc[0];
-                    DocumentsHelper.ProcessFile(userId, serviceId, file);
+                    var file = hfc[0];
+                    Helpers.DocumentsHelpers.DocumentsHelper.ProcessFile(userId, serviceId,model, file, sProfile);
                     return Ok("File Upload Completely");
-
                 }
                 return BadRequest("No files");
             }
@@ -60,7 +62,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // PUT api/documents/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 

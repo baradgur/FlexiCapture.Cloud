@@ -12,6 +12,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <EntityType Name="DocumentCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="Documents">
           <Key>
             <PropertyRef Name="Id" />
@@ -27,6 +34,7 @@
           <Property Name="DocumentStateId" Type="int" Nullable="false" />
           <Property Name="DocumentTypeId" Type="int" Nullable="false" />
           <Property Name="Hash" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DocumentCategoryId" Type="int" />
         </EntityType>
         <EntityType Name="DocumentStates">
           <Key>
@@ -114,6 +122,7 @@
           <Property Name="TaskStateId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="ProfileContent" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -186,6 +195,14 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="OutputFormat" Type="nvarchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="UserProfileServiceDefault">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserProfileId" Type="int" Nullable="false" />
+          <Property Name="ServiceTypeId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserRoleTypes">
           <Key>
             <PropertyRef Name="Id" />
@@ -228,6 +245,18 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="SettingContent" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK_Documents_DocumentCategories">
+          <End Role="DocumentCategories" Type="Self.DocumentCategories" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="DocumentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Documents_DocumentStates">
           <End Role="DocumentStates" Type="Self.DocumentStates" Multiplicity="1" />
           <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
@@ -444,6 +473,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserProfileServiceDefault_ServiceTypes">
+          <End Role="ServiceTypes" Type="Self.ServiceTypes" Multiplicity="1" />
+          <End Role="UserProfileServiceDefault" Type="Self.UserProfileServiceDefault" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfileServiceDefault">
+              <PropertyRef Name="ServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfileServiceDefault_UserProfiles">
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1" />
+          <End Role="UserProfileServiceDefault" Type="Self.UserProfileServiceDefault" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfileServiceDefault">
+              <PropertyRef Name="UserProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserServiceStates_ServiceTypes">
           <End Role="ServiceTypes" Type="Self.ServiceTypes" Multiplicity="1" />
           <End Role="UserServiceSubscribes" Type="Self.UserServiceSubscribes" Multiplicity="*" />
@@ -494,6 +547,7 @@
         </Association>
         <EntityContainer Name="FCCPortalModelStoreContainer">
           <EntitySet Name="AnalysisModeCatalog" EntityType="Self.AnalysisModeCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentCategories" EntityType="Self.DocumentCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentStates" EntityType="Self.DocumentStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentTypes" EntityType="Self.DocumentTypes" Schema="dbo" store:Type="Tables" />
@@ -513,11 +567,16 @@
           <EntitySet Name="UserProfileLanguages" EntityType="Self.UserProfileLanguages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfilePrintTypes" EntityType="Self.UserProfilePrintTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfileServiceDefault" EntityType="Self.UserProfileServiceDefault" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoleTypes" EntityType="Self.UserRoleTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserServiceSubscribes" EntityType="Self.UserServiceSubscribes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserServiceSubscribeStates" EntityType="Self.UserServiceSubscribeStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSettings" EntityType="Self.UserSettings" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Documents_DocumentCategories" Association="Self.FK_Documents_DocumentCategories">
+            <End Role="DocumentCategories" EntitySet="DocumentCategories" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
           <AssociationSet Name="FK_Documents_DocumentStates" Association="Self.FK_Documents_DocumentStates">
             <End Role="DocumentStates" EntitySet="DocumentStates" />
             <End Role="Documents" EntitySet="Documents" />
@@ -590,6 +649,14 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserProfiles" EntitySet="UserProfiles" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserProfileServiceDefault_ServiceTypes" Association="Self.FK_UserProfileServiceDefault_ServiceTypes">
+            <End Role="ServiceTypes" EntitySet="ServiceTypes" />
+            <End Role="UserProfileServiceDefault" EntitySet="UserProfileServiceDefault" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfileServiceDefault_UserProfiles" Association="Self.FK_UserProfileServiceDefault_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="UserProfileServiceDefault" EntitySet="UserProfileServiceDefault" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserServiceStates_ServiceTypes" Association="Self.FK_UserServiceStates_ServiceTypes">
             <End Role="ServiceTypes" EntitySet="ServiceTypes" />
             <End Role="UserServiceSubscribes" EntitySet="UserServiceSubscribes" />
@@ -637,6 +704,8 @@
           <NavigationProperty Name="DocumentStates" Relationship="Self.FK_Documents_DocumentStates" FromRole="Documents" ToRole="DocumentStates" />
           <NavigationProperty Name="DocumentTypes" Relationship="Self.FK_Documents_DocumentTypes" FromRole="Documents" ToRole="DocumentTypes" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Documents_Tasks" FromRole="Documents" ToRole="Tasks" />
+          <Property Name="DocumentCategoryId" Type="Int32" />
+          <NavigationProperty Name="DocumentCategories" Relationship="FCCPortalModel.FK_Documents_DocumentCategories" FromRole="Documents" ToRole="DocumentCategories" />
         </EntityType>
         <EntityType Name="DocumentStates">
           <Key>
@@ -704,6 +773,7 @@
           <Property Name="ServiceName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_ServiceTypes" FromRole="ServiceTypes" ToRole="Tasks" />
           <NavigationProperty Name="UserServiceSubscribes" Relationship="Self.FK_UserServiceStates_ServiceTypes" FromRole="ServiceTypes" ToRole="UserServiceSubscribes" />
+          <NavigationProperty Name="UserProfileServiceDefault" Relationship="FCCPortalModel.FK_UserProfileServiceDefault_ServiceTypes" FromRole="ServiceTypes" ToRole="UserProfileServiceDefault" />
         </EntityType>
         <EntityType Name="Settings">
           <Key>
@@ -736,6 +806,7 @@
           <NavigationProperty Name="ServiceTypes" Relationship="Self.FK_Tasks_ServiceTypes" FromRole="Tasks" ToRole="ServiceTypes" />
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
+          <Property Name="ProfileContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -824,6 +895,7 @@
           <NavigationProperty Name="UserProfilePrintTypes" Relationship="Self.FK_UserProfilePrintTypes_UserProfiles" FromRole="UserProfiles" ToRole="UserProfilePrintTypes" />
           <NavigationProperty Name="Users" Relationship="Self.FK_UserProfiles_Users" FromRole="UserProfiles" ToRole="Users" />
           <Property Name="OutputFormat" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserProfileServiceDefault" Relationship="FCCPortalModel.FK_UserProfileServiceDefault_UserProfiles" FromRole="UserProfiles" ToRole="UserProfileServiceDefault" />
         </EntityType>
         <EntityType Name="UserRoleTypes">
           <Key>
@@ -1256,7 +1328,75 @@
             <End Role="UserServiceSubscribeStates" EntitySet="UserServiceSubscribeStates" />
             <End Role="UserServiceSubscribes" EntitySet="UserServiceSubscribes" />
           </AssociationSet>
+          <EntitySet Name="DocumentCategories" EntityType="FCCPortalModel.DocumentCategories" />
+          <EntitySet Name="UserProfileServiceDefault" EntityType="FCCPortalModel.UserProfileServiceDefault" />
+          <AssociationSet Name="FK_Documents_DocumentCategories" Association="FCCPortalModel.FK_Documents_DocumentCategories">
+            <End Role="DocumentCategories" EntitySet="DocumentCategories" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfileServiceDefault_ServiceTypes" Association="FCCPortalModel.FK_UserProfileServiceDefault_ServiceTypes">
+            <End Role="ServiceTypes" EntitySet="ServiceTypes" />
+            <End Role="UserProfileServiceDefault" EntitySet="UserProfileServiceDefault" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfileServiceDefault_UserProfiles" Association="FCCPortalModel.FK_UserProfileServiceDefault_UserProfiles">
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+            <End Role="UserProfileServiceDefault" EntitySet="UserProfileServiceDefault" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="DocumentCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documents" Relationship="FCCPortalModel.FK_Documents_DocumentCategories" FromRole="DocumentCategories" ToRole="Documents" />
+        </EntityType>
+        <EntityType Name="UserProfileServiceDefault">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserProfileId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ServiceTypes" Relationship="FCCPortalModel.FK_UserProfileServiceDefault_ServiceTypes" FromRole="UserProfileServiceDefault" ToRole="ServiceTypes" />
+          <NavigationProperty Name="UserProfiles" Relationship="FCCPortalModel.FK_UserProfileServiceDefault_UserProfiles" FromRole="UserProfileServiceDefault" ToRole="UserProfiles" />
+        </EntityType>
+        <Association Name="FK_Documents_DocumentCategories">
+          <End Type="FCCPortalModel.DocumentCategories" Role="DocumentCategories" Multiplicity="0..1" />
+          <End Type="FCCPortalModel.Documents" Role="Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="DocumentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfileServiceDefault_ServiceTypes">
+          <End Type="FCCPortalModel.ServiceTypes" Role="ServiceTypes" Multiplicity="1" />
+          <End Type="FCCPortalModel.UserProfileServiceDefault" Role="UserProfileServiceDefault" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfileServiceDefault">
+              <PropertyRef Name="ServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfileServiceDefault_UserProfiles">
+          <End Type="FCCPortalModel.UserProfiles" Role="UserProfiles" Multiplicity="1" />
+          <End Type="FCCPortalModel.UserProfileServiceDefault" Role="UserProfileServiceDefault" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfiles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfileServiceDefault">
+              <PropertyRef Name="UserProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1274,6 +1414,7 @@
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="FCCPortalModel.Documents">
               <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="DocumentCategoryId" ColumnName="DocumentCategoryId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -1378,6 +1519,7 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="FCCPortalModel.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="ProfileContent" ColumnName="ProfileContent" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="TaskStateId" ColumnName="TaskStateId" />
@@ -1508,6 +1650,23 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="SettingContent" ColumnName="SettingContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentCategories">
+            <EntityTypeMapping TypeName="FCCPortalModel.DocumentCategories">
+              <MappingFragment StoreEntitySet="DocumentCategories">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfileServiceDefault">
+            <EntityTypeMapping TypeName="FCCPortalModel.UserProfileServiceDefault">
+              <MappingFragment StoreEntitySet="UserProfileServiceDefault">
+                <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
+                <ScalarProperty Name="UserProfileId" ColumnName="UserProfileId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

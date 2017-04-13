@@ -1,7 +1,11 @@
 ﻿<div ng-controller="singleFileConversionController">
 
-    <div class="container">
-        <div class="panel panel-default">
+    <div class="container" ng-show="!loadData">
+
+        
+
+
+        <div class="panel panel-info">
             <div class="panel-heading"><strong>Upload file to recognize</strong> <small>Load file</small></div>
             <div class="panel-body" id="tformdiv">
 
@@ -17,10 +21,10 @@
                 </form>
 
                 <!-- Drop Zone -->
-                <h4>Or drop file</h4>
+                <!--<h4>Or drop file</h4>
                 <div class="upload-drop-zone" id="drop-zone">
                     Drop here
-                </div>
+                </div>-->
                 <div class="progress" ng-show="showProgressBar">
                     <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                         <span class="sr-only">0% Done</span>
@@ -28,14 +32,12 @@
                 </div>
                 <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
 
-                <div class="row">
-                    <button class="btn btn-sm btn-primary " style="margin-left: 16px;" ng-click="uploadImages()">Conversion</button>
-                </div>
+
 
 
             </div>
 
-            <ul>
+            <!--<ul>
                 <li><input type="checkbox" id="cb1" />
                     <label for="cb1"><img src="./Content/icons/doc.png" /></label>
                 </li>
@@ -61,10 +63,135 @@
                 <li><input type="checkbox" id="cb8" />
                     <label for="cb8"><img src="./Content/icons/txt.png" /></label>
                 </li>
-            </ul>
+            </ul>-->
         </div>
 
+        <!--PROFILES-->
+        <div class="panel panel-info">
+            <div class="panel-heading"><strong>Profiles</strong></div>
+            <div class="panel-body">
+
+
+                <div class="input-group">
+                    <span class="input-group-addon">
+                            Select Profile
+                    </span>
+                    <select class="form-control" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id"
+                        ng-model="currentProfile"></select>
+
+
+                </div>
+                <br/>
+
+                
+              
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                            Languages
+                    </span>
+                            <div class="btn-group form-control" uib-dropdown auto-close="outsideClick" on-toggle="toggled(open)">
+                                <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+        {{selNames}} <span class="caret"></span>
+      </button>
+
+                                <ul class="dropdown-menu menu-chk" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                    <li ng-repeat="lang in currentProfile.AvailableLanguages" role="menuitem">
+                                        <input type="checkbox" ng-change="selectLang(lang.Id)" ng-model="lang.Selected">                                        {{lang.Name}}
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                            Export Formats
+                    </span>
+                            <div class="btn-group form-control" uib-dropdown auto-close="outsideClick" on-toggle="toggled(open)">
+                                <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+        {{selFormats}} <span class="caret"></span>
+      </button>
+
+                                <ul class="dropdown-menu menu-chk" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                    <li ng-repeat="format in currentProfile.AvailableExportFormats" role="menuitem">
+                                        <input type="checkbox" ng-change="selectFormat(format.Id)" ng-model="format.Selected">                                        {{format.Name}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="input-group" ng-show="showSaveProfilePanel">
+
+                    <span class="input-group-addon">
+                            New Profile Name
+                    </span>
+                    <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''" ><span class="glyphicon glyphicon-ok"></span></button>
+                    </span>
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
+                     </span>
+                       
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-info form-group">
+                        <div class="panel-heading">Languages</div>
+                        <div class="panel-body">
+
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages">
+                                    {{lang.Name}}
+                                    <div class="material-switch pull-right">
+                                        <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
+                                            checklist-change="imChanged()" />
+                                        <label for="{{lang.Name}}" class="label-success"></label>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Output Settings</div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="format in currentProfile.AvailableExportFormats">
+                                    {{format.Name}}
+                                    <div class="material-switch pull-right">
+                                        <input id="{{format.Name}}" type="checkbox" checklist-model="currentProfile.SelectedExportFormats" checklist-value="format"
+                                            checklist-comparator=".Id" checklist-change="imChanged()" />
+                                        <label for="{{format.Name}}" class="label-success"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">Recognize</button>
     </div>
+    <!--END PROFILES-->
+</div>
 
 </div>
 </div>

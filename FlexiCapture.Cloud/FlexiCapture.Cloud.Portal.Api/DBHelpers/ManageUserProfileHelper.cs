@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using FlexiCapture.Cloud.Portal.Api.DB;
 using System.Data.Entity;
+using System.Web.Script.Serialization;
+using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
@@ -180,6 +182,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.UserProfileExportFormats.Select(y=>y.ExportFormatsCatalog))
                         .Include(x => x.UserProfileLanguages.Select(y=>y.LanguagesCatalog))
                         .Include(x => x.UserProfilePrintTypes.Select(y=>y.PrintTypeCatalog))
+                        .Include(x=>x.UserProfileServiceDefault)
                         .FirstOrDefault(x => x.Id == profileId);
 
                     return profile;
@@ -214,7 +217,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         /// <summary>
         /// update user profile
         /// </summary>
-        public static void UpdateUserProfile(ManageUserProfileModel model)
+        public static string UpdateUserProfile(ManageUserProfileModel model)
         {
             try
             {
@@ -336,11 +339,120 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         #endregion
                     }
                 }
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                return serializer.Serialize(Helpers.ManageUserHelpers.ManageUserProfileHelper.GetToUserProfileById(model.Id));
+
+               
             }
             catch (Exception exception)
             {
+                return "";
             }
         }
         #endregion
+
+        public static string CreateNewProfile(NewProfileModel data)
+        {
+            try
+            {
+                ManageUserProfileModel model = new ManageUserProfileModel();
+
+                model.UserId = data.UserId;
+                model.Name = data.ProfileName;
+
+                using (var db = new FCCPortalEntities())
+                {
+                    UserProfiles profile = new UserProfiles();
+
+                    profile.UserId = model.UserId;
+                    profile.Deskew = model.Deskew;
+                    profile.RemoveGarbage = model.RemoveGarbage;
+                    profile.RemoveTexture = model.RemoveTexture;
+                    profile.SplitDualPage = model.SplitDualPage;
+                    profile.RotationTypeId = 1;
+                    profile.Resolution = model.Resolution;
+                    profile.JpegQuality = model.JpegQuality;
+                    profile.SpeedOcr = model.SpeedOcr;
+                    profile.AnalysisModeId = 1;
+                    profile.LookForBarcodes = model.LookForBarCodes;
+                    profile.Name = data.ProfileName;
+                    profile.CreationDateTime = DateTime.Now;
+
+                    db.UserProfiles.Add(profile);
+
+                    db.SaveChanges();
+                    model.Id = profile.Id;
+
+                    db.UserProfileLanguages.Add(new UserProfileLanguages() { LanguageId = 1, UserProfileId = model.Id });
+                    db.UserProfileExportFormats.Add(new UserProfileExportFormats() { ExportFormatId = 1, UserProfileId = model.Id });
+                    db.UserProfilePrintTypes.Add(new UserProfilePrintTypes() { PrintTypeId = 1, UserProfileId = model.Id });
+                    db.SaveChanges();
+                    
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    return serializer.Serialize(Helpers.ManageUserHelpers.ManageUserProfileHelper.GetToUserProfileById(model.Id));
+                }
+
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+
+        public static string CreateNewDefaultProfile(ManageUserProfileModel data)
+        {
+            try
+            {
+               
+
+                using (var db = new FCCPortalEntities())
+                {
+                    UserProfiles profile = new UserProfiles();
+
+                    profile.UserId = data.UserId;
+                    profile.Deskew = data.Deskew;
+                    profile.RemoveGarbage = data.RemoveGarbage;
+                    profile.RemoveTexture = data.RemoveTexture;
+                    profile.SplitDualPage = data.SplitDualPage;
+                    profile.RotationTypeId = 1;
+                    profile.Resolution = data.Resolution;
+                    profile.JpegQuality = data.JpegQuality;
+                    profile.SpeedOcr = data.SpeedOcr;
+                    profile.AnalysisModeId = 1;
+                    profile.LookForBarcodes = data.LookForBarCodes;
+                    profile.Name = data.Name;
+                    profile.CreationDateTime = DateTime.Now;
+
+                    db.UserProfiles.Add(profile);
+
+                    db.SaveChanges();
+                    data.Id = profile.Id;
+
+                    foreach (var selectedLanguage in data.SelectedLanguages)
+                    {
+                        db.UserProfileLanguages.Add(new UserProfileLanguages() { LanguageId = selectedLanguage.Id, UserProfileId = profile.Id });
+                        
+                    }
+
+                    foreach (var format in data.SelectedExportFormats)
+                    {
+                        db.UserProfileExportFormats.Add(new UserProfileExportFormats() { ExportFormatId = format.Id, UserProfileId =profile.Id });
+                        
+                    }
+                    
+                    
+                    db.UserProfilePrintTypes.Add(new UserProfilePrintTypes() { PrintTypeId = 1, UserProfileId = profile.Id });
+                    db.SaveChanges();
+
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    return serializer.Serialize(Helpers.ManageUserHelpers.ManageUserProfileHelper.GetToUserProfileById(profile.Id));
+                }
+
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
     }
 }

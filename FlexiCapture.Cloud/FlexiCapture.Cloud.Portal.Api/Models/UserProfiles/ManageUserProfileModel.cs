@@ -89,6 +89,11 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.UserProfiles
         public bool Deskew { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public int DefaultServiceId { get; set; }
+        
+        /// <summary>
         /// removee garbage
         /// </summary>
         public bool RemoveGarbage { get; set; }
@@ -148,6 +153,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.UserProfiles
         public bool LookForBarCodes { get; set; }
 
         #region availiable lists
+        /// <summary>
+        /// default profiles
+        /// </summary>
+        public List<ServiceDefaultProfileModel> ServiceDefaultProfiles { get; set; } 
         /// <summary>
         /// availiable langs
         /// </summary>

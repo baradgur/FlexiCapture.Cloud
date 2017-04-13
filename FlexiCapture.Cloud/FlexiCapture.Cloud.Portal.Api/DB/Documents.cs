@@ -25,9 +25,11 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public int DocumentStateId { get; set; }
         public int DocumentTypeId { get; set; }
         public string Hash { get; set; }
+        public Nullable<int> DocumentCategoryId { get; set; }
     
         public virtual DocumentStates DocumentStates { get; set; }
         public virtual DocumentTypes DocumentTypes { get; set; }
         public virtual Tasks Tasks { get; set; }
+        public virtual DocumentCategories DocumentCategories { get; set; }
     }
 }

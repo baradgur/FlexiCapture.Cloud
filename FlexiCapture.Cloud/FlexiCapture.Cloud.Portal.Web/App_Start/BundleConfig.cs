@@ -42,7 +42,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Content/bootstrap-table.css",
                 "~/Content/lightbox.css",
                 "~/Scripts/chat/chat.css",
-                "~/Content/chat_list.css"
+                "~/Content/chat_list.css",
+                "~/Content/chk-multi-select.css"
                 //"~/Content/bootstrap-datetimepicker.min.css"
                 ));
 
@@ -67,7 +68,10 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/angular-spinner.js",
                 "~/Scripts/ui-bootstrap-tpls-2.1.3.min.js",
                 "~/Scripts/notifier.js",
-                "~/Scripts/mask.js"
+                "~/Scripts/mask.js",
+                "~/Scripts/angularjs-dropdown-multiselect.min.js",
+                "~/Scripts/chk-multi-select.js"
+                //angularjs-dropdown-multiselect.min.js
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/fccApp").Include(

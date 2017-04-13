@@ -57,5 +57,29 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
             }
         }
+
+        /// <summary>
+        /// update task state
+        /// </summary>
+        public static void UpdateTaskProfile(int taskId, string profileContent)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities())
+                {
+                    Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
+
+                    if (task != null)
+                    {
+                        task.ProfileContent = profileContent;
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
     }
 }

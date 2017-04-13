@@ -19,7 +19,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         /// add document to database
         /// </summary>
         /// <returns></returns>
-        public static int AddDocument(int taskId, HttpPostedFile file, Guid guid, string gFileName,string path, string md5)
+        public static int AddDocument(int taskId, HttpPostedFile file, Guid guid, string gFileName,string path, string md5, int categoryId)
         {
             try
             {
@@ -36,7 +36,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         Guid = guid,
                         Path = path,
                         OriginalFileName = file.FileName,
-                        TaskId = taskId
+                        TaskId = taskId,
+                        DocumentCategoryId = categoryId
                         
 
                     };
@@ -103,6 +104,33 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             catch (Exception)
             {
                 return "";
+            }
+        }
+
+        /// <summary>
+        /// get to all documents by user id and service id
+        /// </summary>
+        /// <returns></returns>
+        public static List<Documents> GetDocumentsByTaskId(int taskId)
+        {
+            try
+            {
+                List<DocumentModel> models = new List<DocumentModel>();
+
+                using (var db = new FCCPortalEntities())
+                {
+                    List<Documents> documents = db.Documents
+                        .Include(x => x.DocumentStates)
+                        .Include(x => x.DocumentTypes)
+                        .Include(x => x.Tasks)
+                        .Include(x => x.Tasks)
+                        .Where(x => x.Tasks.Id == taskId).ToList();
+                    return documents;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

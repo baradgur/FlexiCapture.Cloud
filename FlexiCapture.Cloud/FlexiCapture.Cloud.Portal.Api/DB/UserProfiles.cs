@@ -19,6 +19,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
             this.UserProfileExportFormats = new HashSet<UserProfileExportFormats>();
             this.UserProfileLanguages = new HashSet<UserProfileLanguages>();
             this.UserProfilePrintTypes = new HashSet<UserProfilePrintTypes>();
+            this.UserProfileServiceDefault = new HashSet<UserProfileServiceDefault>();
         }
     
         public int Id { get; set; }
@@ -43,5 +44,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual ICollection<UserProfileLanguages> UserProfileLanguages { get; set; }
         public virtual ICollection<UserProfilePrintTypes> UserProfilePrintTypes { get; set; }
         public virtual Users Users { get; set; }
+        public virtual ICollection<UserProfileServiceDefault> UserProfileServiceDefault { get; set; }
     }
 }

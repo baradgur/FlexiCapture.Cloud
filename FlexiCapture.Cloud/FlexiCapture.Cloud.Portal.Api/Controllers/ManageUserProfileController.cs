@@ -18,10 +18,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // GET api/manageuserprofile/5
-        public string Get(int profileId)
+        public string Get(int profileId, int serviceId)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            return serializer.Serialize(ManageUserProfileHelper.GetToUserProfileById(profileId));
+            return serializer.Serialize(ManageUserProfileHelper.GetToUserProfileById(profileId,serviceId));
         }
 
        

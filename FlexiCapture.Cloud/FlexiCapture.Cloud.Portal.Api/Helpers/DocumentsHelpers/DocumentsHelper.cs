@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Hosting;
+using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
+using FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
 {
@@ -15,7 +19,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
         /// <summary>
         ///     process files
         /// </summary>
-        public static bool ProcessFile(int userId, int serviceId, HttpPostedFile file)
+        public static bool ProcessFile(int userId, int serviceId, ManageUserProfileModel profile, HttpPostedFile file,string s)
         {
             try
             {
@@ -44,7 +48,11 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
                 var md5 = MD5Helper.GetMD5HashFromFile(uploadPath);
                 //add document
                 var documentId = DBHelpers.DocumentsHelper.AddDocument(taskId, file, newNameGuid, uploadName, localName,
-                    md5);
+                    md5,1);
+
+                List<Documents> documents = DBHelpers.DocumentsHelper.GetDocumentsByTaskId(taskId);
+                string content = ProfileToRequestModelConverter.ConvertProfileToRequestModel(documents, profile);
+                TasksHelper.UpdateTaskProfile(taskId, content);
 
                 return true;
             }

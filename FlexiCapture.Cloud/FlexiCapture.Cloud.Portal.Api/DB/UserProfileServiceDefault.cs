@@ -12,23 +12,13 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Tasks
+    public partial class UserProfileServiceDefault
     {
-        public Tasks()
-        {
-            this.Documents = new HashSet<Documents>();
-        }
-    
         public int Id { get; set; }
-        public System.DateTime CreationDate { get; set; }
-        public int TaskStateId { get; set; }
-        public int UserId { get; set; }
-        public int ServiceId { get; set; }
-        public string ProfileContent { get; set; }
+        public int UserProfileId { get; set; }
+        public int ServiceTypeId { get; set; }
     
-        public virtual ICollection<Documents> Documents { get; set; }
         public virtual ServiceTypes ServiceTypes { get; set; }
-        public virtual TaskStates TaskStates { get; set; }
-        public virtual Users Users { get; set; }
+        public virtual UserProfiles UserProfiles { get; set; }
     }
 }
