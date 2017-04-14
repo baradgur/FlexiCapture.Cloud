@@ -72,7 +72,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.DocumentTypes)
                         .Include(x => x.Tasks)
                         .Include(x=>x.Tasks)
-                        .Where(x => x.Tasks.UserId == userId && x.Tasks.ServiceId == serviceId).ToList();
+                        .Where(x => x.Tasks.UserId == userId && x.Tasks.ServiceId == serviceId && x.DocumentCategoryId==1).ToList();
 
                     foreach (var document in documents)
                     {
@@ -91,13 +91,44 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             Url = document.Path
                             
                         };
+
+
+                        List<Documents> resultDocs = db.Documents
+                       .Include(x => x.DocumentStates)
+                       .Include(x => x.DocumentTypes)
+                       .Include(x => x.Tasks)
+                       .Include(x => x.Tasks)
+                       .Where(x => x.Tasks.UserId == userId && x.TaskId==document.TaskId && x.Tasks.ServiceId == serviceId && x.DocumentCategoryId == 2).ToList();
+                        foreach (var rDocument in resultDocs)
+                        {
+                            DocumentModel rModel = new DocumentModel()
+                            {
+                                Id = document.Id,
+                                DateTime = rDocument.Date.ToString(),
+                                FileSizeBytes = rDocument.FileSize,
+                                OriginalFileName = rDocument.OriginalFileName,
+                                FileSize = Math.Round((double)(rDocument.FileSize) / (1024 * 1024), 2),
+                                StateName = rDocument.DocumentStates.Name,
+                                StateId = rDocument.DocumentStateId,
+                                TaskId = rDocument.TaskId.ToString(),
+                                TypeId = rDocument.DocumentTypeId,
+                                TypeName = rDocument.DocumentTypes.Name,
+                                Url = rDocument.Path
+
+                            };
+                            rModel.Url = baseUrl + "/" + rModel.Url;
+                            model.ResultDocuments.Add(rModel);
+                        }
+
                         //этот момент переделать, чтобы не давать полный адрес к файлу
                         model.Url = baseUrl +"/"+ model.Url;
+                        
                         models.Add(model);
 
                     }
                 }
 
+                models = models.OrderByDescending(x => x.Id).ToList();
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(models);
             }

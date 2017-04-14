@@ -4,12 +4,25 @@ fccApp.service('documentsHttpService', function () {
         var dElement = {};
         dElement.Id = document.Id;
         dElement.taskId = document.TaskId;
-        dElement.dateTime =document.DateTime;
+        dElement.dateTime = document.DateTime;
         dElement.fileSize = document.FileSize;
         dElement.fileName = document.OriginalFileName;
         dElement.stateName = document.StateName;
         dElement.typeName = document.TypeName;
-        dElement.href ="<a href ='"+ document.Url+"'  download='"+document.OriginalFileName+"'>link</a>";
+        dElement.href = "<a href ='" + document.Url + "'  download='" + document.OriginalFileName + "'>Original File</a>";
+
+        var link = "";
+        for (i = 0; i < document.ResultDocuments.length; i++) {
+            var doc = document.ResultDocuments[i];
+
+            var type = doc.TypeName;
+            var origFilename = doc.OriginalFileName;
+            var url = doc.Url;
+            link += "<p><a href='" + url + "' download='" + origFilename + "'>" + type + "</a></p>"
+
+        }
+        dElement.results = link;
+
         return dElement;
     }
 
@@ -22,15 +35,15 @@ fccApp.service('documentsHttpService', function () {
         $http.get(url, {
             params: { userId: $scope.userData.UserData.Id, serviceId: $scope.serviceStateId }
         }).then(function (response) {
-            var docs =[]
+            var docs = []
             docs = JSON.parse(response.data);
-            for (i = 0; i < docs.length; i++) {
-                 var document = {};
-                 document = docs[i];
-                 $scope.documents.push(document);
+            for (var i = 0; i < docs.length; i++) {
+                var document = {};
+                document = docs[i];
+                $scope.documents.push(document);
                 // $scope.loading = true;
-                 var dElement = addData(document);
-                 data.push(dElement);
+                var dElement = addData(document);
+                data.push(dElement);
             }
 
 
@@ -58,6 +71,27 @@ fccApp.service('documentsHttpService', function () {
             usSpinnerService.stop('spinner-1');
             $scope.loading = false;
             window.scope = $scope;
+        });
+    }
+
+
+    this.getToDocumentsSilent = function ($http, $scope, $state, data, url, usSpinnerService) {
+        $scope.documents = [];
+        $http.get(url, {
+            params: { userId: $scope.userData.UserData.Id, serviceId: $scope.serviceStateId }
+        }).then(function (response) {
+            var docs = [];
+            data =[];
+            docs = JSON.parse(response.data);
+            for (var i = 0; i < docs.length; i++) {
+                var document = {};
+                document = docs[i];
+                $scope.documents.push(document);
+                // $scope.loading = true;
+                var dElement = addData(document);
+                data.push(dElement);
+            }
+            $('#table').bootstrapTable('load', data);
         });
     }
 

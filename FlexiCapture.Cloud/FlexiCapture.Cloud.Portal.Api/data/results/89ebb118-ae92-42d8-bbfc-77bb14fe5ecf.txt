@@ -1,0 +1,429 @@
+AOrOBOPN 15122016/1
+
+Ha pa3pa6oTKy nporpaMMHoro o6ecneHeHJw
+
+i-.Mhhck                     15 AeKa6pa 2016 r.
+
+WiseTREND b jnm.e Ilya Evdokimov h ^auumm,
+AencTByiomero Ha ocHOBaHHH WiseTREND HMeHyeMoe b
+AajibHenmeM "3aKa3HHK", c oahoh ctopohm h nacTHoe
+yHHTapHoe npe/nipHaTHe «HeTBHKC» b jnme AHpeieropa
+XBeAbKOBHna AjieKcanupa CTenaHOBiraa AeHCTBywmero Ha
+ocHOBaHHH     YcTaBa,      HMeHyeMoe     b     AajibHeraiieM
+
+"HCHOJIHHTejIb", C APyrOH CTOpOHbl, 3aKjHOHHJIH HaCTOHIHHH
+
+AoroBop o HH5KecneAyiomeM:
+l.IIpeAMeTfloroBopa
+
+1.1. B cooTBeTCTBHH c ycjiOBHaMH Hacroamero AoroBopa
+HcnojiHHTejn, Ha ocHOBaHHH 3aKa30B 3aKa3HHKa
+pa3pa6aTbiBaeT nporpaMMHoe o6ecneHeHne (aajiee - nO) h
+npeAOCTaBjuieT 3aica3HHKy HCKjnoHHTejibHbie npaBa Ha
+Hcnojib30BaHne 3Toro no b jho6oh (JiopMe h jno6biM
+choco6om, a 3aKa3HHK o6a3yeTca onjianHBaTb
+pa3pa6oTKy          110    b    nopa/pce    h    Ha    ycnoBHax,
+
+npeAycMOTpeHHbix HacToanniM A°r0B0P0M-
+
+2.  06a3aHHOCTH cropoH.
+
+2.1.  3aKa3HHKo6a3yeTca:
+
+2.1.1. BMecTe c 3aKa30M Ha pa3pa6oTKy no nepeaaBaTb
+HcnojiHHTejuo hctko cftopMyjinpoBaHHoe     TexmraecKoe
+
+3aHaHHe, B KOTOpOM yKa3bIBaTb, B HaCTHOCTH, Tpe60BaHH3 K
+
+pa3pa6aTbiBaeMOMy no, uejin pa3pa6oTKH aaHHoro no h
+Apyryio mnJiopMaimio, Heo6xoflHMyio HcnojiHHTejuo fljm
+pa3pa6oTKHnO.
+
+2.1.2.  OnjiaHHBaTb pa3pa6oTKy no b cooTBeTCTBHH c
+ycnoBHHMH HacToamero aoroBopa.
+
+2.1.3.  CBoeBpeMeHHO coraacoBbiBaTb c HcnojiHHTejieM
+H3MeHeHHa coflep5KaHHH TexHHHecKoro 3anaHHa.
+
+2.1.4.  Co6inoAaTb jnwHbie HenMymecTBeHHbie npaBa Ha
+
+no.
+
+2.2. HcnojiHHTejib o6a3yeTca:
+
+2.2.1. Pa3pa6aTbiBaTb no ajih 3aKa3HHKa b cooTBeTCTBHH
+c    HacToaiiniM   AoroBopoM    b    cpoKH,    corjiacoBaHHbie
+
+AOnOJIHHTejIbHblMH COrjiaHieHHaMH B Ka>KAOM KOHKpeTHOM
+
+cnynae.
+
+2.2.2.  HHiJiopMHpoBaTb 3aKa3HHKa b pasyMHbra cpoK 060
+Bcex o6cToaTejn>CTBax, bjihjhoihhx Ha H3MeHeHne cpoKa
+pa3pa6oTKHnO.
+
+2.2.3.  no Tpe6oBaHjno 3aKa3HHKa HHiJiopMHpoBaTb ero o
+xoae pa3pa6oTKH no.
+
+2.3.     Ctopohm     o6a3yiOTca     co6jnoflaTb
+
+KOHlJfflAeHHHajIbHOCTb HH(J)OpMaHHH, HOJiyHCHHOH HMH flpyr
+
+ot Apyra.
+
+3. nop>woK pa3pa6oTim no
+
+3.1. Pa3pa6oTKa no b Ka>KHOM KOHicpeTHOM cnynae
+
+np0H3B0AHTC3         nCnOJIHHTejieM         Ha         OCHOBaHHH
+
+cooTBeTCTByiomero 3aKa3a 3aica3HHKa c npHjioiceHHbiM k
+HeMy TexHHHecimM 3anamieM.
+
+CONTRACT N 15122016/1
+for software development
+
+Minsk                  December 15,2016
+
+WiseTREND in the person of Ilya Evdokimov,
+acting under the WiseTREND hereinafter referred
+to as "Customer", on the one hand, and private
+unitary enterprise "Netvix" in the person of
+Khviadzkovich Aliaksandr acting under the
+Charter, hereinafter referred to as "Contractor", on
+the other hand, concluded the following agreement:
+
+1. Subject of a contract
+
+1.1. According to the terms of this contract and
+on the basis of Customer orders the Contractor
+develops software (abbreviated as SW) and
+provides the Customer with exclusive rights to use
+this software in any form and by all means, and the
+Customer agrees to pay for software development
+on the terms and conditions provided by this
+Contract.
+
+2. Obligations of the parties.
+
+2.1. The Customer shall:
+
+2.1.1. transfer to the Contractor both the Order
+for software development and attached explicit
+Specification, which specify, inter alia, software
+requirements, the purpose of developing the
+software and other information needed for software
+development by the Contractor.
+
+2.1.2. pay for software development in accordance
+with       the       terms       of       this       contract.
+
+2.1.3. timely coordinate changes to the content of
+Specification with the Contractor.
+
+2.1.4.   respect   moral   rights   to   the   software.
+2.2. The Contractor shall:
+
+2.2.1. develop software for the Customer in
+accordance with this contract and in timelines
+agreed by additional agreements in each case.
+
+2.2.2.   inform the Customer of all the
+circumstances affecting the change of software
+development timeline within a reasonable time.
+
+2.2.3.  inform the Customer of software
+development progress at his request.
+
+2.3. The parties shall respect the confidentiality
+of information received from each other.
+
+3. The procedure of software development
+
+3.1.   In   each   case   software   development   is
+performed   by   the   Contractor   on   the   basis   of   the
+
+3.2. OaKT BbinojiHeHHH pa6oT no HacToanjeMy ^oroBopy
+noATBep5KAaeTca Aktom npneMa-nepeaaHn BbinojiHeHHbix
+pa6oT, noAnncbiBaeMbiM CTopoHaMH no okohh3hhh
+BbinojiHeHHa pa6oT h aBjunonniMca ocHOBamieM mm
+pacneTOB.
+
+4. Ycjiobjw onjiaTbi
+
+relevant     Customer      order     with     attached
+
+Specification.
+
+3.2. Under this contract the fact of accomplishing
+the works is confirmed by Acceptance protocol
+being signed by the parties after finishing the
+works, the protocol is the basis for calculations.
+
+4.1. Pa3pa6oTKa no onjiannBaeTca 3aKa3HHKOM b TeneHne
+5 AHen nocne noflnncaHiui aKTa npneMa-nepeaaHn.
+
+4.2. OnnaTa ocymecTBjraeTca b ^ojurapax CIIIA n
+npoH3BOAHTca nyTeM 6aHKOBCKoro nepeBO^a co cneTa
+3aKa3HHKa Ha cneT HcnojiHHTejia Ha ocHOBaHHH aaHHoro
+AoroBopa h aKTa.
+
+5. npaBa Ha no
+
+5.1. HcKjuoHHTejibHbie npaBa no ncnojrb30BaHjno no b
+nenoM n jho6oh ero nacTn npnHanjie>KaT 3aKa3HHicy c
+MOMeHTa C03AaHJw no jih6o ero cooTBeTCTBywmen Hacra.
+
+5.2. ncnojiHHTejn, He HMeeT npaBa ncnojn>30BaTb no (ero
+HCXOflHblH TeKCT JIH60 06"beKTHbffl koa) b nejiOM h jno6yio
+ero nacTb KpoMe KaK ajih co3flaHHa /jpyroro no 3aKa3HHica.
+
+5.3.   JlHHHbie   HeHMynjecTBeHHbie   npaBa  Ha  no
+npHHanne5KaT (J)H3HHecKHM jinijaM, Tpy^OM KOTopbix no
+
+C03flaHO.
+
+6.  OTBeTCTBeHHOCTb CTOPOH
+
+6.1.  3a HencnojiHeHHe nun HeHanjie>Kamee ncnojiHeHHe
+o6a3aTejibCTB no HacToameMy ^oroBopy Kaa^aa H3 ctopoh
+HeceT OTBeTCTBeHHOCTb b pa3Mepe npnHHHeHHbix Apyron
+
+CTOpOHe y6bITKOB.
+
+6.2.  3a Kaambin aera. npocpoHKH c^ann pa3pa6oTaHHoro
+no 3aKa3HHKy HcnojiHHTejib BbinjiannBaeT 3aKa3HHKy
+nemo b pa3Mepe 0.15% ot ctohmocth pa3pa6oTKH ^aHHoro
+
+no.
+
+6.3.  3a HecBoeBpeMeHHyio onjiaTy BbinojraeHHon pa6oTbi
+ncnojiHHTejuo 3aKa3HHK BbinjiannBaeT HcnojTHHTejuo
+HeycTOHKy b pa3Mepe 0.15% HeBbinjianeHHon cyMMbi 3a
+Kaambin KajiennapHbiH aera. npocpoHKH.
+
+6.4. CTopoHa, AonycTHBmaa HencnojraeHne
+jth6o HeHanne5Kaniee ncnojraeHne o6a3aTenbCTB no
+HacToameMy           AoroBopy           ocBo6o>KflaeTca          ot
+
+OTBeTCTBeHHOCTH, eCJIH ROKcDKST, HTO TaKoe HeHCnOJTHeHHe
+
+jth6o HeHanne5Kaniee ncnojraeHne 6bino BbmaHO
+o6cToaTejibCTBaMH HenpeoaojinMon chjim, to ecTb
+Hpe3BbraanHbiMH h HenpeAOTBparnMbiMH npn ^aHHbix
+ycjiOBJiax o6cToaTejrbCTBaMH.
+
+7. nop>moK pa3pemeHHH cnopoB
+
+7.1. Bee cnopbi n pa3Horjiacnji, BbrreicaiomHe H3
+HacToanjero ^oroBopa, pemaiOTca nyTeM neperoBopoB.
+
+7.2. npn HeaocTiDKeHHH corjiacna MOic^y CTopoHaMH cnop
+paccMaTpnBaeTca b xo3JiHCTBeHHOM cyae ropoaa MnHCKa.
+
+8. nponne ycjiOBJia
+
+4. Terms of payment
+
+4.1. Software development is paid by the
+Customer within 5 days after signing the
+Acceptance protocol.
+
+4.2. Payment is made in USD by means of a
+bank transfer from Customer account to Contractor
+account under this contract and acceptance
+protocol.
+
+5. Rights to software
+
+5.1. Exclusive rights to use software - both a
+whole and its any part - belong to the Customer
+from the time of software (or its relevant part)
+creation.
+
+5.2.  The Contractor has no right to use the
+software (its source code or object code) as a whole
+and any its part, except for creating another
+software for the Customer.
+
+5.3.  Moral rights to the Software belong to
+individuals, by which the Software was created.
+
+6. Responsibility of the parties
+
+6.1.  Each party shall be liable to the amount of
+damages, caused to the other party, for any failure
+to perform the obligations under this Contract.
+
+6.2. The Contractor shall pay to the Customer a
+penalty in the amount of 0.15% of the Software
+development cost for each day of delay in delivery
+of the developed software.
+
+6.3. The Customer shall pay to the Contractor a
+forfeit for late payment of performed work in the
+amount of 0.15% of unpaid sum for each calendar
+day of delay.
+
+6.4. The party, assumed any failure to perform the
+obligations under this Contract, shall be exempt
+from liability if it proves that such failure or
+improper performance was caused by force
+majeure, i.e. extraordinary and unavoidable
+circumstances under the given conditions.
+
+7. Settlement of disputes
+
+7.1.  All  disputes and differences arising from
+this    Contract    shall    be    resolved    through
+
+negotiations.
+
+8.1. H3MeHeHiw n AonojiHeHHa b HacToamnn AoroBop
+BHOcaTca nyTeM noflnncaHHH CTopoHaMH cooTBeTCTByioinnx
+AonojranTejibHbix corjiaraeHHH.
+
+8.2. Bee npe^niecTByioniHe neperoBopbi n nepenncKa no
+npeflMeTy AorOBOPa yTpannBaiOT cnjry c MOMenra
+noAnncaHHa ^oroBopa.
+
+8.3. HacToanniH AoroBop cocTaBjieH b 2 (^Byx)
+3K3eMnjiapax Ha 3 (Tpex) crpaHHiiax Ha pyccKOM n
+aHrjinncKOM a3bmax, no o^HOMy 3K3eMnjiapy ajih Ka^on n3
+ctopoh, o6a 3K3eMnjiapa hmciot oflHHaKOByio cnjry.
+
+8.4.   Ctopohm   npn3HaiOT   lopnAHHecKyio   cnjry
+
+(JiaKCHMHJIbHOH    KOnHH    ^OrOBOpa    H    HHblX   flOKyMeHTOB,
+
+HanpaBjieHHbix Ha ncnojraeHne HacToainero A°r0B0Pa-
+
+9. BaHKOBCKne peKBH3HTbi n anpeca ctopoh
+
+HCnOUHHTEJlb
+
+^acTHoe yHHTapHoe npeflirpnflTHe «HeTBHKC»
+
+yffll: 191773758
+
+Anpec: yji. TnMnpa3eBa, a.67,
+
+o<J)hc 1408, 220035,
+
+Mhhck, Pecny6jinKa Bejiapycb
+
+BaHKOBCKne peKBronTbi:
+
+p/c..Nb 3012035121018,
+
+3AO"nneaEaHK"
+
+Pecny6jiHKa Bejiapycb, 220034, r.MnHCK,
+
+yji. 3.B>myjra, a. 11.
+
+‘IDEA BANK’, Minsk, BY, SWIFT: SOMABY22
+
+acc. 30111840600000000683
+
+b PAO ‘SBERBANK’, Moscow, RU
+
+SWIFT: SABRRUMM (Intermediate Bank - Deutsche Bank
+
+Trust   Company   Americas,   New  York,   USA,   SWIFT:
+
+BKTRUS33)
+
+WiseTREND
+
+Name: Ilya Evdokimov
+
+Phone: +1 510-754-9866
+
+Address: 971 Southgate Ave, Daly City, CA. USA
+
+Bank: Wells Fargo
+
+Address: 34988 Newark Blvd, Newark, CA, 94560
+
+Phone: +1 510-792-3301
+
+noanncH ctopoh:
+
+"15" AeKa6pa 2016 r.     "15"fleKa6pa 2016 r.
+
+7.2. If no agreement is reached between the
+parties, the dispute is considered in the economic
+court of Minsk.
+
+8. Other Conditions
+
+8.1. Changes and additions to this Contract shall
+be made through signing the relevant additional
+agreements by the parties.
+
+8.2. All previous negotiations and
+correspondence on the subject of the Contract shall
+become invalid since the signing the Contract.
+
+8.3. This Contract is executed in 2 (two) copies
+with 3 (three) pages in Russian and English, one
+copy for each party, both copies being equally
+authentic.
+
+8.4. The parties recognize the validity of facsimile
+copies of the Contract and any other documents
+aimed at the implementation of this Contract.
+
+9. Bank details and addresses of the parties
+
+CONTRACTOR
+
+Private unitary enterprise "Netvix"
+
+UNP: 191773758
+
+Address:   67,   Timiryazeva   Str.,   office   1408,
+
+220035, Minsk, Republic of Belarus
+
+Bank details:
+
+Ace. JN° 3012035121018,
+
+JSC “Idea Bank”,
+
+11, Z. Byaduli Str., Minsk, Republic of Belarus
+
+‘IDEA BANK’, Minsk, BY, SWIFT: SOMABY22
+
+acc. 30111840600000000683
+
+b PAO ‘SBERBANK’, Moscow, RU
+
+SWIFT:   SABRRUMM   (Intermediate   Bank   -
+
+Deutsche Bank Trust Company Americas, New
+
+York, USA, SWIFT: BKTRUS33)
+
+WiseTREND
+
+Name: Ilya Evdokimov
+
+Phone: +1 510-754-9866
+
+Address: 971 Southgate Ave, Daly City, CA. USA
+
+Bank: Wells Fargo
+
+Address: 34988 Newark Blvd,
+
+Newark, CA, 94560
+
+Phone: +1 510-792-3301
+
+Signatures of parties:     "ya Evdok,mov
+December, 15 2016 December, 15 2016
+
+

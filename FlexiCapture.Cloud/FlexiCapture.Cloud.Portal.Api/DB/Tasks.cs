@@ -25,6 +25,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public int UserId { get; set; }
         public int ServiceId { get; set; }
         public string ProfileContent { get; set; }
+        public string ResponseContent { get; set; }
     
         public virtual ICollection<Documents> Documents { get; set; }
         public virtual ServiceTypes ServiceTypes { get; set; }

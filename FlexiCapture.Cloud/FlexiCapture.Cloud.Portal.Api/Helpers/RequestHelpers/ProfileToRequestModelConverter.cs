@@ -55,15 +55,27 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers
                 };
 
                 string printTypes = "";
+                int counter = 0;
                 foreach (var selectedPrintType in profile.SelectedPrintTypes)
                 {
-                    printTypes += selectedPrintType.Name + ";";
+                    printTypes += selectedPrintType.Name ;
+                    counter++;
+                    if (counter < profile.SelectedPrintTypes.Count)
+                    {
+                        printTypes += ";";
+                    }
                 }
-
+                
                 string languages = "";
+                counter = 0;
                 foreach (var selectedLanguages in profile.SelectedLanguages)
                 {
-                    languages += selectedLanguages.Name + ";";
+                    languages += selectedLanguages.Name ;
+                    counter++;
+                    if (counter < profile.SelectedLanguages.Count)
+                    {
+                        languages += ";";
+                    }
                 }
 
                 requestModel.OcrSettings = new OcrSettingsModel()
@@ -76,10 +88,17 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers
                 };
 
                 string exportFormats = "";
+                counter = 0;
                 foreach (var exportFormat in profile.SelectedExportFormats)
                 {
-                    exportFormats += exportFormat.Name + ";";
+                    exportFormats += exportFormat.Name;
+                    counter++;
+                    if (counter < profile.SelectedExportFormats.Count)
+                    {
+                        exportFormats += ";";
+                    }
                 }
+
                 requestModel.OutputSettings = new OutputSettingsModel()
                 {
                     ExportFormat = exportFormats

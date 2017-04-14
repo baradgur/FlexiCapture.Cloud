@@ -14,7 +14,7 @@ namespace FlexiCapture.Cloud.OCR.Assist.Helpers
         /// <summary>
         /// make post request
         /// </summary>
-        public static void MakePostRequest(string url, string json)
+        public static string MakePostRequest(string url, string json)
         {
             try
             {
@@ -33,10 +33,12 @@ namespace FlexiCapture.Cloud.OCR.Assist.Helpers
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
+                    return result;
                 }
             }
             catch (Exception exception)
             {
+                return "";
             }
         }
 
@@ -66,7 +68,7 @@ namespace FlexiCapture.Cloud.OCR.Assist.Helpers
         /// </summary>
         /// <param name="url"></param>
         /// <param name="downloadPath"></param>
-        public static void DownloadFile(string url, string downloadPath)
+        public static void DownloadFile(string url, string downloadPath, ref string error)
         {
             try
             {
@@ -74,9 +76,14 @@ namespace FlexiCapture.Cloud.OCR.Assist.Helpers
                 {
                     client.DownloadFile(url, downloadPath);
                 }
+                error = "";
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string exc = exception.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                error = "Exception: " + exc + "; Inner Exception: " + innerException + "; Method Name: " + methodName;
             }
         }
     }

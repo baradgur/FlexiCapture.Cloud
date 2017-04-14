@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.OCR.Assi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.OCR.AssistTester", "FlexiCapture.Cloud.OCR.AssistTester\FlexiCapture.Cloud.OCR.AssistTester.csproj", "{1A96663E-683A-44CA-928A-53657E2B0C2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.SingleFileConversionService", "FlexiCapture.Cloud.SingleFileConversionService\FlexiCapture.Cloud.SingleFileConversionService.csproj", "{65ED42C5-C70C-4B8C-8861-83588414A37C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.ServiceAssist", "FlexiCapture.Cloud.ServiceAssist\FlexiCapture.Cloud.ServiceAssist.csproj", "{C1E88B07-11E1-4421-8577-818DD384B5EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{1A96663E-683A-44CA-928A-53657E2B0C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A96663E-683A-44CA-928A-53657E2B0C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A96663E-683A-44CA-928A-53657E2B0C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65ED42C5-C70C-4B8C-8861-83588414A37C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65ED42C5-C70C-4B8C-8861-83588414A37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65ED42C5-C70C-4B8C-8861-83588414A37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65ED42C5-C70C-4B8C-8861-83588414A37C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1E88B07-11E1-4421-8577-818DD384B5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E88B07-11E1-4421-8577-818DD384B5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E88B07-11E1-4421-8577-818DD384B5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E88B07-11E1-4421-8577-818DD384B5EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -108,7 +108,7 @@ namespace FlexiCapture.Cloud.OCR.AssistTester
 
                     string downloadPath = Path.Combine(downloadDir, sName);
 
-                    processor.DownloadFile(file.Uri,downloadPath);
+                 //   processor.DownloadFile(file.Uri,downloadPath);
                 }
                 //string outReq = JsonConvert.SerializeObject(model);
                 Console.ReadKey();

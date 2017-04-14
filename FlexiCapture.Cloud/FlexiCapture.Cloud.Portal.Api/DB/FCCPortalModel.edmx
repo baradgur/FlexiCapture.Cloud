@@ -123,6 +123,7 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="ServiceId" Type="int" Nullable="false" />
           <Property Name="ProfileContent" Type="nvarchar(max)" />
+          <Property Name="ResponseContent" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -807,6 +808,7 @@
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
           <Property Name="ProfileContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ResponseContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -1519,6 +1521,7 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="FCCPortalModel.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
+                <ScalarProperty Name="ResponseContent" ColumnName="ResponseContent" />
                 <ScalarProperty Name="ProfileContent" ColumnName="ProfileContent" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
