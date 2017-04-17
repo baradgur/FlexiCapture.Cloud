@@ -49,8 +49,16 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
                 var hfc = HttpContext.Current.Request.Files;
                 if (hfc.Count > 0)
                 {
-                    var file = hfc[0];
-                    Helpers.DocumentsHelpers.DocumentsHelper.ProcessFile(userId, serviceId,model, file, sProfile);
+                        
+                    //foreach (HttpPostedFile file in hfc)
+                    for (int i = 0; i < hfc.Count; i++)
+                    {
+                        var file = hfc[i];
+
+                        Helpers.DocumentsHelpers.DocumentsHelper.ProcessFile(userId, serviceId, model, file, sProfile);
+                        
+                    }
+                    //var file = hfc[0];
                     return Ok("File Upload Completely");
                 }
                 return BadRequest("No files");

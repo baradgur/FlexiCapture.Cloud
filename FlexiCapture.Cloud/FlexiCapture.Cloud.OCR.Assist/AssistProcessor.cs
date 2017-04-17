@@ -13,14 +13,20 @@ namespace FlexiCapture.Cloud.OCR.Assist
         /// <summary>
         /// make ocr
         /// </summary>
-        public string MakeOcr(string url, string json)
+        public string MakeOcr(string url, string json,ref string error)
         {
             try
             {
-                return PostHelper.MakePostRequest(url,json);
+                return PostHelper.MakePostRequest(url,json,ref error);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                 string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+
+                error = "Method Name: " + methodName + "Exception: " + exception.Message + " Inner exception:" +
+                        innerException;
+
                 return "";
             }
         }

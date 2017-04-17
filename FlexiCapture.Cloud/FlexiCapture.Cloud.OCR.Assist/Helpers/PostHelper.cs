@@ -14,7 +14,7 @@ namespace FlexiCapture.Cloud.OCR.Assist.Helpers
         /// <summary>
         /// make post request
         /// </summary>
-        public static string MakePostRequest(string url, string json)
+        public static string MakePostRequest(string url, string json, ref string error)
         {
             try
             {
@@ -35,9 +35,15 @@ namespace FlexiCapture.Cloud.OCR.Assist.Helpers
                     var result = streamReader.ReadToEnd();
                     return result;
                 }
+                error = "";
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+
+                error = "Method Name: " + methodName + "Exception: " + exception.Message + " Inner exception:" +
+                        innerException;
                 return "";
             }
         }

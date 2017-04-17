@@ -27,7 +27,16 @@ namespace FlexiCapture.Cloud.SingleFileConversionService.Helpers.TasksHelpers
 
                 string url = serviceAssist.GetSettingValueByName("ApiUrl");
                 string json = task.ProfileContent;
-                string response =assist.MakeOcr(url,json);
+                string error = "";
+                string response = assist.MakeOcr(url, json, ref error);
+                if (string.IsNullOrEmpty(response))
+                {
+                    LogHelper.AddLog(error);
+                    serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+                    serviceAssist.UpdateTaskState(task.Id, 4);
+                    return;
+                }
+
                 OcrResponseModel model = new OcrResponseModel();
                 serviceAssist.UpdateTaskReponseContent(task.Id,response);
                 model =  JsonConvert.DeserializeObject<OcrResponseModel>(response);

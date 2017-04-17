@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.SingleFi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.ServiceAssist", "FlexiCapture.Cloud.ServiceAssist\FlexiCapture.Cloud.ServiceAssist.csproj", "{C1E88B07-11E1-4421-8577-818DD384B5EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.BatchFileConversionService", "FlexiCapture.Cloud.BatchFileConversionService\FlexiCapture.Cloud.BatchFileConversionService.csproj", "{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{C1E88B07-11E1-4421-8577-818DD384B5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1E88B07-11E1-4421-8577-818DD384B5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1E88B07-11E1-4421-8577-818DD384B5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

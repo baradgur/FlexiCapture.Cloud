@@ -12,7 +12,7 @@
         var timer;
         if (!timer) {
             timer = $interval(function () {
-                console.log('Start silence!');
+                //console.log('Start silence!');
                 documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
             }
                 , 5000);

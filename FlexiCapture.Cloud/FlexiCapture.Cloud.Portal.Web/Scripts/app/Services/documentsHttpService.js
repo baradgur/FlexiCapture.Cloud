@@ -30,6 +30,7 @@ fccApp.service('documentsHttpService', function () {
     //get to clients list
     this.getToDocuments = function ($http, $scope, $state, data, url, usSpinnerService) {
         $scope.documents = [];
+        $scope.loading=true;
         usSpinnerService.spin("spinner-1");
 
         $http.get(url, {
