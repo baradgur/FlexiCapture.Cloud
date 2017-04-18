@@ -1,0 +1,91 @@
+<div ng-controller="userProfileController">
+    <div class="container">
+        <form class="form-horizontal">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>{{currentUser.FirstName}} {{currentUser.LastName}} Profile</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">User Name</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" readonly placeholder="User Name" ng-model="currentUser.UserName" class="form-control input-md">
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">First Name</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" placeholder="First Name" ng-model="currentUser.FirstName" class="form-control input-md">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Last Name</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" placeholder="Last Name" ng-model="currentUser.LastName" class="form-control input-md">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Role Name</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" readonly placeholder="Role Name" ng-model="currentUser.UserRoleName" class="form-control input-md">
+                    </div>
+                </div>
+
+                 <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Registration Date</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" readonly placeholder="Registration Date" ng-model="currentUser.RegistrationDate" class="form-control input-md">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Email</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="email" readonly placeholder="Email" ng-model="currentUser.Email" class="form-control input-md">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Phone Number</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" placeholder="Phone Number" ng-model="currentUser.PhoneNumber" class="form-control input-md">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Company Name</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text"  placeholder="Company Name" ng-model="currentUser.CompanyName" class="form-control input-md">
+                    </div>
+                </div>
+                <!-- Password input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="passwordinput">New password</label>
+                    <div class="col-md-4">
+                        <input id="passwordinput" name="passwordinput" type="password" placeholder="New password" ng-model="currentUser.NewPassword" class="form-control input-md">
+
+                    </div>
+                </div>
+
+                <!-- Password input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="passwordinput">Repeat password</label>
+                    <div class="col-md-4">
+                        <input id="passwordinput" name="passwordinput" type="password" placeholder="Repeat password" ng-model="currentUser.RepeatPassword" class="form-control input-md">
+
+                    </div>
+                </div>
+
+
+
+            </fieldset>
+        </form>
+
+    </div>
+</div>

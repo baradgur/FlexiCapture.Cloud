@@ -454,5 +454,22 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 return "";
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static void CreateProfileForNewUser(int userId)
+        {
+            try
+            {
+                string name = "Default Profile";
+
+                NewProfileModel model = new NewProfileModel() {UserId = userId, ProfileName = name};
+                CreateNewProfile(model);
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

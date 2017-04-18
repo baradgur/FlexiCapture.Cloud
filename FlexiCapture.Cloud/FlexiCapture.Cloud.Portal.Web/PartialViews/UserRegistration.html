@@ -1,0 +1,54 @@
+<div ng-controller="userRegistrationController">
+    <div class="container">
+        <span us-spinner spinner-key="spinner-1" spinner-start-active="false"></span>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <form role="form">
+                    <h2>Please Sign Up <small>It's free and always will be.</small></h2>
+                    <hr class="colorgraph">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="first_name" id="first_name" class="form-control input-lg" ng-model="newUser.FirstName" placeholder="First Name" tabindex="1">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" ng-model="newUser.LastName" tabindex="2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="User Name" tabindex="3" ng-model="newUser.UserName">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4" ng-model="newUser.Email">
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="newUser.Password" tabindex="5">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" ng-model="newUser.ConfirmPassword"
+                                    tabindex="6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">CAPTCHA</div>
+                    </div>
+
+                    <hr class="colorgraph">
+                    <div class="row">
+                        <div class="col-xs-12"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7" ng-click="registerUser()"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

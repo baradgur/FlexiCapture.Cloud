@@ -88,12 +88,17 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-
-                            <a href="#" ui-sref="main.dashboard.userInfo"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b>                                </a>
+                            <a ng-click="selectService(5);"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b>                                </a>
                         </li>
+
+                        <li>
+                            <a ng-click="selectService(6);"><i class="fa fa-shopping-cart"></i> Store</a>
+                        </li>
+
                         <li>
                             <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
+
                         <li class="divider"></li>
                         <li>
                             <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
@@ -199,7 +204,15 @@
                     <!--end FTP-->
 
 
+                    <!--PROFILE -->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==5">
 
+                        <li>
+                            <a ui-sref="main.dashboard.profile"><i class="fa fa-user fa-fw"></i>Profile Details</a>
+                        </li>
+
+                    </ul>
+                    <!--end SFC-->
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>

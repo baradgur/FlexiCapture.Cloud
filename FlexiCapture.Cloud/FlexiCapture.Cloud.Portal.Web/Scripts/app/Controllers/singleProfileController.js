@@ -104,7 +104,7 @@
                 }, 0);
             });
         $scope.$watchCollection('currentProfile', function () {
-
+        
             if ($scope.changeCount > 0)
                 $scope.profileIsChanged = true;
             $scope.changeCount++;

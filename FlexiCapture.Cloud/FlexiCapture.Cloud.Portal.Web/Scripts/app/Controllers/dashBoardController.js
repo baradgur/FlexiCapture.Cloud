@@ -1,7 +1,7 @@
 ﻿(function () {
     var dashBoardController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
 
-
+        $scope.profileShowing = false;
         var dash = function () {
             $scope.serviceStateId = 1;
             //            $scope.khingalFactory = khingalFactory;
@@ -117,6 +117,10 @@
 
                 case 4:
                     $state.go("main.dashboard.emaillibrary");
+                    break;
+
+                case 5:
+                    $state.go("main.dashboard.profile");
                     break;
 
             }

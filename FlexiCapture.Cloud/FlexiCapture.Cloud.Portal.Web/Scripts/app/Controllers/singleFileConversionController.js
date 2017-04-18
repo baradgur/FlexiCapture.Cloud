@@ -1,5 +1,5 @@
 (function () {
-    var singleFileConversionController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
+    var singleFileConversionController = function ($scope, $http,$timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
 
         $scope.profiles = []
         $scope.changeCount = 0;
@@ -11,6 +11,14 @@
         $scope.profileIsChanged = false;
         $scope.defaultProfileId = -1;
         $scope.oldDefaultProfileId = -1;
+
+        $scope.showNewProfile = function (show) {
+
+            $scope.newProfile = show;
+            $scope.NewProfileName = "";
+
+        }
+
         var singleProfile = function () {
             $scope.loadData = true;
             $scope.languages = [];
@@ -26,6 +34,25 @@
         $scope.showFileNamePanel = function () {
             $scope.showSaveProfilePanel = true;
         }
+
+        $scope.showNewProfile = function (show) {
+
+            $scope.newProfile = show;
+            $scope.NewProfileName = "";
+
+        }
+
+        $scope.updateSettings = function () {
+            //alert(JSON.stringify($scope.profiles));
+           //$scope.currentProfile = {};
+           var data =[];
+            var isEdit = $scope.profileIsChanged;
+            var purl = $$ApiUrl + "/userProfile";
+            manageUserProfileHttpService.manageProfile($http, $scope, data, purl, usSpinnerService, isEdit );
+            $scope.showNewProfile(false);
+            $scope.profileIsChanged = false;
+        }
+
 
         $scope.selectLang = function (id) {
             $scope.showSaveProfilePanel = true;
@@ -68,6 +95,7 @@
 
         $scope.hideNewProfilePanel = function () {
             $scope.showSaveProfilePanel = false;
+            $scope.newProfile = false;
         }
 
         $scope.addCustomProfile = function () {
@@ -181,19 +209,19 @@
             var uploadForm3 = document.getElementsByTagName('form');
 
             $scope.uploadImages = function () {
+
+                //alert(JSON.stringify($scope.currentProfile));
                 if ($scope.files.length > 0) {
                     $scope.showProgressBar = true;
                     usSpinnerService.spin('spinner-1');
                     var data = new FormData();
 
-                    //for (var i = 0; i < $scope.files.length; i++) {
-                    //alert("UserId "+$scope.userData.UserData.Id+"ServiceId: "+$scope.serviceStateId);
-
+                
                     data.append("uploadedFile0", $scope.files[0]);
                     data.append("serviceId", $scope.serviceStateId);
                     data.append("userId", $scope.userData.UserData.Id);
                     data.append("profile", JSON.stringify($scope.currentProfile));
-                    // }
+                    
                     var fUrl = url;
                     manageFilesHttpService.uploadFiles($http, $scope, $state, fUrl, usSpinnerService, data);
                 } else {
@@ -253,8 +281,51 @@
         };
         singleFileConversion();
 
+
+$scope.changeProfile = function () {
+            
+            
+            for(var i=0;i<$scope.profiles.length;i++)
+            {
+                if ($scope.currentProfile.Id==$scope.profiles[i].Id)
+                {
+                    $scope.currentProfile=$scope.profiles[i];
+                    $scope.defaultProfileId = $scope.currentProfile.Id;
+                    console.log("Up");
+                    break;
+                }
+            }
+        
+            
+            $scope.changeCount = 0;
+            $scope.profileIsChanged = false;
+
+        };
+
+        $scope.$watch('$viewContentLoaded',
+            function () {
+                $timeout(function () {
+                    //do something
+                    $scope.changeCount = 0;
+                    $scope.profileIsChanged = false;
+                }, 0);
+            });
+        $scope.$watchCollection('currentProfile', function () {
+        
+            if ($scope.changeCount > 0)
+                $scope.profileIsChanged = true;
+            $scope.changeCount++;
+
+        });
+
+        $scope.imChanged = function () {
+            if ($scope.changeCount > 0)
+                $scope.profileIsChanged = true;
+            $scope.changeCount++;
+
+        }
     };
 
 
-    fccApp.controller("singleFileConversionController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", singleFileConversionController]);
+    fccApp.controller("singleFileConversionController", ["$scope", "$http","$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", singleFileConversionController]);
 }())

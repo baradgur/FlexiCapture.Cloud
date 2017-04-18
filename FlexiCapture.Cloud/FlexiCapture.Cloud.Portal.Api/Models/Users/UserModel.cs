@@ -42,7 +42,13 @@
         /// Phone number
         /// </summary>
         public string PhoneNumber { get; set; }
-       /// <summary>
+
+        public string UserRoleName { get; set; }
+        public string LoginState { get; set; }
+        public string UserName { get; set; }
+        public string RegistrationDate { get; set; }
+
+        /// <summary>
        /// constructor
        /// </summary>
         public UserModel()

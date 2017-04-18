@@ -150,7 +150,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
+    <Compile Include="Controllers\RestoreDataController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Controllers\UserRegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBHelpers\DefaultProfileHelper.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="DBHelpers\LogHelper.cs" />
     <Compile Include="DBHelpers\LoginHelper.cs" />
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
+    <Compile Include="DBHelpers\ServicesHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
@@ -263,6 +266,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CatalogsHelpers\CatalogHelper.cs" />
+    <Compile Include="Helpers\CryptHelpers\KeyGenerator.cs" />
     <Compile Include="Helpers\CryptHelpers\MD5Helper.cs" />
     <Compile Include="Helpers\CryptHelpers\PasswordHelper.cs" />
     <Compile Include="Helpers\DocumentsHelpers\DocumentsHelper.cs" />
@@ -271,6 +275,8 @@
     <Compile Include="Helpers\ManageUserHelpers\ManageUserHelper.cs" />
     <Compile Include="Helpers\ManageUserHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="Helpers\RequestHelpers\ProfileToRequestModelConverter.cs" />
+    <Compile Include="Helpers\RestoreHelpers\RestoreHelper.cs" />
+    <Compile Include="Helpers\UserProfileHelpers\UserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
     <Compile Include="Models\Areas\AreaMapModel.cs" />
     <Compile Include="Models\Catalogs\RotationTypeModel.cs" />
@@ -283,7 +289,7 @@
     <Compile Include="Models\GeneralModels\NewProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
-    <Compile Include="Models\UserProfiles\UserProfile.cs" />
+    <Compile Include="Models\UserProfiles\UserProfileModel.cs" />
     <Compile Include="Models\Users\AuthUserModel.cs" />
     <Compile Include="Models\Users\UserLoginModel.cs" />
     <Compile Include="Models\Users\UserLoginStatesModel.cs" />

@@ -1,21 +1,16 @@
-﻿
-
-using Khingal.Models.Users;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using FlexiCapture.Cloud.Portal.Api.DB;
-using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
 using FlexiCapture.Cloud.Portal.Api.Models.Users;
-
-
-namespace Khingal.Helpers.DBHelpers.Users
+using Khingal.Models.Users;
+using System.Data.Entity;
+using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
+using System.Data.Entity;
+namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
     public static class UsersHelper
     {
@@ -55,19 +50,38 @@ namespace Khingal.Helpers.DBHelpers.Users
             {
                 using (var db = new FCCPortalEntities())
                 {
-                    var user = (from s in db.Users
-                                where s.Id == id select s).ToList().LastOrDefault();
+//                    var user = (from s in db.Users
+//                                where s.Id == id select s).ToList().LastOrDefault();
+//
+//                    var login = db.UserLogins.FirstOrDefault(x => x.UserId==user.Id);
 
-                    var login = db.UserLogins.FirstOrDefault(x => x.UserId==user.Id);
-                        
+//                    var user = db.Users
+//                        .Include(x => x.UserLogins.Select(y=>y))
+//                        .Include(x => x.UserLogins.Select(y => y.UserLoginStates))
+//                        .Include(x=>x.UserLogins.Select(y=>y.UserRoleTypes))
+//                        .FirstOrDefault(x => x.Id == id);
+
+                    var login = db.UserLogins
+                        .Include(x => x.Users)
+                        .Include(x => x.UserLoginStates)
+                        .Include(x => x.UserRoleTypes)
+                        .FirstOrDefault(x => x.Users.Id == id);
                     var model = new UserModel
                     {
 
-                        LastActivityDate = (user == null) ? "" : login.LastLoginDate.Value.ToString(),
+                        LastActivityDate = login.LastLoginDate.ToString(),
                         Id = id,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
+                            FirstName = login.Users.FirstName,
+                        LastName = login.Users.LastName,
                         UserRoleId = (int) login.UserRoleId,
+                        UserRoleName = login.UserRoleTypes.Name,
+                        LoginState = login.UserLoginStates.StateName,
+                        UserName = login.UserName,
+                        RegistrationDate = login.RegistrationDate.ToString(),
+                        Email = login.Users.Email,
+                        CompanyName = login.Users.CompanyName,
+                        PhoneNumber = login.Users.PhoneNumber,
+
                     };
 
                     return model;
@@ -158,68 +172,74 @@ namespace Khingal.Helpers.DBHelpers.Users
         /// добавление пользователя
         /// </summary>
         /// <returns></returns>
-        public static string AddUser(UserViewModel model)
+        public static string AddUser(UserProfileModel model)
         {
             try
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-//                using (KhingalEntities db = new KhingalEntities())
-//                {
-//                    string cryptPassword = CryptHelpers.PasswordHelper.Crypt.EncryptString(model.LoginData.UserPassword);
-//                    if (model.LoginData.IsGroupAccount) {
-//                        var checkForPasswordDuplications = (from s in db.UserLogins
-//                                                            where s.Pasword.Equals(cryptPassword)
-//                                                            select s).FirstOrDefault();
-//                        if (checkForPasswordDuplications != null) {
-//                            return serializer.Serialize(new UserViewModel()
-//                            {
-//                                Error = new ErrorModel()
-//                                {
-//                                    Name = "Ошибка добавления пользователя",
-//                                    ShortDescription = "Повторяющийся пароль, пользователь не был добавлен",
-//                                    FullDescription = "Пользователь с групповой ролью должен иметь уникальный пароль! Измените пароль пользователя"
-//                                }
-//                            });
-//                        }
-//                    }
-//                    DB.Users user = new DB.Users();
-//
-//                    user.LastActivityDate = null;
-//                    if (!String.IsNullOrEmpty(model.UserData.BirthDayDate))
-//                    {
-//                        user.BirthDayDate = DateTime.Parse(model.UserData.BirthDayDate);
-//                    }
-//                    user.FirstName = model.UserData.FirstName;
-//                    user.SecondName = model.UserData.SecondName;
-//                    user.LastName = model.UserData.LastName;
-//                    user.CompanyUnitId = model.UserData.CompanyUnitId;
-//                    user.UserRoleId = model.UserData.UserRoleId;
-//
-//                    db.Users.Add(user);
-//
-//                    DB.UserLogins login = new DB.UserLogins()
-//                    {
-//                        UserLogin = model.LoginData.UserLogin,
-//                        Pasword = PasswordHelper.Crypt.EncryptString(model.LoginData.UserPassword),
-//                        RegistrationDate = DateTime.Now,
-//                        LastLoginDate = DateTime.Now,
-//                        IsGroupAccount = model.LoginData.IsGroupAccount,
-//                        UserLoginStateId = model.LoginData.UserLoginStateId,
-//                        UserId = user.Id
-//                    };
-//                    db.UserLogins.Add(login);
-//                    db.SaveChanges();
-//
-//                    UserViewModel response = GetToUsersData(user.Id);
+                using (var db = new FCCPortalEntities())
+                {
+                    UserLogins login = db.UserLogins
+                        .Include(x => x.Users)
+                        .FirstOrDefault(
+                            x =>
+                                x.Users.Email.ToLower().Equals(model.Email.ToLower()) ||
+                                x.UserName.ToLower().Equals(model.UserName.ToLower()));
 
-//                    return serializer.Serialize(response);
-                return "";
-           // }
+                    if (login != null)
+                    {
+                        return serializer.Serialize(new UserProfileModel()
+                        {
+                            Error = new ErrorModel()
+                            {
+                                Name = "Error registration",
+                                ShortDescription = "User exists",
+                                FullDescription = "User with this credentials is exists"
+                                
+                            }
+                        });
+                    }
+
+                    DB.Users user = new DB.Users()
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+
+                    };
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
+
+                    UserLogins uLogin = new UserLogins()
+                    {
+                        UserName = model.UserName,
+                        UserPassword = PasswordHelper.Crypt.EncryptString(model.Password),
+                        UserLoginStateId = 1,
+                        UserRoleId = 3,
+                        UserId = user.Id,
+                        LastLoginDate = DateTime.Now,
+                        RegistrationDate = DateTime.Now
+                    };
+                    db.UserLogins.Add(uLogin);
+                    db.SaveChanges();
+
+//                    DB.Users rUser = db.Users
+//                        .Include(x => x.UserLogins)
+//                        .FirstOrDefault(x => x.Id == user.Id);
+
+                    model.Id = user.Id;
+                    return serializer.Serialize(model);
+
+                }
+
+                
+            
             }
             catch (Exception exception)
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                return serializer.Serialize(new UserViewModel()
+                return serializer.Serialize(new UserProfileModel()
                 {
                     Error = new ErrorModel()
                     {
@@ -378,5 +398,54 @@ namespace Khingal.Helpers.DBHelpers.Users
             }
         }
         #endregion
+
+        /// <summary>
+        /// drop user password
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
+        public static string DropUserPassword(string email, string newPassword)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            try
+            {
+                string cryptPassword = PasswordHelper.Crypt.EncryptString(newPassword);
+
+                using (var db = new FCCPortalEntities())
+                {
+                    DB.UserLogins login = db.UserLogins
+                        .Include(x=>x.Users)
+                        .FirstOrDefault(x => x.Users.Email.ToLower().Equals(email.ToLower()));
+
+                    if (login == null)
+                    {
+                        ErrorModel model = new ErrorModel();
+                        model.Name = "Error email";
+                        model.FullDescription = "Email " + email + " not found. Please check your email and try again";
+                        model.ShortDescription = "Email " + email + " not exists";
+
+
+
+                        return serializer.Serialize(model);
+                    }
+                    else
+                    {
+                        login.UserPassword = cryptPassword;
+                        db.SaveChanges();
+
+                        return "OK";
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                ErrorModel model = new ErrorModel();
+                model.Name = "Error reset password";
+                model.FullDescription = exception.Message;
+                model.ShortDescription = "Error";
+                return serializer.Serialize(model);
+            }
+        }
     }
 }

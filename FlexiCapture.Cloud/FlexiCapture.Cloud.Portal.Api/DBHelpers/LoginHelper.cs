@@ -70,6 +70,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             .Where(x=>x.Users.Id==userId)
                             .Select(x => x).FirstOrDefault();
 
+                    //string password = KeyGenerator.GetUniqueKey(8);
                     
                     if (login != null)
                     {

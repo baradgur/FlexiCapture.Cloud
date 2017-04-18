@@ -37,5 +37,32 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
             }
         }
+
+        public static void GenerateDefaultProfileForService(int userId)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities())
+                {
+                    UserProfileServiceDefault defaults = new UserProfileServiceDefault();
+
+                    var profile = db.UserProfiles.FirstOrDefault(x => x.UserId == userId);
+ 
+                    if (profile==null) return;
+                    int userProfileId = profile.Id;
+                    db.SaveChanges();
+                    db.UserProfileServiceDefault.Add(new UserProfileServiceDefault()
+                    {
+                        UserProfileId = userProfileId,
+                        ServiceTypeId = 1
+                    });
+                    db.SaveChanges();
+
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

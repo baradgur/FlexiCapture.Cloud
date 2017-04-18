@@ -129,4 +129,22 @@
             });
         $('#table').bootstrapTable('resetWidth');
     }
+
+    //get to clients list
+    this.getToUserProfile = function ($http, $scope, $state, url, usSpinnerService) {
+        $scope.user = {};
+        usSpinnerService.spin("spinner-1");
+
+        $http.get(url,{
+                params: { userId:$scope.userData.UserData.Id}
+            })
+        
+        .then(function (response) {
+           // alert(JSON.stringify(response.data));
+            $scope.currentUser = JSON.parse(response.data);
+            usSpinnerService.stop('spinner-1');
+            $scope.loading = false;
+            window.scope = $scope;
+        });
+    }
 });

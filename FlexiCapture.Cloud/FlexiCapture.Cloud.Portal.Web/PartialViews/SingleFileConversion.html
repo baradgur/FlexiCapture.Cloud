@@ -2,7 +2,7 @@
 
     <div class="container" ng-show="!loadData">
 
-        
+
 
 
         <div class="panel panel-info">
@@ -37,13 +37,40 @@
 
             </div>
 
-           
+
         </div>
+
+<div id="toolbar">
+                <button type="button" ng-show="profileIsChanged" class="btn btn-primary orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip" title="Add New User"
+                    data-placement="bottom">
+                    
+                    <span class="glyphicon glyphicon-plus" ></span>  Save to New Profile
+                    </button>
+                <button type="button" ng-show="profileIsChanged" class="btn btn-success" ng-click="updateSettings();" data-toggle="tooltip"
+                    title="Save Profile" data-placement="bottom" ng-disabled="newProfile">
+                    
+                    <span class="glyphicon glyphicon-check" ></span> Update Current Profile
+                    </button>
+                <div class="input-group" ng-show="newProfile">
+
+                    <span class="input-group-addon">
+                            New Profile Name
+                    </span>
+                    <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''" ><span class="glyphicon glyphicon-ok"></span></button>
+                    </span>
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                </div>
+            </div>
 
         <!--PROFILES-->
         <div class="panel panel-info">
             <div class="panel-heading"><strong>Profiles</strong></div>
-            <div class="panel-body">
+            <!--<div class="panel-body">-->
 
 
                 <div class="input-group">
@@ -58,245 +85,192 @@
                 <br/>
 
                 
-              
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                            Languages
-                    </span>
-                            <div class="btn-group form-control" uib-dropdown auto-close="outsideClick" on-toggle="toggled(open)">
-                                <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
-        {{selNames}} <span class="caret"></span>
-      </button>
 
-                                <ul class="dropdown-menu menu-chk" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                                    <li ng-repeat="lang in currentProfile.AvailableLanguages" role="menuitem">
-                                        <input type="checkbox" ng-change="selectLang(lang.Id)" ng-model="lang.Selected">                                        {{lang.Name}}
-                                    </li>
-                                </ul>
+
+
+                
+            <!--</div>-->
+
+            <div class="panel-group">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse1">{{currentProfile.Name}} Profile Details</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <!--PROFILE DETAILS-->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">Cleanup Settings</div>
+                                        <!--<div class="panel-body">-->
+
+                                        <ul class="list-group">
+
+                                            <li class="list-group-item">
+                                                Deskew
+                                                <div class="material-switch pull-right">
+                                                    <input id="deskew" type="checkbox" ng-model="currentProfile.Deskew" />
+                                                    <label for="deskew" class="label-success"></label>
+                                                </div>
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                Remove Garbage
+                                                <div class="material-switch pull-right">
+                                                    <input id="removeGarbage" type="checkbox" ng-model="currentProfile.RemoveGarbage" />
+                                                    <label for="removeGarbage" class="label-success"></label>
+                                                </div>
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                Remove Texture
+                                                <div class="material-switch pull-right">
+                                                    <input id="removeTexture" type="checkbox" ng-model="currentProfile.RemoveTexture" />
+                                                    <label for="removeTexture" class="label-success"></label>
+                                                </div>
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                Split Dual Page
+                                                <div class="material-switch pull-right">
+                                                    <input id="splitDualPage" type="checkbox" ng-model="currentProfile.SplitDualPage" />
+                                                    <label for="splitDualPage" class="label-success"></label>
+                                                </div>
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="sizing-addon_rotation">Rotation Type</span>
+
+                                                    <select class="form-control" ng-options="rotation as rotation.Name for rotation in currentProfile.AvailableRotationTypes track by rotation.Id"
+                                                        ng-model="currentProfile.SelectedRotationType" aria-describedby="sizing-addon_rotation"></select>
+                                                </div>
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="sizing-addon_out">Output Format</span>
+
+                                                    <input type="text" class="form-control" ng-model="currentProfile.OutputFormat" aria-describedby="sizing-addon_out">
+                                                </div>
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="sizing-addon_res">Resolution</span>
+                                                    <input type="text" class="form-control" ng-model="currentProfile.Resolution" aria-describedby="sizing-addon_res">
+                                                </div>
+
+                                            </li>
+
+                                            <li class="list-group-item">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="sizing-addon_jpeg">Jpeg Quality</span>
+                                                    <input type="text" class="form-control" ng-model="currentProfile.JpegQuality" aria-describedby="sizing-addon_jpeg">
+                                                </div>
+
+                                            </li>
+                                        </ul>
+
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">OCR Settings</div>
+                                        <!--<div class="panel-body">-->
+                                        <li class="list-group-item">
+                                            Speed OCR
+                                            <div class="material-switch pull-right">
+                                                <input id="speedOcr" type="checkbox" ng-model="currentProfile.SpeedOcr" />
+                                                <label for="speedOcr" class="label-success"></label>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            Look For BarCodes
+                                            <div class="material-switch pull-right">
+                                                <input id="lookForBarCodes" type="checkbox" ng-model="currentProfile.LookForBarCodes" />
+                                                <label for="lookForBarCodes" class="label-success"></label>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="sizing-addon_analysis_mode">Analysis Mode</span>
+
+                                                <select class="form-control" ng-options="aMode as aMode.Name for aMode in currentProfile.AvailableAnalysisModes track by aMode.Id"
+                                                    ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
+                                            </div>
+                                        </li>
+
+
+
+
+                                        <div class="panel panel-info form-group">
+                                            <div class="panel-heading">Print Types</div>
+
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
+                                                    {{print.Name}}
+                                                    <div class="material-switch pull-right">
+                                                        <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
+                                                            checklist-change="imChanged()" />
+                                                        <label for="{{print.Name}}" class="label-success"></label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="panel panel-info form-group">
+                                            <div class="panel-heading">Languages</div>
+
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages">
+                                                    {{lang.Name}}
+                                                    <div class="material-switch pull-right">
+                                                        <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
+                                                            checklist-change="imChanged()" />
+                                                        <label for="{{lang.Name}}" class="label-success"></label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">Output Settings</div>
+                                        <!--<div class="panel-body">-->
+                                        <ul class="list-group">
+                                            <li class="list-group-item" ng-repeat="format in currentProfile.AvailableExportFormats">
+                                                {{format.Name}}
+                                                <div class="material-switch pull-right">
+                                                    <input id="{{format.Name}}" type="checkbox" checklist-model="currentProfile.SelectedExportFormats" checklist-value="format"
+                                                        checklist-comparator=".Id" checklist-change="imChanged()" />
+                                                    <label for="{{format.Name}}" class="label-success"></label>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                                <!--</div>-->
                             </div>
-
+                            <!--END PROFILE DETAILS-->
 
                         </div>
                     </div>
-                    <div class="col-md-6">
-
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                            Export Formats
-                    </span>
-                            <div class="btn-group form-control" uib-dropdown auto-close="outsideClick" on-toggle="toggled(open)">
-                                <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
-        {{selFormats}} <span class="caret"></span>
-      </button>
-
-                                <ul class="dropdown-menu menu-chk" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                                    <li ng-repeat="format in currentProfile.AvailableExportFormats" role="menuitem">
-                                        <input type="checkbox" ng-change="selectFormat(format.Id)" ng-model="format.Selected">                                        {{format.Name}}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <br/>
-
-                <div class="input-group" ng-show="showSaveProfilePanel">
-
-                    <span class="input-group-addon">
-                            New Profile Name
-                    </span>
-                    <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''" ><span class="glyphicon glyphicon-ok"></span></button>
-                    </span>
-
-                    <span class="input-group-btn">
-                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
-                     </span>
-                       
-                </div>
-            </div>
         </div>
 
-        <div class="panel-group">
-  <div class="panel panel-success">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse1">{{currentProfile.Name}} Profile Details</a>
-      </h4>
-    </div>
-    <div id="collapse1" class="panel-collapse collapse">
-      <!--PROFILE DETAILS-->
-      <div class="row">
-                <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">Cleanup Settings</div>
-                        <!--<div class="panel-body">-->
-
-                        <ul class="list-group">
-
-                            <li class="list-group-item">
-                                Deskew
-                                <div class="material-switch pull-right">
-                                    <input id="deskew" type="checkbox" ng-model="currentProfile.Deskew" />
-                                    <label for="deskew" class="label-success"></label>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item">
-                                Remove Garbage
-                                <div class="material-switch pull-right">
-                                    <input id="removeGarbage" type="checkbox" ng-model="currentProfile.RemoveGarbage" />
-                                    <label for="removeGarbage" class="label-success"></label>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item">
-                                Remove Texture
-                                <div class="material-switch pull-right">
-                                    <input id="removeTexture" type="checkbox" ng-model="currentProfile.RemoveTexture" />
-                                    <label for="removeTexture" class="label-success"></label>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item">
-                                Split Dual Page
-                                <div class="material-switch pull-right">
-                                    <input id="splitDualPage" type="checkbox" ng-model="currentProfile.SplitDualPage" />
-                                    <label for="splitDualPage" class="label-success"></label>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="sizing-addon_rotation">Rotation Type</span>
-
-                                    <select class="form-control" ng-options="rotation as rotation.Name for rotation in currentProfile.AvailableRotationTypes track by rotation.Id"
-                                        ng-model="currentProfile.SelectedRotationType" aria-describedby="sizing-addon_rotation"></select>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="sizing-addon_out">Output Format</span>
-
-                                    <input type="text" class="form-control" ng-model="currentProfile.OutputFormat" aria-describedby="sizing-addon_out">
-                                </div>
-                            </li>
-
-                            <li class="list-group-item">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="sizing-addon_res">Resolution</span>
-                                    <input type="text" class="form-control" ng-model="currentProfile.Resolution" aria-describedby="sizing-addon_res">
-                                </div>
-
-                            </li>
-
-                            <li class="list-group-item">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="sizing-addon_jpeg">Jpeg Quality</span>
-                                    <input type="text" class="form-control" ng-model="currentProfile.JpegQuality" aria-describedby="sizing-addon_jpeg">
-                                </div>
-
-                            </li>
-                        </ul>
-
-                        <!--</div>-->
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">OCR Settings</div>
-                        <!--<div class="panel-body">-->
-                        <li class="list-group-item">
-                            Speed OCR
-                            <div class="material-switch pull-right">
-                                <input id="speedOcr" type="checkbox" ng-model="currentProfile.SpeedOcr" />
-                                <label for="speedOcr" class="label-success"></label>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item">
-                            Look For BarCodes
-                            <div class="material-switch pull-right">
-                                <input id="lookForBarCodes" type="checkbox" ng-model="currentProfile.LookForBarCodes" />
-                                <label for="lookForBarCodes" class="label-success"></label>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon_analysis_mode">Analysis Mode</span>
-
-                                <select class="form-control" ng-options="aMode as aMode.Name for aMode in currentProfile.AvailableAnalysisModes track by aMode.Id"
-                                    ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
-                            </div>
-                        </li>
 
 
-
-
-                        <div class="panel panel-info form-group">
-                            <div class="panel-heading">Print Types</div>
-
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
-                                    {{print.Name}}
-                                    <div class="material-switch pull-right">
-                                        <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
-                                            checklist-change="imChanged()" />
-                                        <label for="{{print.Name}}" class="label-success"></label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="panel panel-info form-group">
-                            <div class="panel-heading">Languages</div>
-
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages">
-                                    {{lang.Name}}
-                                    <div class="material-switch pull-right">
-                                        <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
-                                            checklist-change="imChanged()" />
-                                        <label for="{{lang.Name}}" class="label-success"></label>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">Output Settings</div>
-                        <!--<div class="panel-body">-->
-                        <ul class="list-group">
-                            <li class="list-group-item" ng-repeat="format in currentProfile.AvailableExportFormats">
-                                {{format.Name}}
-                                <div class="material-switch pull-right">
-                                    <input id="{{format.Name}}" type="checkbox" checklist-model="currentProfile.SelectedExportFormats" checklist-value="format"
-                                        checklist-comparator=".Id" checklist-change="imChanged()" />
-                                    <label for="{{format.Name}}" class="label-success"></label>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                    </div>
-                </div>
-
-                <!--</div>-->
-            </div>
-      <!--END PROFILE DETAILS-->
-      
-    </div>
-  </div>
-</div>
         <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">Recognize</button>
     </div>
     <!--END PROFILES-->

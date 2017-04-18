@@ -105,7 +105,17 @@
                 });
         },
             250);
+
+     $scope.restoreUser = function(){
+        $state.go("main.restore");
+    }
+
+    $scope.registrationUser = function(){
+        $state.go("main.registration");
+    }       
     };
+
+    
 
     fccApp.controller("loginController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "usSpinnerService", "$cookies",  loginController]);
 }())

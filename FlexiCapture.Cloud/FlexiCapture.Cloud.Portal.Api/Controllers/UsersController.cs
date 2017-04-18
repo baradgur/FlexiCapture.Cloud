@@ -4,7 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Khingal.Helpers.DBHelpers.Users;
+using System.Web.Script.Serialization;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 
 namespace FlexiCapture.Cloud.Portal.Api.Controllers
 {
@@ -25,9 +26,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // GET api/users/5
-        public string Get(int id)
+        public string Get(int userId)
         {
-            return "value";
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            return serializer.Serialize(UsersHelper.GetToUserData(userId));
         }
 
         // POST api/users
