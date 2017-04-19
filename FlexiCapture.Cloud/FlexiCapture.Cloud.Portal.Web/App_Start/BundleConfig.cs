@@ -70,7 +70,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/notifier.js",
                 "~/Scripts/mask.js",
                 "~/Scripts/angularjs-dropdown-multiselect.min.js",
-                "~/Scripts/chk-multi-select.js"
+                "~/Scripts/chk-multi-select.js",
+                "~/Scripts/angular-recaptcha.js"
                 //angularjs-dropdown-multiselect.min.js
                 ));
 

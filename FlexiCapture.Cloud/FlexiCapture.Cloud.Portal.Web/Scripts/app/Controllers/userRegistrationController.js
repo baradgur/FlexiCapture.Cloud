@@ -2,7 +2,7 @@
     var userRegistrationController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
         var url = $$ApiUrl + "/userRegistration";
         $scope.newUser = {};
-
+        $scope.rResponse = "";
         var userRegistration = function () {
 
             $scope.loadData = false;
@@ -10,14 +10,49 @@
         };
         userRegistration();
 
-        //make registration
-        $scope.registerUser = function () {
+      //make registration
+    $scope.checkRecaptcha = function () {
+            $http({
+                url: "https://www.google.com/recaptcha/api/siteverify",
+                method: "POST",
+                data: {secret:"6LcbtB0UAAAAAMGSWHdQAI7hs7hCZOf76fFsJA-N",response:$scope.rResponse}
+            })
+                .then(function (response) {
+                   
 
+                    console.log(response);
 
+                    // success
+                },
+                function (response) { // optional
+                    // failed
+                });
+
+         }
+    //make registration
+    $scope.registerUser = function () {
+
+        $scope.rResponse = window.grecaptcha.getResponse();
+                    console.log($scope.rResponse);
+
+                    if ($scope.rResponse=="")
+                    {
+                        var dialog = new BootstrapDialog({
+                            type: BootstrapDialog.TYPE_DANGER,
+                            size: BootstrapDialog.SIZE_SMALL,
+                            title: "Captcha not selected",
+                            message: "<div style='text-align:center'>Please click to the captcha</div>"
+                        });
+                        dialog.setSize(BootstrapDialog.SIZE_SMALL);
+                        dialog.open();
+                        return;
+                    }
+        //alert(JSON.stringify($scope.rResponse));
+        //$scope.checkRecaptcha();
             usSpinnerService.spin('spinner-1');
 
             $scope.loadData = true;
-
+            $scope.newUser.CaptchaResponse =$scope.rResponse;
             $http({
                 url: url,
                 method: "POST",
@@ -63,7 +98,7 @@
                     // failed
                 });
 
-        }
+         }
 
     };
 

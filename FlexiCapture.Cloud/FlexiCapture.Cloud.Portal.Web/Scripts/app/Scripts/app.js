@@ -1,5 +1,5 @@
 ﻿var $$ApiUrl = "http://localhost/FCCPortalApi/api";
-var fccApp = angular.module("fccApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask','angularjs-dropdown-multiselect','isteven-multi-select']);
+var fccApp = angular.module("fccApp", ["ui.router", 'ui.router.title', 'angularSpinner', 'ui.bootstrap', 'checklist-model', 'ngMessages', 'accessibleForm', 'ngCookies', 'ngIdle', 'ui.mask','angularjs-dropdown-multiselect','isteven-multi-select','vcRecaptcha']);
 
 fccApp.run([
     '$rootScope', '$state', '$stateParams','$window', '$cookies',

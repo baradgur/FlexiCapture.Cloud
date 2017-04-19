@@ -46,6 +46,9 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.UserProfiles
         /// </summary>
         public ErrorModel Error { get; set; }
 
-        
+        /// <summary>
+        /// captcha response
+        /// </summary>
+        public string CaptchaResponse { get; set; }
     }
 }
