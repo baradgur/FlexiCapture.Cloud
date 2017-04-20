@@ -1,5 +1,5 @@
 (function () {
-    var singleFileConversionController = function ($scope, $http,$timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
+    var singleFileConversionController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
 
         $scope.profiles = []
         $scope.changeCount = 0;
@@ -44,11 +44,11 @@
 
         $scope.updateSettings = function () {
             //alert(JSON.stringify($scope.profiles));
-           //$scope.currentProfile = {};
-           var data =[];
+            //$scope.currentProfile = {};
+            var data = [];
             var isEdit = $scope.profileIsChanged;
             var purl = $$ApiUrl + "/userProfile";
-            manageUserProfileHttpService.manageProfile($http, $scope, data, purl, usSpinnerService, isEdit );
+            manageUserProfileHttpService.manageProfile($http, $scope, data, purl, usSpinnerService, isEdit);
             $scope.showNewProfile(false);
             $scope.profileIsChanged = false;
         }
@@ -102,7 +102,7 @@
             if ($scope.NewProfileName == "") return;
             $scope.customProfile = $scope.currentProfile;
             $scope.customProfile.Name = $scope.NewProfileName;
-            var data=[];
+            var data = [];
             manageUserProfileHttpService.addCustomProfile($http, $scope, data, customProfileUrl, usSpinnerService);
             $scope.hideNewProfilePanel();
 
@@ -180,19 +180,19 @@
                 }
             }
 
-             for (var j = 0; j < $scope.currentProfile.AvailableLanguages.length; j++) {
-                            for (var k = 0; k < $scope.currentProfile.SelectedLanguages.length; k++) {
-                                if ($scope.currentProfile.SelectedLanguages[k].Id == $scope.currentProfile.AvailableLanguages[j].Id)
-                                    $scope.currentProfile.AvailableLanguages[j].Selected = true;
-                            }
-                        }
+            for (var j = 0; j < $scope.currentProfile.AvailableLanguages.length; j++) {
+                for (var k = 0; k < $scope.currentProfile.SelectedLanguages.length; k++) {
+                    if ($scope.currentProfile.SelectedLanguages[k].Id == $scope.currentProfile.AvailableLanguages[j].Id)
+                        $scope.currentProfile.AvailableLanguages[j].Selected = true;
+                }
+            }
 
-                        for (var j = 0; j < $scope.currentProfile.AvailableExportFormats.length; j++) {
-                            for (var k = 0; k < $scope.currentProfile.SelectedExportFormats.length; k++) {
-                                if ($scope.currentProfile.SelectedExportFormats[k].Id == $scope.currentProfile.AvailableExportFormats[j].Id)
-                                    $scope.currentProfile.AvailableExportFormats[j].Selected = true;
-                            }
-                        }
+            for (var j = 0; j < $scope.currentProfile.AvailableExportFormats.length; j++) {
+                for (var k = 0; k < $scope.currentProfile.SelectedExportFormats.length; k++) {
+                    if ($scope.currentProfile.SelectedExportFormats[k].Id == $scope.currentProfile.AvailableExportFormats[j].Id)
+                        $scope.currentProfile.AvailableExportFormats[j].Selected = true;
+                }
+            }
 
             $scope.changeCount = 0;
             $scope.profileIsChanged = false;
@@ -216,12 +216,12 @@
                     usSpinnerService.spin('spinner-1');
                     var data = new FormData();
 
-                
+
                     data.append("uploadedFile0", $scope.files[0]);
                     data.append("serviceId", $scope.serviceStateId);
                     data.append("userId", $scope.userData.UserData.Id);
                     data.append("profile", JSON.stringify($scope.currentProfile));
-                    
+
                     var fUrl = url;
                     manageFilesHttpService.uploadFiles($http, $scope, $state, fUrl, usSpinnerService, data);
                 } else {
@@ -282,21 +282,19 @@
         singleFileConversion();
 
 
-$scope.changeProfile = function () {
-            
-            
-            for(var i=0;i<$scope.profiles.length;i++)
-            {
-                if ($scope.currentProfile.Id==$scope.profiles[i].Id)
-                {
-                    $scope.currentProfile=$scope.profiles[i];
+        $scope.changeProfile = function () {
+
+
+            for (var i = 0; i < $scope.profiles.length; i++) {
+                if ($scope.currentProfile.Id == $scope.profiles[i].Id) {
+                    $scope.currentProfile = $scope.profiles[i];
                     $scope.defaultProfileId = $scope.currentProfile.Id;
                     console.log("Up");
                     break;
                 }
             }
-        
-            
+
+
             $scope.changeCount = 0;
             $scope.profileIsChanged = false;
 
@@ -311,7 +309,7 @@ $scope.changeProfile = function () {
                 }, 0);
             });
         $scope.$watchCollection('currentProfile', function () {
-        
+
             if ($scope.changeCount > 0)
                 $scope.profileIsChanged = true;
             $scope.changeCount++;
@@ -327,5 +325,5 @@ $scope.changeProfile = function () {
     };
 
 
-    fccApp.controller("singleFileConversionController", ["$scope", "$http","$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", singleFileConversionController]);
+    fccApp.controller("singleFileConversionController", ["$scope", "$http", "$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", singleFileConversionController]);
 }())

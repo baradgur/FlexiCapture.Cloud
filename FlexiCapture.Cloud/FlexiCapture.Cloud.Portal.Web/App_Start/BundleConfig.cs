@@ -117,7 +117,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Services/usersHttpService.js",
                 "~/Scripts/app/Services/manageFilesHttpService.js",
                 "~/Scripts/app/Services/documentsHttpService.js",
-                "~/Scripts/app/Services/manageUserProfileHttpService.js"
+                "~/Scripts/app/Services/manageUserProfileHttpService.js",
+                "~/Scripts/app/Services/storeHttpService.js"
                 //manageFilesHttpService
                 )
                 );

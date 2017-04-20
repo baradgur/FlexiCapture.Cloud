@@ -1,9 +1,32 @@
 (function () {
-    var ftpLibraryController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
+    var ftpLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
+        var data = [];
+        var url = $$ApiUrl + "/documents";
 
-        
+
+        var timer;
+        if (!timer) {
+            timer = $interval(function () {
+                //console.log('Start silence!');
+                documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
+            }
+                , 5000);
+        }
+
+        $scope.killtimer = function () {
+            if (angular.isDefined(timer)) {
+                $interval.cancel(timer);
+                timer = undefined;
+            }
+        };
+
+        $scope.$on('$destroy', function () {
+            $scope.killtimer();
+        });
+
         var ftpLibrary = function () {
-           
+            documentsHttpService.getToDocuments($http, $scope, $state, data, url, usSpinnerService);
+
             $scope.loadData = false;
 
         };
@@ -12,5 +35,5 @@
     };
 
 
-    fccApp.controller("ftpLibraryController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", ftpLibraryController]);
+    fccApp.controller("ftpLibraryController", ["$scope","$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", ftpLibraryController]);
 }())

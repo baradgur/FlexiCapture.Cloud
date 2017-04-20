@@ -10,6 +10,8 @@ using Khingal.Models.Users;
 using System.Data.Entity;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 using System.Data.Entity;
+using FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers;
+
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
     public static class UsersHelper
@@ -522,7 +524,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 }
                 return models;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return null;
             }
@@ -584,13 +586,15 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         model.FullDescription = "Email " + email + " not found. Please check your email and try again";
                         model.ShortDescription = "Email " + email + " not exists";
 
-
+                        
 
                         return serializer.Serialize(model);
                     }
                     else
                     {
                         login.UserPassword = cryptPassword;
+                        string userName = login.Users.FirstName + " " + login.Users.LastName;
+                        EmailHelper.SendNewPasswordToEmail(userName,email,newPassword);
                         db.SaveChanges();
 
                         return "OK";

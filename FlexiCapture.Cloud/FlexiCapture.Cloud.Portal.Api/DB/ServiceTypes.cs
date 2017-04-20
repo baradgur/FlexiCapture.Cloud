@@ -17,15 +17,15 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public ServiceTypes()
         {
             this.Tasks = new HashSet<Tasks>();
-            this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
             this.UserProfileServiceDefault = new HashSet<UserProfileServiceDefault>();
+            this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
         }
     
         public int Id { get; set; }
         public string ServiceName { get; set; }
     
         public virtual ICollection<Tasks> Tasks { get; set; }
-        public virtual ICollection<UserServiceSubscribes> UserServiceSubscribes { get; set; }
         public virtual ICollection<UserProfileServiceDefault> UserProfileServiceDefault { get; set; }
+        public virtual ICollection<UserServiceSubscribes> UserServiceSubscribes { get; set; }
     }
 }

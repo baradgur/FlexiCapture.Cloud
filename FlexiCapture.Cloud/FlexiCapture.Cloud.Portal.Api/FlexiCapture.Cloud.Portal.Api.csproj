@@ -151,6 +151,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
     <Compile Include="Controllers\RestoreDataController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UserRegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="DBHelpers\ServicesHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\StoreHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
@@ -270,12 +272,14 @@
     <Compile Include="Helpers\CryptHelpers\MD5Helper.cs" />
     <Compile Include="Helpers\CryptHelpers\PasswordHelper.cs" />
     <Compile Include="Helpers\DocumentsHelpers\DocumentsHelper.cs" />
+    <Compile Include="Helpers\EmailHelpers\EmailHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\LoginHelpers\LoginHelper.cs" />
     <Compile Include="Helpers\ManageUserHelpers\ManageUserHelper.cs" />
     <Compile Include="Helpers\ManageUserHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="Helpers\RequestHelpers\ProfileToRequestModelConverter.cs" />
     <Compile Include="Helpers\RestoreHelpers\RestoreHelper.cs" />
+    <Compile Include="Helpers\StoreHelpers\StoreHelper.cs" />
     <Compile Include="Helpers\UserProfileHelpers\UserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
     <Compile Include="Models\Areas\AreaMapModel.cs" />
@@ -286,7 +290,9 @@
     <Compile Include="Models\Catalogs\LanguageModel.cs" />
     <Compile Include="Models\Documents\DocumentModel.cs" />
     <Compile Include="Models\Errors\ErrorModel.cs" />
+    <Compile Include="Models\GeneralModels\CaptchaResponseModel.cs" />
     <Compile Include="Models\GeneralModels\NewProfileModel.cs" />
+    <Compile Include="Models\StoreModels\StoreModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
     <Compile Include="Models\UserProfiles\UserProfileModel.cs" />
@@ -371,6 +377,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FlexiCapture.Cloud.EmailAgent\FlexiCapture.Cloud.EmailAgent\FlexiCapture.Cloud.EmailAgent.csproj">
+      <Project>{920a26eb-fa4e-4ac4-9279-2e067110d2e2}</Project>
+      <Name>FlexiCapture.Cloud.EmailAgent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FlexiCapture.Cloud.OCR.Assist\FlexiCapture.Cloud.OCR.Assist.csproj">
       <Project>{5cdf763b-ee3e-4d85-a30b-1d37019aa39d}</Project>
       <Name>FlexiCapture.Cloud.OCR.Assist</Name>

@@ -2,15 +2,30 @@
 
     <div class="container">
 
-        <div class="row" ng-show="!loading">
+            <div class="row" ng-show="!loading">
             <div id="toolbar">
-                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User"  data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-plus" ></span>
-                    </button>
-
+               
             </div>
-                    HELLO ftpLibrary!!!!
+            <div class="form-inline">
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true" data-height="300"
+                    data-toggle="table">
+                    <thead>
+
+                        <tr>
+                            <th data-field="Id" data-sortable="true">Id</th>
+                            <th data-field="taskId" data-sortable="true">Task Id</th>
+                            <th data-field="dateTime" data-sortable="true">Date</th>
+                            <th data-field="fileSize" data-sortable="true">Size</th>
+                            <th data-field="fileName" data-sortable="true">File Name</th>
+                            <th data-field="stateName" data-sortable="true">State</th>
+                            <th data-field="typeName" data-sortable="true">Type</th>
+                            <th data-field="href" data-sortable="true">Url</th>
+                            <th data-field="results" data-sortable="true">Results</th>
+                            <!--<th data-field="action" data-formatter="actionFormatterUser" data-events="actionEventsUser" data-width="5%" style="text-align:center;"></th>-->
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 </div>

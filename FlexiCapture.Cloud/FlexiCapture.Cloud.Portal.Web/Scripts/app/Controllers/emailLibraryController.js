@@ -1,10 +1,35 @@
 (function () {
-    var emailLibraryController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
+    var emailLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal,documentsHttpService) {
 
+        var data = [];
+        var url = $$ApiUrl + "/documents";
+
+
+        var timer;
+        if (!timer) {
+            timer = $interval(function () {
+                //console.log('Start silence!');
+                documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
+            }
+                , 5000);
+        }
+
+        $scope.killtimer = function () {
+            if (angular.isDefined(timer)) {
+                $interval.cancel(timer);
+                timer = undefined;
+            }
+        };
+
+        $scope.$on('$destroy', function () {
+            $scope.killtimer();
+        });
         
         var emailLibrary = function () {
            
+            documentsHttpService.getToDocuments($http, $scope, $state, data, url, usSpinnerService);
             $scope.loadData = false;
+
 
         };
         emailLibrary();
@@ -12,5 +37,5 @@
     };
 
 
-    fccApp.controller("emailLibraryController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", emailLibraryController]);
+    fccApp.controller("emailLibraryController", ["$scope","$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal","documentsHttpService", emailLibraryController]);
 }())

@@ -101,8 +101,16 @@
                 $window.document.title = "User Profile";
             }
         })
-        .state("main.dashboard.systemSettings",
-        {
+
+        .state("main.dashboard.store", {
+            url: "/store",
+            templateUrl: "PartialViews/Store.html",
+            onEnter: function ($window, $state) {
+                $window.document.title = "Store";
+            }
+        })
+
+        .state("main.dashboard.systemSettings", {
             url: "/systemsettings",
             templateUrl: "PartialViews/SystemSettings.html",
             onEnter: function($window, $state) {

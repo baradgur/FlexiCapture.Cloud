@@ -27,6 +27,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         }
     
         public virtual DbSet<AnalysisModeCatalog> AnalysisModeCatalog { get; set; }
+        public virtual DbSet<DocumentCategories> DocumentCategories { get; set; }
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<DocumentStates> DocumentStates { get; set; }
         public virtual DbSet<DocumentTypes> DocumentTypes { get; set; }
@@ -46,12 +47,11 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<UserProfileLanguages> UserProfileLanguages { get; set; }
         public virtual DbSet<UserProfilePrintTypes> UserProfilePrintTypes { get; set; }
         public virtual DbSet<UserProfiles> UserProfiles { get; set; }
+        public virtual DbSet<UserProfileServiceDefault> UserProfileServiceDefault { get; set; }
         public virtual DbSet<UserRoleTypes> UserRoleTypes { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserServiceSubscribes> UserServiceSubscribes { get; set; }
         public virtual DbSet<UserServiceSubscribeStates> UserServiceSubscribeStates { get; set; }
         public virtual DbSet<UserSettings> UserSettings { get; set; }
-        public virtual DbSet<DocumentCategories> DocumentCategories { get; set; }
-        public virtual DbSet<UserProfileServiceDefault> UserProfileServiceDefault { get; set; }
     }
 }

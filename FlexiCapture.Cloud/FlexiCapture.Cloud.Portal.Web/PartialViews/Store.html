@@ -1,3 +1,75 @@
 <div ng-controller="storeController">
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/single.png">
+                    <div class="caption">
+                        <h4>Single File Conversion</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
+                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                        <button type="button" disabled ng-class="userData.ServiceData.SingleFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'">
+                              <span ng-if="userData.ServiceData.SingleFileConversionService">Active</span>
+                              <span ng-if="!userData.ServiceData.SingleFileConversionService">Disabled</span>
+                        </button>
 
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/batch.png">
+                    <div class="caption">
+                        <h4>Batch File Conversion</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
+                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                        <button type="button" ng-class="userData.ServiceData.BatchFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(2)">
+                              <span ng-if="userData.ServiceData.BatchFileConversionService">Active</span>
+                              <span ng-if="!userData.ServiceData.BatchFileConversionService">Disabled</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/email.png">
+                    <div class="caption">
+                        <h4>E-mail Conversion</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
+                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                        <button type="button" ng-class="userData.ServiceData.EmailAttachmentFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(4)">
+                              <span ng-if="userData.ServiceData.EmailAttachmentFileConversionService">Active</span>
+                              <span ng-if="!userData.ServiceData.EmailAttachmentFileConversionService">Disabled</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-18 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/ftp.png">
+                    <div class="caption">
+                        <h4>FTP Conversion</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
+                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                        <button type="button" ng-class="userData.ServiceData.FTPFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(3)">
+                              <span ng-if="userData.ServiceData.FTPFileConversionService">Active</span>
+                              <span ng-if="!userData.ServiceData.FTPFileConversionService">Disabled</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <!--/row-->
+    </div>
+    <!--/container -->
 </div>
