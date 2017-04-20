@@ -1,0 +1,144 @@
+﻿<div>
+    <div class="modal-header-primary">
+        <h3>User Profile</h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="userForm" id="userForm" role="form" novalidate>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[userForm.firstName.$invalid && (userForm.firstName.$touched || submitted)]">
+                        <label class="col-sm-3 control-label">FirstName<i class="red-star">*</i></label>
+                        <div class="col-sm-8">
+                            <input type="text" name="firstName" class="form-control" placeholder="First Name" pattern="[a-zA-Z]+[a-zA-Z-_\.]*" maxlength="16" ng-model="user.UserData.FirstName" required>
+                            <div class="help-block" ng-messages="userForm.firstName.$error" ng-if="userForm.firstName.$touched || submitted">
+                                <div ng-message="required">Field "First Name" must be filled</div>
+                                <div ng-message="maxlength">First Name must be not more 16 characters</div>
+                                <div ng-message="pattern">Use only letters, '.', '-' or '_'.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[userForm.lastName.$invalid && (userForm.lastName.$touched || submitted)]">
+                        <label class="col-sm-3 control-label">LastName<i class="red-star">*</i></label>
+                        <div class="col-sm-8">
+                            <input type="text" name="lastName" class="form-control" placeholder="Last Name" pattern="[a-zA-Z]+[a-zA-Z-_\.]*" maxlength="16" ng-model="user.UserData.LastName" required>
+                            <div class="help-block" ng-messages="userForm.lastName.$error" ng-if="userForm.lastName.$touched || submitted">
+                                <div ng-message="required">Field "Last Name" must be filled</div>
+                                <div ng-message="maxlength">Last Name must be not more 16 characters</div>
+                                <div ng-message="pattern">Use only letters, '.', '-' or '_'.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[(!user.UserData.UserRoleId) && (userForm.roleSelect.$touched || submitted)]">
+                        <label class="col-sm-3 control-label">User Role<i class="red-star">*</i></label>
+                        <div class="col-sm-8">
+                            <select name="roleSelect" id="roleSelect" class="form-control" ng-options="option.name for option in userRoles.availableOptions track by option.id" ng-model="userRoles.selectedOption" ng-change="vm.roleChanged();" required></select>
+                            <div class="help-block" ng-show="!user.UserData.UserRoleId" ng-if="userForm.roleSelect.$touched || submitted">
+                                User role must be selected
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="textinput7">Phone Number</label>
+                        <div class="col-sm-8">
+                            <input id="textinput7" name="phone_number" type="text" placeholder="Phone Number" ng-model="user.UserData.PhoneNumber" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="textinput8">Company Name</label>
+                        <div class="col-sm-8">
+                            <input id="textinput8" name="company_name" type="text" placeholder="Company Name" ng-model="user.UserData.CompanyName" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[userForm.loginEmail.$invalid && (userForm.loginEmail.$touched || submitted)]">
+                        <label class="col-sm-3 control-label">Email<i class="red-star">*</i></label>
+                        <div class="col-sm-8">
+                            <input type="email" name="loginEmail" class="form-control" placeholder="Email" ng-model="user.LoginData.UserLogin" required>
+                            <div class="help-block" ng-messages="userForm.loginEmail.$error" ng-if="userForm.loginEmail.$touched || submitted">
+                                <div ng-message="required">Field "Email Address" must be filled</div>
+                                <div ng-message="email">Input correct Email Address</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[userForm.userPasswords.$invalid && (userForm.userPasswords.$touched || submitted)]">
+                        <label class="col-sm-3 control-label">Password<i class="red-star">*</i></label>
+                        <div class="col-sm-8">
+                            <input type="password" name="userPasswords" class="form-control" placeholder="Password" minlength="6" ng-maxlength="10" ng-required="true" ng-model="user.LoginData.UserPassword">
+                            <div class="help-block" ng-messages="userForm.userPasswords.$error" ng-if="userForm.userPasswords.$touched || submitted">
+                                <div ng-message="required">Field "Password" must be filled</div>
+                                <div ng-message="minlength">Password length must be at least 6 characters </div>
+                                <div ng-message="maxlength">Password length must be no more than 10 characters</div>
+                                <div ng-message="pattern">Password must not contain spaces</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="isEdit">
+                        <label class="col-sm-3 control-label">Login State<i class="red-star">*</i></label>
+                        <div class="col-sm-8">
+                            <select name="stateSelect" id="stateSelect" class="form-control" ng-options="option.name for option in loginStates.availableOptions track by option.id" ng-model="loginStates.selectedOption" ng-change="vm.stateChanged();" data-odd="odd" required></select>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Services</label>
+                        <div class="col-sm-8">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Single File Conversion Service
+                                    <div class="material-switch pull-right">
+                                        <input id="sfcService" type="checkbox" ng-model="user.ServiceData.SingleFileConversionService" />
+                                        <label for="sfcService" class="label-success"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    Batch File Conversion Service
+                                    <div class="material-switch pull-right">
+                                        <input id="bfcService" type="checkbox" ng-model="user.ServiceData.BatchFileConversionService" />
+                                        <label for="bfcService" class="label-success"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    FTP File Conversion Service
+                                    <div class="material-switch pull-right">
+                                        <input id="ffcService" type="checkbox" ng-model="user.ServiceData.FTPFileConversionService" />
+                                        <label for="ffcService" class="label-success"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    Email Attachment File Conversion Service
+                                    <div class="material-switch pull-right">
+                                        <input id="eafcService" type="checkbox" ng-model="user.ServiceData.EmailAttachmentFileConversionService" />
+                                        <label for="eafcService" class="label-success"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <br />
+                    <div class="form-group">
+                        <div class="form-group col-sm-10 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-primary" ng-click="vm.confirm();">Save</button>
+                            <button type="button" class="btn btn-primary btn-outline" ng-click="vm.cancel();">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <div>
+                    <p class="form-description-text">Signed fields <i class="red-star">*</i> must be filled</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -42,6 +42,16 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.UserProfiles
         public string Email { get; set; }
 
         /// <summary>
+        /// CompanyName
+        /// </summary>
+        public string CompanyName { get; set; }
+
+        /// <summary>
+        /// PhoneNumber
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
         /// error
         /// </summary>
         public ErrorModel Error { get; set; }

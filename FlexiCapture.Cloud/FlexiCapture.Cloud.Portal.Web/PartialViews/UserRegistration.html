@@ -5,59 +5,84 @@
     <div class="container">
         <span us-spinner spinner-key="spinner-1" spinner-start-active="false"></span>
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                <form role="form">
-                    <h2>Please Sign Up <small>It's free and always will be.</small></h2>
-                    <hr class="colorgraph">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="first_name" id="first_name" class="form-control input-lg" ng-model="newUser.FirstName" placeholder="First Name"
-                                    tabindex="1">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" ng-model="newUser.LastName"
-                                    tabindex="2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="User Name" tabindex="3"
-                            ng-model="newUser.UserName">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4" ng-model="newUser.Email">
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="newUser.Password"
-                                    tabindex="5">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password"
-                                    ng-model="newUser.ConfirmPassword" tabindex="6">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="g-recaptcha" data-sitekey="6LcbtB0UAAAAAI-fW5HTczFwSp6LNCo5JNDSQ17k"></div>
-                        </div>
-                    </div>
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <div class="panel panel-default" style="margin-top: 90px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Registration</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" name="registrationForm" novalidate>
+                        <h2>Please Sign Up <small>It's free and always will be.</small></h2>
+                        <hr class="colorgraph">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
 
-                    <hr class="colorgraph">
-                    <div class="row">
-                        <div class="col-xs-12"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7" ng-click="registerUser()"></div>
-                    </div>
-                </form>
+                                <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.first_name.$invalid && (registrationForm.first_name.$touched || submitted)]">
+                                    <input type="text" name="first_name" id="first_name" class="form-control input-lg" ng-model="newUser.FirstName" placeholder="First Name"
+                                           tabindex="1" required pattern="[a-zA-Z]+[a-zA-Z-_\.]*" autofocus ng-maxlength="16">
+                                    <div class="help-block" ng-messages="registrationForm.first_name.$error" ng-if="registrationForm.first_name.$touched || submitted">
+                                        <div ng-message="required">Field "First Name" must be filled</div>
+                                        <div ng-message="maxlength">First Name must be not more 16 characters</div>
+                                        <div ng-message="pattern">Use only letters, '.', '-' or '_'.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.last_name.$invalid && (registrationForm.last_name.$touched || submitted)]">
+                                    <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" ng-model="newUser.LastName"
+                                           tabindex="2" required pattern="[a-zA-Z]+[a-zA-Z-_\.]*" ng-maxlength="16">
+                                    <div class="help-block" ng-messages="registrationForm.last_name.$error" ng-if="registrationForm.last_name.$touched || submitted">
+                                        <div ng-message="required">Field "Last Name" must be filled</div>
+                                        <div ng-message="maxlength">Last Name must be not more 16 characters</div>
+                                        <div ng-message="pattern">Use only letters, '.', '-' or '_'.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.email.$invalid && (registrationForm.email.$touched || submitted)]">
+                            <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="3" ng-model="newUser.Email" required />
+                            <div class="help-block" ng-messages="registrationForm.email.$error" ng-if="registrationForm.email.$touched || submitted">
+                                <div ng-message="required">Field "Email Address" must be filled</div>
+                                <div ng-message="email">Input correct Email Address</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.password.$invalid && (registrationForm.password.$touched || submitted)]">
+                                    <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="newUser.Password"
+                                           tabindex="4" minlength="6" ng-maxlength="10" pattern="\S+" required />
+                                    <div class="help-block" ng-messages="registrationForm.password.$error" ng-if="registrationForm.password.$touched || submitted">
+                                        <div ng-message="required">Field "Password" must be filled</div>
+                                        <div ng-message="minlength">Password length must be at least 6 characters </div>
+                                        <div ng-message="maxlength">Password length must be no more than 10 characters</div>
+                                        <div ng-message="pattern">Password must not contain spaces</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.password_confirmation.$viewValue != registrationForm.password.$viewValue && (registrationForm.password_confirmation.$touched || submitted)]">
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password"
+                                           ng-model="newUser.ConfirmPassword" tabindex="5">
+                                    <div class="help-block" ng-if="registrationForm.password_confirmation.$viewValue != registrationForm.password.$viewValue && (registrationForm.password_confirmation.$touched || submitted)">
+                                        Password are not matching
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="g-recaptcha" data-sitekey="6LcbtB0UAAAAAI-fW5HTczFwSp6LNCo5JNDSQ17k"></div>
+                            </div>
+                        </div>
+
+                        <hr class="colorgraph">
+                        <div class="row">
+                            <div class="col-xs-12"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="6" ng-click="registerUser()"></div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>

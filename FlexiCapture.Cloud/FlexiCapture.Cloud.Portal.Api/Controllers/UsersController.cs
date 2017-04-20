@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
+using Khingal.Models.Users;
 
 namespace FlexiCapture.Cloud.Portal.Api.Controllers
 {
@@ -33,13 +35,15 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // POST api/users
-        public void Post([FromBody]string value)
+        public string Post(UserViewModel model)
         {
+            return UsersHelper.AddUserAdmin(model);
         }
 
         // PUT api/users/5
-        public void Put(int id, [FromBody]string value)
+        public string Put(UserViewModel model)
         {
+            return UsersHelper.UpdateUser(model);
         }
 
         // DELETE api/users/5

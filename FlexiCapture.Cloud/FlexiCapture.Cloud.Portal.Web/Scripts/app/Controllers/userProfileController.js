@@ -7,10 +7,22 @@
            
             $scope.loadData = false;
             usersHttpService.getToUserProfile($http, $scope, $state, url, usSpinnerService);
-
-            //alert("E");
         };
         userProfile();
+
+        $scope.updateUserProfile = function() {
+            if ($scope.userProfileForm.$invalid ||
+                    $scope.userProfileForm.password_confirmation.$viewValue != $scope.userProfileForm.password.$viewValue) {
+                $scope.submitted = true;
+                return;
+            } else {
+                $scope.submitted = false;
+                $scope.currentUser.UserName = $scope.currentUser.Email;
+                $scope.currentUser.Password = $scope.currentUser.NewPassword;
+            }
+            var anotherUrl = $$ApiUrl + "/manageuserprofile";
+            usersHttpService.updateUserProfile($http, $scope, anotherUrl, usSpinnerService);
+        }
 
     };
 

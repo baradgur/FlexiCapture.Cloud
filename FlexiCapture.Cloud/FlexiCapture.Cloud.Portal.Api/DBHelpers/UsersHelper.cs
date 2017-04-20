@@ -37,6 +37,136 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 return null;
             }
         }
+        /// <summary>
+        /// adding user by admin
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static string AddUserAdmin(UserViewModel model)
+        {
+            try
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                using (var db = new FCCPortalEntities())
+                {
+                    UserLogins login = db.UserLogins
+                        .Include(x => x.Users)
+                        .FirstOrDefault(
+                            x =>
+                                x.Users.Email.ToLower().Equals(model.UserData.Email.ToLower()) ||
+                                x.UserName.ToLower().Equals(model.UserData.UserName.ToLower()));
+
+                    if (login != null)
+                    {
+                        return serializer.Serialize(new UserViewModel()
+                        {
+                            Error = new ErrorModel()
+                            {
+                                Name = "Error registration",
+                                ShortDescription = "User exists",
+                                FullDescription = "User with this credentials is exists"
+
+                            }
+                        });
+                    }
+
+                    DB.Users user = new DB.Users()
+                    {
+                        FirstName = model.UserData.FirstName,
+                        LastName = model.UserData.LastName,
+                        Email = model.UserData.Email,
+                        PhoneNumber = model.UserData.PhoneNumber,
+                        CompanyName = model.UserData.CompanyName
+
+                    };
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
+
+                    UserLogins uLogin = new UserLogins()
+                    {
+                        UserName = model.UserData.UserName,
+                        UserPassword = PasswordHelper.Crypt.EncryptString(model.LoginData.UserPassword),
+                        UserLoginStateId = model.LoginData.UserLoginStateId,
+                        UserRoleId = model.UserData.UserRoleId,
+                        UserId = user.Id,
+                        LastLoginDate = DateTime.Now,
+                        RegistrationDate = DateTime.Now
+                    };
+                    db.UserLogins.Add(uLogin);
+                    db.SaveChanges();
+
+                    if (model.ServiceData.SingleFileConversionService)
+                    {
+                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        {
+                            UserId = user.Id,
+                            ServiceId = (int)Models.Enums.ServiceTypes.Single,
+                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                        };
+                        db.UserServiceSubscribes.Add(sb);
+                        db.SaveChanges();
+                    }
+
+                    if (model.ServiceData.BatchFileConversionService)
+                    {
+                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        {
+                            UserId = user.Id,
+                            ServiceId = (int)Models.Enums.ServiceTypes.Batch,
+                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                        };
+                        db.UserServiceSubscribes.Add(sb);
+                        db.SaveChanges();
+                    }
+
+                    if (model.ServiceData.EmailAttachmentFileConversionService)
+                    {
+                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        {
+                            UserId = user.Id,
+                            ServiceId = (int)Models.Enums.ServiceTypes.Email,
+                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                        };
+                        db.UserServiceSubscribes.Add(sb);
+                        db.SaveChanges();
+                    }
+
+                    if (model.ServiceData.FTPFileConversionService)
+                    {
+                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        {
+                            UserId = user.Id,
+                            ServiceId = (int)Models.Enums.ServiceTypes.FTP,
+                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                        };
+                        db.UserServiceSubscribes.Add(sb);
+                        db.SaveChanges();
+                    }
+
+                    var response = GetToUsersData(user.Id);
+                    return serializer.Serialize(response);
+
+                }
+
+
+
+            }
+            catch (Exception exception)
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                return serializer.Serialize(new UserViewModel()
+                {
+                    Error = new ErrorModel()
+                    {
+                        Name = "Error Auth",
+                        ShortDescription = exception.Message,
+                        FullDescription = exception.InnerException?.Message ?? ""
+
+                    }
+                });
+            }
+        }
 
         /// <summary>
         ///     получаем данные пользователя
@@ -50,17 +180,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
                 using (var db = new FCCPortalEntities())
                 {
-//                    var user = (from s in db.Users
-//                                where s.Id == id select s).ToList().LastOrDefault();
-//
-//                    var login = db.UserLogins.FirstOrDefault(x => x.UserId==user.Id);
-
-//                    var user = db.Users
-//                        .Include(x => x.UserLogins.Select(y=>y))
-//                        .Include(x => x.UserLogins.Select(y => y.UserLoginStates))
-//                        .Include(x=>x.UserLogins.Select(y=>y.UserRoleTypes))
-//                        .FirstOrDefault(x => x.Id == id);
-
                     var login = db.UserLogins
                         .Include(x => x.Users)
                         .Include(x => x.UserLoginStates)
@@ -104,7 +223,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 var models = new List<UserViewModel>();
                 using (FCCPortalEntities db = new FCCPortalEntities())
                 {
-                    var users = (from s in db.Users select s).ToList();
+                    var users = db.Users
+                        .Include(x=>x.UserServiceSubscribes)
+                        .ToList();
 
                     foreach (var user in users)
                     {
@@ -113,6 +234,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         model.UserData = GetToUserData(user.Id);
                         model.LoginData = LoginHelper.GetToLoginData(model.UserData.Id);
                         model.UserRoleData = GetToUserRolesData(model.UserData.UserRoleId);
+                        model.ServiceData = UserServiceDataHelper.GetToServiceData(user.UserServiceSubscribes);
 
                         models.Add(model);
                     }
@@ -139,9 +261,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
                 using (FCCPortalEntities db = new FCCPortalEntities())
                 {
-                    var user = (from s in db.Users
-                        where s.Id == id
-                        select s).FirstOrDefault();
+                    var user = db.Users
+                        .Include(x=>x.UserServiceSubscribes)
+                        .FirstOrDefault(x=>x.Id == id);
 
 
                     UserViewModel model = new UserViewModel();
@@ -149,6 +271,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     model.UserData = GetToUserData(user.Id);
                     model.LoginData = LoginHelper.GetToLoginData(model.UserData.Id);
                     model.UserRoleData = GetToUserRolesData(model.UserData.UserRoleId);
+                    model.ServiceData = UserServiceDataHelper.GetToServiceData(user.UserServiceSubscribes);
                     return model;
                 }
                 return null;
@@ -261,59 +384,95 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-//                JavaScriptSerializer serializer = new JavaScriptSerializer();
-//                using (KhingalEntities db = new KhingalEntities())
-//                {
-//                    string cryptPassword = CryptHelpers.PasswordHelper.Crypt.EncryptString(model.LoginData.UserPassword);
-//                    if (model.LoginData.IsGroupAccount)
-//                    {
-//                        var checkForPasswordDuplications = (from s in db.UserLogins
-//                                                            where s.Pasword.Equals(cryptPassword)
-//                                                            select s).FirstOrDefault();
-//                        if (checkForPasswordDuplications != null)
-//                        {
-//                            return serializer.Serialize(new UserViewModel()
-//                            {
-//                                Error = new ErrorModel()
-//                                {
-//                                    Name = "Ошибка обновления пользователя",
-//                                    ShortDescription = "Повторяющийся пароль, пользователь не был обновлен",
-//                                    FullDescription = "Пользователь с групповой ролью должен иметь уникальный пароль! Измените пароль пользователя"
-//                                }
-//                            });
-//                        }
-//                    }
-//                    DB.Users user = db.Users.Find(Convert.ToInt32(model.UserData.Id));
-//                    user.Id = model.UserData.Id;
-//                    if (!String.IsNullOrEmpty(model.UserData.BirthDayDate))
-//                    {
-//                        user.BirthDayDate = DateTime.Parse(model.UserData.BirthDayDate);
-//                    }
-//                    if (!String.IsNullOrEmpty(model.UserData.LastActivityDate))
-//                    {
-//                        user.LastActivityDate = DateTime.Parse(model.UserData.LastActivityDate);
-//                    }
-//                    user.FirstName = model.UserData.FirstName;
-//                    user.SecondName = model.UserData.SecondName;
-//                    user.LastName = model.UserData.LastName;
-//                    user.CompanyUnitId = model.UserData.CompanyUnitId;
-//                    user.UserRoleId = model.UserData.UserRoleId;
-//
-//                    DB.UserLogins uLogin = (from s in db.UserLogins
-//                        where s.UserId == model.UserData.Id
-//                        select s).FirstOrDefault();
-//
-//                    uLogin.UserLogin = model.LoginData.UserLogin;
-//                    uLogin.Pasword = PasswordHelper.Crypt.EncryptString(model.LoginData.UserPassword);
-//                    uLogin.IsGroupAccount = model.LoginData.IsGroupAccount;
-//                    uLogin.UserLoginStateId = model.LoginData.UserLoginStateId;
-//
-//                    db.SaveChanges();
-//                    UserViewModel response = GetToUsersData(model.UserData.Id);
-//
-//                    return serializer.Serialize(response);
-//                };
-                return "";
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                using (FCCPortalEntities db = new FCCPortalEntities())
+                {
+                    UserLogins login = db.UserLogins
+                        .Include(x => x.Users)
+                        .FirstOrDefault(
+                            x =>
+                            x.Users.Id != model.UserData.Id &&
+                                (x.Users.Email.ToLower().Equals(model.UserData.Email.ToLower()) ||
+                                x.UserName.ToLower().Equals(model.UserData.UserName.ToLower())
+                                ));
+
+                    if (login != null)
+                    {
+                        return serializer.Serialize(new UserViewModel()
+                        {
+                            Error = new ErrorModel()
+                            {
+                                Name = "Error registration",
+                                ShortDescription = "User exists",
+                                FullDescription = "User with this credentials already exists"
+
+                            }
+                        });
+                    }
+
+                    DB.Users user = db.Users.Find(Convert.ToInt32(model.UserData.Id));
+                    if (user != null)
+                    {
+                        user.Id = model.UserData.Id;
+                        user.FirstName = model.UserData.FirstName;
+                        user.LastName = model.UserData.LastName;
+                        user.CompanyName = model.UserData.CompanyName;
+                        user.PhoneNumber = model.UserData.PhoneNumber;
+                        user.Email = model.UserData.Email;
+                    }
+                    else
+                    {
+                        return serializer.Serialize(new UserViewModel()
+                        {
+                            Error = new ErrorModel()
+                            {
+                                Name = "Error Auth",
+                                ShortDescription = "User not found",
+                                FullDescription = "User was not found in the database!"
+
+                            }
+                        });
+                    }
+
+
+
+                    DB.UserLogins uLogin = (from s in db.UserLogins
+                                            where s.UserId == model.UserData.Id
+                                            select s).FirstOrDefault();
+
+                    if (uLogin != null)
+                    {
+                        uLogin.UserName = model.LoginData.UserLogin;
+                        uLogin.UserPassword = PasswordHelper.Crypt.EncryptString(model.LoginData.UserPassword);
+                        uLogin.UserRoleId = model.UserData.UserRoleId;
+                        uLogin.UserLoginStateId = model.LoginData.UserLoginStateId;
+                    }
+                    else
+                    {
+                        return serializer.Serialize(new UserViewModel()
+                        {
+                            Error = new ErrorModel()
+                            {
+                                Name = "Error Auth",
+                                ShortDescription = "User's credentials not found",
+                                FullDescription = "User's credentials were not found in the database!"
+
+                            }
+                        });
+                    }
+
+                    db.SaveChanges();
+
+                    var subcribes = (from s in db.UserServiceSubscribes
+                        where s.UserId == model.UserData.Id
+                        select s).ToList();
+
+                    /// here update subscribes
+
+                    var response = GetToUsersData(model.UserData.Id);
+
+                    return serializer.Serialize(response);
+                }
             }
             catch (Exception exception)
             {

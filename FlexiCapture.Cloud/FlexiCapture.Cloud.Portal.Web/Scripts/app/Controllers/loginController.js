@@ -5,9 +5,7 @@
         
         // $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
         $scope.loadData = false;
-       // $scope.khingalFactory = khingalFactory;
         $scope.loginUser = function () {
-            //alert('Work!');
                 if ($scope.loginForm.$invalid) {
                     $scope.submitted = true;
                     return;
@@ -22,10 +20,6 @@
                 $scope.model.UserPassword = $scope.Password;
                 $scope.loadData = false;
 
-              // $state.go("main.dashboard");
-
-                //
-
                 $http({
                     url: url,
                     method: "POST",
@@ -36,11 +30,9 @@
                         $scope.loadData = false;
 
                         var authModel = response.data;
-                        //configureMapArea($scope, authModel);
-                        //console.log($scope.authData);
 
                         if (authModel.Error != null) {
-                            //  BootstrapDialog.show({
+                           
                             var dialog = new BootstrapDialog({
                                 type: BootstrapDialog.TYPE_DANGER,
                                 size: BootstrapDialog.SIZE_SMALL,
@@ -64,24 +56,9 @@
                                 var expireDate = new Date();
                                 expireDate.setDate(expireDate.getDate() + 10);
                                 $cookies.putObject("UserData", authModel, { expires: expireDate, path:"/" });
-                                $cookies.putObject("AuthData", $scope.authData, { expires: expireDate, path: "/" });
                             }
                             $window.sessionStorage.setItem("UserData", JSON.stringify(authModel));
-                            // $window.sessionStorage.setItem("AuthData", JSON.stringify($scope.authData));
 
-                            //добавляем данные из настроек
-
-                        //     for (var i = 0; i < authModel.SettingsData.length; i++) {
-                        //        if (authModel.SettingsData[i].SettingName == "PhoneNumberMask"+authModel.CompanyData.Id) {
-                        //            $scope.khingalFactory.phoneMask = authModel.SettingsData[i].SettingValue;
-                        //            $window.sessionStorage.setItem("PhoneMask", JSON.stringify($scope.khingalFactory.phoneMask));
-                        //            if ($scope.rememberMe) {
-                        //                var expireDate = new Date();
-                        //                expireDate.setDate(expireDate.getDate() + 10);
-                        //                $cookies.putObject("PhoneMask", $scope.khingalFactory.phoneMask, { expires: expireDate, path: "/" });
-                        //            }
-                        //        }
-                        //    }
                             $state.go("main.dashboard");
 
                         }
