@@ -11,6 +11,7 @@ using System.Data.Entity;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 using System.Data.Entity;
 using FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.StoreModels;
 
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
@@ -100,50 +101,46 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
                     if (model.ServiceData.SingleFileConversionService)
                     {
-                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        StoreModel stmModel = new StoreModel()
                         {
                             UserId = user.Id,
                             ServiceId = (int)Models.Enums.ServiceTypes.Single,
-                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                            State = true
                         };
-                        db.UserServiceSubscribes.Add(sb);
-                        db.SaveChanges();
+                        StoreHelper.SetStoreState(stmModel);
                     }
 
                     if (model.ServiceData.BatchFileConversionService)
                     {
-                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        StoreModel stmModel = new StoreModel()
                         {
                             UserId = user.Id,
                             ServiceId = (int)Models.Enums.ServiceTypes.Batch,
-                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                            State = true
                         };
-                        db.UserServiceSubscribes.Add(sb);
-                        db.SaveChanges();
+                        StoreHelper.SetStoreState(stmModel);
                     }
 
                     if (model.ServiceData.EmailAttachmentFileConversionService)
                     {
-                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        StoreModel stmModel = new StoreModel()
                         {
                             UserId = user.Id,
                             ServiceId = (int)Models.Enums.ServiceTypes.Email,
-                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                            State = true
                         };
-                        db.UserServiceSubscribes.Add(sb);
-                        db.SaveChanges();
+                        StoreHelper.SetStoreState(stmModel);
                     }
 
                     if (model.ServiceData.FTPFileConversionService)
                     {
-                        UserServiceSubscribes sb = new UserServiceSubscribes()
+                        StoreModel stmModel = new StoreModel()
                         {
                             UserId = user.Id,
                             ServiceId = (int)Models.Enums.ServiceTypes.FTP,
-                            SubscribeStateId = (int)Models.Enums.SubscribeStates.Subscribe
+                            State = true
                         };
-                        db.UserServiceSubscribes.Add(sb);
-                        db.SaveChanges();
+                        StoreHelper.SetStoreState(stmModel);
                     }
 
                     var response = GetToUsersData(user.Id);
@@ -465,11 +462,38 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
                     db.SaveChanges();
 
-                    var subcribes = (from s in db.UserServiceSubscribes
-                        where s.UserId == model.UserData.Id
-                        select s).ToList();
+                    // updating subscribes
+                    StoreModel stmModel = new StoreModel()
+                    {
+                        UserId = user.Id,
+                        ServiceId = (int)Models.Enums.ServiceTypes.Batch,
+                        State = model.ServiceData.BatchFileConversionService
+                    };
+                    StoreHelper.SetStoreState(stmModel);
 
-                    /// here update subscribes
+                    stmModel = new StoreModel()
+                    {
+                        UserId = user.Id,
+                        ServiceId = (int)Models.Enums.ServiceTypes.Single,
+                        State = model.ServiceData.SingleFileConversionService
+                    };
+                    StoreHelper.SetStoreState(stmModel);
+
+                    stmModel = new StoreModel()
+                    {
+                        UserId = user.Id,
+                        ServiceId = (int)Models.Enums.ServiceTypes.Email,
+                        State = model.ServiceData.EmailAttachmentFileConversionService
+                    };
+                    StoreHelper.SetStoreState(stmModel);
+
+                    stmModel = new StoreModel()
+                    {
+                        UserId = user.Id,
+                        ServiceId = (int)Models.Enums.ServiceTypes.FTP,
+                        State = model.ServiceData.FTPFileConversionService
+                    };
+                    StoreHelper.SetStoreState(stmModel);
 
                     var response = GetToUsersData(model.UserData.Id);
 
