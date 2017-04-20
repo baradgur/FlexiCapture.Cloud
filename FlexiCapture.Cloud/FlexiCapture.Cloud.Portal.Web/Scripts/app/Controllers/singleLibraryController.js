@@ -1,10 +1,6 @@
 (function () {
     var singleLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
-
-
-
-
         var data = [];
         var url = $$ApiUrl + "/documents";
 

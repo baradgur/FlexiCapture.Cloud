@@ -43,9 +43,9 @@
                         <h4>E-mail Conversion</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
                             minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                        <button type="button" disabled ng-class="userData.ServiceData.EmailAttachmentFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(4)">
-                              <span ng-if="userData.ServiceData.EmailAttachmentFileConversionService">Unavailable</span>
-                              <span ng-if="!userData.ServiceData.EmailAttachmentFileConversionService">Unavailable</span>
+                        <button type="button" ng-class="userData.ServiceData.EmailAttachmentFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(4)">
+                              <span ng-if="userData.ServiceData.EmailAttachmentFileConversionService">Active</span>
+                              <span ng-if="!userData.ServiceData.EmailAttachmentFileConversionService">Disabled</span>
                         </button>
                     </div>
                 </div>
@@ -58,9 +58,9 @@
                         <h4>FTP Conversion</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
                             minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                        <button type="button"  disabled  ng-class="userData.ServiceData.FTPFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(3)">
-                              <span ng-if="userData.ServiceData.FTPFileConversionService">Unavailable</span>
-                              <span ng-if="!userData.ServiceData.FTPFileConversionService">Unavailable</span>
+                        <button type="button" ng-class="userData.ServiceData.FTPFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(3)">
+                              <span ng-if="userData.ServiceData.FTPFileConversionService">Active</span>
+                              <span ng-if="!userData.ServiceData.FTPFileConversionService">Disabled</span>
                         </button>
                     </div>
                 </div>

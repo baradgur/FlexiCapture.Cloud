@@ -21,6 +21,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Extension { get; set; }
     
         public virtual ICollection<UserProfileExportFormats> UserProfileExportFormats { get; set; }
     }
