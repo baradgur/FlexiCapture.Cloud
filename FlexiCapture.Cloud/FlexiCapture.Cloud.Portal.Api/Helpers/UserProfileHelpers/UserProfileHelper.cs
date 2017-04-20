@@ -1,45 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
+using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
 {
     public static class UserProfileHelper
     {
-        private static void RecaptchaResponse(string captchaResponse)
+        private static bool RecaptchaResponse(string captchaResponse)
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create("https://www.google.com/recaptcha/api/siteverify");
-                request.ContentType = "application/json";
-                request.Method = "POST";
 
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                using (var client = new WebClient())
                 {
-                    string json = new JavaScriptSerializer().Serialize(new
-                    {
-                        secret = "6LcbtB0UAAAAAMGSWHdQAI7hs7hCZOf76fFsJA-N",
-                        response = captchaResponse
-                    });
+                    var values = new NameValueCollection();
+                    values["secret"] = "6LcbtB0UAAAAAMGSWHdQAI7hs7hCZOf76fFsJA-N";
+                    values["response"] = captchaResponse;
 
-                    streamWriter.Write(json);
-                }
+                    var response = client.UploadValues("https://www.google.com/recaptcha/api/siteverify", values);
 
-                var response = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(response.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
+                    var responseString = Encoding.Default.GetString(response);
+
+                    CaptchaResponseModel ob = new JavaScriptSerializer().Deserialize<CaptchaResponseModel>(responseString);
+                    return ob.success;
                 }
+               
             }
             catch (Exception)
             {
+                return false;
             }
         }
         /// <summary>
@@ -50,21 +49,32 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
         {
             try
             {
+                model.Error = new ErrorModel();
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 //add user to db
                 
-                RecaptchaResponse(model.CaptchaResponse);
-//                model = serializer.Deserialize<UserProfileModel>(UsersHelper.AddUser(model));
-//
-//
-//                if (model.Error != null) return serializer.Serialize(model);
-//                //set default services
-//                ServicesHelper.SetDeafultServiceSubcscribeForNewUser(model.Id);
-//                ManageUserProfileHelper.CreateProfileForNewUser(model.Id);
-//                DefaultProfileHelper.GenerateDefaultProfileForService(model.Id);
-//
-//                return serializer.Serialize(model);
-                return "";
+              bool captchaEx =  RecaptchaResponse(model.CaptchaResponse);
+
+                if (!captchaEx)
+                {
+                    model.Error = new ErrorModel()
+                    {
+                        FullDescription = "Captcha validation failed",
+                        Name = "Captcha failed",
+                        ShortDescription = "Captcha failed"
+                    };
+                    return serializer.Serialize(model);
+                }
+                model = serializer.Deserialize<UserProfileModel>(UsersHelper.AddUser(model));
+
+
+                if (model.Error != null) return serializer.Serialize(model);
+                //set default services
+                ServicesHelper.SetDeafultServiceSubcscribeForNewUser(model.Id);
+                ManageUserProfileHelper.CreateProfileForNewUser(model.Id);
+                DefaultProfileHelper.GenerateDefaultProfileForService(model.Id);
+
+                return serializer.Serialize(model);
             }
             catch (Exception exception)
             {

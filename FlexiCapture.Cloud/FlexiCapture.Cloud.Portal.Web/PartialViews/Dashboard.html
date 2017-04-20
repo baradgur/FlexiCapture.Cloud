@@ -208,11 +208,21 @@
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==5">
 
                         <li>
-                            <a ui-sref="main.dashboard.profile"><i class="fa fa-user fa-fw"></i>Profile Details</a>
+                            <a ui-sref="main.dashboard.profile"><i class="fa fa-user fa-fw"></i> Profile Details</a>
                         </li>
 
                     </ul>
-                    <!--end SFC-->
+                    <!--end PROFILE-->
+
+                     <!--STORE -->
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==6">
+
+                        <li>
+                            <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart"></i> Store Details</a>
+                        </li>
+
+                    </ul>
+                    <!--end PROFILE-->
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>

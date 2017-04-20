@@ -123,6 +123,10 @@
                     $state.go("main.dashboard.profile");
                     break;
 
+                case 6:
+                    $state.go("main.dashboard.store");
+                    break;
+
             }
         };
     };

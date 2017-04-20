@@ -12,6 +12,13 @@
         $scope.defaultProfileId = -1;
         $scope.oldDefaultProfileId = -1;
 
+        $scope.showNewProfile = function (show) {
+
+            $scope.newProfile = show;
+            $scope.NewProfileName = "";
+
+        }
+
 
         var batchProfile = function () {
             $scope.loadData = true;
@@ -27,9 +34,28 @@
 
 
 
-$scope.showFileNamePanel = function () {
+        $scope.showFileNamePanel = function () {
             $scope.showSaveProfilePanel = true;
         }
+
+        $scope.showNewProfile = function (show) {
+
+            $scope.newProfile = show;
+            $scope.NewProfileName = "";
+
+        }
+
+        $scope.updateSettings = function () {
+            //alert(JSON.stringify($scope.profiles));
+            //$scope.currentProfile = {};
+            var data = [];
+            var isEdit = $scope.profileIsChanged;
+            var purl = $$ApiUrl + "/userProfile";
+            manageUserProfileHttpService.manageProfile($http, $scope, data, purl, usSpinnerService, isEdit);
+            $scope.showNewProfile(false);
+            $scope.profileIsChanged = false;
+        }
+
 
         $scope.selectLang = function (id) {
             $scope.showSaveProfilePanel = true;
@@ -72,13 +98,14 @@ $scope.showFileNamePanel = function () {
 
         $scope.hideNewProfilePanel = function () {
             $scope.showSaveProfilePanel = false;
+            $scope.newProfile = false;
         }
 
         $scope.addCustomProfile = function () {
             if ($scope.NewProfileName == "") return;
             $scope.customProfile = $scope.currentProfile;
             $scope.customProfile.Name = $scope.NewProfileName;
-            var data=[];
+            var data = [];
             manageUserProfileHttpService.addCustomProfile($http, $scope, data, customProfileUrl, usSpinnerService);
             $scope.hideNewProfilePanel();
 
@@ -156,19 +183,19 @@ $scope.showFileNamePanel = function () {
                 }
             }
 
-             for (var j = 0; j < $scope.currentProfile.AvailableLanguages.length; j++) {
-                            for (var k = 0; k < $scope.currentProfile.SelectedLanguages.length; k++) {
-                                if ($scope.currentProfile.SelectedLanguages[k].Id == $scope.currentProfile.AvailableLanguages[j].Id)
-                                    $scope.currentProfile.AvailableLanguages[j].Selected = true;
-                            }
-                        }
+            for (var j = 0; j < $scope.currentProfile.AvailableLanguages.length; j++) {
+                for (var k = 0; k < $scope.currentProfile.SelectedLanguages.length; k++) {
+                    if ($scope.currentProfile.SelectedLanguages[k].Id == $scope.currentProfile.AvailableLanguages[j].Id)
+                        $scope.currentProfile.AvailableLanguages[j].Selected = true;
+                }
+            }
 
-                        for (var j = 0; j < $scope.currentProfile.AvailableExportFormats.length; j++) {
-                            for (var k = 0; k < $scope.currentProfile.SelectedExportFormats.length; k++) {
-                                if ($scope.currentProfile.SelectedExportFormats[k].Id == $scope.currentProfile.AvailableExportFormats[j].Id)
-                                    $scope.currentProfile.AvailableExportFormats[j].Selected = true;
-                            }
-                        }
+            for (var j = 0; j < $scope.currentProfile.AvailableExportFormats.length; j++) {
+                for (var k = 0; k < $scope.currentProfile.SelectedExportFormats.length; k++) {
+                    if ($scope.currentProfile.SelectedExportFormats[k].Id == $scope.currentProfile.AvailableExportFormats[j].Id)
+                        $scope.currentProfile.AvailableExportFormats[j].Selected = true;
+                }
+            }
 
             $scope.changeCount = 0;
             $scope.profileIsChanged = false;
@@ -180,7 +207,7 @@ $scope.showFileNamePanel = function () {
 
         var batchFileConversion = function () {
 
-           var uploadForm = document.getElementById('tformdiv');
+            var uploadForm = document.getElementById('tformdiv');
             var uploadForm3 = document.getElementsByTagName('form');
 
             $scope.uploadImages = function () {
@@ -190,7 +217,7 @@ $scope.showFileNamePanel = function () {
                     var data = new FormData();
 
                     for (var i = 0; i < $scope.files.length; i++) {
-                        data.append("uploadedFile"+i, $scope.files[i]);
+                        data.append("uploadedFile" + i, $scope.files[i]);
                     }
                     data.append("serviceId", $scope.serviceStateId);
                     data.append("userId", $scope.userData.UserData.Id);
@@ -239,6 +266,46 @@ $scope.showFileNamePanel = function () {
         };
         batchFileConversion();
 
+        $scope.changeProfile = function () {
+
+
+            for (var i = 0; i < $scope.profiles.length; i++) {
+                if ($scope.currentProfile.Id == $scope.profiles[i].Id) {
+                    $scope.currentProfile = $scope.profiles[i];
+                    $scope.defaultProfileId = $scope.currentProfile.Id;
+                    console.log("Up");
+                    break;
+                }
+            }
+
+
+            $scope.changeCount = 0;
+            $scope.profileIsChanged = false;
+
+        };
+
+        $scope.$watch('$viewContentLoaded',
+            function () {
+                $timeout(function () {
+                    //do something
+                    $scope.changeCount = 0;
+                    $scope.profileIsChanged = false;
+                }, 0);
+            });
+        $scope.$watchCollection('currentProfile', function () {
+
+            if ($scope.changeCount > 0)
+                $scope.profileIsChanged = true;
+            $scope.changeCount++;
+
+        });
+
+        $scope.imChanged = function () {
+            if ($scope.changeCount > 0)
+                $scope.profileIsChanged = true;
+            $scope.changeCount++;
+
+        }
     };
 
 

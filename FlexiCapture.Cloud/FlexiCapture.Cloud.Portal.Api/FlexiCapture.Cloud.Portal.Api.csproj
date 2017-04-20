@@ -151,6 +151,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
     <Compile Include="Controllers\RestoreDataController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UserRegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="DBHelpers\ServicesHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\StoreHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
@@ -276,6 +278,7 @@
     <Compile Include="Helpers\ManageUserHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="Helpers\RequestHelpers\ProfileToRequestModelConverter.cs" />
     <Compile Include="Helpers\RestoreHelpers\RestoreHelper.cs" />
+    <Compile Include="Helpers\StoreHelpers\StoreHelper.cs" />
     <Compile Include="Helpers\UserProfileHelpers\UserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
     <Compile Include="Models\Areas\AreaMapModel.cs" />
@@ -286,7 +289,9 @@
     <Compile Include="Models\Catalogs\LanguageModel.cs" />
     <Compile Include="Models\Documents\DocumentModel.cs" />
     <Compile Include="Models\Errors\ErrorModel.cs" />
+    <Compile Include="Models\GeneralModels\CaptchaResponseModel.cs" />
     <Compile Include="Models\GeneralModels\NewProfileModel.cs" />
+    <Compile Include="Models\StoreModels\StoreModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
     <Compile Include="Models\UserProfiles\UserProfileModel.cs" />

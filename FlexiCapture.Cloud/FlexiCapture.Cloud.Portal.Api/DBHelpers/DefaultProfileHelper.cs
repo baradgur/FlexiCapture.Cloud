@@ -38,7 +38,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
         }
 
-        public static void GenerateDefaultProfileForService(int userId)
+        public static void GenerateDefaultProfileForService(int userId, int serviceId=1)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     db.UserProfileServiceDefault.Add(new UserProfileServiceDefault()
                     {
                         UserProfileId = userProfileId,
-                        ServiceTypeId = 1
+                        ServiceTypeId = serviceId
                     });
                     db.SaveChanges();
 
