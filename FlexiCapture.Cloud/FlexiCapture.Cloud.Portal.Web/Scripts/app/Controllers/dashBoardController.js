@@ -4,18 +4,13 @@
         $scope.profileShowing = false;
         var dash = function () {
             $scope.serviceStateId = 1;
-            //            $scope.khingalFactory = khingalFactory;
-            // $scope.authData = JSON.parse($window.sessionStorage.getItem("AuthData"));
             $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
-            //$scope.khingalFactory.phoneMask = JSON.parse($window.sessionStorage.getItem("PhoneMask"));
-            //alert(JSON.stringify($scope.authData));
-            //alert(JSON.stringify($scope.userData.UserData));
 
             switch ($scope.userData.UserData.UserRoleId) {
                 case 1:
                     $state.go("main.dashboard.users");
                     $scope.serviceStateId = -1;
-                    break
+                    break;
 
                 case 2:
                 case 3:
@@ -23,7 +18,7 @@
                     break;
 
                 default:
-                    //$state.go("main.login");
+                    $state.go("main.login");
                     break;
             }
             $scope.loadData = false;
@@ -59,10 +54,9 @@
 
             $rootScope.sockets = undefined;
             $rootScope.socketsActive = false;
-            $cookies.remove("AuthData", { path: "/" });
             $cookies.remove("UserData", { path: "/" });
             $window.sessionStorage.clear();
-            $state.go('main.login');
+            $state.go("main.login");
         }
         /// add a session timeout
         $scope.started = false;

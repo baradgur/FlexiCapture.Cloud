@@ -28,54 +28,47 @@
             }
         };
         $scope.updateUser = function (row) {
-            // var singleUser = {};
-            // var userId = row.userId;
-            // for(i=0; i<$scope.users.length; i++){
-            //     if($scope.users[i].UserData.Id == userId){
-            //         singleUser = angular.copy($scope.users[i]);
-            //     }
-            // }
-            // $scope.gotoAddNewUserView(singleUser);
+             var singleUser = {};
+             var userId = row.userId;
+             for(i=0; i<$scope.users.length; i++){
+                 if($scope.users[i].UserData.Id == userId){
+                     singleUser = angular.copy($scope.users[i]);
+                 }
+             }
+             $scope.gotoAddNewUserView(singleUser);
         }
 
         //add new user btn event
         $scope.gotoAddNewUserView = function (user) {
             
-            // if (user) {
-            //     $scope.isEdit = true;
-            // }
-            // else {
-            //     user = {};
-            //     $scope.isEdit = false;
-            // }
+             if (user) {
+                 $scope.isEdit = true;
+             }
+             else {
+                 user = {};
+                 $scope.isEdit = false;
+             }
             
-            // $scope.user = user;
+             $scope.user = user;
 
-            // var modalInstance = $uibModal.open({
-            //     templateUrl: 'PartialViews/UserManagement.html',
-            //     controller: manageUserController,
-            //     controllerAs: 'vm',
-            //     scope: $scope,
-            //     resolve: {
-            //         items: function () {
-            //             return $scope.items;
-            //         }
-            //     }
-            // });
+             var modalInstance = $uibModal.open({
+                 templateUrl: 'PartialViews/UserManagement.html',
+                 controller: usersManageController,
+                 controllerAs: 'vm',
+                 scope: $scope,
+                 resolve: {
+                     items: function () {
+                         return data;
+                     }
+                 }
+             });
 
-            // modalInstance.result.then(function () {
-            //     $log.info(JSON.stringify($scope.user));
-            //     if ($scope.user.UserData.Id == undefined) $scope.isEdit = false;
-
-            //     if (!$scope.isEdit) {
-            //         $scope.user.UserData.Id = -1;
-            //         $scope.user.LoginData.UserLoginStateId = 1;// состояние логина Активно
-            //     }
-
-            //     usersHttpService.manageUser($http, $scope, data, url, usSpinnerService, $scope.isEdit);
-            // }, function () {
-            //     $log.info('Modal dismissed at: ' + new Date());
-            // });
+             modalInstance.result.then(function () {
+                 $log.info(JSON.stringify($scope.user));
+                 
+             }, function () {
+                 $log.info('Modal dismissed at: ' + new Date());
+             });
         }
     };
 

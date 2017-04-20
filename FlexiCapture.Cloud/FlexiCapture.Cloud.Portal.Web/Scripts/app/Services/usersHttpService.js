@@ -49,12 +49,14 @@
 
             var $result = $('#eventsResult');
 
-            $('#table').on('all.bs.table', function (e, name, args) {
-                // console.log('Event:', name, ', data:', args);
-            })
-                .on('click-row.bs.table', function (e, row, $element) {
-                    // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.userName));
-                })
+            $('#table').on('all.bs.table',
+                    function(e, name, args) {
+                        // console.log('Event:', name, ', data:', args);
+                    })
+                .on('click-row.bs.table',
+                    function(e, row, $element) {
+                        // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.userName));
+                    });
 
             $('#table').bootstrapTable('resetWidth');
             usSpinnerService.stop('spinner-1');
@@ -64,8 +66,9 @@
     }
 
     //add or Edit user
-    this.manageUser = function ($http, $scope, data, url, usSpinnerService, isEdit) {
-
+    this.manageUser = function (callback, $http, $scope, data, url, usSpinnerService, isEdit) {
+        var responseSuccess = null;
+        var responseNoError = null;
 
         usSpinnerService.spin("spinner-1");
         var methodType = "POST";
@@ -80,10 +83,12 @@
             data: JSON.stringify($scope.user)
         })
             .then(function (response) {
+                    responseSuccess = true;
                 usSpinnerService.stop('spinner-1');
                 $scope.loadData = false;
                 console.log(JSON.stringify(response.data));
                 var user = JSON.parse(response.data);
+                
                 if (user.Error != null) {
                     BootstrapDialog.alert({
                         title: user.Error.Name,
@@ -92,6 +97,7 @@
                     });
                 }
                 else {
+                    responseNoError = true;
                     var dElement = addData(user);
                     if (!isEdit) {
                         data.push(dElement);
@@ -120,14 +126,17 @@
                     $('#table').bootstrapTable('resetWidth');
                     // success
                 }
+                callback(responseSuccess, responseNoError);
             },
             function (response) { // optional
                 // failed
                 usSpinnerService.stop('spinner-1');
                 showNotify("Успех", "Ошибка при добавлении пользователя", "danger");
                 $('#table').bootstrapTable('resetWidth');
+                callback(responseSuccess, responseNoError);
             });
         $('#table').bootstrapTable('resetWidth');
+        
     }
 
     //get to clients list
@@ -142,9 +151,48 @@
         .then(function (response) {
            // alert(JSON.stringify(response.data));
             $scope.currentUser = JSON.parse(response.data);
+            $scope.user = angular.copy($scope.currentUser);
             usSpinnerService.stop('spinner-1');
             $scope.loading = false;
             window.scope = $scope;
         });
+    }
+
+    //edit user profile
+    this.updateUserProfile = function ($http, $scope, url, usSpinnerService) {
+
+
+        usSpinnerService.spin("spinner-1");
+        var methodType = "PUT";
+
+        $http({
+            url: url,
+            method: methodType,
+            contentType: "application/json",
+            data: JSON.stringify($scope.currentUser)
+        })
+            .then(function (response) {
+                usSpinnerService.stop('spinner-1');
+                $scope.loadData = false;
+                console.log(JSON.stringify(response.data));
+                var user = JSON.parse(response.data);
+                if (user.Error != null) {
+                    BootstrapDialog.alert({
+                        title: user.Error.Name,
+                        type: BootstrapDialog.TYPE_WARNING,
+                        message: user.Error.ShortDescription + "</br>" + user.Error.FullDescription
+                    });
+                }
+                else {
+                    $scope.user = user;
+                    showNotify("Успех", user.FirstName + "! Your profile has been successfully updated", "success");
+                    // success
+                }
+            },
+            function (response) { // optional
+                // failed
+                usSpinnerService.stop('spinner-1');
+                showNotify("Успех", "Unable to update profile", "danger");
+            });
     }
 });

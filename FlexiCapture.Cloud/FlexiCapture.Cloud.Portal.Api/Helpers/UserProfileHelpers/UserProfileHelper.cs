@@ -11,6 +11,8 @@ using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
 using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
+using FlexiCapture.Cloud.Portal.Api.DB;
+using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
 {
@@ -41,6 +43,89 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
                 return false;
             }
         }
+            
+        
+
+        public static string UpdateUserProfile(UserProfileModel model)
+        {
+            try
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                using (FCCPortalEntities db = new FCCPortalEntities())
+                {
+
+                    DB.Users user = db.Users.Find(Convert.ToInt32(model.Id));
+                    if (user != null)
+                    {
+                        user.FirstName = model.FirstName;
+                        user.LastName = model.LastName;
+                        user.CompanyName = model.CompanyName;
+                        user.PhoneNumber = model.PhoneNumber;
+                        user.Email = model.Email;
+                    }
+                    else
+                    {
+                        return serializer.Serialize(new UserProfileModel()
+                        {
+                            Error = new ErrorModel()
+                            {
+                                Name = "Error Auth",
+                                ShortDescription = "User not found",
+                                FullDescription = "User was not found in the database!"
+
+                            }
+                        });
+                    }
+
+
+
+                    var uLogin = (from s in db.UserLogins
+                                            where s.UserId == model.Id
+                                            select s).FirstOrDefault();
+
+                    if (uLogin != null)
+                    {
+                        uLogin.UserName = model.UserName;
+                        if (model.Password != null) { 
+                        uLogin.UserPassword = PasswordHelper.Crypt.EncryptString(model.Password);
+                        }
+                    }
+                    else
+                    {
+                        return serializer.Serialize(new UserProfileModel()
+                        {
+                            Error = new ErrorModel()
+                            {
+                                Name = "Error Auth",
+                                ShortDescription = "User's credentials not found",
+                                FullDescription = "User's credentials were not found in the database!"
+
+                            }
+                        });
+                    }
+
+                    db.SaveChanges();
+                    model.Id = user.Id;
+
+                    return serializer.Serialize(model);
+                }
+            }
+            catch (Exception exception)
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                return serializer.Serialize(new UserProfileModel()
+                {
+                    Error = new ErrorModel()
+                    {
+                        Name = "Error Auth",
+                        ShortDescription = exception.Message,
+                        FullDescription = exception.InnerException?.Message ?? ""
+
+                    }
+                });
+            }
+        }
+
         /// <summary>
         /// regiter users
         /// </summary>

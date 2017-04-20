@@ -28,6 +28,11 @@ namespace Khingal.Models.Users
         public UserRolesModel UserRoleData { get; set; }
 
         /// <summary>
+        /// Service data
+        /// </summary>
+        public UserServiceData ServiceData { get; set; }
+
+        /// <summary>
         /// ошибка
         /// </summary>
         public ErrorModel Error { get; set; }

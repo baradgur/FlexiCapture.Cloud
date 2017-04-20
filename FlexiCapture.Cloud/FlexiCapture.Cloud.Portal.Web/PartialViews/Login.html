@@ -9,17 +9,17 @@
                 <div class="panel-body">
                     <form role="form" name="loginForm" novalidate>
                             <div class="form-group" ng-class="{ true: 'has-error'}[loginForm.login.$invalid && (loginForm.login.$touched || submitted)]">
-                                <input class="form-control" id="login" name="login" placeholder="Login" ng-model="Login" type="text" ng-maxlength="16" autofocus required>
-                                <div class="help-block with-errors" ng-messages="loginForm.login.$error" ng-if="loginForm.login.$touched || submitted">
+                                <input class="form-control input-lg" id="login" name="login" placeholder="Login" ng-model="Login" type="text" ng-maxlength="16" autofocus required>
+                                <div class="help-block" ng-messages="loginForm.login.$error" ng-if="loginForm.login.$touched || submitted">
                                     <div ng-message="required">Field "Login" must be filled</div>
                                     <div ng-message="maxlength">Login must be not more 16 characters</div>
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{ true: 'has-error'}[loginForm.userPassword.$invalid && (loginForm.userPassword.$touched || submitted)]">
-                                <input class="form-control" id="password" name="userPassword" placeholder="Password" ng-model="Password" type="password" minlength="3" ng-maxlength="10" required>
-                                <div class="help-block with-errors" ng-messages="loginForm.userPassword.$error" ng-if="loginForm.userPassword.$touched || submitted">
+                                <input class="form-control input-lg" id="password" name="userPassword" placeholder="Password" ng-model="Password" type="password" minlength="6" ng-maxlength="10" required>
+                                <div class="help-block" ng-messages="loginForm.userPassword.$error" ng-if="loginForm.userPassword.$touched || submitted">
                                     <div ng-message="required">Field "Password" must be filled</div>
-                                    <div ng-message="minlength">Password length must be at least 3 characters </div>
+                                    <div ng-message="minlength">Password length must be at least 6 characters </div>
                                     <div ng-message="maxlength">Password length must be no more than 10 characters</div>
                                 </div>
                             </div>
