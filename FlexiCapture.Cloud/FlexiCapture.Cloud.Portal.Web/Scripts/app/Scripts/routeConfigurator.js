@@ -26,7 +26,7 @@
                 //                    $window.sessionStorage.setItem("PhoneMask", JSON.stringify($cookies.getObject("PhoneMask")));
                 //                    $state.go("main.dashboard");
                 //                }
-                                $window.document.title = "Sign In";
+                $window.document.title = "Sign In";
             }
 
         })
@@ -41,7 +41,7 @@
             }
         })
 
-             //restore
+        //restore
         .state("main.restore", {
             url: "/restore",
             templateUrl: "PartialViews/UserRestore.html",
@@ -51,7 +51,7 @@
             }
         })
 
-  
+
 
         ////dashboard container
         .state("main.dashboard", {
@@ -112,7 +112,7 @@
             }
         })
 
-                .state("main.dashboard.adminStatistics", {
+        .state("main.dashboard.adminStatistics", {
             url: "/adminstatistics",
             templateUrl: "PartialViews/AdminStatistics.html",
             onEnter: function ($window, $state) {
@@ -123,7 +123,7 @@
             }
         })
 
-         .state("main.dashboard.single", {
+        .state("main.dashboard.single", {
             url: "/single",
             templateUrl: "PartialViews/SingleFileConversion.html",
             onEnter: function ($window, $state) {
@@ -167,7 +167,7 @@
             }
         })
 
-         .state("main.dashboard.batch", {
+        .state("main.dashboard.batch", {
             url: "/batch",
             templateUrl: "PartialViews/BatchConversion.html",
             onEnter: function ($window, $state) {
@@ -212,7 +212,7 @@
         })
 
 
-        
+
 
         .state("main.dashboard.emaillibrary", {
             url: "/emaillibrary",
@@ -225,6 +225,16 @@
             }
         })
 
+        .state("main.dashboard.emailprofile", {
+            url: "/emailprofile",
+            templateUrl: "PartialViews/EmailProfile.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Email Attachment Profile";
+            }
+        })
         .state("main.dashboard.emailsettings", {
             url: "/emailsettings",
             templateUrl: "PartialViews/EmailSettings.html",
@@ -236,7 +246,8 @@
             }
         })
 
-       
+
+
         .state("main.dashboard.ftplibrary", {
             url: "/ftplibrary",
             templateUrl: "PartialViews/FtpLibrary.html",
@@ -248,6 +259,16 @@
             }
         })
 
+        .state("main.dashboard.ftpprofile", {
+            url: "/ftpprofile",
+            templateUrl: "PartialViews/FtpProfile.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    //$state.go("main.login")
+                }
+                $window.document.title = "Ftp Profile";
+            }
+        })
         .state("main.dashboard.ftpsettings", {
             url: "/ftpsettings",
             templateUrl: "PartialViews/FtpSettings.html",
@@ -259,7 +280,7 @@
             }
         })
 
-   
+
     // use the HTML5 History API
     //$locationProvider.html5Mode(true);
 });

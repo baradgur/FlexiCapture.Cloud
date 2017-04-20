@@ -98,10 +98,12 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/batchSettingsController.js",
 
                   "~/Scripts/app/Controllers/ftpLibraryController.js",
+                  "~/Scripts/app/Controllers/ftpProfileController.js",
                 "~/Scripts/app/Controllers/ftpSettingsController.js",
 
 
                   "~/Scripts/app/Controllers/emailLibraryController.js",
+                  "~/Scripts/app/Controllers/emailProfileController.js",
                 "~/Scripts/app/Controllers/emailSettingsController.js",
                 "~/Scripts/app/Controllers/storeController.js",
                 "~/Scripts/app/Controllers/userProfileController.js",
