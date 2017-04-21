@@ -17,11 +17,13 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public TaskStates()
         {
             this.Tasks = new HashSet<Tasks>();
+            this.Tasks1 = new HashSet<Tasks>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         public virtual ICollection<Tasks> Tasks { get; set; }
+        public virtual ICollection<Tasks> Tasks1 { get; set; }
     }
 }

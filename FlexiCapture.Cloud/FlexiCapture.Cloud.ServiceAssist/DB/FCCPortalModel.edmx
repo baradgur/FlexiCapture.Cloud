@@ -315,7 +315,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tasks">
-              <PropertyRef Name="UserId" />
+              <PropertyRef Name="TaskStateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -819,6 +819,7 @@
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
           <Property Name="ResponseContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TaskStates1" Relationship="FCCPortalModel.FK_Tasks_TaskStates1" FromRole="Tasks" ToRole="TaskStates" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -827,6 +828,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskStates" FromRole="TaskStates" ToRole="Tasks" />
+          <NavigationProperty Name="Tasks1" Relationship="FCCPortalModel.FK_Tasks_TaskStates1" FromRole="TaskStates" ToRole="Tasks" />
         </EntityType>
         <EntityType Name="UserLogins">
           <Key>
@@ -1400,7 +1402,23 @@
             <End Role="UserServiceSubscribeStates" EntitySet="UserServiceSubscribeStates" />
             <End Role="UserServiceSubscribes" EntitySet="UserServiceSubscribes" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tasks_TaskStates1" Association="FCCPortalModel.FK_Tasks_TaskStates1">
+            <End Role="TaskStates" EntitySet="TaskStates" />
+            <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Tasks_TaskStates1">
+          <End Type="FCCPortalModel.TaskStates" Role="TaskStates" Multiplicity="1" />
+          <End Type="FCCPortalModel.Tasks" Role="Tasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tasks">
+              <PropertyRef Name="TaskStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

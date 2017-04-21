@@ -160,7 +160,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     {
                         Name = "Error Auth",
                         ShortDescription = exception.Message,
-                        FullDescription = exception.InnerException?.Message ?? ""
+                        FullDescription = (exception.InnerException == null) ? "" : exception.InnerException.Message.ToString()
 
                     }
                 });
@@ -566,7 +566,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 {
                     var role =
                         (from s in db.UserRoleTypes where s.Id == userRoleId select s).FirstOrDefault();
-
+                    
                     var model = new UserRolesModel
                     {
                         Id = role.Id,

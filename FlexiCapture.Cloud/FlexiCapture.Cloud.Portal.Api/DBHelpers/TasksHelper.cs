@@ -29,7 +29,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     return task.Id;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return -1;
             }

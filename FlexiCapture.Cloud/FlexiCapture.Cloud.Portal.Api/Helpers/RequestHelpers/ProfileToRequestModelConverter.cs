@@ -105,17 +105,20 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers
                 };
 
                 string serverPath = HostingEnvironment.MapPath("~/");
-
+                string url = "http://api.datacapture.cloud/";
                 foreach (var document in documents)
                 {
                     string filePath = Path.Combine(serverPath, document.Path);
- 
+                    string dUrl = Path.Combine(url, document.Path);
+                    dUrl = dUrl.Replace("\\", "/");
+                LogHelper.AddLog("DownloadUrl: "+dUrl);
                     InputFileModel model = new InputFileModel()
                     {
                         Name = document.OriginalFileName,
                         Password = "",
-                        InputUrl = "",
-                        InputBlob = ConvertFileToBase64(filePath),
+                        InputUrl = dUrl,
+                        //InputBlob = ConvertFileToBase64(filePath),
+                        InputBlob = "",
                         InputType = document.DocumentTypes.Name,
                         PostFix = ""
                     };
@@ -124,7 +127,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers
                 }
 
                 var json = JsonConvert.SerializeObject(requestModel);
-                
+                LogHelper.AddLog("JSON: " + json);
+                LogHelper.AddLog("JSON: " + json);
                 return json;
             }
             catch (Exception exception)

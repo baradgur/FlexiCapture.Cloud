@@ -119,8 +119,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
                     {
                         Name = "Error Auth",
                         ShortDescription = exception.Message,
-                        FullDescription = exception.InnerException?.Message ?? ""
-
+                        FullDescription = (exception.InnerException == null) ? "" : exception.InnerException.Message.ToString()
                     }
                 });
             }
@@ -153,7 +152,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
                 model = serializer.Deserialize<UserProfileModel>(UsersHelper.AddUser(model));
 
 
-                if (model.Error != null) return serializer.Serialize(model);
+                if (model.Error != null && model.Error.FullDescription!=null) return serializer.Serialize(model);
+                model.Error = null;
                 //set default services
                 ServicesHelper.SetDeafultServiceSubcscribeForNewUser(model.Id);
                 ManageUserProfileHelper.CreateProfileForNewUser(model.Id);

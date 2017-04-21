@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using FlexiCapture.Cloud.Portal.Api.Helpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
@@ -27,7 +28,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
             return "value";
         }
         // POST api/login
-        public AuthUserModel Post([FromBody]UserLoginModel model)
+        public AuthUserModel Post(UserLoginModel model)
         {
             try
             {
