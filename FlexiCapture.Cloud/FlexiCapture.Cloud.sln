@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.ServiceA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.BatchFileConversionService", "FlexiCapture.Cloud.BatchFileConversionService\FlexiCapture.Cloud.BatchFileConversionService.csproj", "{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.FTPService", "FlexiCapture.Cloud.FTPService\FlexiCapture.Cloud.FTPService.csproj", "{06AFAF7D-876D-453A-97E1-F192901438E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiCapture.Cloud.EmailAttachmentService", "FlexiCapture.Cloud.EmailAttachmentService\FlexiCapture.Cloud.EmailAttachmentService.csproj", "{AC511FE6-8131-4A84-B02A-616FF2DD68AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7EC8897-BDB9-4124-A75C-4CC06BDF505B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AFAF7D-876D-453A-97E1-F192901438E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AFAF7D-876D-453A-97E1-F192901438E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AFAF7D-876D-453A-97E1-F192901438E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AFAF7D-876D-453A-97E1-F192901438E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC511FE6-8131-4A84-B02A-616FF2DD68AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC511FE6-8131-4A84-B02A-616FF2DD68AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC511FE6-8131-4A84-B02A-616FF2DD68AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC511FE6-8131-4A84-B02A-616FF2DD68AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

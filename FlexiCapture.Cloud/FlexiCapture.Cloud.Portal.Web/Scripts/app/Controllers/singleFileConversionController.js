@@ -102,8 +102,8 @@
             if ($scope.NewProfileName == "") return;
             $scope.customProfile = $scope.currentProfile;
             $scope.customProfile.Name = $scope.NewProfileName;
-            var data = [];
-            manageUserProfileHttpService.addCustomProfile($http, $scope, data, customProfileUrl, usSpinnerService);
+            
+            manageUserProfileHttpService.addCustomProfile($http, $scope, customProfileUrl, usSpinnerService);
             $scope.hideNewProfilePanel();
 
         }
