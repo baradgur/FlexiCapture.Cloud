@@ -1,0 +1,98 @@
+﻿<div>
+    <div class="modal-header-primary">
+        <h3>Email settings</h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="settingForm" id="settingForm" role="form" novalidate>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.user_name.$invalid && (settingForm.user_name.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Account Name<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input type="text" name="user_name" class="form-control" placeholder="Account Name" ng-model="setting.AccountName" required>
+                            <div class="help-block" ng-messages="settingForm.user_name.$error" ng-if="settingForm.user_name.$touched || submitted">
+                                <div ng-message="required">Field "Account Name" must be filled</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.email.$invalid && (settingForm.email.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Email<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input type="email" name="email" class="form-control" placeholder="Email" ng-model="setting.Email" required>
+                            <div class="help-block" ng-messages="settingForm.email.$error" ng-if="settingForm.email.$touched || submitted">
+                                <div ng-message="required">Field "Email Address" must be filled</div>
+                                <div ng-message="email">Input correct Email Address</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.password.$invalid && (settingForm.password.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Password<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input type="password" name="password" class="form-control" placeholder="Password" ng-model="setting.Password"
+                                   minlength="3" ng-maxlength="10" pattern="\S+" required>
+                            <div class="help-block" ng-messages="settingForm.password.$error" ng-if="settingForm.password.$touched || submitted">
+                                <div ng-message="required">Field "Password" must be filled</div>
+                                <div ng-message="minlength">Password length must be at least 3 characters </div>
+                                <div ng-message="maxlength">Password length must be no more than 10 characters</div>
+                                <div ng-message="pattern">Password must not contain spaces</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.host.$invalid && (settingForm.host.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Host<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input type="text" name="host" class="form-control" placeholder="Host" ng-model="setting.Host" required>
+                            <div class="help-block" ng-messages="settingForm.host.$error" ng-if="settingForm.host.$touched || submitted">
+                                <div ng-message="required">Field "Host" must be filled</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.port.$invalid && (settingForm.port.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Port<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input type="number" name="port" class="form-control" placeholder="987" ng-model="setting.Port" required>
+                            <div class="help-block" ng-messages="settingForm.port.$error" ng-if="settingForm.port.$touched || submitted">
+                                <div ng-message="required">Field "Port" must be filled</div>
+                                <div ng-message="number">Please enter correct port</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">SSL Setings</label>
+                        <div class="col-sm-7">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Use SSL
+                                    <div class="material-switch pull-right">
+                                        <input id="useSSL" type="checkbox" ng-model="setting.UseSSL" />
+                                        <label for="useSSL" class="label-success"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="form-group">
+                        <div class="form-group col-sm-10 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-primary" ng-click="vm.confirm();">Save</button>
+                            <button type="button" class="btn btn-primary btn-outline" ng-click="vm.cancel();">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <div>
+                    <p class="form-description-text">Signed fields <i class="red-star">*</i> must be filled</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -101,11 +101,13 @@ namespace FlexiCapture.Cloud.Portal.Web
                   "~/Scripts/app/Controllers/ftpLibraryController.js",
                   "~/Scripts/app/Controllers/ftpProfileController.js",
                 "~/Scripts/app/Controllers/ftpSettingsController.js",
-
+                "~/Scripts/app/Controllers/ftpSettingManageController.js",
 
                   "~/Scripts/app/Controllers/emailLibraryController.js",
                   "~/Scripts/app/Controllers/emailProfileController.js",
                 "~/Scripts/app/Controllers/emailSettingsController.js",
+                "~/Scripts/app/Controllers/emailSettingManageController.js",
+
                 "~/Scripts/app/Controllers/storeController.js",
                 "~/Scripts/app/Controllers/userProfileController.js",
                 "~/Scripts/app/Controllers/userRestoreController.js",
@@ -120,6 +122,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Services/manageFilesHttpService.js",
                 "~/Scripts/app/Services/documentsHttpService.js",
                 "~/Scripts/app/Services/manageUserProfileHttpService.js",
+                "~/Scripts/app/Services/ftpSettingsHttpService.js",
+                "~/Scripts/app/Services/emailSettingsHttpService.js",
                 "~/Scripts/app/Services/storeHttpService.js"
                 //manageFilesHttpService
                 )

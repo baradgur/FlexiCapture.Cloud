@@ -160,7 +160,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     {
                         Name = "Error Auth",
                         ShortDescription = exception.Message,
-                        FullDescription = exception.InnerException?.Message ?? ""
+                        FullDescription = (exception.InnerException == null) ? "" : exception.InnerException.Message.ToString()
 
                     }
                 });

@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -147,6 +148,8 @@
     <Compile Include="Controllers\CustomProfileController.cs" />
     <Compile Include="Controllers\DefaultProfileController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
+    <Compile Include="Controllers\EmailSettingsController.cs" />
+    <Compile Include="Controllers\FTPSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
@@ -183,6 +186,9 @@
     <Compile Include="DB\DocumentTypes.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\sysdiagrams.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\ExportFormatsCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -201,6 +207,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\FTPSettings.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\LanguagesCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -217,9 +226,6 @@
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Settings.cs">
-      <DependentUpon>FCCPortalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Tasks.cs">
@@ -279,6 +285,8 @@
     <Compile Include="Helpers\ManageUserHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="Helpers\RequestHelpers\ProfileToRequestModelConverter.cs" />
     <Compile Include="Helpers\RestoreHelpers\RestoreHelper.cs" />
+    <Compile Include="Helpers\ServiceSettingsHelper\EmailSettingsHelper.cs" />
+    <Compile Include="Helpers\ServiceSettingsHelper\FTPSettingsHelper.cs" />
     <Compile Include="Helpers\StoreHelpers\StoreHelper.cs" />
     <Compile Include="Helpers\UserProfileHelpers\UserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
@@ -289,9 +297,14 @@
     <Compile Include="Models\Catalogs\PrintTypeModel.cs" />
     <Compile Include="Models\Catalogs\LanguageModel.cs" />
     <Compile Include="Models\Documents\DocumentModel.cs" />
+    <Compile Include="Models\Enums\EnumModels.cs" />
     <Compile Include="Models\Errors\ErrorModel.cs" />
     <Compile Include="Models\GeneralModels\CaptchaResponseModel.cs" />
     <Compile Include="Models\GeneralModels\NewProfileModel.cs" />
+    <Compile Include="Models\SettingsModels\EmailSettingsModel.cs" />
+    <Compile Include="Models\SettingsModels\FTPSettingsModel.cs" />
+    <Compile Include="Models\SettingsModels\EmailSettingsViewModel.cs" />
+    <Compile Include="Models\SettingsModels\FTPSettingsViewModel.cs" />
     <Compile Include="Models\StoreModels\StoreModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
@@ -310,6 +323,16 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DB\FCCPortalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\FCCPortalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -330,18 +353,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FCCPortalModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DB\FCCPortalModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="DB\FCCPortalModel.edmx.diagram">
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="DB\FCCPortalModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
