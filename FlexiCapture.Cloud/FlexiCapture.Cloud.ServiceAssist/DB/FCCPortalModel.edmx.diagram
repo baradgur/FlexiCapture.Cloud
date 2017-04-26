@@ -57,6 +57,7 @@
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceStates_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserSettings_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceSubscribes_UserServiceSubscribeStates" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCPortalModel.FK_Tasks_TaskStates1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

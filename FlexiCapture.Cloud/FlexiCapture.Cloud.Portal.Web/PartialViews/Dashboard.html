@@ -245,10 +245,10 @@
     </div>
     <script type="text/ng-template" id="warning-dialog.html">
         <div class="modal-header">
-            <h3>Вы не ничего не делаете!</h3>
+            <h3>You are idle !</h3>
         </div>
         <div idle-countdown="countdown" ng-init="countdown=30" class="modal-body">
-            Выход через {{countdown}} с.
+            Session will be closed in {{countdown}} sec.
             <uib-progressbar max="30" value="countdown" animate="true" class="progress-striped active"></uib-progressbar>
         </div>
 

@@ -21,8 +21,9 @@
                 $scope.loadData = false;
 
                 $http({
-                    url: url,
-                    method: "POST",
+                   url: url,
+                    method: 'POST',
+					//headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     data: $scope.model
                 })
                     .then(function (response) {

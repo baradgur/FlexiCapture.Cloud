@@ -566,7 +566,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 {
                     var role =
                         (from s in db.UserRoleTypes where s.Id == userRoleId select s).FirstOrDefault();
-
+                    
                     var model = new UserRolesModel
                     {
                         Id = role.Id,

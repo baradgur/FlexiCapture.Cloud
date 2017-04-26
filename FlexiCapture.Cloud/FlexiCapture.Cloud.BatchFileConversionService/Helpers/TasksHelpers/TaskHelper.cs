@@ -120,6 +120,9 @@ namespace FlexiCapture.Cloud.BatchFileConversionService.Helpers.TasksHelpers
                     //update documents
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id,3);
                 }
+                else if (model.Status.Equals("Processing"))
+                {
+                }
                 else if (!model.Status.Equals("Submitted"))
                 {
                     LogHelper.AddLog("Error in JobStatus: "+jobStatus);

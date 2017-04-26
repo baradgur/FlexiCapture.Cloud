@@ -1,5 +1,5 @@
 (function () {
-    var batchFileConversionController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
+    var batchFileConversionController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
 
         $scope.profiles = []
         $scope.changeCount = 0;
@@ -105,8 +105,8 @@
             if ($scope.NewProfileName == "") return;
             $scope.customProfile = $scope.currentProfile;
             $scope.customProfile.Name = $scope.NewProfileName;
-            var data = [];
-            manageUserProfileHttpService.addCustomProfile($http, $scope, data, customProfileUrl, usSpinnerService);
+            
+            manageUserProfileHttpService.addCustomProfile($http, $scope, customProfileUrl, usSpinnerService);
             $scope.hideNewProfilePanel();
 
         }
@@ -309,5 +309,5 @@
     };
 
 
-    fccApp.controller("batchFileConversionController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", batchFileConversionController]);
+    fccApp.controller("batchFileConversionController", ["$scope", "$http","$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", batchFileConversionController]);
 }())
