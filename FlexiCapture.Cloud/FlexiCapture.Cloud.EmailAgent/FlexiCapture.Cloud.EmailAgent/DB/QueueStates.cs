@@ -14,6 +14,7 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
     
     public partial class QueueStates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public QueueStates()
         {
             this.Queue = new HashSet<Queue>();
@@ -22,6 +23,7 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
         public int Id { get; set; }
         public string Description { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Queue> Queue { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FCCPortalEntities : DbContext
+    public partial class FCCPortalEntities2 : DbContext
     {
-        public FCCPortalEntities()
-            : base("name=FCCPortalEntities")
+        public FCCPortalEntities2()
+            : base("name=FCCPortalEntities2")
         {
         }
     

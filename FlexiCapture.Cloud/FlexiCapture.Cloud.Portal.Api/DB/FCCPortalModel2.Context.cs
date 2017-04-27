@@ -18,7 +18,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public FCCPortalEntities2()
             : base("name=FCCPortalEntities2")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

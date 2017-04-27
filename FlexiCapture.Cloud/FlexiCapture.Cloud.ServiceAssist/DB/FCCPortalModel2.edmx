@@ -1367,7 +1367,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FCCPortalEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FCCPortalEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AnalysisModeCatalog" EntityType="Self.AnalysisModeCatalog" />
           <EntitySet Name="DocumentCategories" EntityType="Self.DocumentCategories" />
           <EntitySet Name="Documents" EntityType="Self.Documents" />
@@ -1526,7 +1526,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FCCPortalModelStoreContainer" CdmEntityContainer="FCCPortalEntities">
+        <EntityContainerMapping StorageEntityContainer="FCCPortalModelStoreContainer" CdmEntityContainer="FCCPortalEntities2">
           <EntitySetMapping Name="AnalysisModeCatalog">
             <EntityTypeMapping TypeName="FCCPortalModel.AnalysisModeCatalog">
               <MappingFragment StoreEntitySet="AnalysisModeCatalog">

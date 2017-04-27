@@ -17,7 +17,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var t = db.ExportFormatsCatalog.FirstOrDefault(x => x.Name.ToLower().Equals(type.ToLower()));
                     if (t!=null)
