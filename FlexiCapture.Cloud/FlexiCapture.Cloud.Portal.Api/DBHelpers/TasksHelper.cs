@@ -15,7 +15,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db =new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     Tasks task = new Tasks()
                     {
@@ -42,7 +42,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
 
@@ -65,7 +65,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
 

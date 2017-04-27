@@ -14,6 +14,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
     public partial class UserLoginStates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserLoginStates()
         {
             this.UserLogins = new HashSet<UserLogins>();
@@ -22,6 +23,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public int Id { get; set; }
         public string StateName { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserLogins> UserLogins { get; set; }
     }
 }

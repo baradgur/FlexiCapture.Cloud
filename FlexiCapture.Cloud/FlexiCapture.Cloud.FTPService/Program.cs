@@ -9,15 +9,19 @@ namespace FlexiCapture.Cloud.FTPService
 {
     static class Program
     {
+        public static FCCFtpService Service;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main()
         {
+            Service = new FCCFtpService();
+            FlexiCapture.Cloud.FTPService.Helpers.ProcessorHelper.MakeProcessing();
+
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
-                new FCCFtpService() 
+                Service
             };
             ServiceBase.Run(ServicesToRun);
         }

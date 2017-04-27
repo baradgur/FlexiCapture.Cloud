@@ -14,6 +14,32 @@ namespace FlexiCapture.Cloud.ServiceAssist
     {
         #region tasks
         /// <summary>
+        /// add task to db
+        /// </summary>
+        public int AddTask(int userId, int serviceId)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities())
+                {
+                    Tasks task = new Tasks()
+                    {
+                        CreationDate = DateTime.Now,
+                        TaskStateId = 1,
+                        UserId = userId,
+                        ServiceId = serviceId
+                    };
+                    db.Tasks.Add(task);
+                    db.SaveChanges();
+                    return task.Id;
+                }
+            }
+            catch (Exception exception)
+            {
+                return -1;
+            }
+        }
+        /// <summary>
         /// get to not executed tasks
         /// </summary>
         /// <param name="serviceId"></param>

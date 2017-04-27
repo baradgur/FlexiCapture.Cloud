@@ -17,9 +17,35 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
     public static class DocumentsHelper
     {
         /// <summary>
+        /// add task to db
+        /// </summary>
+        public static int AddTask(int userId, int serviceId)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    Tasks task = new Tasks()
+                    {
+                        CreationDate = DateTime.Now,
+                        TaskStateId = 1,
+                        UserId = userId,
+                        ServiceId = serviceId
+                    };
+                    db.Tasks.Add(task);
+                    db.SaveChanges();
+                    return task.Id;
+                }
+            }
+            catch (Exception exception)
+            {
+                return -1;
+            }
+        }
+        /// <summary>
         ///     process files
         /// </summary>
-        public static bool ProcessFile(int userId, int serviceId, ManageUserProfileModel profile, HttpPostedFile file,string s)
+        public static bool ProcessFile(int userId, int serviceId, ManageUserProfileModel profile, HttpPostedFile file, string s)
         {
             try
             {

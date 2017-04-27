@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Web.Script.Serialization;
 using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
+using FlexiCapture.Cloud.ServiceAssist;
 
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
@@ -24,7 +25,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.LanguagesCatalog.Select(x=>x).ToList();    
                 }
@@ -46,7 +47,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.PrintTypeCatalog.Select(x => x).ToList();
                 }
@@ -68,7 +69,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new  FCCPortalEntities2())
                 {
                     return db.ExportFormatsCatalog.Select(x => x).ToList();
                 }
@@ -90,7 +91,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.RotationTypeCatalog.Select(x => x).ToList();
                 }
@@ -110,7 +111,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.RotationTypeCatalog.FirstOrDefault();
                 }
@@ -132,7 +133,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.AnalysisModeCatalog.Select(x => x).ToList();
                 }
@@ -152,7 +153,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.AnalysisModeCatalog.FirstOrDefault();
                 }
@@ -174,7 +175,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     UserProfiles profile = db.UserProfiles
                         .Include(x=>x.AnalysisModeCatalog)
@@ -202,7 +203,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.UserProfiles.Where(x => x.UserId == userId).Select(x => x.Id).ToList();
                 }
@@ -221,7 +222,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     int profileId = model.Id;
 
@@ -360,7 +361,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 model.UserId = data.UserId;
                 model.Name = data.ProfileName;
 
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     UserProfiles profile = new UserProfiles();
 
@@ -405,7 +406,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
                
 
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     UserProfiles profile = new UserProfiles();
 

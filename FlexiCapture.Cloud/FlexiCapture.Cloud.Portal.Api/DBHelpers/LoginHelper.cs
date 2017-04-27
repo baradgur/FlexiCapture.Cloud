@@ -24,7 +24,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var cryptPass = PasswordHelper.Crypt.EncryptString(model.UserPassword);
 
@@ -59,7 +59,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
                 if (userId == null)
                     return null;
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
 //                   
                     UserLogins login =
@@ -103,7 +103,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             try
             {
                 List<UserLoginStatesModel> models = new List<UserLoginStatesModel>();
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var states =
                         (from s in db.UserLoginStates

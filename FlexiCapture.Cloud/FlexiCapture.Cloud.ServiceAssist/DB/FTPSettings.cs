@@ -12,19 +12,17 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class DocumentTypes
+    public partial class FTPSettings
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DocumentTypes()
-        {
-            this.Documents = new HashSet<Documents>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Extension { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string Host { get; set; }
+        public Nullable<int> Port { get; set; }
+        public string Password { get; set; }
+        public string Path { get; set; }
+        public bool UseSSL { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Documents> Documents { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

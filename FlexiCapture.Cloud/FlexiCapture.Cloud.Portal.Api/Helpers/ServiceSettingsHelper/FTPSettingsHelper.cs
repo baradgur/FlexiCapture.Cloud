@@ -24,7 +24,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                 FTPSettingsViewModel model = new FTPSettingsViewModel();
                 model.Settings = new List<FTPSettingsModel>();
 
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var settings = (from s in db.FTPSettings
                                     where s.UserId == userId
@@ -69,7 +69,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var setting = (from s in db.FTPSettings
                         where s.Id == model.Id
@@ -103,7 +103,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var dbModel = new FTPSettings()
                     {
@@ -132,7 +132,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var setting = (from s in db.FTPSettings
                         where s.Id == id

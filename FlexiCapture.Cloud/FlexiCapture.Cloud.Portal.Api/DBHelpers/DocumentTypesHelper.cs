@@ -19,7 +19,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     List<DocumentTypes> types = db.DocumentTypes.Select(x => x).ToList();
                     foreach (var type in types)
