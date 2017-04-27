@@ -17,7 +17,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             try
             {
                 
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     if (db.Log.Count() > 1000)
                     {

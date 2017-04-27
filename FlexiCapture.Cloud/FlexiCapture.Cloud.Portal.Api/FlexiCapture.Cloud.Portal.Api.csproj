@@ -196,7 +196,7 @@
     <Compile Include="DB\DocumentTypes.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
+    <Compile Include="DB\EmailSettings.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ExportFormatsCatalog.cs">

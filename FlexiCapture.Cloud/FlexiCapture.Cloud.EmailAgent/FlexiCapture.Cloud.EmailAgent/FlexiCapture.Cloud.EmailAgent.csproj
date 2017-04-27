@@ -33,15 +33,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ImapX">
       <HintPath>E:\Downloads\ImapX Sample application 2.0.0.16 Binaries\ImapX.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -110,9 +114,6 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DB\Tasks.cs">
       <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
     </Compile>
@@ -167,18 +168,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FCCEmailAgentModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DB\FCCEmailAgentModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
-      <LastGenOutput>FCCEmailAgentModel.Context.cs</LastGenOutput>
-    </None>
     <None Include="DB\FCCEmailAgentModel.edmx.diagram">
       <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
-    </None>
-    <None Include="DB\FCCEmailAgentModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
-      <LastGenOutput>FCCEmailAgentModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -193,7 +184,18 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DB\FCCEmailAgentModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
+      <LastGenOutput>FCCEmailAgentModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\FCCEmailAgentModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
+      <LastGenOutput>FCCEmailAgentModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

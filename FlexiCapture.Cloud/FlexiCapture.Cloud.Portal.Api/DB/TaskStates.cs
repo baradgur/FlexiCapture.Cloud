@@ -14,16 +14,16 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
     public partial class TaskStates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TaskStates()
         {
             this.Tasks = new HashSet<Tasks>();
-            this.Tasks1 = new HashSet<Tasks>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks { get; set; }
-        public virtual ICollection<Tasks> Tasks1 { get; set; }
     }
 }

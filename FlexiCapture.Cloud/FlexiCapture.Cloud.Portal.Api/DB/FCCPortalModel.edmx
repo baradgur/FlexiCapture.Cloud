@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -51,6 +51,19 @@
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Extension" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="EmailSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AccountName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="Host" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Port" Type="int" Nullable="false" />
+          <Property Name="UseSSL" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="ExportFormatsCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -58,6 +71,19 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Extension" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FTPSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Host" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Port" Type="int" />
+          <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="UseSSL" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -103,16 +129,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SettingName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="SettingValue" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Tasks">
           <Key>
@@ -295,6 +311,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmailSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="EmailSettings" Type="Self.EmailSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailSettings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FTPSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FTPSettings" Type="Self.FTPSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPSettings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tasks_ServiceTypes">
           <End Role="ServiceTypes" Type="Self.ServiceTypes" Multiplicity="1" />
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
@@ -315,7 +355,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tasks">
-              <PropertyRef Name="TaskStateId" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -553,14 +593,15 @@
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentStates" EntityType="Self.DocumentStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentTypes" EntityType="Self.DocumentTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailSettings" EntityType="Self.EmailSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExportFormatsCatalog" EntityType="Self.ExportFormatsCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FTPSettings" EntityType="Self.FTPSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguagesCatalog" EntityType="Self.LanguagesCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrintTypeCatalog" EntityType="Self.PrintTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
@@ -590,6 +631,14 @@
           <AssociationSet Name="FK_Documents_Tasks" Association="Self.FK_Documents_Tasks">
             <End Role="Tasks" EntitySet="Tasks" />
             <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailSettings_Users" Association="Self.FK_EmailSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="EmailSettings" EntitySet="EmailSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FTPSettings_Users" Association="Self.FK_FTPSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FTPSettings" EntitySet="FTPSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_Tasks_ServiceTypes" Association="Self.FK_Tasks_ServiceTypes">
             <End Role="ServiceTypes" EntitySet="ServiceTypes" />
@@ -676,10 +725,11 @@
             <End Role="UserSettings" EntitySet="UserSettings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -734,6 +784,20 @@
           <Property Name="Extension" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Documents" Relationship="Self.FK_Documents_DocumentTypes" FromRole="DocumentTypes" ToRole="Documents" />
         </EntityType>
+        <EntityType Name="EmailSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AccountName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Host" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Port" Type="Int32" Nullable="false" />
+          <Property Name="UseSSL" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_EmailSettings_Users" FromRole="EmailSettings" ToRole="Users" />
+        </EntityType>
         <EntityType Name="ExportFormatsCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -742,6 +806,20 @@
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Extension" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfileExportFormats" Relationship="Self.FK_UserProfileExportFormats_ExportFormatsCatalog" FromRole="ExportFormatsCatalog" ToRole="UserProfileExportFormats" />
+        </EntityType>
+        <EntityType Name="FTPSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Host" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Port" Type="Int32" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UseSSL" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_FTPSettings_Users" FromRole="FTPSettings" ToRole="Users" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -794,16 +872,6 @@
           <Property Name="SettingName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SettingValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
@@ -819,7 +887,6 @@
           <NavigationProperty Name="ServiceTypes" Relationship="Self.FK_Tasks_ServiceTypes" FromRole="Tasks" ToRole="ServiceTypes" />
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
-          <NavigationProperty Name="TaskStates1" Relationship="FCCPortalModel.FK_Tasks_TaskStates1" FromRole="Tasks" ToRole="TaskStates" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -828,7 +895,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskStates" FromRole="TaskStates" ToRole="Tasks" />
-          <NavigationProperty Name="Tasks1" Relationship="FCCPortalModel.FK_Tasks_TaskStates1" FromRole="TaskStates" ToRole="Tasks" />
         </EntityType>
         <EntityType Name="UserLogins">
           <Key>
@@ -939,6 +1005,8 @@
           <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompanyName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EmailSettings" Relationship="Self.FK_EmailSettings_Users" FromRole="Users" ToRole="EmailSettings" />
+          <NavigationProperty Name="FTPSettings" Relationship="Self.FK_FTPSettings_Users" FromRole="Users" ToRole="FTPSettings" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Users" FromRole="Users" ToRole="Tasks" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogins_Users" FromRole="Users" ToRole="UserLogins" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.FK_UserProfiles_Users" FromRole="Users" ToRole="UserProfiles" />
@@ -1034,6 +1102,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmailSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="EmailSettings" Type="Self.EmailSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailSettings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserProfileExportFormats_ExportFormatsCatalog">
           <End Role="ExportFormatsCatalog" Type="Self.ExportFormatsCatalog" Multiplicity="1" />
           <End Role="UserProfileExportFormats" Type="Self.UserProfileExportFormats" Multiplicity="*" />
@@ -1043,6 +1123,18 @@
             </Principal>
             <Dependent Role="UserProfileExportFormats">
               <PropertyRef Name="ExportFormatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FTPSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FTPSettings" Type="Self.FTPSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPSettings">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1280,14 +1372,15 @@
           <EntitySet Name="Documents" EntityType="Self.Documents" />
           <EntitySet Name="DocumentStates" EntityType="Self.DocumentStates" />
           <EntitySet Name="DocumentTypes" EntityType="Self.DocumentTypes" />
+          <EntitySet Name="EmailSettings" EntityType="Self.EmailSettings" />
           <EntitySet Name="ExportFormatsCatalog" EntityType="Self.ExportFormatsCatalog" />
+          <EntitySet Name="FTPSettings" EntityType="Self.FTPSettings" />
           <EntitySet Name="LanguagesCatalog" EntityType="Self.LanguagesCatalog" />
           <EntitySet Name="Log" EntityType="Self.Log" />
           <EntitySet Name="PrintTypeCatalog" EntityType="Self.PrintTypeCatalog" />
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" />
           <EntitySet Name="Settings" EntityType="Self.Settings" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" />
@@ -1322,9 +1415,17 @@
             <End Role="Tasks" EntitySet="Tasks" />
             <End Role="Documents" EntitySet="Documents" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmailSettings_Users" Association="Self.FK_EmailSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="EmailSettings" EntitySet="EmailSettings" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserProfileExportFormats_ExportFormatsCatalog" Association="Self.FK_UserProfileExportFormats_ExportFormatsCatalog">
             <End Role="ExportFormatsCatalog" EntitySet="ExportFormatsCatalog" />
             <End Role="UserProfileExportFormats" EntitySet="UserProfileExportFormats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FTPSettings_Users" Association="Self.FK_FTPSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FTPSettings" EntitySet="FTPSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_UserProfileLanguages_LanguagesCatalog" Association="Self.FK_UserProfileLanguages_LanguagesCatalog">
             <End Role="LanguagesCatalog" EntitySet="LanguagesCatalog" />
@@ -1402,23 +1503,7 @@
             <End Role="UserServiceSubscribeStates" EntitySet="UserServiceSubscribeStates" />
             <End Role="UserServiceSubscribes" EntitySet="UserServiceSubscribes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tasks_TaskStates1" Association="FCCPortalModel.FK_Tasks_TaskStates1">
-            <End Role="TaskStates" EntitySet="TaskStates" />
-            <End Role="Tasks" EntitySet="Tasks" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Tasks_TaskStates1">
-          <End Type="FCCPortalModel.TaskStates" Role="TaskStates" Multiplicity="1" />
-          <End Type="FCCPortalModel.Tasks" Role="Tasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TaskStates">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tasks">
-              <PropertyRef Name="TaskStateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1476,12 +1561,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EmailSettings">
+            <EntityTypeMapping TypeName="FCCPortalModel.EmailSettings">
+              <MappingFragment StoreEntitySet="EmailSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="UseSSL" ColumnName="UseSSL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ExportFormatsCatalog">
             <EntityTypeMapping TypeName="FCCPortalModel.ExportFormatsCatalog">
               <MappingFragment StoreEntitySet="ExportFormatsCatalog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Extension" ColumnName="Extension" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FTPSettings">
+            <EntityTypeMapping TypeName="FCCPortalModel.FTPSettings">
+              <MappingFragment StoreEntitySet="FTPSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="UseSSL" ColumnName="UseSSL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1533,17 +1646,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SettingName" ColumnName="SettingName" />
                 <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="FCCPortalModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

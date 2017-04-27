@@ -14,6 +14,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     
     public partial class TaskStates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TaskStates()
         {
             this.Tasks = new HashSet<Tasks>();
@@ -23,7 +24,9 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public int Id { get; set; }
         public string Name { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks1 { get; set; }
     }
 }

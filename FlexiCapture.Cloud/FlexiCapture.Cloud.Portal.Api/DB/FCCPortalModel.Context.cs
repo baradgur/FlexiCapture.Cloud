@@ -18,7 +18,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public FCCPortalEntities()
             : base("name=FCCPortalEntities")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -31,14 +30,15 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<DocumentStates> DocumentStates { get; set; }
         public virtual DbSet<DocumentTypes> DocumentTypes { get; set; }
+        public virtual DbSet<EmailSettings> EmailSettings { get; set; }
         public virtual DbSet<ExportFormatsCatalog> ExportFormatsCatalog { get; set; }
+        public virtual DbSet<FTPSettings> FTPSettings { get; set; }
         public virtual DbSet<LanguagesCatalog> LanguagesCatalog { get; set; }
         public virtual DbSet<Log> Log { get; set; }
         public virtual DbSet<PrintTypeCatalog> PrintTypeCatalog { get; set; }
         public virtual DbSet<RotationTypeCatalog> RotationTypeCatalog { get; set; }
         public virtual DbSet<ServiceTypes> ServiceTypes { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<TaskStates> TaskStates { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }

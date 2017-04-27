@@ -14,6 +14,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
     public partial class LanguagesCatalog
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LanguagesCatalog()
         {
             this.UserProfileLanguages = new HashSet<UserProfileLanguages>();
@@ -23,6 +24,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public string Name { get; set; }
         public string ShortName { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileLanguages> UserProfileLanguages { get; set; }
     }
 }
