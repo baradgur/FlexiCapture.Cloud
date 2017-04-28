@@ -21,7 +21,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     return db.Settings.FirstOrDefault(x => x.SettingName.ToLower().Equals(name.ToLower())).SettingValue;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return "";
             }

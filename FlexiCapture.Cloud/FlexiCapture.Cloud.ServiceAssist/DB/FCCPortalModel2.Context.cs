@@ -18,7 +18,6 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public FCCPortalEntities2()
             : base("name=FCCPortalEntities2")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

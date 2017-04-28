@@ -355,7 +355,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tasks">
-              <PropertyRef Name="UserId" />
+              <PropertyRef Name="TaskStateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1218,7 +1218,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tasks">
-              <PropertyRef Name="UserId" />
+              <PropertyRef Name="TaskStateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

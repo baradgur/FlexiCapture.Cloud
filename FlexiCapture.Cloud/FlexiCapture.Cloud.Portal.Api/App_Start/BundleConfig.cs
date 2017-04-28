@@ -3,6 +3,7 @@ using System.Web.Optimization;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers;
+using FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper;
 
 namespace FlexiCapture.Cloud.Portal.Api
 {
@@ -12,7 +13,7 @@ namespace FlexiCapture.Cloud.Portal.Api
         public static void RegisterBundles(BundleCollection bundles)
         {
 
-
+            //string p = PasswordHelper.Crypt.EncryptString("xSmHXUg62rq7");
             //ManageUserHelper.GetToManageUserProfile(1);
             //string hash = MD5Helper.GetMD5HashFromFile("d://164305872312.kwm");
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

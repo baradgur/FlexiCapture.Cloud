@@ -33,6 +33,5 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual ServiceTypes ServiceTypes { get; set; }
         public virtual TaskStates TaskStates { get; set; }
         public virtual Users Users { get; set; }
-        public virtual TaskStates TaskStates1 { get; set; }
     }
 }

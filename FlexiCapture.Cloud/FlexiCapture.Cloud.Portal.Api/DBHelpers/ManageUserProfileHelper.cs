@@ -68,7 +68,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new  FCCPortalEntities())
                 {
                     return db.ExportFormatsCatalog.Select(x => x).ToList();
                 }

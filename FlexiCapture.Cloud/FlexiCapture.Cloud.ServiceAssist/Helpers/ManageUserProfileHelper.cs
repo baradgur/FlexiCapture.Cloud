@@ -4,6 +4,8 @@ using System.Linq;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.Models.Catalogs;
 using FlexiCapture.Cloud.ServiceAssist.Models.UserProfiles;
+using System.Data.Entity;
+using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
 
 namespace FlexiCapture.Cloud.ServiceAssist.Helpers
 {
@@ -73,6 +75,45 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
             }
             catch (Exception exception)
             {
+                return null;
+            }
+        }
+
+        public static ManageUserProfileModel GetToUserProfile(int objUserId, int i)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {// ServiceId == i means it's ftp service
+                    var subscribe = db.UserServiceSubscribes
+                            .Include(x => x.Users)
+                            .Include(x => x.Users.UserProfiles.Select(xx => xx.UserProfileServiceDefault))
+                            .Where(x => x.ServiceId == i && x.SubscribeStateId == 1 && x.UserId == objUserId)
+                            .Select(x => x).FirstOrDefault();
+                    int profileId = 0;
+                    foreach (var userProfile in subscribe.Users.UserProfiles)
+                    {
+                        foreach (var defaultService in userProfile.UserProfileServiceDefault)
+                        {
+                            if (defaultService.ServiceTypeId == i)
+                            {
+                                profileId = userProfile.Id;
+                            }
+                        }
+                    }
+                    if (profileId != 0)
+                    {
+                        return Helpers.ManageUserProfileHelper.GetToUserProfileById(profileId, i);
+                    }
+                    return null;
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
                 return null;
             }
         }

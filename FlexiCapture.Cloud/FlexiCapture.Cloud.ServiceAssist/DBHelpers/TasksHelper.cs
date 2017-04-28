@@ -10,6 +10,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 {
     public static class TasksHelper
     {
+       
         /// <summary>
         /// add task to db
         /// </summary>
@@ -36,6 +37,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                 return -1;
             }
         }
+
         /// <summary>
         /// get to not executed tasks
         /// </summary>

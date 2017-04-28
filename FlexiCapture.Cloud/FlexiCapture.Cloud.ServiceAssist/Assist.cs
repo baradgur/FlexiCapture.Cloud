@@ -25,6 +25,32 @@ namespace FlexiCapture.Cloud.ServiceAssist
 
         #region tasks
         /// <summary>
+        /// add task to db
+        /// </summary>
+        public int AddTask(int userId, int serviceId)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    Tasks task = new Tasks()
+                    {
+                        CreationDate = DateTime.Now,
+                        TaskStateId = 1,
+                        UserId = userId,
+                        ServiceId = serviceId
+                    };
+                    db.Tasks.Add(task);
+                    db.SaveChanges();
+                    return task.Id;
+                }
+            }
+            catch (Exception exception)
+            {
+                return -1;
+            }
+        }
+        /// <summary>
         /// get to not executed tasks
         /// </summary>
         /// <param name="serviceId"></param>
@@ -128,16 +154,6 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             DocumentsHelper.AddResultDocument(taskId, guid, originalFileName, realFileName, filePath);
         }
-        /// <summary>
-        /// add task to db
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="serviceId"></param>
-        /// <returns></returns>
-        public int AddTask(int userId, int serviceId)
-        {
-            return TasksHelper.AddTask(userId, serviceId);
-        }
 
 
         /// <summary>
@@ -189,6 +205,11 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public string ConvertProfileToRequestModel(List<Documents> documents , ManageUserProfileModel userProfile)
         {
             return ProfileToRequestModelConverter.ConvertProfileToRequestModel(documents, userProfile);
+        }
+
+        public ManageUserProfileModel GetUserProfile(int objUserId, int i)
+        {
+            return Helpers.ManageUserProfileHelper.GetToUserProfile(objUserId, i);
         }
     }
 }

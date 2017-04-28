@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1254b5b099eb448ea7a293b235d9e7aa" Name="Diagram1">
+      <Diagram DiagramId="954cea0bb6d24a319169f126e1cd5a44" Name="Diagram1">
         <EntityTypeShape EntityType="FCCPortalModel.AnalysisModeCatalog" Width="1.5" PointX="3.75" PointY="30.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.DocumentCategories" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.Documents" Width="1.5" PointX="8.25" PointY="16.125" IsExpanded="true" />
@@ -60,7 +60,6 @@
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceStates_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserSettings_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceSubscribes_UserServiceSubscribeStates" ManuallyRouted="false" />
-        <AssociationConnector Association="FCCPortalModel.FK_Tasks_TaskStates1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
