@@ -1,7 +1,7 @@
 (function () {
     var singleFileConversionController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
 
-        $scope.profiles = []
+        $scope.profiles = [];
         $scope.changeCount = 0;
         $scope.currentProfile = {};
         var profilesUrl = $$ApiUrl + "/userProfile";
@@ -204,7 +204,7 @@
         var singleFileConversion = function () {
 
 
-            // var dropZone = document.getElementById('drop-zone');
+             var dropZone = document.getElementById('drop-zone');
             var uploadForm = document.getElementById('tformdiv');
             var uploadForm3 = document.getElementsByTagName('form');
 
@@ -262,21 +262,21 @@
 
                 $scope.$apply();
             }
-            // dropZone.ondrop = function (e) {
-            //     e.preventDefault();
-            //     this.className = 'upload-drop-zone';
-            //     $scope.addToScopeFiles(e.dataTransfer.files);
-            // }
+             dropZone.ondrop = function (e) {
+                 e.preventDefault();
+                 this.className = 'upload-drop-zone';
+                 $scope.addToScopeFiles(e.dataTransfer.files);
+             }
 
-            // dropZone.ondragover = function () {
-            //     this.className = 'upload-drop-zone drop';
-            //     return false;
-            // }
+             dropZone.ondragover = function () {
+                 this.className = 'upload-drop-zone drop';
+                 return false;
+             }
 
-            // dropZone.ondragleave = function () {
-            //     this.className = 'upload-drop-zone';
-            //     return false;
-            // }
+             dropZone.ondragleave = function () {
+                 this.className = 'upload-drop-zone';
+                 return false;
+             }
 
         };
         singleFileConversion();

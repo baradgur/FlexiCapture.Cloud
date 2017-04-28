@@ -13,6 +13,13 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Enums
         Email = 4
     }
 
+    public enum UserLoginStateTypes
+    {
+        Active = 1,
+        WaitConfirm = 2,
+        Locked = 3
+    }
+
     public enum SubscribeStates
     {
         Subscribe = 1,

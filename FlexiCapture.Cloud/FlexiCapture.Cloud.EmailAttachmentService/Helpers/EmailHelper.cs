@@ -44,6 +44,12 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                         assist.UserProfile = assist.CheckServiceAvailabilityByEmail(message.From.Address);
                                         if (assist.UserProfile != null)
                                         {
+
+                                            if (message.Body != null)
+                                            {
+                                                //change  user profile
+                                            }
+
                                             foreach (var attachment in message.Attachments)
                                             {
                                                 var extension = Path.GetExtension(attachment.FileName);
@@ -72,7 +78,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                             }
 
                                         }
-                                        //message.Seen = true;
+                                        message.Seen = true;
                                     }
                                 }
                             }

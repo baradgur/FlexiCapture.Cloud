@@ -272,6 +272,7 @@
     <Content Include="Scripts\app\Scripts\accessible-form.js" />
     <Content Include="Scripts\app\Scripts\app.js" />
     <Content Include="Scripts\app\Scripts\checklist-model.js" />
+    <Content Include="Scripts\app\Scripts\disposable.js" />
     <Content Include="Scripts\app\Scripts\mapAreaConfigurator.js" />
     <Content Include="Scripts\app\Scripts\routeConfigurator.js" />
     <Content Include="Scripts\app\Services\documentsHttpService.js" />

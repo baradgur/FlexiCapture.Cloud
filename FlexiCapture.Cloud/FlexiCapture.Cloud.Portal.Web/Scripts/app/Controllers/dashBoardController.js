@@ -93,7 +93,7 @@
         $scope.start();
 
         //navigate
-        $scope.selectService = function (serviceId) {
+        $scope.selectService = function (serviceId, anchor) {
             if (serviceId == $scope.serviceStateId) return;
             $scope.serviceStateId = serviceId;
             switch (serviceId) {
@@ -118,11 +118,12 @@
                     break;
 
                 case 6:
-                    $state.go("main.dashboard.store");
+                    $state.go("main.dashboard.store", { '#': anchor });
                     break;
 
             }
         };
+
     };
 
 

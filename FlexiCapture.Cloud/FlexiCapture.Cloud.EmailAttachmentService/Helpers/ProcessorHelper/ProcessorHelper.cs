@@ -30,7 +30,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.ProcessorHelper
 
                 List<string> extentions = assist.GetToAvailableFileExtensions();
                 // getting IMAP setttings
-                string path = "data/settings.xml";
+                string path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"data/settings.xml");
 
                 if (File.Exists(path))
                 {
