@@ -23,7 +23,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     Tasks task = new Tasks()
                     {

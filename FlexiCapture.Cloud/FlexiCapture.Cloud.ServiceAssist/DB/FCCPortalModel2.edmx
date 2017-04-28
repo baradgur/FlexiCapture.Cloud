@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -725,7 +725,8 @@
             <End Role="UserSettings" EntitySet="UserSettings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -886,7 +887,6 @@
           <NavigationProperty Name="ServiceTypes" Relationship="Self.FK_Tasks_ServiceTypes" FromRole="Tasks" ToRole="ServiceTypes" />
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
-          <NavigationProperty Name="TaskStates1" Relationship="FCCPortalModel.FK_Tasks_TaskStates1" FromRole="Tasks" ToRole="TaskStates" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -895,7 +895,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskStates" FromRole="TaskStates" ToRole="Tasks" />
-          <NavigationProperty Name="Tasks1" Relationship="FCCPortalModel.FK_Tasks_TaskStates1" FromRole="TaskStates" ToRole="Tasks" />
         </EntityType>
         <EntityType Name="UserLogins">
           <Key>
@@ -1219,7 +1218,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tasks">
-              <PropertyRef Name="UserId" />
+              <PropertyRef Name="TaskStateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1504,23 +1503,7 @@
             <End Role="UserServiceSubscribeStates" EntitySet="UserServiceSubscribeStates" />
             <End Role="UserServiceSubscribes" EntitySet="UserServiceSubscribes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tasks_TaskStates1" Association="FCCPortalModel.FK_Tasks_TaskStates1">
-            <End Role="TaskStates" EntitySet="TaskStates" />
-            <End Role="Tasks" EntitySet="Tasks" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Tasks_TaskStates1">
-          <End Type="FCCPortalModel.TaskStates" Role="TaskStates" Multiplicity="1" />
-          <End Type="FCCPortalModel.Tasks" Role="Tasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TaskStates">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tasks">
-              <PropertyRef Name="TaskStateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

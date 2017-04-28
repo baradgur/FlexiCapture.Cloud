@@ -23,7 +23,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     Documents document = new Documents()
                     {
@@ -65,7 +65,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
                 List<DocumentModel> models = new List<DocumentModel>();
 
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     List<Documents> documents = db.Documents
                         .Include(x => x.DocumentStates)
@@ -148,7 +148,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
                 List<DocumentModel> models = new List<DocumentModel>();
 
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     List<Documents> documents = db.Documents
                         .Include(x => x.DocumentStates)

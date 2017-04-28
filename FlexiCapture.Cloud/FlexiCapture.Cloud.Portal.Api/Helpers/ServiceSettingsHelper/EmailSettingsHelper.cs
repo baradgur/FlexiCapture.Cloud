@@ -24,7 +24,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                 EmailSettingsViewModel model = new EmailSettingsViewModel();
                 model.Settings = new List<EmailSettingsModel>();
 
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     var settings = (from s in db.EmailSettings
                                     where s.UserId == userId
@@ -69,7 +69,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     var setting = (from s in db.EmailSettings
                                    where s.Id == model.Id
@@ -103,7 +103,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     var dbModel = new EmailSettings()
                     {
@@ -132,7 +132,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     var setting = (from s in db.EmailSettings
                                    where s.Id == id

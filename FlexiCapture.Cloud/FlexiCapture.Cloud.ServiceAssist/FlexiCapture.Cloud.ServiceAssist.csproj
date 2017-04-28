@@ -192,6 +192,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FlexiCapture.Cloud.OCR.Assist\FlexiCapture.Cloud.OCR.Assist.csproj">
+      <Project>{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}</Project>
+      <Name>FlexiCapture.Cloud.OCR.Assist</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <Content Include="DB\FCCPortalModel2.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
@@ -202,12 +209,6 @@
       <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
       <LastGenOutput>FCCPortalModel2.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FlexiCapture.Cloud.OCR.Assist\FlexiCapture.Cloud.OCR.Assist.csproj">
-      <Project>{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}</Project>
-      <Name>FlexiCapture.Cloud.OCR.Assist</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

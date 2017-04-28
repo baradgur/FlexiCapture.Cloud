@@ -17,7 +17,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db=new FCCPortalEntities2())
+                using (var db=new FCCPortalEntities())
                 {
                     List<UserServiceSubscribes> subscribes =
                         db.UserServiceSubscribes.Where(x => x.UserId == userId).ToList();

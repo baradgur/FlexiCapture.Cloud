@@ -100,7 +100,7 @@
       <Name>FlexiCapture.Cloud.OCR.Assist</Name>
     </ProjectReference>
     <ProjectReference Include="..\FlexiCapture.Cloud.ServiceAssist\FlexiCapture.Cloud.ServiceAssist.csproj">
-      <Project>{c1e88b07-11e1-4421-8577-818dd384b5ea}</Project>
+      <Project>{C1E88B07-11E1-4421-8577-818DD384B5EA}</Project>
       <Name>FlexiCapture.Cloud.ServiceAssist</Name>
     </ProjectReference>
   </ItemGroup>

@@ -20,7 +20,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
         private static List<DocumentTypes> AcceptableTypes;
         public static List<FTPSetting> GetFtpSettings()
         {
-            using (var db = new FCCPortalEntities())
+            using (var db = new FCCPortalEntities2())
             {
                 try
                 {
@@ -50,8 +50,15 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 
                 if (IsPrivilegedEnough(userId))
                 {
+                    Uri uriResult;
+                    bool result = Uri.TryCreate("ftp://" + url,
+                                      UriKind.Absolute, out uriResult) && 
+                                      uriResult.Scheme == Uri.UriSchemeFtp;
 
-                    FtpWebRequest request = (FtpWebRequest) WebRequest.Create("ftp://" + url);
+                    if (!result)
+                        return response;
+
+                    FtpWebRequest request = (FtpWebRequest) WebRequest.Create(uriResult);
                     request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
 
                     request.Credentials = new NetworkCredential(userName, userPassword);
@@ -76,7 +83,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             
                 if (AcceptableTypes == null)
                 {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     AcceptableTypes = db.DocumentTypes
                         .Select(x => x).ToList();
@@ -134,20 +141,24 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 Uri serverUri = new Uri(uri);
                 if (serverUri.Scheme != Uri.UriSchemeFtp)
                 {
-                    return;
+                    return "";
                 }
                 FtpWebRequest reqFTP;
                 reqFTP = (FtpWebRequest) FtpWebRequest.Create(uri);
                 reqFTP.Credentials = new NetworkCredential(userName, userPassword);
                 reqFTP.KeepAlive = false;
                 reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
-                reqFTP.UseBinary = true;
-                reqFTP.Proxy = null;
-                reqFTP.UsePassive = false;
+                reqFTP.Timeout = 10000;
+                reqFTP.KeepAlive = false;
+                reqFTP.ServicePoint.ConnectionLeaseTimeout = 20000;
+                reqFTP.ServicePoint.MaxIdleTime = 20000;
+                //reqFTP.UseBinary = true;
+                //reqFTP.Proxy = null;
+                //reqFTP.UsePassive = false;
                 FtpWebResponse response = (FtpWebResponse) reqFTP.GetResponse();
                 Stream responseStream = response.GetResponseStream();
                 FileStream writeStream =
-                    new FileStream(Path.Combine(SettingsHelper.GetSettingsValueByName("MainPath"), "data", "uploads", file),
+                    new FileStream(Path.Combine(SettingsHelper.GetSettingsValueByName("MainPath"), "data", "uploads", fileName),
                         FileMode.Create);
 
                 int Length = 2048;
@@ -167,6 +178,10 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 reqFTP.UseBinary = true;
                 reqFTP.Proxy = null;
                 reqFTP.UsePassive = false;
+                reqFTP.KeepAlive = false;
+                reqFTP.ServicePoint.ConnectionLeaseTimeout = 20000;
+                reqFTP.ServicePoint.MaxIdleTime = 20000;
+                reqFTP.Timeout = 10000;
                 response = (FtpWebResponse)reqFTP.GetResponse();
 
                 response.Close();
@@ -176,7 +191,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             }
             catch (Exception ex)
             {
-                return;
+                return "";
             }
 
         }
@@ -197,7 +212,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 
                 UserServiceSubscribes query;
 
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     query = (from ss in db.UserServiceSubscribes
                          where ss.UserId.Equals(userId)

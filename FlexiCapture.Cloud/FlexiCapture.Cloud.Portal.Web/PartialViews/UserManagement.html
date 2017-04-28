@@ -94,11 +94,14 @@
                         <div class="col-sm-8">
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    Single File Conversion Service
-                                    <div class="material-switch pull-right">
-                                        <input id="sfcService" type="checkbox" ng-model="user.ServiceData.SingleFileConversionService" disabled/>
-                                        <label for="sfcService" class="label-success"></label>
-                                    </div>
+                                        Single File Conversion Service
+                                        <div style="display: inline-block" class="material-switch pull-right">
+                                            <input id="sfcService" type="checkbox" ng-model="user.ServiceData.SingleFileConversionService" disabled />
+                                            <label for="sfcService" class="label-success"></label>
+                                        </div>
+                                    <button  style="display: inline-block;" class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </button>
                                 </li>
                                 <li class="list-group-item">
                                     Batch File Conversion Service
@@ -106,6 +109,9 @@
                                         <input id="bfcService" type="checkbox" ng-model="user.ServiceData.BatchFileConversionService" />
                                         <label for="bfcService" class="label-success"></label>
                                     </div>
+                                    <button class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </button>
                                 </li>
                                 <li class="list-group-item">
                                     FTP File Conversion Service

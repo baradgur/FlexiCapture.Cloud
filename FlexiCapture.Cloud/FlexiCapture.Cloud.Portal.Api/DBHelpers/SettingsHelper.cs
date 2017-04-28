@@ -16,7 +16,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     return db.Settings.FirstOrDefault(x => x.SettingName.ToLower().Equals(name.ToLower())).SettingValue;
                 }

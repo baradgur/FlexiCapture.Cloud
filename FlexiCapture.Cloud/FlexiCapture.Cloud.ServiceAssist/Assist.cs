@@ -31,7 +31,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     Tasks task = new Tasks()
                     {
@@ -154,16 +154,6 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             DocumentsHelper.AddResultDocument(taskId, guid, originalFileName, realFileName, filePath);
         }
-        /// <summary>
-        /// add task to db
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="serviceId"></param>
-        /// <returns></returns>
-        public int AddTask(int userId, int serviceId)
-        {
-            return TasksHelper.AddTask(userId, serviceId);
-        }
 
 
         /// <summary>
@@ -215,6 +205,11 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public string ConvertProfileToRequestModel(List<Documents> documents , ManageUserProfileModel userProfile)
         {
             return ProfileToRequestModelConverter.ConvertProfileToRequestModel(documents, userProfile);
+        }
+
+        public ManageUserProfileModel GetUserProfile(int objUserId, int i)
+        {
+            return Helpers.ManageUserProfileHelper.GetToUserProfile(objUserId, i);
         }
     }
 }

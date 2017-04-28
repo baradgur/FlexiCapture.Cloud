@@ -10,6 +10,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 {
     public static class TasksHelper
     {
+       
         /// <summary>
         /// add task to db
         /// </summary>
@@ -18,32 +19,6 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             try
             {
                 using (var db = new FCCPortalEntities2())
-                {
-                    Tasks task = new Tasks()
-                    {
-                        CreationDate = DateTime.Now,
-                        TaskStateId = 1,
-                        UserId = userId,
-                        ServiceId = serviceId
-                    };
-                    db.Tasks.Add(task);
-                    db.SaveChanges();
-                    return task.Id;
-                }
-            }
-            catch (Exception exception)
-            {
-                return -1;
-            }
-        }
-        /// <summary>
-        /// add task to db
-        /// </summary>
-        public static int AddTask(int userId, int serviceId)
-        {
-            try
-            {
-                using (var db = new FCCPortalEntities())
                 {
                     Tasks task = new Tasks()
                     {
@@ -71,7 +46,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db=new FCCPortalEntities())
+                using (var db=new FCCPortalEntities2())
                 {
                     return
                         db.Tasks.Where(x => x.TaskStateId == 1 && x.ServiceId == serviceId && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
@@ -96,7 +71,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return
                         db.Tasks.Where(x => x.TaskStateId == 2 && x.ServiceId ==serviceId && !string.IsNullOrEmpty(x.ResponseContent)).ToList();
@@ -119,7 +94,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
                     if (task != null)
@@ -160,7 +135,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db =new FCCPortalEntities())
+                using (var db =new FCCPortalEntities2())
                 {
                     Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
                     if (task != null)

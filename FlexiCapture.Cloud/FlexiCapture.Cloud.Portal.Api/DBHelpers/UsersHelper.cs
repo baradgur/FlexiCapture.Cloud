@@ -50,7 +50,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             try
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     UserLogins login = db.UserLogins
                         .Include(x => x.Users)
@@ -177,7 +177,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             string applicationPath = System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     var login = db.UserLogins
                         .Include(x => x.Users)
@@ -220,7 +220,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             try
             {
                 var models = new List<UserViewModel>();
-                using (FCCPortalEntities2 db = new FCCPortalEntities2())
+                using (FCCPortalEntities db = new FCCPortalEntities())
                 {
                     var users = db.Users
                         .Include(x=>x.UserServiceSubscribes)
@@ -258,7 +258,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             try
             {
 
-                using (FCCPortalEntities2 db = new FCCPortalEntities2())
+                using (FCCPortalEntities db = new FCCPortalEntities())
                 {
                     var user = db.Users
                         .Include(x=>x.UserServiceSubscribes)
@@ -299,7 +299,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             try
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     UserLogins login = db.UserLogins
                         .Include(x => x.Users)
@@ -384,7 +384,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             try
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                using (FCCPortalEntities2 db = new FCCPortalEntities2())
+                using (FCCPortalEntities db = new FCCPortalEntities())
                 {
                     UserLogins login = db.UserLogins
                         .Include(x => x.Users)
@@ -531,7 +531,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
                 var models = new List<UserRolesModel>();
 
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     var roles =
                         (from s in db.UserRoleTypes select s).ToList();
@@ -562,7 +562,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     var role =
                         (from s in db.UserRoleTypes where s.Id == userRoleId select s).FirstOrDefault();
@@ -597,7 +597,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             {
                 string cryptPassword = PasswordHelper.Crypt.EncryptString(newPassword);
 
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     DB.UserLogins login = db.UserLogins
                         .Include(x=>x.Users)

@@ -16,7 +16,11 @@ namespace FlexiCapture.Cloud.FTPService
         static void Main()
         {
             Service = new FCCFtpService();
-            FlexiCapture.Cloud.FTPService.Helpers.ProcessorHelper.MakeProcessing();
+            //FlexiCapture.Cloud.FTPService.Helpers.ProcessorHelper.MakeProcessing();
+
+        //#if DEBUG
+        //    Service.OnDebug();
+        //    #else
 
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
@@ -24,6 +28,7 @@ namespace FlexiCapture.Cloud.FTPService
                 Service
             };
             ServiceBase.Run(ServicesToRun);
+//#endif
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -39,13 +40,43 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
 
                     if (response != null)
                     {
+                        assist.UserProfile = assist.GetUserProfile(x.UserId, 3);
+
                         addedFilesInResponse = FTPHelper.ExtractFiles(response, x.Host, x.UserName,
                             PasswordHelper.Crypt.DecryptString(x.Password));
 
                         addedFilesInResponse.ForEach(af =>
                         {
-                            assist.AddTask(x.UserId, 3);
+                            var newNameGuid = Guid.NewGuid();
+                            var uploadName = newNameGuid + af.Item2;
+                            var localName = Path.Combine(Path.Combine("data", "uploads"), uploadName);
+
+                           
+                            var filePathOld = Path.Combine(assist.GetSettingValueByName("MainPath"), "data", "uploads", af.Item1);
+                            var filePathNew = Path.Combine(assist.GetSettingValueByName("MainPath"), "data", "uploads", newNameGuid.ToString() + af.Item2);
+
+                           
+                           
+                            //add task to db
+                            var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
+
+                            var md5 = assist.GetMD5HashFromFile(filePathOld);
+                            //add document
+                            var fileInfo = new FileInfo(filePathOld);
+                            
+
+                            var documentId = assist.AddDocument(taskId, fileInfo, newNameGuid, uploadName, localName, md5, 1);
+
+                            System.IO.File.Move(filePathOld, filePathNew);
+                            if (File.Exists(filePathOld))
+                                File.Delete(filePathOld);
+
+                            assist.Documents = assist.GetDocumentsByTaskId(taskId);
+
+                            string content = assist.ConvertProfileToRequestModel(assist.Documents, assist.UserProfile);
+                            assist.UpdateTaskProfile(taskId, content);
                         });
+
                     }
 
 

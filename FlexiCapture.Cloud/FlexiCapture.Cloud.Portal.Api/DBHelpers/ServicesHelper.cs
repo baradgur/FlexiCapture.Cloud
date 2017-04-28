@@ -16,7 +16,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities())
                 {
                     db.UserServiceSubscribes.Add(new UserServiceSubscribes()
                     {

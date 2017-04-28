@@ -51,7 +51,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
             try
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                using (FCCPortalEntities2 db = new FCCPortalEntities2())
+                using (FCCPortalEntities db = new FCCPortalEntities())
                 {
 
                     DB.Users user = db.Users.Find(Convert.ToInt32(model.Id));
