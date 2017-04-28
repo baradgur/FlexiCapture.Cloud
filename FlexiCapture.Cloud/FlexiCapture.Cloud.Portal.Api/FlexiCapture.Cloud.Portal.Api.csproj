@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -158,6 +159,8 @@
     <Compile Include="Controllers\CustomProfileController.cs" />
     <Compile Include="Controllers\DefaultProfileController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
+    <Compile Include="Controllers\EmailSettingsController.cs" />
+    <Compile Include="Controllers\FTPSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
@@ -301,6 +304,8 @@
     <Compile Include="Helpers\ManageUserHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="Helpers\RequestHelpers\ProfileToRequestModelConverter.cs" />
     <Compile Include="Helpers\RestoreHelpers\RestoreHelper.cs" />
+    <Compile Include="Helpers\ServiceSettingsHelper\EmailSettingsHelper.cs" />
+    <Compile Include="Helpers\ServiceSettingsHelper\FTPSettingsHelper.cs" />
     <Compile Include="Helpers\StoreHelpers\StoreHelper.cs" />
     <Compile Include="Helpers\UserProfileHelpers\UserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
@@ -315,6 +320,10 @@
     <Compile Include="Models\Errors\ErrorModel.cs" />
     <Compile Include="Models\GeneralModels\CaptchaResponseModel.cs" />
     <Compile Include="Models\GeneralModels\NewProfileModel.cs" />
+    <Compile Include="Models\SettingsModels\EmailSettingsModel.cs" />
+    <Compile Include="Models\SettingsModels\FTPSettingsModel.cs" />
+    <Compile Include="Models\SettingsModels\EmailSettingsViewModel.cs" />
+    <Compile Include="Models\SettingsModels\FTPSettingsViewModel.cs" />
     <Compile Include="Models\Preflight\PreflightRequestsHandler.cs" />
     <Compile Include="Models\StoreModels\StoreModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />

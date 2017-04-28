@@ -119,10 +119,10 @@
                         }
                     }
                     $('#table').bootstrapTable('load', data);
-                    var notificationT = "добавлен";
-                    if (isEdit) notificationT = "обновлен";
+                    var notificationT = "added";
+                    if (isEdit) notificationT = "updated";
 
-                    showNotify("Успех", "Пользователь " + $scope.user.UserData.FirstName + " был успешно " + notificationT, "success");
+                    showNotify("Успех", "User " + $scope.user.UserData.FirstName + " was successfully" + notificationT, "success");
                     $('#table').bootstrapTable('resetWidth');
                     // success
                 }
@@ -131,7 +131,7 @@
             function (response) { // optional
                 // failed
                 usSpinnerService.stop('spinner-1');
-                showNotify("Успех", "Ошибка при добавлении пользователя", "danger");
+                showNotify("Успех", "Error occurred while adding user", "danger");
                 $('#table').bootstrapTable('resetWidth');
                 callback(responseSuccess, responseNoError);
             });

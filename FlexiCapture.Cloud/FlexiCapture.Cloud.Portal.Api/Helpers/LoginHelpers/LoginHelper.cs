@@ -1,13 +1,16 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
+
+using FlexiCapture.Cloud.Portal.Api.Models.Enums;
+
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
 using FlexiCapture.Cloud.Portal.Api.Models.Users;
 using FlexiCapture.Cloud.Portal.Api.Users;
-using Khingal.Models.Users;
 using UserServiceDataHelper = FlexiCapture.Cloud.Portal.Api.Helpers.UserServiceDataHelpers.UserServiceDataHelper;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
@@ -23,6 +26,34 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
             try
             {
                 DB.UserLogins userLogin = DBHelpers.LoginHelper.LoginUser(model);
+
+                if (userLogin.UserLoginStateId == (int) UserLoginStateTypes.WaitConfirm)
+                {
+                    return new AuthUserModel()
+                    {
+                        Error = new ErrorModel()
+                        {
+                            Name = "Login Error",
+                            ShortDescription = "Await email adress confirmation",
+                            FullDescription = "An email adress confirmation is in progress. Please, try again later."
+
+                        }
+                    };
+                }
+
+                if (userLogin.UserLoginStateId == (int)UserLoginStateTypes.Locked)
+                {
+                    return new AuthUserModel()
+                    {
+                        Error = new ErrorModel()
+                        {
+                            Name = "Login Error",
+                            ShortDescription = "User Locked",
+                            FullDescription = "This user is locked. Please, contact the administrator for more information."
+
+                        }
+                    };
+                }
 
                 AuthUserModel aModel = new AuthUserModel();
 

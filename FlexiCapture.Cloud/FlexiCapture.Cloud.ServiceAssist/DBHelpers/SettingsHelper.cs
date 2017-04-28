@@ -17,7 +17,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     var setting = db.Settings.FirstOrDefault(x => x.SettingName.ToLower().Equals(settingName.ToLower()));
 

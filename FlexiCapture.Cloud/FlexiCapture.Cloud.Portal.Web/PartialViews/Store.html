@@ -2,66 +2,258 @@
     <hr>
     <div class="container">
         <div class="row">
-            <div class="col-xs-18 col-sm-6 col-md-3">
+            <div id="singleSer" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
                     <img src="./Content/gfx/single.png">
-                    <div class="caption">
-                        <h4>Single File Conversion</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
-                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
-                        <button type="button" disabled ng-class="userData.ServiceData.SingleFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'">
-                              <span ng-if="userData.ServiceData.SingleFileConversionService">Active</span>
-                              <span ng-if="!userData.ServiceData.SingleFileConversionService">Disabled</span>
-                        </button>
 
+                    <div class="caption margin-top-10">
+                        <button type="button" disabled ng-class="userData.ServiceData.SingleFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'">
+                            <span ng-if="userData.ServiceData.SingleFileConversionService">Active</span>
+                            <span ng-if="!userData.ServiceData.SingleFileConversionService">Disabled</span>
+                        </button>
+                        <h4>Single File Conversion</h4>
+                        <p>Pimple and convenient service for converting any image file (PDF, TIF, PNG, JPG, JPEG2000) to any text-based document (Searchable PDF, TXT, RTF, DOC, XLS) using high-quality Optical Character Recognition (OCR).</p>
                     </div>
 
                 </div>
 
             </div>
 
-            <div class="col-xs-18 col-sm-6 col-md-3">
+            <div id="batchCon" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
                     <img src="./Content/gfx/batch.png">
-                    <div class="caption">
-                        <h4>Batch File Conversion</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
-                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                    <div class="caption margin-top-10">
                         <button type="button" ng-class="userData.ServiceData.BatchFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(2)">
-                              <span ng-if="userData.ServiceData.BatchFileConversionService">Active</span>
-                              <span ng-if="!userData.ServiceData.BatchFileConversionService">Disabled</span>
+                            <span ng-if="userData.ServiceData.BatchFileConversionService">Active</span>
+                            <span ng-if="!userData.ServiceData.BatchFileConversionService">Disabled</span>
                         </button>
+                        <h4>Batch File Conversion</h4>
+                        <p>
+                            Simple batch conversion service to load large volume of images and PDFs in a single Zip file to be converted automatically all at the same time.
+                        </p>
+
 
                     </div>
                 </div>
             </div>
-
-            <div class="col-xs-18 col-sm-6 col-md-3">
+            <div class="clearfix visible-sm"></div>
+            <div id="emailAtt" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
                     <img src="./Content/gfx/email.png">
-                    <div class="caption">
-                        <h4>E-mail Conversion</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
-                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                    <div class="caption margin-top-10">
                         <button type="button" ng-class="userData.ServiceData.EmailAttachmentFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(4)">
-                              <span ng-if="userData.ServiceData.EmailAttachmentFileConversionService">Active</span>
-                              <span ng-if="!userData.ServiceData.EmailAttachmentFileConversionService">Disabled</span>
+                            <span ng-if="userData.ServiceData.EmailAttachmentFileConversionService">Active</span>
+                            <span ng-if="!userData.ServiceData.EmailAttachmentFileConversionService">Disabled</span>
                         </button>
+                        <h4>E-mail Conversion</h4>
+                        <p>
+                            Convenient service to perform image to text OCR conversion directly from any e-mail application.  Send an attachment by e-mail to receive a converted attachment back to your e-mail.
+                        </p>
+
                     </div>
                 </div>
             </div>
 
-            <div class="col-xs-18 col-sm-6 col-md-3">
+            <div id="ftpCon" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
                     <img src="./Content/gfx/ftp.png">
-                    <div class="caption">
-                        <h4>FTP Conversion</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt
-                            minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit</p>
+                    <div class="caption margin-top-10">
                         <button type="button" ng-class="userData.ServiceData.FTPFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(3)">
-                              <span ng-if="userData.ServiceData.FTPFileConversionService">Active</span>
-                              <span ng-if="!userData.ServiceData.FTPFileConversionService">Disabled</span>
+                            <span ng-if="userData.ServiceData.FTPFileConversionService">Active</span>
+                            <span ng-if="!userData.ServiceData.FTPFileConversionService">Disabled</span>
                         </button>
+                        <h4>FTP Conversion</h4>
+                        <p>
+                            Automated image to text conversion service that uses an FTP location (provided or your own) to perform one-time or on-going conversions.  Images and documents uploaded to FTP are processed in real-time with on-going monitoring for new uploads.  This service is suitable for manual use as well as for software application development where FTP is used as a transport layer protocol.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix hidden-xs"></div>
+            <div id="cloudCon" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Cloud Storage Conversion</h4>
+                        <p>
+                            This service provides automated file conversion for files located in popular Cloud file storage platforms (Amazon S3, Box, Dropbox, Google Drive).  Provide cloud storage access credentials to a specific Input (with possible sub-folders), Output and Exceptions folders and our crawler will monitor and processes all encountered images and PDFs automatically.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="agentCon" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Windows/Mac/Linux Conversion Agent</h4>
+                        <p>
+                            Download and install a small application that will run 24/7 in background on your server or workstation and monitor for new images and PDFs to process from your designated local or network Input folder.  Results will be automatically downloaded into your designated local or network Output folder.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix visible-sm"></div>
+            <div id="webOcr" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Online Web OCR API</h4>
+                        <p>
+                            Automated image to text conversion service that uses POST requests to perform image to text conversions.  Images and documents are submitted and processed in real-time with options to control all settings. This service is suitable for software application and mobile app development where images are submitted as URL references or Blobs and results are returned programmatically.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="dataForm" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Data Capture & Form Processing</h4>
+                        <p>
+                            Powerful service to automate gathering of specific targeted data from structured and semi-structured documents, including handwritten forms.  Common examples include forms like surveys, questionnaires, registration cards, as well as documents like Invoice, Purchase Orders, bank statements, medical forms. Data is returned in structured Excel-like or Database-like formats.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix hidden-xs"></div>
+            <div id="mobileCap" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Mobile Image Capture Front End</h4>
+                        <p>
+                            (requires Data Capture & Form Processing service) Service to provide a well-polished managed powerful way to empower companies to capture documents through mobile devices interface.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="verVal" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Verification & Validation Front End</h4>
+                        <p>
+                            (requires Data Capture & Form Processing service) Service to provide a well-polished managed powerful way to empower companies to distribute error resolution and exception handling to document submitters through mobile devices interface.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix visible-sm"></div>
+            <div id="mailRoom" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Document Sorting/Mailroom</h4>
+                        <p>
+                            Service to provide powerful yet easily adaptable classification and document separation functionality for large volume of mixed documents coming into typical organizations. This process is trainable to fit each company's requirements and document structures.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="efCap" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Electronic Forms Capture</h4>
+                        <p>
+                            Service to easily create online fillable forms from paper and statically created digital forms, and effective collection of data.  This service is designed to replace paper forms in cases where on-screen data filling is possible.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix hidden-xs"></div>
+            <div id="scrapNorm" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Data Scraping and Normalization</h4>
+                        <p>
+                            Service to collect and organize semi-structured information from various sources into user-defined well-formatted document and field structures.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="translation" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>Translation</h4>
+                        <p>
+                            Service to translate with high-quality text-based documents from language to language.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix visible-sm"></div>
+            <div id="digitEye" class="col-xs-12 col-sm-6 col-md-3">
+                <div class="thumbnail-c">
+                    <img src="./Content/gfx/service-not-available.png">
+                    <div class="caption margin-top-10">
+                        <button type="button" class="btn btn-danger btn-lg btn-block"
+                                ng-disabled="true">
+                            Disabled
+                        </button>
+                        <h4>DigitEYE Desktop Lamp & Document Scanner</h4>
+                        <p>
+                            This innovative 21st century scanner device provides a seamless transition from your desk surface into a quick and efficient document scanning and archiving software.
+                        </p>
+
                     </div>
                 </div>
             </div>

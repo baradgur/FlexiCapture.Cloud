@@ -16,6 +16,8 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     {
         public Users()
         {
+            this.EmailSettings = new HashSet<EmailSettings>();
+            this.FTPSettings = new HashSet<FTPSettings>();
             this.Tasks = new HashSet<Tasks>();
             this.UserLogins = new HashSet<UserLogins>();
             this.UserProfiles = new HashSet<UserProfiles>();
@@ -30,6 +32,8 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public string PhoneNumber { get; set; }
         public string CompanyName { get; set; }
     
+        public virtual ICollection<EmailSettings> EmailSettings { get; set; }
+        public virtual ICollection<FTPSettings> FTPSettings { get; set; }
         public virtual ICollection<Tasks> Tasks { get; set; }
         public virtual ICollection<UserLogins> UserLogins { get; set; }
         public virtual ICollection<UserProfiles> UserProfiles { get; set; }

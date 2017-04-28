@@ -30,7 +30,7 @@
         $scope.updateUser = function (row) {
              var singleUser = {};
              var userId = row.userId;
-             for(i=0; i<$scope.users.length; i++){
+             for(var i=0; i<$scope.users.length; i++){
                  if($scope.users[i].UserData.Id == userId){
                      singleUser = angular.copy($scope.users[i]);
                  }

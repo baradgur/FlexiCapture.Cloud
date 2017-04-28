@@ -6,7 +6,7 @@
 
 
         <div class="panel panel-info">
-            <div class="panel-heading"><strong>Upload file to recognize</strong> <small>Load file</small></div>
+            <div class="panel-heading"><strong>STEP 1: Provide image or PDF to process</strong></div>
             <div class="panel-body" id="tformdiv">
 
                 <!-- Standar Form -->
@@ -21,10 +21,10 @@
                 </form>
 
                 <!-- Drop Zone -->
-                <!--<h4>Or drop file</h4>
+                <h4>Or drop file</h4>
                 <div class="upload-drop-zone" id="drop-zone">
                     Drop here
-                </div>-->
+                </div>
                 <div class="progress" ng-show="showProgressBar">
                     <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                         <span class="sr-only">0% Done</span>
@@ -39,37 +39,10 @@
 
 
         </div>
-
-        <div id="toolbar">
-            <button type="button" ng-show="profileIsChanged" class="btn btn-primary orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip"
-                title="Add New Profile" data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-plus" ></span>  Save to New Profile
-                    </button>
-            <button type="button" ng-show="profileIsChanged" class="btn btn-success" ng-click="updateSettings();" data-toggle="tooltip"
-                title="Save Profile" data-placement="bottom" ng-disabled="newProfile">
-                    
-                    <span class="glyphicon glyphicon-check" ></span> Update Current Profile
-                    </button>
-            <div class="input-group" ng-show="newProfile">
-
-                <span class="input-group-addon">
-                            New Profile Name
-                    </span>
-                <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
-                <span class="input-group-btn">
-                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''" ><span class="glyphicon glyphicon-ok"></span></button>
-                </span>
-
-                <span class="input-group-btn">
-                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
-                </span>
-            </div>
-        </div>
-
+        
         <!--PROFILES-->
         <div class="panel panel-info">
-            <div class="panel-heading"><strong>Profiles</strong></div>
+            <div class="panel-heading"><strong>STEP 2: Customize your OCR settings or create an existing Profile</strong></div>
             <!--<div class="panel-body">-->
 
 
@@ -83,12 +56,33 @@
 
             </div>
             <br/>
+            <div id="toolbar">
+                <button type="button" ng-show="profileIsChanged" class="btn btn-primary orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip"
+                        title="Add New Profile" data-placement="bottom">
 
+                    <span class="glyphicon glyphicon-plus"></span>  Save to New Profile
+                </button>
+                <button type="button" ng-show="profileIsChanged" class="btn btn-success" ng-click="updateSettings();" data-toggle="tooltip"
+                        title="Save Profile" data-placement="bottom" ng-disabled="newProfile">
 
+                    <span class="glyphicon glyphicon-check"></span> Update Current Profile
+                </button>
+                <div class="input-group" ng-show="newProfile">
 
+                    <span class="input-group-addon">
+                        New Profile Name
+                    </span>
+                    <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''"><span class="glyphicon glyphicon-ok"></span></button>
+                    </span>
 
-
-
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                </div>
+            </div>
+            <br />
             <!--</div>-->
 
             <div class="panel-group">
@@ -271,7 +265,7 @@
 
 
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">Recognize</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">STEP 3: Start Recognition</button>
     </div>
     <!--END PROFILES-->
 </div>

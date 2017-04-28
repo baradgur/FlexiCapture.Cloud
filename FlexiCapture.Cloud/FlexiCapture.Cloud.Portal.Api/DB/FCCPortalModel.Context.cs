@@ -31,7 +31,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<DocumentStates> DocumentStates { get; set; }
         public virtual DbSet<DocumentTypes> DocumentTypes { get; set; }
+        public virtual DbSet<EmailSettings> EmailSettings { get; set; }
         public virtual DbSet<ExportFormatsCatalog> ExportFormatsCatalog { get; set; }
+        public virtual DbSet<FTPSettings> FTPSettings { get; set; }
         public virtual DbSet<LanguagesCatalog> LanguagesCatalog { get; set; }
         public virtual DbSet<Log> Log { get; set; }
         public virtual DbSet<PrintTypeCatalog> PrintTypeCatalog { get; set; }
@@ -41,6 +43,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<TaskStates> TaskStates { get; set; }
+        public virtual DbSet<UserConfirmationEmails> UserConfirmationEmails { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserLoginStates> UserLoginStates { get; set; }
         public virtual DbSet<UserProfileExportFormats> UserProfileExportFormats { get; set; }
@@ -53,8 +56,5 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<UserServiceSubscribes> UserServiceSubscribes { get; set; }
         public virtual DbSet<UserServiceSubscribeStates> UserServiceSubscribeStates { get; set; }
         public virtual DbSet<UserSettings> UserSettings { get; set; }
-        public virtual DbSet<UserConfirmationEmails> UserConfirmationEmails { get; set; }
-        public virtual DbSet<EmailSettings> EmailSettings { get; set; }
-        public virtual DbSet<FTPSettings> FTPSettings { get; set; }
     }
 }

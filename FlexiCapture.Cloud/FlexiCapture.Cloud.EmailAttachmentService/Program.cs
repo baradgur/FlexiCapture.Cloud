@@ -9,17 +9,23 @@ namespace FlexiCapture.Cloud.EmailAttachmentService
 {
     static class Program
     {
+        public static FCC_EmailAttachmentService Service;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main()
         {
+            Service = new FCC_EmailAttachmentService();
+            //#if DEBUG
+            //         Service.OnDebug();
+            //#else
             ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-            { 
-                new FCC_EmailAttachmentService() 
+            ServicesToRun = new ServiceBase[]
+            {
+                Service
             };
             ServiceBase.Run(ServicesToRun);
+            //#endif
         }
     }
 }

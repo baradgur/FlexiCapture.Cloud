@@ -16,13 +16,13 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     {
         public Users()
         {
+            this.EmailSettings = new HashSet<EmailSettings>();
+            this.FTPSettings = new HashSet<FTPSettings>();
             this.Tasks = new HashSet<Tasks>();
             this.UserLogins = new HashSet<UserLogins>();
             this.UserProfiles = new HashSet<UserProfiles>();
             this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
             this.UserSettings = new HashSet<UserSettings>();
-            this.EmailSettings = new HashSet<EmailSettings>();
-            this.FTPSettings = new HashSet<FTPSettings>();
         }
     
         public int Id { get; set; }
@@ -32,12 +32,12 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public string PhoneNumber { get; set; }
         public string CompanyName { get; set; }
     
+        public virtual ICollection<EmailSettings> EmailSettings { get; set; }
+        public virtual ICollection<FTPSettings> FTPSettings { get; set; }
         public virtual ICollection<Tasks> Tasks { get; set; }
         public virtual ICollection<UserLogins> UserLogins { get; set; }
         public virtual ICollection<UserProfiles> UserProfiles { get; set; }
         public virtual ICollection<UserServiceSubscribes> UserServiceSubscribes { get; set; }
         public virtual ICollection<UserSettings> UserSettings { get; set; }
-        public virtual ICollection<EmailSettings> EmailSettings { get; set; }
-        public virtual ICollection<FTPSettings> FTPSettings { get; set; }
     }
 }

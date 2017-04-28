@@ -4,13 +4,31 @@
 
         <div class="row" ng-show="!loading">
             <div id="toolbar">
-                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User"  data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-plus" ></span>
-                    </button>
+                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add New Settings Item" data-placement="bottom">
+
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
 
             </div>
-                    HELLO ftpSettings!!!!
+
+            <!--<div class="alert alert-success" id="eventsResult">
+                Here is the result of event.
+            </div>-->
+            <div class="form-inline">
+                <table id="ftpSettingstable" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true"
+                       data-height="300" data-toggle="table">
+                    <thead>
+                        <tr>
+                            <th data-field="settingId" data-sortable="true">Id</th>
+                            <th data-field="settingHost" data-sortable="true">Host</th>
+                            <th data-field="settingPort" data-sortable="true">Port</th>
+                            <th data-field="settingUserName" data-sortable="true">User Name</th>
+                            <th data-field="settingPath" data-sortable="true">Path</th>
+                            <th data-field="settingUseSSL" data-sortable="true">Use SSL</th>
+                            <th data-field="action" data-formatter="actionFormatterFTPSetting" data-events="actionEventsFTPSetting" data-width="5%" style="text-align:center;"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-    </div>
-</div>
+    </div></div>

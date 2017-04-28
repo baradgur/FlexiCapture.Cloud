@@ -12,7 +12,7 @@
                 </div>
                 <div class="panel-body">
                     <form role="form" name="registrationForm" novalidate>
-                        <h2>Please Sign Up <small>It's free and always will be.</small></h2>
+                        <h3>Please Sign Up <small>Your Portal to all Data Capture needs</small></h3>
                         <hr class="colorgraph">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -39,23 +39,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.email.$invalid && (registrationForm.email.$touched || submitted)]">
+                        <div class="form-group" ng-class="{ true: 'has-error'}[(registrationForm.email.$invalid || !stableEmail )&& (registrationForm.email.$touched || submitted)]">
                             <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="3" ng-model="newUser.Email" required />
                             <div class="help-block" ng-messages="registrationForm.email.$error" ng-if="registrationForm.email.$touched || submitted">
                                 <div ng-message="required">Field "Email Address" must be filled</div>
                                 <div ng-message="email">Input correct Email Address</div>
+                            </div>
+                            <div class="help-block" ng-if="!stableEmail">
+                                This e-mail domain is not supported.  Please use your permanent e-mail address for the subscription.
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.password.$invalid && (registrationForm.password.$touched || submitted)]">
                                     <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="newUser.Password"
-                                           tabindex="4" minlength="6" ng-maxlength="10" pattern="\S+" required />
+                                           tabindex="4" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(\S+)" required />
                                     <div class="help-block" ng-messages="registrationForm.password.$error" ng-if="registrationForm.password.$touched || submitted">
                                         <div ng-message="required">Field "Password" must be filled</div>
-                                        <div ng-message="minlength">Password length must be at least 6 characters </div>
-                                        <div ng-message="maxlength">Password length must be no more than 10 characters</div>
-                                        <div ng-message="pattern">Password must not contain spaces</div>
+                                        <div ng-message="minlength">Password length must be at least 8 characters </div>
+                                        <div ng-message="pattern">
+                                            Password must meet the following requirements:<br />
+                                            <ul>
+                                                <li>No spaces</li>
+                                                <li>At least one capital letter</li>
+                                                <li>At least one letter</li>
+                                                <li>At least one number</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

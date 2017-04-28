@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.Helpers;
+using System.Data.Entity;
 
 namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 {
@@ -19,7 +20,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     List<DocumentTypes> types = db.DocumentTypes.Select(x => x).ToList();
                     foreach (var type in types)
@@ -53,7 +54,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     Documents document = db.Documents.FirstOrDefault(x => x.Id == documentId);
                     if (document != null)
@@ -79,9 +80,11 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
-                    return db.Documents.Where(x => x.TaskId == taskId).ToList();
+                    return db.Documents
+                        .Include(x=>x.DocumentTypes)
+                        .Where(x => x.TaskId == taskId).ToList();
                 }
             }
             catch (Exception exception)
@@ -103,7 +106,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     List<Documents> documents = db.Documents.Where(x => x.TaskId == taskId).ToList();
                     foreach (Documents document in documents)
@@ -129,7 +132,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     return db.Documents.FirstOrDefault(x => x.TaskId == taskId && x.DocumentCategoryId == 1);
                 }
@@ -143,7 +146,42 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                 return null;
             }
         }
-        
+
+        public static int AddDocument(int taskId, FileInfo file, Guid guid, string gFileName, string path, string md5, int categoryId)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    Documents document = new Documents()
+                    {
+                        Date = DateTime.Now,
+                        DocumentStateId = 1,
+                        DocumentTypeId = DocumentTypesHelper.GetToDocumentFileType(file.Extension),
+                        FileName = gFileName,
+                        FileSize = file.Length,
+                        Hash = md5,
+                        Guid = guid,
+                        Path = path,
+                        OriginalFileName = file.Name,
+                        TaskId = taskId,
+                        DocumentCategoryId = categoryId
+
+
+                    };
+                    db.Documents.Add(document);
+                    db.SaveChanges();
+                    return document.Id;
+                }
+
+                return -1;
+            }
+            catch (Exception exception)
+            {
+                return -1;
+            }
+        }
+
         /// <summary>
         /// add result document to db
         /// </summary>
@@ -158,7 +196,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                 string resultPath = assist.GetSettingValueByName("ResultFolder");
                 string path = Path.Combine(resultPath, realFileName);
                 FileInfo info = new FileInfo(filePath);
-                using (var db = new FCCPortalEntities())
+                using (var db = new FCCPortalEntities2())
                 {
                     Documents document = new Documents();
                     document.Date = DateTime.Now;

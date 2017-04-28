@@ -106,6 +106,9 @@
             url: "/store",
             templateUrl: "PartialViews/Store.html",
             onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
                 $window.document.title = "Store";
             }
         })
@@ -236,7 +239,7 @@
             templateUrl: "PartialViews/EmailProfile.html",
             onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
-                    //$state.go("main.login")
+                    $state.go("main.login");
                 }
                 $window.document.title = "Email Attachment Profile";
             }
@@ -270,7 +273,7 @@
             templateUrl: "PartialViews/FtpProfile.html",
             onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
-                    //$state.go("main.login")
+                    $state.go("main.login");
                 }
                 $window.document.title = "Ftp Profile";
             }
