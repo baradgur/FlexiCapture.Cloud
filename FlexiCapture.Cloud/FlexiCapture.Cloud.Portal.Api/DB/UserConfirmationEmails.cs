@@ -12,16 +12,13 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class UserLoginStates
+    public partial class UserConfirmationEmails
     {
-        public UserLoginStates()
-        {
-            this.UserLogins = new HashSet<UserLogins>();
-        }
-    
         public int Id { get; set; }
-        public string StateName { get; set; }
+        public int UserLoginId { get; set; }
+        public System.Guid ConfirmationGuid { get; set; }
+        public System.DateTime ExpirationDate { get; set; }
     
-        public virtual ICollection<UserLogins> UserLogins { get; set; }
+        public virtual UserLogins UserLogins { get; set; }
     }
 }

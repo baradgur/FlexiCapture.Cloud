@@ -38,10 +38,26 @@ namespace FlexiCapture.Cloud.EmailAgent.Models
 
                 foreach (var splitElement in splitElements)
                 {
-                    List<string> separateElements = splitElement.Split('=').ToList();
+                    bool ex = false;
+                    string value = splitElement;
+                    int rCount = 0;
+                    if (splitElement.Contains("confirmEmail?guid="))
+                    {
+                        value = splitElement.Replace("confirmEmail?guid=", "~");
+                        ex = true;
+                    }
+                    List<string> separateElements = value.Split('=').ToList();
                     if (separateElements.Count == 2)
                     {
-                        Elements.Add(new EmailContentElementModel(){ Name = separateElements[0], Value = separateElements[1]});
+                        if (ex)
+                        {
+                            Elements.Add(new EmailContentElementModel() { Name = separateElements[0], Value = separateElements[1].Replace("~", "confirmEmail?guid=") });
+                            
+                        }
+                        else
+                        {
+                            Elements.Add(new EmailContentElementModel() { Name = separateElements[0], Value = separateElements[1] });
+                        }
                     }
                 }
             }

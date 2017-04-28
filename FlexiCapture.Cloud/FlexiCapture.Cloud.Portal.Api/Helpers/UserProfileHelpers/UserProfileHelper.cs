@@ -158,7 +158,9 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
                 ServicesHelper.SetDeafultServiceSubcscribeForNewUser(model.Id);
                 ManageUserProfileHelper.CreateProfileForNewUser(model.Id);
                 DefaultProfileHelper.GenerateDefaultProfileForService(model.Id);
-
+                //send confirmation email
+                
+                Helpers.ConfirmationEmailHelpers.ConfirmationEmailHelper.SendConfirmUserEmail(model.Id);
                 return serializer.Serialize(model);
             }
             catch (Exception exception)

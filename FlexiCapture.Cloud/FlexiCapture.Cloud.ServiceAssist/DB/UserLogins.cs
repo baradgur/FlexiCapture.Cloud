@@ -14,6 +14,11 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     
     public partial class UserLogins
     {
+        public UserLogins()
+        {
+            this.UserConfirmationEmails = new HashSet<UserConfirmationEmails>();
+        }
+    
         public int Id { get; set; }
         public string UserName { get; set; }
         public string UserPassword { get; set; }
@@ -23,6 +28,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public Nullable<System.DateTime> LastLoginDate { get; set; }
         public Nullable<System.DateTime> RegistrationDate { get; set; }
     
+        public virtual ICollection<UserConfirmationEmails> UserConfirmationEmails { get; set; }
         public virtual UserLoginStates UserLoginStates { get; set; }
         public virtual UserRoleTypes UserRoleTypes { get; set; }
         public virtual Users Users { get; set; }

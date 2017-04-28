@@ -7,21 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FlexiCapture.Cloud.Portal.Api.DB
+namespace FlexiCapture.Cloud.ServiceAssist.DB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class UserLoginStates
+    public partial class sysdiagrams
     {
-        public UserLoginStates()
-        {
-            this.UserLogins = new HashSet<UserLogins>();
-        }
-    
-        public int Id { get; set; }
-        public string StateName { get; set; }
-    
-        public virtual ICollection<UserLogins> UserLogins { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

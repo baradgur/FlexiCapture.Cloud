@@ -14,7 +14,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
     public partial class ServiceTypes
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ServiceTypes()
         {
             this.Tasks = new HashSet<Tasks>();
@@ -25,11 +24,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public int Id { get; set; }
         public string ServiceName { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileServiceDefault> UserProfileServiceDefault { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserServiceSubscribes> UserServiceSubscribes { get; set; }
     }
 }

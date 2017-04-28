@@ -1,5 +1,13 @@
 ﻿using System;
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using FlexiCapture.Cloud.Portal.Api.DB;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
+
 using FlexiCapture.Cloud.Portal.Api.Models.Enums;
+
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
 using FlexiCapture.Cloud.Portal.Api.Models.Users;
 using FlexiCapture.Cloud.Portal.Api.Users;
@@ -86,6 +94,21 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
 
                     }
                 };
+            }
+        }
+
+        public static int GetToLoginIdByUserId(int userId)
+        {
+            try
+            {
+                using (var db =new FCCPortalEntities())
+                {
+                    return db.UserLogins.FirstOrDefault(x => x.UserId == userId).Id;
+                }
+            }
+            catch (Exception)
+            {
+                return -1;
             }
         }
     }

@@ -287,7 +287,19 @@
                 }
                 $window.document.title = "FTP File Settings";
             }
+        })
+        
+        
+        .state("main.confirmEmail", {
+            url: "/confirmEmail?guid",
+            templateUrl: "PartialViews/ConfirmEmail.html",
+            onEnter: function($window, $state) {
+                
+                $window.document.title = "Confirm Email";
+            }
         });
+
+        
 
    
     // use the HTML5 History API

@@ -18,6 +18,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public FCCPortalEntities2()
             : base("name=FCCPortalEntities2")
         {
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -39,8 +40,10 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual DbSet<RotationTypeCatalog> RotationTypeCatalog { get; set; }
         public virtual DbSet<ServiceTypes> ServiceTypes { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<TaskStates> TaskStates { get; set; }
+        public virtual DbSet<UserConfirmationEmails> UserConfirmationEmails { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserLoginStates> UserLoginStates { get; set; }
         public virtual DbSet<UserProfileExportFormats> UserProfileExportFormats { get; set; }

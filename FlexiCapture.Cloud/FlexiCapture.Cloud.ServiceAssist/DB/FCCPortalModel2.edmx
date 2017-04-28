@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FCCPortalModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -130,6 +130,16 @@
           <Property Name="SettingName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="SettingValue" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
@@ -148,6 +158,15 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserConfirmationEmails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserLoginId" Type="int" Nullable="false" />
+          <Property Name="ConfirmationGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserLogins">
           <Key>
@@ -371,6 +390,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserConfirmationEmails_UserLogins">
+          <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="1" />
+          <End Role="UserConfirmationEmails" Type="Self.UserConfirmationEmails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserLogins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserConfirmationEmails">
+              <PropertyRef Name="UserLoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserLogins_UserLoginStates">
           <End Role="UserLoginStates" Type="Self.UserLoginStates" Multiplicity="1" />
           <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="*" />
@@ -587,7 +618,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FCCPortalModelStoreContainer">
+        <EntityContainer Name="FCCPortalModel2StoreContainer">
           <EntitySet Name="AnalysisModeCatalog" EntityType="Self.AnalysisModeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentCategories" EntityType="Self.DocumentCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
@@ -602,8 +633,10 @@
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserConfirmationEmails" EntityType="Self.UserConfirmationEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLoginStates" EntityType="Self.UserLoginStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileExportFormats" EntityType="Self.UserProfileExportFormats" Schema="dbo" store:Type="Tables" />
@@ -651,6 +684,10 @@
           <AssociationSet Name="FK_Tasks_Users" Association="Self.FK_Tasks_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserConfirmationEmails_UserLogins" Association="Self.FK_UserConfirmationEmails_UserLogins">
+            <End Role="UserLogins" EntitySet="UserLogins" />
+            <End Role="UserConfirmationEmails" EntitySet="UserConfirmationEmails" />
           </AssociationSet>
           <AssociationSet Name="FK_UserLogins_UserLoginStates" Association="Self.FK_UserLogins_UserLoginStates">
             <End Role="UserLoginStates" EntitySet="UserLoginStates" />
@@ -729,7 +766,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="FCCPortalModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -872,6 +909,16 @@
           <Property Name="SettingName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SettingValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
@@ -896,6 +943,16 @@
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskStates" FromRole="TaskStates" ToRole="Tasks" />
         </EntityType>
+        <EntityType Name="UserConfirmationEmails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserLoginId" Type="Int32" Nullable="false" />
+          <Property Name="ConfirmationGuid" Type="Guid" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserConfirmationEmails_UserLogins" FromRole="UserConfirmationEmails" ToRole="UserLogins" />
+        </EntityType>
         <EntityType Name="UserLogins">
           <Key>
             <PropertyRef Name="Id" />
@@ -908,6 +965,7 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
           <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserConfirmationEmails" Relationship="Self.FK_UserConfirmationEmails_UserLogins" FromRole="UserLogins" ToRole="UserConfirmationEmails" />
           <NavigationProperty Name="UserLoginStates" Relationship="Self.FK_UserLogins_UserLoginStates" FromRole="UserLogins" ToRole="UserLoginStates" />
           <NavigationProperty Name="UserRoleTypes" Relationship="Self.FK_UserLogins_UserRoleTypes" FromRole="UserLogins" ToRole="UserRoleTypes" />
           <NavigationProperty Name="Users" Relationship="Self.FK_UserLogins_Users" FromRole="UserLogins" ToRole="Users" />
@@ -1234,6 +1292,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserConfirmationEmails_UserLogins">
+          <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="1" />
+          <End Role="UserConfirmationEmails" Type="Self.UserConfirmationEmails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserLogins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserConfirmationEmails">
+              <PropertyRef Name="UserLoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserLogins_UserLoginStates">
           <End Role="UserLoginStates" Type="Self.UserLoginStates" Multiplicity="1" />
           <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="*" />
@@ -1381,8 +1451,10 @@
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" />
           <EntitySet Name="Settings" EntityType="Self.Settings" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" />
+          <EntitySet Name="UserConfirmationEmails" EntityType="Self.UserConfirmationEmails" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" />
           <EntitySet Name="UserLoginStates" EntityType="Self.UserLoginStates" />
           <EntitySet Name="UserProfileExportFormats" EntityType="Self.UserProfileExportFormats" />
@@ -1459,6 +1531,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserConfirmationEmails_UserLogins" Association="Self.FK_UserConfirmationEmails_UserLogins">
+            <End Role="UserLogins" EntitySet="UserLogins" />
+            <End Role="UserConfirmationEmails" EntitySet="UserConfirmationEmails" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserLogins_UserLoginStates" Association="Self.FK_UserLogins_UserLoginStates">
             <End Role="UserLoginStates" EntitySet="UserLoginStates" />
             <End Role="UserLogins" EntitySet="UserLogins" />
@@ -1509,9 +1585,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FCCPortalModelStoreContainer" CdmEntityContainer="FCCPortalEntities2">
+        <EntityContainerMapping StorageEntityContainer="FCCPortalModel2StoreContainer" CdmEntityContainer="FCCPortalEntities2">
           <EntitySetMapping Name="AnalysisModeCatalog">
-            <EntityTypeMapping TypeName="FCCPortalModel.AnalysisModeCatalog">
+            <EntityTypeMapping TypeName="FCCPortalModel2.AnalysisModeCatalog">
               <MappingFragment StoreEntitySet="AnalysisModeCatalog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1519,7 +1595,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DocumentCategories">
-            <EntityTypeMapping TypeName="FCCPortalModel.DocumentCategories">
+            <EntityTypeMapping TypeName="FCCPortalModel2.DocumentCategories">
               <MappingFragment StoreEntitySet="DocumentCategories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1527,7 +1603,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Documents">
-            <EntityTypeMapping TypeName="FCCPortalModel.Documents">
+            <EntityTypeMapping TypeName="FCCPortalModel2.Documents">
               <MappingFragment StoreEntitySet="Documents">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
@@ -1545,7 +1621,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DocumentStates">
-            <EntityTypeMapping TypeName="FCCPortalModel.DocumentStates">
+            <EntityTypeMapping TypeName="FCCPortalModel2.DocumentStates">
               <MappingFragment StoreEntitySet="DocumentStates">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1553,7 +1629,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DocumentTypes">
-            <EntityTypeMapping TypeName="FCCPortalModel.DocumentTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel2.DocumentTypes">
               <MappingFragment StoreEntitySet="DocumentTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1562,7 +1638,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmailSettings">
-            <EntityTypeMapping TypeName="FCCPortalModel.EmailSettings">
+            <EntityTypeMapping TypeName="FCCPortalModel2.EmailSettings">
               <MappingFragment StoreEntitySet="EmailSettings">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1576,7 +1652,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ExportFormatsCatalog">
-            <EntityTypeMapping TypeName="FCCPortalModel.ExportFormatsCatalog">
+            <EntityTypeMapping TypeName="FCCPortalModel2.ExportFormatsCatalog">
               <MappingFragment StoreEntitySet="ExportFormatsCatalog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1585,7 +1661,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FTPSettings">
-            <EntityTypeMapping TypeName="FCCPortalModel.FTPSettings">
+            <EntityTypeMapping TypeName="FCCPortalModel2.FTPSettings">
               <MappingFragment StoreEntitySet="FTPSettings">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1599,7 +1675,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LanguagesCatalog">
-            <EntityTypeMapping TypeName="FCCPortalModel.LanguagesCatalog">
+            <EntityTypeMapping TypeName="FCCPortalModel2.LanguagesCatalog">
               <MappingFragment StoreEntitySet="LanguagesCatalog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1608,7 +1684,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Log">
-            <EntityTypeMapping TypeName="FCCPortalModel.Log">
+            <EntityTypeMapping TypeName="FCCPortalModel2.Log">
               <MappingFragment StoreEntitySet="Log">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -1617,7 +1693,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PrintTypeCatalog">
-            <EntityTypeMapping TypeName="FCCPortalModel.PrintTypeCatalog">
+            <EntityTypeMapping TypeName="FCCPortalModel2.PrintTypeCatalog">
               <MappingFragment StoreEntitySet="PrintTypeCatalog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1625,7 +1701,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RotationTypeCatalog">
-            <EntityTypeMapping TypeName="FCCPortalModel.RotationTypeCatalog">
+            <EntityTypeMapping TypeName="FCCPortalModel2.RotationTypeCatalog">
               <MappingFragment StoreEntitySet="RotationTypeCatalog">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1633,7 +1709,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ServiceTypes">
-            <EntityTypeMapping TypeName="FCCPortalModel.ServiceTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel2.ServiceTypes">
               <MappingFragment StoreEntitySet="ServiceTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
@@ -1641,7 +1717,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Settings">
-            <EntityTypeMapping TypeName="FCCPortalModel.Settings">
+            <EntityTypeMapping TypeName="FCCPortalModel2.Settings">
               <MappingFragment StoreEntitySet="Settings">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="SettingName" ColumnName="SettingName" />
@@ -1649,8 +1725,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FCCPortalModel2.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="FCCPortalModel.Tasks">
+            <EntityTypeMapping TypeName="FCCPortalModel2.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
@@ -1663,15 +1750,25 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TaskStates">
-            <EntityTypeMapping TypeName="FCCPortalModel.TaskStates">
+            <EntityTypeMapping TypeName="FCCPortalModel2.TaskStates">
               <MappingFragment StoreEntitySet="TaskStates">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserConfirmationEmails">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserConfirmationEmails">
+              <MappingFragment StoreEntitySet="UserConfirmationEmails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+                <ScalarProperty Name="ConfirmationGuid" ColumnName="ConfirmationGuid" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserLogins">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserLogins">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserLogins">
               <MappingFragment StoreEntitySet="UserLogins">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1685,7 +1782,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserLoginStates">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserLoginStates">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserLoginStates">
               <MappingFragment StoreEntitySet="UserLoginStates">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="StateName" ColumnName="StateName" />
@@ -1693,7 +1790,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfileExportFormats">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserProfileExportFormats">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserProfileExportFormats">
               <MappingFragment StoreEntitySet="UserProfileExportFormats">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserProfileId" ColumnName="UserProfileId" />
@@ -1702,7 +1799,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfileLanguages">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserProfileLanguages">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserProfileLanguages">
               <MappingFragment StoreEntitySet="UserProfileLanguages">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserProfileId" ColumnName="UserProfileId" />
@@ -1711,7 +1808,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfilePrintTypes">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserProfilePrintTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserProfilePrintTypes">
               <MappingFragment StoreEntitySet="UserProfilePrintTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserProfileId" ColumnName="UserProfileId" />
@@ -1720,7 +1817,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserProfiles">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserProfiles">
               <MappingFragment StoreEntitySet="UserProfiles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1741,7 +1838,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfileServiceDefault">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserProfileServiceDefault">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserProfileServiceDefault">
               <MappingFragment StoreEntitySet="UserProfileServiceDefault">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserProfileId" ColumnName="UserProfileId" />
@@ -1750,7 +1847,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoleTypes">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserRoleTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserRoleTypes">
               <MappingFragment StoreEntitySet="UserRoleTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1758,7 +1855,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="FCCPortalModel.Users">
+            <EntityTypeMapping TypeName="FCCPortalModel2.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -1770,7 +1867,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserServiceSubscribes">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserServiceSubscribes">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserServiceSubscribes">
               <MappingFragment StoreEntitySet="UserServiceSubscribes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1780,7 +1877,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserServiceSubscribeStates">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserServiceSubscribeStates">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserServiceSubscribeStates">
               <MappingFragment StoreEntitySet="UserServiceSubscribeStates">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1788,7 +1885,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserSettings">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserSettings">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserSettings">
               <MappingFragment StoreEntitySet="UserSettings">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

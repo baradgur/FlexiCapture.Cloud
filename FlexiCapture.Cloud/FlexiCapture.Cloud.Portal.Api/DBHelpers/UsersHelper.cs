@@ -337,7 +337,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     {
                         UserName = model.UserName,
                         UserPassword = PasswordHelper.Crypt.EncryptString(model.Password),
-                        UserLoginStateId = 1,
+                        UserLoginStateId = 2,
                         UserRoleId = 3,
                         UserId = user.Id,
                         LastLoginDate = DateTime.Now,

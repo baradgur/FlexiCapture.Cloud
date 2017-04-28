@@ -112,7 +112,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/storeController.js",
                 "~/Scripts/app/Controllers/userProfileController.js",
                 "~/Scripts/app/Controllers/userRestoreController.js",
-                "~/Scripts/app/Controllers/userRegistrationController.js"
+                "~/Scripts/app/Controllers/userRegistrationController.js",
+                "~/Scripts/app/Controllers/emailConfirmController.js"
 
 
                 )
