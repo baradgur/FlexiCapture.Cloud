@@ -92,5 +92,57 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers
                // Console.WriteLine(exception.Message);
             }
         }
+
+        /// <summary>
+        ///     test method to send single emails
+        /// </summary>
+        public static void SendConfirmationEmail(string email, string url)
+        {
+            try
+            {
+                QueuePackageModel package = new QueuePackageModel();
+                var models = new List<EmailModel>();
+                models.Add(new EmailModel
+                {
+                    EmailContentLine = "#link#="+url+";#buttontitle#=Go to site;#sendername#=DataCapture cloud;#linkto#=http://datacapture.cloud;#linktitle#=Go To datacapture.cloud",
+                    ToEmails = email,
+                    FromEmail = "fccemailagent@netvix.by",
+                    Subject = "Datacapture Cloud Confirm Registration",
+                    TypeId = 11,
+                    Task = new QueuePackageTaskModel() { DeliveryDateTime = DateTime.Now }
+                });
+
+                package.Emails.AddRange(models);
+
+                var model = new QueueModel();
+                model.StateId = 1;
+
+                var settings = new XmlWriterSettings();
+                settings.Encoding = new UnicodeEncoding(false, false); // no BOM in a .NET string
+                settings.Indent = true;
+                settings.OmitXmlDeclaration = true;
+
+                var formatter = new XmlSerializer(typeof(QueuePackageModel));
+                string content = "";
+
+                using (StringWriter textWriter = new StringWriter())
+                {
+                    using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
+                    {
+                        formatter.Serialize(xmlWriter, package);
+                    }
+                    content = textWriter.ToString();
+
+                }
+
+                model.EmailContent = content;
+                AddQueueToDb(model);
+
+            }
+            catch (Exception exception)
+            {
+                // Console.WriteLine(exception.Message);
+            }
+        }
     }
 }

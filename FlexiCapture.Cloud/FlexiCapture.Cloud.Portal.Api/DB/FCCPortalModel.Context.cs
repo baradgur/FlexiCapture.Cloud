@@ -53,5 +53,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<UserServiceSubscribes> UserServiceSubscribes { get; set; }
         public virtual DbSet<UserServiceSubscribeStates> UserServiceSubscribeStates { get; set; }
         public virtual DbSet<UserSettings> UserSettings { get; set; }
+        public virtual DbSet<UserConfirmationEmails> UserConfirmationEmails { get; set; }
+        public virtual DbSet<EmailSettings> EmailSettings { get; set; }
+        public virtual DbSet<FTPSettings> FTPSettings { get; set; }
     }
 }

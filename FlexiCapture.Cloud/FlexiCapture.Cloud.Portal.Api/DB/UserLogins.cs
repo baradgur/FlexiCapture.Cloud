@@ -14,6 +14,11 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
     public partial class UserLogins
     {
+        public UserLogins()
+        {
+            this.UserConfirmationEmails = new HashSet<UserConfirmationEmails>();
+        }
+    
         public int Id { get; set; }
         public string UserName { get; set; }
         public string UserPassword { get; set; }
@@ -26,5 +31,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual UserLoginStates UserLoginStates { get; set; }
         public virtual UserRoleTypes UserRoleTypes { get; set; }
         public virtual Users Users { get; set; }
+        public virtual ICollection<UserConfirmationEmails> UserConfirmationEmails { get; set; }
     }
 }

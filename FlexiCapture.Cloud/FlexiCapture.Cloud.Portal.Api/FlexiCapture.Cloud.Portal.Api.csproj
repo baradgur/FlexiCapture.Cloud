@@ -154,6 +154,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ConfirmationEmailController.cs" />
     <Compile Include="Controllers\CustomProfileController.cs" />
     <Compile Include="Controllers\DefaultProfileController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Controllers\UserRegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DBHelpers\ConfirmationEmailHelper.cs" />
     <Compile Include="DBHelpers\DefaultProfileHelper.cs" />
     <Compile Include="DBHelpers\DocumentsHelper.cs" />
     <Compile Include="DBHelpers\DocumentTypesHelper.cs" />
@@ -193,6 +195,9 @@
     <Compile Include="DB\DocumentTypes.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\EmailSettings.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\ExportFormatsCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -210,6 +215,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FTPSettings.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\LanguagesCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
@@ -236,6 +244,9 @@
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\TaskStates.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserConfirmationEmails.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserLogins.cs">
@@ -278,6 +289,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CatalogsHelpers\CatalogHelper.cs" />
+    <Compile Include="Helpers\ConfirmationEmailHelpers\ConfirmationEmailHelper.cs" />
     <Compile Include="Helpers\CryptHelpers\KeyGenerator.cs" />
     <Compile Include="Helpers\CryptHelpers\MD5Helper.cs" />
     <Compile Include="Helpers\CryptHelpers\PasswordHelper.cs" />

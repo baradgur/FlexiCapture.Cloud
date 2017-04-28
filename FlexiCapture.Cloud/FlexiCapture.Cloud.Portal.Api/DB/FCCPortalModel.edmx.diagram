@@ -58,6 +58,12 @@
         <AssociationConnector Association="FCCPortalModel.FK_UserSettings_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceSubscribes_UserServiceSubscribeStates" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_Tasks_TaskStates1" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserConfirmationEmails" Width="1.5" PointX="8.25" PointY="18.625" />
+        <AssociationConnector Association="FCCPortalModel.FK_UserConfirmationEmails_UserLogins" />
+        <EntityTypeShape EntityType="FCCPortalModel.EmailSettings" Width="1.5" PointX="3" PointY="26.625" />
+        <EntityTypeShape EntityType="FCCPortalModel.FTPSettings" Width="1.5" PointX="3" PointY="34.125" />
+        <AssociationConnector Association="FCCPortalModel.FK_EmailSettings_Users" />
+        <AssociationConnector Association="FCCPortalModel.FK_FTPSettings_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
