@@ -65,7 +65,7 @@ function actionFormatterFTPSetting(value, row, index) {
 
             modalInstance.result.then(function () {
                 
-                $scope.setting.UserId = $scope.userData.UserData.Id;
+                $scope.setting.UserId = $scope.choosedUserId;
 
                 ftpSettingsHttpService.manageSetting($http, $scope, data, url, usSpinnerService, $scope.isEdit);
             }, function () {

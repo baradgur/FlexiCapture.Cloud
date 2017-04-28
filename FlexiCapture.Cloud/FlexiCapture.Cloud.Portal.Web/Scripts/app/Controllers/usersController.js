@@ -25,6 +25,7 @@
         $window.actionEventsUser = {            
             'click .edit-user': function (e, value, row, index) {
                 $scope.updateUser(row);
+                $scope.choosedUserId = row.userId;
             }
         };
         $scope.updateUser = function (row) {
@@ -36,6 +37,36 @@
                  }
              }
              $scope.gotoAddNewUserView(singleUser);
+        }
+
+        $scope.editFtpSettings = function() {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'PartialViews/FTPSettings.html',
+                controller: ftpSettingManageController,
+                controllerAs: 'vm',
+                size: 'lg',
+                scope: $scope,
+                resolve: {
+                    items: function () {
+                        return $scope.items;
+                    }
+                }
+            });
+        }
+
+        $scope.editEmailSettings = function () {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'PartialViews/EmailSettings.html',
+                controller: emailSettingManageController,
+                controllerAs: 'vm',
+                size: 'lg',
+                scope: $scope,
+                resolve: {
+                    items: function () {
+                        return $scope.items;
+                    }
+                }
+            });
         }
 
         //add new user btn event

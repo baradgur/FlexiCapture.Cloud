@@ -92,16 +92,16 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Services</label>
                         <div class="col-sm-8">
-                            <ul class="list-group">
+                            <ul style="width: 112%;" class="list-group">
                                 <li class="list-group-item">
                                         Single File Conversion Service
                                         <div style="display: inline-block" class="material-switch pull-right">
                                             <input id="sfcService" type="checkbox" ng-model="user.ServiceData.SingleFileConversionService" disabled />
                                             <label for="sfcService" class="label-success"></label>
                                         </div>
-                                    <button  style="display: inline-block;" class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
+                                    <!--<button class="btn btn-info orange-tooltip edit-user modify-service-access-button" style="display: inline-block;" class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
                                         <i class="glyphicon glyphicon-edit"></i>
-                                    </button>
+                                    </button>-->
                                 </li>
                                 <li class="list-group-item">
                                     Batch File Conversion Service
@@ -109,9 +109,9 @@
                                         <input id="bfcService" type="checkbox" ng-model="user.ServiceData.BatchFileConversionService" />
                                         <label for="bfcService" class="label-success"></label>
                                     </div>
-                                    <button class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
+                                    <!--<button class="btn btn-info orange-tooltip edit-user modify-service-access-button" style="display: inline-block;" class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
                                         <i class="glyphicon glyphicon-edit"></i>
-                                    </button>
+                                    </button>-->
                                 </li>
                                 <li class="list-group-item">
                                     FTP File Conversion Service
@@ -119,6 +119,9 @@
                                         <input id="ffcService" type="checkbox" ng-model="user.ServiceData.FTPFileConversionService" />
                                         <label for="ffcService" class="label-success"></label>
                                     </div>
+                                    <button ng-click="editFtpSettings();" class="btn btn-info orange-tooltip edit-user modify-service-access-button" style="display: inline-block;" class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </button>
                                 </li>
                                 <li class="list-group-item">
                                     Email Attachment File Conversion Service
@@ -126,6 +129,9 @@
                                         <input id="eafcService" type="checkbox" ng-model="user.ServiceData.EmailAttachmentFileConversionService" />
                                         <label for="eafcService" class="label-success"></label>
                                     </div>
+                                    <button ng-click="editEmailSettings();" class="btn btn-info orange-tooltip edit-user modify-service-access-button" style="display: inline-block;" class="btn btn-info orange-tooltip edit-user" href="javascript:void(0)" title="Edit" style="text-align: center;" data-toggle="tooltip" title="Edit User" data-placement="bottom">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </button>
                                 </li>
                             </ul>
                         </div>

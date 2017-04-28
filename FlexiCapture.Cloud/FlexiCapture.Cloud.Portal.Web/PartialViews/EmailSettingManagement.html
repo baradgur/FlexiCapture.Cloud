@@ -33,11 +33,11 @@
                         <label class="col-sm-4 control-label">Password<i class="red-star">*</i></label>
                         <div class="col-sm-7">
                             <input type="password" name="password" class="form-control" placeholder="Password" ng-model="setting.Password"
-                                   minlength="3" ng-maxlength="10" pattern="\S+" required>
+                                   minlength="3" ng-maxlength="30" pattern="\S+" required>
                             <div class="help-block" ng-messages="settingForm.password.$error" ng-if="settingForm.password.$touched || submitted">
                                 <div ng-message="required">Field "Password" must be filled</div>
                                 <div ng-message="minlength">Password length must be at least 3 characters </div>
-                                <div ng-message="maxlength">Password length must be no more than 10 characters</div>
+                                <div ng-message="maxlength">Password length must be no more than 30 characters</div>
                                 <div ng-message="pattern">Password must not contain spaces</div>
                             </div>
                         </div>

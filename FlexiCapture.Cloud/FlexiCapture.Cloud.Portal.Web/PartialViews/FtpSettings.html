@@ -3,7 +3,7 @@
     <div class="container">
 
         <div class="row" ng-show="!loading">
-            <div id="toolbar">
+            <div id="toolbar"  ng-show="userData.UserData.UserRoleId == 1">
                 <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add New Settings Item" data-placement="bottom">
 
                     <span class="glyphicon glyphicon-plus"></span>
@@ -25,7 +25,7 @@
                             <th data-field="settingUserName" data-sortable="true">User Name</th>
                             <th data-field="settingPath" data-sortable="true">Path</th>
                             <th data-field="settingUseSSL" data-sortable="true">Use SSL</th>
-                            <th data-field="action" data-formatter="actionFormatterFTPSetting" data-events="actionEventsFTPSetting" data-width="5%" style="text-align:center;"></th>
+                            <th data-field="action" ng-show="userData.UserData.UserRoleId == 1" data-formatter="actionFormatterFTPSetting" data-events="actionEventsFTPSetting" data-width="5%" style="text-align:center;"></th>
                         </tr>
                     </thead>
                 </table>
