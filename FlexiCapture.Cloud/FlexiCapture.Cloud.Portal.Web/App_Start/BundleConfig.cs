@@ -84,6 +84,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/chat/socketio.js",
                 "~/Scripts/app/Scripts/routeConfigurator.js",
                 "~/Scripts/app/Scripts/fileUploader.js",
+                "~/Scripts/app/Scripts/disposable.js",
                 "~/Scripts/app/Scripts/mapAreaConfigurator.js",
                 "~/Scripts/app/Controllers/loginController.js",
                 "~/Scripts/app/Controllers/dashBoardController.js",
@@ -111,7 +112,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/storeController.js",
                 "~/Scripts/app/Controllers/userProfileController.js",
                 "~/Scripts/app/Controllers/userRestoreController.js",
-                "~/Scripts/app/Controllers/userRegistrationController.js"
+                "~/Scripts/app/Controllers/userRegistrationController.js",
+                "~/Scripts/app/Controllers/emailConfirmController.js"
 
 
                 )

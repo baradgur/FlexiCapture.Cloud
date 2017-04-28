@@ -23,55 +23,269 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" style="color: #3914AF" ng-click="exitQuestion();"><img border="0" alt="FCC Portal" src="Content/puzzle.png" width="24" height="24"> FCC Portal</a>
+                <a class="navbar-brand" style="color: #3914AF" ng-click="exitQuestion();"><img border="0" alt="FCC Portal" src="Content/puzzle.png" height="24"> DataCapture.cloud Portal</a>
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-left" style="cursor: pointer" ng-show="userData.UserData.UserRoleId==3">
                 <!--
-                        <!-- /.dropdown -->
+                <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        Services <i class="fa fa-caret-down"></i>
+                        <span ng-if="serviceStateId==1"><i class="fa fa-file-o fa-fw"></i> Single File Conversion</span>
+                        <span ng-if="serviceStateId==2"><i class="fa fa-file-archive-o fa-fw"></i> Batch File Conversion</span>
+                        <span ng-if="serviceStateId==3"><i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion</span>
+                        <span ng-if="serviceStateId==4"><i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion</span>
+                        <span ng-if="serviceStateId!=1 && serviceStateId!=2 && serviceStateId!=3 && serviceStateId!=4">Services</span>
+                        <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li ng-show="userData.ServiceData.SingleFileConversionService">
-                            <a href="" ng-click="selectService(1);">
-                                <div>
-                                    <i class="fa fa-file-o fa-fw"></i> Single File Conversion
-                                    <span class="pull-right text-muted small">Active</span>
+                    <ul class="dropdown-menu dropdown-alerts" style="width: 430px;">
+                        <li class="divider"></li>
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" href="" ng-click="selectService(1, 'singleSer', userData.ServiceData.SingleFileConversionService);">
+                                        <i class="fa fa-file-o fa-fw"></i> Single File Conversion
+                                    </a>
                                 </div>
-                            </a>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'singleSer');">
+                                        <span class="text-muted small" ng-class="userData.ServiceData.SingleFileConversionService?'service-acts':''">
+                                            {{userData.ServiceData.SingleFileConversionService?'Active':'Sign up'}}
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
                         </li>
-                        <li class="divider" ng-show="userData.ServiceData.SingleFileConversionService"></li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" href="" ng-click="selectService(2, 'batchCon', userData.ServiceData.BatchFileConversionService);">
+                                        <i class="fa fa-file-archive-o fa-fw"></i> Batch File Conversion
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'batchCon');">
+                                        <span class="text-muted small" ng-class="userData.ServiceData.BatchFileConversionService?'service-acts':''">
+                                            {{userData.ServiceData.BatchFileConversionService?'Active':'Sign up'}}
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
 
-                        <li ng-show="userData.ServiceData.BatchFileConversionService">
-                            <a href="" ng-click="selectService(2);">
-                                <div>
-                                    <i class="fa fa-file-archive-o fa-fw"></i> Batch File Conversion
-                                    <span class="pull-right text-muted small">Active</span>
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" href="" ng-click="selectService(4, 'emailAtt', userData.ServiceData.EmailAttachmentFileConversionService);">
+                                        <i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion
+                                    </a>
                                 </div>
-                            </a>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'emailAtt');">
+                                        <span class="text-muted small" ng-class="userData.ServiceData.EmailAttachmentFileConversionService?'service-acts':''">
+                                            {{userData.ServiceData.EmailAttachmentFileConversionService?'Active':'Sign up'}}
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
                         </li>
-                        <li class="divider" ng-show="userData.ServiceData.BatchFileConversionService"></li>
+                        <li class="divider"></li>
 
-                        <li ng-show="userData.ServiceData.EmailAttachmentFileConversionService">
-                            <a href="" ng-click="selectService(4);">
-                                <div>
-                                    <i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion
-                                    <span class="pull-right text-muted small">Active</span>
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" href="" ng-click="selectService(3, 'ftpCon', userData.ServiceData.FTPFileConversionService);">
+                                        <i class="fa fa-hdd-o fa-fw"></i> FTP Conversion
+                                    </a>
                                 </div>
-                            </a>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'ftpCon');">
+                                        <span class="text-muted small" ng-class="userData.ServiceData.FTPFileConversionService?'service-acts':''">
+                                            {{userData.ServiceData.FTPFileConversionService?'Active':'Sign up'}}
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
                         </li>
-                        <li class="divider" ng-show="userData.ServiceData.EmailAttachmentFileConversionService"></li>
+                        <li class="divider"></li>
 
-                        <li ng-show="userData.ServiceData.FTPFileConversionService">
-                            <a ng-click="selectService(3);">
-                                <div>
-                                    <i class="fa fa-hdd-o fa-fw"></i> FTP Conversion
-                                    <span class="pull-right text-muted small">Active</span>
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'cloudCon');">
+                                        <i class="fa fa-cloud-upload fa-fw"></i> Cloud Storage Conversion
+                                    </a>
                                 </div>
-                            </a>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'cloudCon');">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
                         </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'agentCon');">
+                                        <i class="fa fa-desktop fa-fw"></i> Windows/Mac/Linux Conversion Agent
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'agentCon');">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'webOcr');">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Online Web OCR API
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'webOcr');">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'dataForm')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Data Capture & Form Processing
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'dataForm')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'mobileCap')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Mobile Image Capture Front End
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'mobileCap')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'verVal')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Verification & Validation Front End
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'verVal')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'mailRoom')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Document Sorting/Mailroom
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'mailRoom')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'efCap')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Electronic Forms Capture
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'efCap')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'scrapNorm')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Data Scraping and Normalization
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5"ng-click="selectService(6, 'scrapNorm')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    <li class="divider"></li>
+                        
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'translation')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> Translation
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'translation')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    <li class="divider"></li>
+                        
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <a class="padding-5" ng-click="selectService(6, 'digitEye')">
+                                        <i class="fa fa-file-text-o fa-fw"></i> DigitEYE Desktop Lamp & Document Scanner
+                                    </a>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a class="padding-5" ng-click="selectService(6, 'digitEye')">
+                                        <span class="text-muted small">Sign up</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
 
                     </ul>
                     <!-- /.dropdown-alerts -->
@@ -79,8 +293,9 @@
 
                 <!-- /.dropdown -->
             </ul>
-            <ul class="nav navbar-top-links navbar-right">
 
+            <ul class="nav navbar-top-links navbar-right">
+                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -92,11 +307,7 @@
                         </li>
 
                         <li>
-                            <a ng-click="selectService(6);"><i class="fa fa-shopping-cart"></i> Store</a>
-                        </li>
-
-                        <li>
-                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Account Settings</a>
                         </li>
 
                         <li class="divider"></li>
@@ -132,7 +343,6 @@
                         </li>
                     </ul>
                     <!--end ADMIN-->
-
                     <!-- SINGLE FILE Conversion -->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==1">
 
@@ -145,15 +355,14 @@
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt"></i> Conversion Profile</a>
+                            <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear"></i> Settings</a>
+                            <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end SFC-->
-
                     <!-- BATCH Conversion -->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==2">
 
@@ -166,15 +375,14 @@
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt"></i> Conversion Profiles</a>
+                            <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.batchsettings"><i class="fa fa-gear"></i> Settings</a>
+                            <a ui-sref="main.dashboard.batchsettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end BATCh-->
-
                     <!-- email Attachment -->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==4">
 
@@ -184,15 +392,14 @@
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.emailprofile"><i class="fa fa-bolt"></i> Conversion Profiles</a>
+                            <a ui-sref="main.dashboard.emailprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear"></i> Settings</a>
+                            <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end EMAIL-->
-
                     <!-- FTP -->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==3">
 
@@ -202,16 +409,14 @@
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.ftpprofile"><i class="fa fa-bolt"></i> Conversion Profiles</a>
+                            <a ui-sref="main.dashboard.ftpprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear"></i> Settings</a>
+                            <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end FTP-->
-
-
                     <!--PROFILE -->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==5">
 
@@ -221,7 +426,6 @@
 
                     </ul>
                     <!--end PROFILE-->
-
                     <!--STORE -->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==6">
 

@@ -14,7 +14,6 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     
     public partial class ExportFormatsCatalog
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ExportFormatsCatalog()
         {
             this.UserProfileExportFormats = new HashSet<UserProfileExportFormats>();
@@ -24,7 +23,6 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public string Name { get; set; }
         public string Extension { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileExportFormats> UserProfileExportFormats { get; set; }
     }
 }

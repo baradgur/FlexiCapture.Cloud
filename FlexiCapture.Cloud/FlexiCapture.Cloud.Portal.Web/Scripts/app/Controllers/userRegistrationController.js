@@ -3,6 +3,7 @@
         var url = $$ApiUrl + "/userRegistration";
         $scope.newUser = {};
         $scope.rResponse = "";
+        $scope.stableEmail = true;
         var userRegistration = function () {
 
             $scope.loadData = false;
@@ -31,10 +32,11 @@
         }
         //make registration
         $scope.registerUser = function () {
-
+            $scope.stableEmail = validate($scope.registrationForm.email);
             $scope.rResponse = window.grecaptcha.getResponse();
             if ($scope.registrationForm.$invalid ||
-                $scope.registrationForm.password_confirmation.$viewValue != $scope.registrationForm.password.$viewValue) {
+                $scope.registrationForm.password_confirmation.$viewValue != $scope.registrationForm.password.$viewValue
+                || !$scope.stableEmail) {
                 $scope.submitted = true;
                 return;
             } else {
@@ -89,7 +91,7 @@
                             type: BootstrapDialog.TYPE_SUCCESS,
                             size: BootstrapDialog.SIZE_SMALL,
                             title: "Successfull!",
-                            message: "Congratulations, "+authModel.FirstName+" "+authModel.LastName+"! You've been succesfully registered!",
+                            message: "Congratulations, "+authModel.FirstName+" "+authModel.LastName+"! You've been succesfully registered! Please, enter your email adress and password to login.",
                             onhidden: function (dialogRef) {
                                 $state.go("main.login");
                             }

@@ -14,7 +14,6 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
     
     public partial class TaskTypes
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TaskTypes()
         {
             this.Tasks = new HashSet<Tasks>();
@@ -23,7 +22,6 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
         public int Id { get; set; }
         public string Description { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks { get; set; }
     }
 }

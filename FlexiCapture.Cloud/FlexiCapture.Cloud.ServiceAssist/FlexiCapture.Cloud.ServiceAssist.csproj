@@ -120,10 +120,16 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\sysdiagrams.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Tasks.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\TaskStates.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\UserConfirmationEmails.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserLogins.cs">
@@ -183,8 +189,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FCCPortalModel2.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="DB\FCCPortalModel2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel2.Context.cs</LastGenOutput>
+    </None>
     <None Include="DB\FCCPortalModel2.edmx.diagram">
       <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
+    </None>
+    <None Include="DB\FCCPortalModel2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel2.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -198,18 +214,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="DB\FCCPortalModel2.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel2.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DB\FCCPortalModel2.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel2.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

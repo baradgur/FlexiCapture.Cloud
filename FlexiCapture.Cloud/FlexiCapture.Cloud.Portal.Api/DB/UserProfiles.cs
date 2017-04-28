@@ -14,7 +14,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
     public partial class UserProfiles
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserProfiles()
         {
             this.UserProfileExportFormats = new HashSet<UserProfileExportFormats>();
@@ -41,14 +40,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
         public virtual AnalysisModeCatalog AnalysisModeCatalog { get; set; }
         public virtual RotationTypeCatalog RotationTypeCatalog { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileExportFormats> UserProfileExportFormats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileLanguages> UserProfileLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfilePrintTypes> UserProfilePrintTypes { get; set; }
         public virtual Users Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileServiceDefault> UserProfileServiceDefault { get; set; }
     }
 }

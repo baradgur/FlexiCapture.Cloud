@@ -13,8 +13,8 @@ namespace FlexiCapture.Cloud.EmailAgent
         {
             Agent = new FCCEmailAgent();
 //#if DEBUG
-//            //execute operations in debug mode
-//            Agent = new FCCEmailAgent();
+//          //execute operations in debug mode
+            //Agent = new FCCEmailAgent();
 //            Agent.OnDebug();
 //#else
                 ServiceBase[] ServicesToRun;
