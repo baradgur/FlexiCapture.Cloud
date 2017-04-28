@@ -43,7 +43,7 @@
                         <li>
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <a class="padding-5" href="" ng-click="selectService(1);">
+                                    <a class="padding-5" href="" ng-click="selectService(1, 'singleSer', userData.ServiceData.SingleFileConversionService);">
                                         <i class="fa fa-file-o fa-fw"></i> Single File Conversion
                                     </a>
                                 </div>
@@ -60,7 +60,7 @@
                         <li>
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <a class="padding-5" href="" ng-click="selectService(2);">
+                                    <a class="padding-5" href="" ng-click="selectService(2, 'batchCon', userData.ServiceData.BatchFileConversionService);">
                                         <i class="fa fa-file-archive-o fa-fw"></i> Batch File Conversion
                                     </a>
                                 </div>
@@ -78,7 +78,7 @@
                         <li>
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <a class="padding-5" href="" ng-click="selectService(4);">
+                                    <a class="padding-5" href="" ng-click="selectService(4, 'emailAtt', userData.ServiceData.EmailAttachmentFileConversionService);">
                                         <i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion
                                     </a>
                                 </div>
@@ -96,7 +96,7 @@
                         <li>
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <a class="padding-5" href="" ng-click="selectService(3);">
+                                    <a class="padding-5" href="" ng-click="selectService(3, 'ftpCon', userData.ServiceData.FTPFileConversionService);">
                                         <i class="fa fa-hdd-o fa-fw"></i> FTP Conversion
                                     </a>
                                 </div>
@@ -295,7 +295,7 @@
             </ul>
 
             <ul class="nav navbar-top-links navbar-right">
-                <a ng-click="selectService(6);"><i class="fa fa-shopping-cart"></i> Services Store</a>
+                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">

@@ -93,8 +93,11 @@
         $scope.start();
 
         //navigate
-        $scope.selectService = function (serviceId, anchor) {
+        $scope.selectService = function (serviceId, anchor, isAvailable) {
             if (serviceId == $scope.serviceStateId) return;
+            if (!isAvailable && serviceId !== 5  && serviceId!== 6) {
+                serviceId = 6;
+            }
             $scope.serviceStateId = serviceId;
             switch (serviceId) {
                 case 1:
