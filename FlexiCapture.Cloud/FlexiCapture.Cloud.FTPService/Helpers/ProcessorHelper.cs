@@ -19,6 +19,27 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
     /// </summary>
     public static class ProcessorHelper
     {
+
+        /// <summary>
+        /// check extesoion method
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
+        private static bool CheckExtensions(List<string> extensions, string ext)
+        {
+            try
+            {
+                foreach (var extension in extensions)
+                {
+                    if (extension.ToLower().Contains(ext.ToLower())) return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         /// <summary>
         /// make processing 
         /// </summary>
@@ -28,11 +49,13 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
             {
                 int serviceId = 3;
                 ServiceAssist.Assist assist = new Assist();
-
+                List<string> extensions = assist.GetToAvailableFileExtensions();
+                
                 List<FtpWebResponse> responses = new List<FtpWebResponse>();
                 
                 FTPHelper.GetFtpSettings().ForEach(x =>
                 {
+
                     var response = FTPHelper.TryLoginToFtp(x.Host, x.UserName,
                         PasswordHelper.Crypt.DecryptString(x.Password), x.UserId);
 
@@ -47,34 +70,44 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
 
                         addedFilesInResponse.ForEach(af =>
                         {
-                            var newNameGuid = Guid.NewGuid();
-                            var uploadName = newNameGuid + af.Item2;
-                            var localName = Path.Combine(Path.Combine("data", "uploads"), uploadName);
 
-                           
-                            var filePathOld = Path.Combine(assist.GetSettingValueByName("MainPath"), "data", "uploads", af.Item1);
-                            var filePathNew = Path.Combine(assist.GetSettingValueByName("MainPath"), "data", "uploads", newNameGuid.ToString() + af.Item2);
+                            if (CheckExtensions(extensions, af.Item2))
+                            {
 
-                           
-                           
-                            //add task to db
-                            var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
 
-                            var md5 = assist.GetMD5HashFromFile(filePathOld);
-                            //add document
-                            var fileInfo = new FileInfo(filePathOld);
-                            
+                                var newNameGuid = Guid.NewGuid();
+                                var uploadName = newNameGuid + af.Item2;
+                                var localName = Path.Combine(Path.Combine("data", "uploads"), uploadName);
 
-                            var documentId = assist.AddDocument(taskId, fileInfo, newNameGuid, uploadName, localName, md5, 1);
+                                string originalFileName = af.Item1;
+                                var filePathOld = Path.Combine(assist.GetSettingValueByName("MainPath"), "data",
+                                    "uploads", af.Item1);
+                                var filePathNew = Path.Combine(assist.GetSettingValueByName("MainPath"), "data",
+                                    "uploads", newNameGuid.ToString() + af.Item2);
 
-                            System.IO.File.Move(filePathOld, filePathNew);
-                            if (File.Exists(filePathOld))
-                                File.Delete(filePathOld);
 
-                            assist.Documents = assist.GetDocumentsByTaskId(taskId);
 
-                            string content = assist.ConvertProfileToRequestModel(assist.Documents, assist.UserProfile);
-                            assist.UpdateTaskProfile(taskId, content);
+                                //add task to db
+                                var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
+
+                                var md5 = assist.GetMD5HashFromFile(filePathOld);
+                                //add document
+                                var fileInfo = new FileInfo(filePathOld);
+
+
+                                var documentId = assist.AddDocument(taskId, fileInfo, originalFileName, newNameGuid,
+                                    uploadName, localName, md5, 1);
+
+                                System.IO.File.Move(filePathOld, filePathNew);
+                                if (File.Exists(filePathOld))
+                                    File.Delete(filePathOld);
+
+                                assist.Documents = assist.GetDocumentsByTaskId(taskId);
+
+                                string content = assist.ConvertProfileToRequestModel(assist.Documents,
+                                    assist.UserProfile);
+                                assist.UpdateTaskProfile(taskId, content);
+                            }
                         });
 
                     }

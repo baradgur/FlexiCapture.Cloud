@@ -19,7 +19,7 @@ namespace FlexiCapture.Cloud.FTPService
             //FlexiCapture.Cloud.FTPService.Helpers.ProcessorHelper.MakeProcessing();
 
         //#if DEBUG
-        //    Service.OnDebug();
+           // Service.OnDebug();
         //    #else
 
             ServiceBase[] ServicesToRun;

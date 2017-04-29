@@ -11,6 +11,27 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
     public static class EmailHelper
     {
         #region imap helpers
+
+        /// <summary>
+        /// check extesoion method
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
+        private static bool CheckExtensions(List<string> extensions, string ext)
+        {
+            try
+            {
+                foreach (var extension in extensions)
+                {
+                    if (extension.ToLower().Contains(ext.ToLower())) return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         /// <summary>
         /// receive emails from IMAP
         /// </summary>
@@ -53,12 +74,13 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                             foreach (var attachment in message.Attachments)
                                             {
                                                 var extension = Path.GetExtension(attachment.FileName);
-                                                if (extensions.Contains(extension))// check whether file extension is in the extensions list
+                                                if (CheckExtensions(extensions,extension))// check whether file extension is in the extensions list
                                                 {
                                                     var newNameGuid = Guid.NewGuid();
                                                     var uploadName = newNameGuid + extension;
                                                     var localName = Path.Combine(uploadFolder, uploadName);
                                                     var filePath = Path.Combine(uploadPath, uploadName);
+                                                    string originalFileName = attachment.FileName;
                                                     attachment.Download();
                                                     attachment.Save(uploadPath, uploadName);
                                                     //add task to db
@@ -68,7 +90,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                                     //add document
                                                     var fileInfo = new FileInfo(filePath);
 
-                                                    var documentId = assist.AddDocument(taskId, fileInfo, newNameGuid, uploadName, localName, md5, 1);
+                                                    var documentId = assist.AddDocument(taskId, fileInfo, originalFileName, newNameGuid, uploadName, localName, md5, 1);
 
                                                     assist.Documents = assist.GetDocumentsByTaskId(taskId);
 

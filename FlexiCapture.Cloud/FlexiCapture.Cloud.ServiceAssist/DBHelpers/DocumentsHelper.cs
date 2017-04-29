@@ -147,7 +147,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             }
         }
 
-        public static int AddDocument(int taskId, FileInfo file, Guid guid, string gFileName, string path, string md5, int categoryId)
+        public static int AddDocument(int taskId, FileInfo file, string originalFileName, Guid guid, string gFileName, string path, string md5, int categoryId)
         {
             try
             {
@@ -163,7 +163,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                         Hash = md5,
                         Guid = guid,
                         Path = path,
-                        OriginalFileName = file.Name,
+                        OriginalFileName = originalFileName,
                         TaskId = taskId,
                         DocumentCategoryId = categoryId
 

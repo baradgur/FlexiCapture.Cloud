@@ -187,9 +187,9 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return MD5Helper.GetMD5HashFromFile(uploadPath);
         }
 
-        public int AddDocument(int taskId, FileInfo attachment, Guid newNameGuid, string uploadName, string localName, string md5, int categoryId)
+        public int AddDocument(int taskId, FileInfo attachment, string originalFileName, Guid newNameGuid, string uploadName, string localName, string md5, int categoryId)
         {
-            return DocumentsHelper.AddDocument(taskId, attachment, newNameGuid, uploadName, localName, md5, categoryId);
+            return DocumentsHelper.AddDocument(taskId, attachment, originalFileName, newNameGuid, uploadName, localName, md5, categoryId);
         }
 
         public void UpdateTaskProfile(int taskId, string content)

@@ -17,7 +17,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService
         {
             Service = new FCC_EmailAttachmentService();
             //#if DEBUG
-            //         Service.OnDebug();
+              //       Service.OnDebug();
             //#else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
@@ -25,7 +25,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService
                 Service
             };
             ServiceBase.Run(ServicesToRun);
-            //#endif
+           // #endif
         }
     }
 }

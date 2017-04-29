@@ -179,11 +179,14 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             {
                 using (var db = new FCCPortalEntities2())
                 {// ServiceId == 4 means it's email attachment
+                    db.Configuration.ProxyCreationEnabled = false;
+
                     var subscribe = db.UserServiceSubscribes
                             .Include(x => x.Users)
-                            .Include(x=>x.Users.UserProfiles.Select(xx=>xx.UserProfileServiceDefault))
+                            .Include(x => x.Users.UserProfiles.Select(xx => xx.UserProfileServiceDefault))
                             .Where(x => x.ServiceId == 4 && x.Users.Email == fromAddress && x.SubscribeStateId == 1)
-                            .Select(x=>x).FirstOrDefault();
+                            .Select(x => x).FirstOrDefault();
+
                     int profileId = 0;
                     foreach (var userProfile in subscribe.Users.UserProfiles)
                     {
