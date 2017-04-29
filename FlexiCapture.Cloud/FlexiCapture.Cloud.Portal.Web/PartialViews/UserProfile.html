@@ -74,10 +74,10 @@
                     <label class="col-md-4 control-label" for="passwordinput9">New password</label>
                     <div class="col-md-4">
                         <input id="passwordinput9" name="password" type="password" placeholder="New password" ng-model="currentUser.NewPassword" class="form-control"
-                               minlength="6" ng-maxlength="10" pattern="\S+" />
+                               minlength="6" ng-maxlength="30" pattern="\S+" />
                         <div class="help-block" ng-messages="userProfileForm.password.$error" ng-if="userProfileForm.password.$touched || submitted">
                             <div ng-message="minlength">Password length must be at least 6 characters </div>
-                            <div ng-message="maxlength">Password length must be no more than 10 characters</div>
+                            <div ng-message="maxlength">Password length must be no more than 30 characters</div>
                             <div ng-message="pattern">Password must not contain spaces</div>
                         </div>
                     </div>

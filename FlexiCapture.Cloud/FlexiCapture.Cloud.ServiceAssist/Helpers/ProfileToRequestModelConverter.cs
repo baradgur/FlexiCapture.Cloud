@@ -105,21 +105,21 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
                 };
 
                 string serverPath = SettingsHelper.GetSettingValueByName("MainPath");
-                string url = "http://api.datacapture.cloud/";
+                string url = SettingsHelper.GetSettingValueByName("ServerPathApi");
                 foreach (var document in documents)
                 {
                    string filePath = Path.Combine(serverPath, document.Path);
-                //    string dUrl = Path.Combine(url, document.Path);
-                //    dUrl = dUrl.Replace("\\", "/");
+                    string dUrl = Path.Combine(url, document.Path);
+                    dUrl = dUrl.Replace("\\", "/");
                 //LogHelper.AddLog("DownloadUrl: "+dUrl);
                     InputFileModel model = new InputFileModel()
                     {
                         Name = document.OriginalFileName,
                         Password = "",
-                        //InputUrl = dUrl,
-                        InputUrl = "",
-                        InputBlob = ConvertFileToBase64(filePath),
-                        //InputBlob = "",
+                        InputUrl = dUrl,
+                        //InputUrl = "",
+                        //InputBlob = ConvertFileToBase64(filePath),
+                        InputBlob = "",
                         InputType = document.DocumentTypes.Name,
                         PostFix = ""
                     };

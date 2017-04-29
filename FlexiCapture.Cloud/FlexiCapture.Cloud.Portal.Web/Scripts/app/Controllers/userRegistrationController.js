@@ -91,7 +91,7 @@
                             type: BootstrapDialog.TYPE_SUCCESS,
                             size: BootstrapDialog.SIZE_SMALL,
                             title: "Successfull!",
-                            message: "Congratulations, "+authModel.FirstName+" "+authModel.LastName+"! You've been succesfully registered! Please, enter your email adress and password to login.",
+                            message: "Congratulations, "+authModel.FirstName+" "+authModel.LastName+"! You've been succesfully registered! A confirmation email has been sent to your email account. Please open it and follow the instructions.",
                             onhidden: function (dialogRef) {
                                 $state.go("main.login");
                             }

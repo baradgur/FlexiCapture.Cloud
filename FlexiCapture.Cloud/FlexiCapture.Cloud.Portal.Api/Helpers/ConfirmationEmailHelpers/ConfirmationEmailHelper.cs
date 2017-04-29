@@ -18,8 +18,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ConfirmationEmailHelpers
                 Guid guid = Guid.NewGuid();
 
                 string email =DBHelpers.ConfirmationEmailHelper.AddConfirmationEmail(loginId,guid);
-                //string url = "http://portal.datacapture.cloud/#/confirmEmail?guid=" + guid;
-                string url = "http://localhost/FCCPortal#/confirmEmail?guid=" + guid;
+                string url = "http://portal.datacapture.cloud/#/confirmEmail?guid=" + guid;
+                //string url = "http://localhost/FCCPortal#/confirmEmail?guid=" + guid;
                 if (!string.IsNullOrEmpty(email))
                 EmailHelpers.EmailHelper.SendConfirmationEmail(email,url);
             }
