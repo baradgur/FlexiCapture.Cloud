@@ -53,10 +53,11 @@
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group" ng-class="{ true: 'has-error'}[registrationForm.password.$invalid && (registrationForm.password.$touched || submitted)]">
                                     <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" ng-model="newUser.Password"
-                                           tabindex="4" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(\S+)" required />
+                                           tabindex="4" minlength="8"  ng-maxlength="30" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(\S+)" required />
                                     <div class="help-block" ng-messages="registrationForm.password.$error" ng-if="registrationForm.password.$touched || submitted">
                                         <div ng-message="required">Field "Password" must be filled</div>
                                         <div ng-message="minlength">Password length must be at least 8 characters </div>
+                                        <div ng-message="maxlength">Password length must be no more than 30 characters</div>
                                         <div ng-message="pattern">
                                             Password must meet the following requirements:<br />
                                             <ul>

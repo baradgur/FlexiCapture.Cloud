@@ -5,6 +5,7 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
     var roleId = null;
     var loginStateId = null;
     if ($scope.user.UserData) {
+        $scope.user.LoginData.UserLogin = angular.copy($scope.user.UserData.Email);
         roleId = $scope.user.UserData.UserRoleId;
         loginStateId = $scope.user.LoginData.UserLoginStateId;
     } else {

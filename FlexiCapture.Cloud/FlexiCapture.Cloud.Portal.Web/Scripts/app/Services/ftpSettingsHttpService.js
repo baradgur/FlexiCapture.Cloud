@@ -21,12 +21,13 @@
         usSpinnerService.spin("spinner-1");
 
         $http.get(url, {
-            params: { userId: $scope.userData.UserData.Id }
+            params: { userId: $scope.choosedUserId?$scope.choosedUserId:$scope.userData.UserData.Id }
         }).then(function (response) {
             if (response.data.Error) {
-                BootstrapDialog.alert({
+                BootstrapDialog.show({
                     title: response.data.Error.Name,
                     type: BootstrapDialog.TYPE_WARNING,
+                    cssClass: 'bp-z',
                     message: response.data.Error.ShortDescription + "</br>" + response.data.Error.FullDescription
                 });
             }
