@@ -7,31 +7,32 @@
 
         <div class="panel panel-info">
             <div class="panel-heading"><strong>STEP 1: Provide images or PDFs to process</strong></div>
-            <div class="panel-body" id="tformdiv">
-
-                <!-- Standar Form -->
-                <h4>Select file</h4>
-                <form id="lForm" action="" method="post" enctype="multipart/form-data">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <input type="file" name="filesToUpload" onchange="angular.element(this).scope().addThruChoice(this)" id="js-upload-files"
-                                   accept=".zip,.png,.jpg,.jpeg,.bmp,.tif,.tiff,.pdf" multiple>
+            <div class="panel-body row" id="tformdiv">
+                <div class="col-md-4">
+                    <!-- Standar Form -->
+                    <h4>Select file</h4>
+                    <form id="lForm" action="" method="post" enctype="multipart/form-data">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="file" name="filesToUpload" onchange="angular.element(this).scope().addThruChoice(this)" id="js-upload-files"
+                                       accept=".zip,.png,.jpg,.jpeg,.bmp,.tif,.tiff,.pdf" multiple>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-8">
+                    <!-- Drop Zone -->
+                    <h4>Or drop file</h4>
+                    <div class="upload-drop-zone" id="drop-zone">
+                        Drop here
+                    </div>
+                    <div class="progress" ng-show="showProgressBar">
+                        <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">0% Done</span>
                         </div>
                     </div>
-                </form>
-
-                <!-- Drop Zone -->
-                <h4>Or drop file</h4>
-                <div class="upload-drop-zone" id="drop-zone">
-                    Drop here
+                    <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
                 </div>
-                <div class="progress" ng-show="showProgressBar">
-                    <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                        <span class="sr-only">0% Done</span>
-                    </div>
-                </div>
-                <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
-
 
 
 
@@ -91,8 +92,8 @@
 
             <!--</div>-->
 
-            <div class="panel-group" style="margin-top: -1.7%">
-                <div class="panel panel-success" >
+            <div class="panel-group">
+                <div class="panel panel-success"  style="margin-top: -2%">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">

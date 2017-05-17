@@ -1,8 +1,36 @@
+function actionFormatterSingleLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-info orange-tooltip edit-single-library" href="javascript:void(0)" title="Preview" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Preview"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-edit"></i>',
+        '</button>'
+    ].join('');
+}
+
 (function () {
     var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
+
+        function actionFormatterWeight(value, row, index) {
+            return [
+                '<button class="btn btn-info orange-tooltip edit-weight" href="javascript:void(0)" title="Редактировать" style=" text-align: center;" ',
+                'data-toggle="tooltip" title="Редактировать вес"  data-placement="bottom">',
+                '<i class="glyphicon glyphicon-edit"></i>',
+                '</button>'
+            ].join('');
+        }
+
+        $window.actionEventsSingleLibrary = {
+            'click .edit-single-library': function (e, value, row, index) {
+                BootstrapDialog.info({
+                    title: 'Warning',
+                    message: 'Function is not implemented yet!',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+            }
+        };
 
 
         var timer;
