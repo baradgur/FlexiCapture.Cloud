@@ -1,5 +1,5 @@
 ﻿fccApp.service('manageFilesHttpService', function () {
-    
+
 
     // adding images to the dish gallery
     this.uploadFiles = function ($http, $scope, $state, fUrl, usSpinnerService, data) {
@@ -7,8 +7,8 @@
         var objXhr = new XMLHttpRequest();
         objXhr.onreadystatechange = stateChange;
         objXhr.upload.onprogress = updateProgress;
-        
-        
+
+
         // SEND FILE DETAILS TO THE API.
         objXhr.open("POST", fUrl);
         objXhr.send(data);
@@ -17,10 +17,23 @@
         function stateChange() {
             if (objXhr.readyState == 4) {// 4 = "DONE"
                 if (objXhr.status == 200) {// 200 = OK
-                    if (JSON.parse(objXhr.response)!=null) {
-                       // $scope.currentDish.ImagesProperties = JSON.parse(objXhr.response);
-                        
+                    if (JSON.parse(objXhr.response) != null) {
+                        // $scope.currentDish.ImagesProperties = JSON.parse(objXhr.response);
+
                         showNotify("Successfull", "Loading was successful.", "success");
+
+                        switch ($scope.serviceStateId) {
+                            case 1:
+                                $state.go("main.dashboard.singlelibrary");
+                                break;
+
+                            case 2:
+                                $state.go("main.dashboard.batchlibrary");
+                                break;
+
+                            default: break;
+                        }
+
                     }
                     else { showNotify("Error", "Error loading files", "danger"); }
                 }
@@ -38,12 +51,12 @@
                 var percentComplete = (evt.loaded / evt.total) * 100;
                 document.getElementById("proBar").style.width = percentComplete + "%";
             }
-            else { console.log('unable to compute');}
+            else { console.log('unable to compute'); }
         }
 
     }
 
-  
+
 });
 
 

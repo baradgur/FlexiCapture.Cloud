@@ -58,7 +58,7 @@
         $scope.selectLang = function (id) {
             $scope.showSaveProfilePanel = true;
 
-            for (i = 0; i < $scope.currentProfile.AvailableLanguages.length; i++) {
+            for (var i = 0; i < $scope.currentProfile.AvailableLanguages.length; i++) {
                 if ($scope.currentProfile.AvailableLanguages[i].Id == id) {
                     // alert($scope.currentProfile.AvailableLanguages[i].Selected);
 
@@ -112,7 +112,7 @@
         $scope.selectFormat = function (id) {
             $scope.showSaveProfilePanel = true;
 
-            for (i = 0; i < $scope.currentProfile.AvailableExportFormats.length; i++) {
+            for (var i = 0; i < $scope.currentProfile.AvailableExportFormats.length; i++) {
                 if ($scope.currentProfile.AvailableExportFormats[i].Id == id) {
                     // alert($scope.currentProfile.AvailableLanguages[i].Selected);
 
