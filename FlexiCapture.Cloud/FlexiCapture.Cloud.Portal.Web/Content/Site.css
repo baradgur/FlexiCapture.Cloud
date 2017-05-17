@@ -517,6 +517,7 @@ label {
 .margin-top-10 {
     margin-top: 10px;
 }
+
 .modify-service-access-button {
     display: inline-block;
     float: right;
@@ -527,9 +528,19 @@ label {
 }
 
 .modal-lg {
-        width: 80%;
-    }
+    width: 80%;
+}
 
 .bp-z {
     z-index: 10000 !important;
+}
+
+@media (min-width: 1200px) {
+    .panel-heading-btn {
+        margin-top: -5px;
+        margin-bottom: -5px;
+        
+    }
+
+    .panel-heading-btn .btn{float: right;}
 }

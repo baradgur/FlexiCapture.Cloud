@@ -6,7 +6,7 @@
 
 
         <div class="panel panel-info">
-            <div class="panel-heading"><strong>Upload files to recognize</strong> <small>Load files</small></div>
+            <div class="panel-heading"><strong>STEP 1: Provide images or PDFs to process</strong></div>
             <div class="panel-body" id="tformdiv">
 
                 <!-- Standar Form -->
@@ -15,7 +15,7 @@
                     <div class="form-inline">
                         <div class="form-group">
                             <input type="file" name="filesToUpload" onchange="angular.element(this).scope().addThruChoice(this)" id="js-upload-files"
-                                accept=".zip,.png,.jpg,.jpeg,.bmp,.tif,.tiff,.pdf" multiple>
+                                   accept=".zip,.png,.jpg,.jpeg,.bmp,.tif,.tiff,.pdf" multiple>
                         </div>
                     </div>
                 </form>
@@ -38,52 +38,56 @@
             </div>
         </div>
         <div id="toolbar">
-            <button type="button" ng-show="profileIsChanged" class="btn btn-primary orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip"
-                title="Add New Profile" data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-plus" ></span>  Save to New Profile
-                    </button>
-            <button type="button" ng-show="profileIsChanged" class="btn btn-success" ng-click="updateSettings();" data-toggle="tooltip"
-                title="Save Profile" data-placement="bottom" ng-disabled="newProfile">
-                    
-                    <span class="glyphicon glyphicon-check" ></span> Update Current Profile
-                    </button>
-            <div class="input-group" ng-show="newProfile">
-
-                <span class="input-group-addon">
-                            New Profile Name
-                    </span>
-                <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
-                <span class="input-group-btn">
-                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''" ><span class="glyphicon glyphicon-ok"></span></button>
-                </span>
-
-                <span class="input-group-btn">
-                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
-                </span>
-            </div>
+            
+            
         </div>
         <!--PROFILES-->
         <div class="panel panel-info">
-            <div class="panel-heading"><strong>Profiles</strong></div>
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-7"> <strong>STEP 2: Customize your OCR settings or create an existing Capture Profile</strong></div>
+                    <div class="col-lg-5 panel-heading-btn">
+                        <button type="button" ng-show="profileIsChanged" class="btn btn-success btn-sm" ng-click="updateSettings();" data-toggle="tooltip"
+                                title="Save Profile" data-placement="bottom" ng-disabled="newProfile">
+
+                            <span class="glyphicon glyphicon-check"></span> Update Current Profile
+                        </button>
+                        <button type="button" ng-show="profileIsChanged" class="btn btn-primary btn-sm orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip"
+                                title="Add New Profile" data-placement="bottom">
+
+                            <span class="glyphicon glyphicon-plus"></span>  Save to New Profile
+                        </button>
+
+                    </div>
+                </div>
+            </div>
             <!--<div class="panel-body">-->
 
 
-            <div class="input-group">
-                <span class="input-group-addon">
-                            Select Profile
-                    </span>
-                <select class="form-control" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id"
+        <div class="input-group">
+            <span class="input-group-addon">
+                Select Capture Profile
+            </span>
+            <select class="form-control" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id"
                     ng-model="currentProfile"></select>
 
 
+        </div>
+            <div class="input-group" ng-show="newProfile">
+
+                <span class="input-group-addon">
+                    New Profile Name
+                </span>
+                <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
+                <span class="input-group-btn">
+                    <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''"><span class="glyphicon glyphicon-ok"></span></button>
+                </span>
+
+                <span class="input-group-btn">
+                    <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
+                </span>
             </div>
-            <br/>
-
-
-
-
-
+            <br />
 
             <!--</div>-->
 
@@ -141,11 +145,11 @@
                                                 <span class="input-group-addon" id="sizing-addon_rotation">Rotation Type</span>
 
                                                 <select class="form-control" ng-options="rotation as rotation.Name for rotation in currentProfile.AvailableRotationTypes track by rotation.Id"
-                                                    ng-model="currentProfile.SelectedRotationType" aria-describedby="sizing-addon_rotation"></select>
+                                                        ng-model="currentProfile.SelectedRotationType" aria-describedby="sizing-addon_rotation"></select>
                                             </div>
                                         </li>
 
-                                        <li class="list-group-item">
+                                        <!--<li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="input-group-addon" id="sizing-addon_out">Output Format</span>
 
@@ -167,7 +171,7 @@
                                                 <input type="text" class="form-control" ng-model="currentProfile.JpegQuality" aria-describedby="sizing-addon_jpeg">
                                             </div>
 
-                                        </li>
+                                        </li>-->
                                     </ul>
 
                                     <!--</div>-->
@@ -198,7 +202,7 @@
                                             <span class="input-group-addon" id="sizing-addon_analysis_mode">Analysis Mode</span>
 
                                             <select class="form-control" ng-options="aMode as aMode.Name for aMode in currentProfile.AvailableAnalysisModes track by aMode.Id"
-                                                ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
+                                                    ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
                                         </div>
                                     </li>
 
@@ -213,7 +217,7 @@
                                                 {{print.Name}}
                                                 <div class="material-switch pull-right">
                                                     <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
-                                                        checklist-change="imChanged()" />
+                                                           checklist-change="imChanged()" />
                                                     <label for="{{print.Name}}" class="label-success"></label>
                                                 </div>
                                             </li>
@@ -228,7 +232,7 @@
                                                 {{lang.Name}}
                                                 <div class="material-switch pull-right">
                                                     <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
-                                                        checklist-change="imChanged()" />
+                                                           checklist-change="imChanged()" />
                                                     <label for="{{lang.Name}}" class="label-success"></label>
                                                 </div>
                                             </li>
@@ -247,7 +251,7 @@
                                             {{format.Name}}
                                             <div class="material-switch pull-right">
                                                 <input id="{{format.Name}}" type="checkbox" checklist-model="currentProfile.SelectedExportFormats" checklist-value="format"
-                                                    checklist-comparator=".Id" checklist-change="imChanged()" />
+                                                       checklist-comparator=".Id" checklist-change="imChanged()" />
                                                 <label for="{{format.Name}}" class="label-success"></label>
                                             </div>
                                         </li>
@@ -267,7 +271,7 @@
 
 
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">Recognize</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">STEP 3: Start Recognition</button>
     </div>
     <!--END PROFILES-->
 </div>

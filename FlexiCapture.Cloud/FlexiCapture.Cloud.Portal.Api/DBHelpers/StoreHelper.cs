@@ -54,7 +54,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                                     break;
                             }
 
-                            profile.ProfileName = name + " Default Profile ";
+                            profile.ProfileName = name + " Default Capture Profile ";
                             var mdl = ManageUserProfileHelper.CreateNewProfile(profile);
                             var serializer = new JavaScriptSerializer();
                             var pModel = serializer.Deserialize<ManageUserProfileModel>(mdl);

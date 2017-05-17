@@ -32,6 +32,27 @@
         };
         ftpLibrary();
 
+        $scope.gotoDeleteSelectedPositions = function () {
+            var positionsToDelete = $('#table').bootstrapTable('getSelections');
+            if (positionsToDelete.length > 0) {
+                var deleteData = [];
+                for (var i = 0; i < positionsToDelete.length; i++) {
+                    deleteData.push({
+                        'Id': positionsToDelete[i].Id,
+                        'TaskId': positionsToDelete[i].taskId
+                    });
+                };
+                documentsHttpService.deleteSelectedPositions($http, $scope, data, deleteData, url, usSpinnerService);
+            }
+            else {
+                BootstrapDialog.alert({
+                    title: 'Warning',
+                    message: 'There were no documents selected to delete!',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+            }
+        }
+
     };
 
 

@@ -7,18 +7,18 @@ fccApp.service('documentsHttpService', function () {
         dElement.dateTime = document.DateTime;
         dElement.fileSize = document.FileSize;
         dElement.fileName = document.OriginalFileName;
-        dElement.stateName = document.StateName;
+        dElement.stateName = (document.StateId==2?"<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>":"")+document.StateName;
         dElement.typeName = document.TypeName;
-        dElement.href = "<a href ='" + document.Url + "'  download='" + document.OriginalFileName + "'>Original File</a>";
+        dElement.href = "<a href ='" + document.Url + "'  download='" + document.OriginalFileName + "'><i class='fa fa-download' aria-hidden='true'></i> Original File</a>";
 
         var link = "";
-        for (i = 0; i < document.ResultDocuments.length; i++) {
+        for (var i = 0; i < document.ResultDocuments.length; i++) {
             var doc = document.ResultDocuments[i];
 
             var type = doc.TypeName;
             var origFilename = doc.OriginalFileName;
             var url = doc.Url;
-            link += "<p><a href='" + url + "' download='" + origFilename + "'>" + type + "</a></p>"
+            link += "<p><a href='" + url + "' download='" + origFilename + "'><i class='fa fa-download' aria-hidden='true'></i> " + type + "</a></p>"
 
         }
         dElement.results = link;
@@ -94,6 +94,58 @@ fccApp.service('documentsHttpService', function () {
             }
             $('#table').bootstrapTable('load', data);
         });
+    }
+
+
+    // delete position
+    this.deleteSelectedPositions = function ($http, $scope, data, deleteData, url, usSpinnerService) {
+        usSpinnerService.spin("spinner-1");
+        var methodType = "DELETE";
+        $http({
+            url: url,
+            method: methodType,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(deleteData)
+        })
+            .then(function (response) {
+                $scope.loadData = false;
+                if (response.data == "Success") {
+
+                    data = [];
+
+                    for (var i = 0; i < deleteData.length; i++) {
+                        for (var j = 0; j < $scope.documents.length; j++) {
+                            if (deleteData[i].Id == $scope.documents[j].Id) {
+                                $scope.documents.splice(j,1);
+                            }
+                        }
+                    }
+
+                    for (var i = 0; i < $scope.documents.length; i++) {
+                        var dElement = addData($scope.documents[i]);
+                        data.push(dElement);
+                    }
+
+                    $('#table').bootstrapTable('load', data);
+                    showNotify("Success", "Documents have been deleted successfully!", "success");
+                    // success
+                } else {
+                    showNotify("Fail", "Failed to delete documents", "danger");
+                }
+                usSpinnerService.stop('spinner-1');
+                $scope.loading = false;
+                $('#table').bootstrapTable('resetWidth');
+            },
+            function (response) { // optional
+                // failed
+                $scope.loading = false;
+                usSpinnerService.stop('spinner-1');
+                showNotify("Fail", "Failed to delete documents", "danger");
+                $('#table').bootstrapTable('resetWidth');
+            });
+        $('#table').bootstrapTable('resetWidth');
     }
 
 

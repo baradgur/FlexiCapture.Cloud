@@ -3,46 +3,54 @@
     <div class="container">
 
         <div class="row" ng-show="!loadData">
-            <div id="toolbar">
-                <button type="button" class="btn btn-primary orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip" title="Add New User"
-                    data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-plus" ></span>  New Profile
-                    </button>
-                <button type="button" ng-show="profileIsChanged" class="btn btn-success" ng-click="updateSettings();" data-toggle="tooltip"
-                    title="Save Profile" data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-check" ></span> Update Profile
-                    </button>
-                <div ng-show="newProfile">
-                    <label>New Profile Name:
-                        <input type="textbox"  ng-model="NewProfileName">
-                        <button type="button" class="btn btn-success orange-tooltip btn-sm" ng-click="createNewSettings();" data-toggle="tooltip" title="Create new profile"
-                        data-placement="bottom">
-                    <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                        <button type="button" class="btn btn-danger orange-tooltip btn-sm" ng-click="showNewProfile(false);" data-toggle="tooltip" title="Hide"
-                        data-placement="bottom">
-                    <span class="glyphicon glyphicon-remove" ></span>
-                    </button>
-                    </label>
-                </div>
-            </div>
-
-
-            </br>
+            
             <div class="panel panel-info">
-                <div class="panel-heading">Profiles</div>
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-7"> <strong>Customize your OCR settings or create an existing Profile</strong></div>
+                        <div class="col-lg-5 panel-heading-btn">
+                            <button type="button" ng-show="profileIsChanged" class="btn btn-success btn-sm" ng-click="updateSettings();" data-toggle="tooltip"
+                                    title="Save Profile" data-placement="bottom">
+                                <span class="glyphicon glyphicon-check"></span> Update Current Profile
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip" title="Add New Profile"
+                                    data-placement="bottom">
+                                <span class="glyphicon glyphicon-plus"></span> Save to New Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon">
-                    <input type="checkbox" aria-label="Checkbox for following text input"  
-                    ng-model="currentProfile.isDefault" ng-change="changeDefaultProfile()" ng-disabled="currentProfile.isDefault"> Is Default
-                </span>
+                            <input type="checkbox" aria-label="Checkbox for following text input"
+                                   ng-model="currentProfile.isDefault" ng-change="changeDefaultProfile()" ng-disabled="currentProfile.isDefault"> Is Default
+                        </span>
                         <select class="form-control" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id"
-                            ng-model="currentProfile"></select>
+                                ng-model="currentProfile"></select>
                     </div>
+                    <div id="toolbar">
+                        <div class="input-group" ng-show="newProfile">
 
+                            <span class="input-group-addon">
+                                New Profile Name
+                            </span>
+                            <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success orange-tooltip btn-sm" ng-click="createNewSettings();" data-toggle="tooltip" title="Create new profile"
+                                        data-placement="bottom">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                            </span>
+
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger orange-tooltip btn-sm" ng-click="showNewProfile(false);" data-toggle="tooltip" title="Hide"
+                                        data-placement="bottom">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -98,7 +106,7 @@
                                 </div>
                             </li>
 
-                            <li class="list-group-item">
+                            <!--<li class="list-group-item">
                                 <div class="input-group">
                                     <span class="input-group-addon" id="sizing-addon_out">Output Format</span>
 
@@ -120,7 +128,7 @@
                                     <input type="text" class="form-control" ng-model="currentProfile.JpegQuality" aria-describedby="sizing-addon_jpeg">
                                 </div>
 
-                            </li>
+                            </li>-->
                         </ul>
 
                         <!--</div>-->

@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.Documents;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 
 namespace FlexiCapture.Cloud.Portal.Api.Controllers
@@ -75,8 +76,17 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // DELETE api/documents/5
-        public void Delete(int id)
+        public string Delete(List<DocumentModel> models)
         {
+            try
+            {
+                return DocumentsHelper.DeleteDocuments(models);
+            }
+            catch (Exception ex)
+            {
+                return "Error";
+            }
+
         }
     }
 }

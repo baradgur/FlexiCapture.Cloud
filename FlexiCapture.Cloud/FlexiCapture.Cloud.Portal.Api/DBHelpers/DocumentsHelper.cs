@@ -137,6 +137,40 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 return "";
             }
         }
+        /// <summary>
+        /// method to delete documents and their tasks
+        /// </summary>
+        /// <param name="models"></param>
+        /// <returns></returns>
+        public static string DeleteDocuments(List<DocumentModel> models)
+        {
+            try
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                using (FCCPortalEntities db = new FCCPortalEntities())
+                {
+                    foreach (var model in models)
+                    {
+                        DB.Documents doc = db.Documents
+                            .Include(x=>x.Tasks)
+                            .FirstOrDefault(x=>x.Id == model.Id);
+
+                        if (doc != null)
+                        {
+                            db.Tasks.Remove(doc.Tasks);
+                            db.Documents.Remove(doc);
+                        }
+                    }
+                    db.SaveChanges();
+                }
+                return "Success";
+            }
+
+            catch (Exception exception)
+            {
+                return "Error";
+            }
+        }
 
         /// <summary>
         /// get to all documents by user id and service id

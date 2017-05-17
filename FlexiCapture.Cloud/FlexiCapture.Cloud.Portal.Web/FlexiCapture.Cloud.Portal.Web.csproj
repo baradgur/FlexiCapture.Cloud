@@ -178,6 +178,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chk-multi-select.css" />
+    <Content Include="Content\DataCapture.Cloud Logo 300x190.png" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\icons\csv.png" />
@@ -251,6 +252,7 @@
     <Content Include="Scripts\app\Controllers\batchProfileController.js" />
     <Content Include="Scripts\app\Controllers\batchSettingsController.js" />
     <Content Include="Scripts\app\Controllers\dashBoardController.js" />
+    <Content Include="Scripts\app\Controllers\emailConfirmController.js" />
     <Content Include="Scripts\app\Controllers\emailLibraryController.js" />
     <Content Include="Scripts\app\Controllers\emailProfileController.js" />
     <Content Include="Scripts\app\Controllers\emailSettingsController.js" />
