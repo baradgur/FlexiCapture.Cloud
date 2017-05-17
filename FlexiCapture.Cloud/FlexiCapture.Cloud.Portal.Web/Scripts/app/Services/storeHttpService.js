@@ -34,7 +34,7 @@
                  usSpinnerService.stop('spinner-1');
                  showNotify("Success", "The selected Service Status updated Successfully!", "success");
             },
-            function (response) { // optional
+            function (response) { // optionalr
                 // failed
                 usSpinnerService.stop('spinner-1');
                 showNotify("Error", "Service State Updating Error ", "danger");
@@ -42,3 +42,4 @@
             });
     }
 });
+

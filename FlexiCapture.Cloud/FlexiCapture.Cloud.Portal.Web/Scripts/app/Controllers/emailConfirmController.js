@@ -18,7 +18,7 @@
                         type: BootstrapDialog.TYPE_SUCCESS,
                         size: BootstrapDialog.SIZE_SMALL,
                         title: "Email Confirmation Done!",
-                        message: "<div style='text-align:center'>Email confirmation successfull! Login to system with your credentials</div>",
+                        message: "<div style='text-align:center'>Email confirmation was successful.  Please login with your credentials.</div>",
                         onhidden: function (dialogRef) {
                                 $state.go("main.login");
                             }

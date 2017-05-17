@@ -60,7 +60,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService
             try
             {
                 Timer = new Timer();
-                Timer.Interval = 5000;
+                Timer.Interval = 4000;
                 Timer.Elapsed += Timer_Elapsed;
                 Timer.Start();
             }

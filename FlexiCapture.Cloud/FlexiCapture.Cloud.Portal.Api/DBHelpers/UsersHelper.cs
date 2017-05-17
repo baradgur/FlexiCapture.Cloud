@@ -315,8 +315,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             Error = new ErrorModel()
                             {
                                 Name = "Error registration",
-                                ShortDescription = "User exists",
-                                FullDescription = "User with this credentials is exists"
+                                ShortDescription = "E-mail address exists",
+                                FullDescription = "A user with this e-mail address already exists.  Please login or reset your password."
                                 
                             }
                         });

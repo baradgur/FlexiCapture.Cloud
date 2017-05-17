@@ -43,8 +43,6 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.ProcessorHelper
                         settingsModel = formatter.Deserialize(fs) as ServiceSettingsModel;
                     }
 
-                    EmailHelper.CreateTasksFromEmails(settingsModel, assist, extentions, uploadUrl, uploadFolder, serviceId);
-
                     //check tasks
                     List<Tasks> notExecutedTasks = assist.GetToNotExecutedTasks(serviceId);
                     //upload files
@@ -60,6 +58,10 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.ProcessorHelper
                     {
                         TaskHelper.CheckStateTask(processedTask);
                     }
+
+                    EmailHelper.CreateTasksFromEmails(settingsModel, assist, extentions, uploadUrl, uploadFolder, serviceId);
+
+                   
 
                 }
                 else

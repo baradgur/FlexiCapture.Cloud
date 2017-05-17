@@ -56,11 +56,13 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                             if (folder.Name.ToLower().Equals(model.ImapSettings.DefaultFolder.ToLower()))
                             {
                                 folder.Messages.Download("ALL", MessageFetchMode.Full, Int32.MaxValue);
-
+                                //if (folder.Unseen>0)
                                 foreach (var message in folder.Messages)
                                 {
                                     if (!message.Seen)
                                     {
+                                        assist.AddLog("Check not seen letter from: " + message.From);
+                                   
                                         // check whether this email is active and user has email service
                                         assist.UserProfile = assist.CheckServiceAvailabilityByEmail(message.From.Address);
                                         if (assist.UserProfile != null)
@@ -83,8 +85,10 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                                     string originalFileName = attachment.FileName;
                                                     attachment.Download();
                                                     attachment.Save(uploadPath, uploadName);
+                                                    assist.AddLog("Download file: "+uploadName);
                                                     //add task to db
                                                     var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
+                                                    assist.AddLog("Add task: " + taskId);
 
                                                     var md5 = assist.GetMD5HashFromFile(filePath);
                                                     //add document
@@ -108,8 +112,13 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                    assist.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+
             }
         }
         #endregion

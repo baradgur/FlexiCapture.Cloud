@@ -34,8 +34,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
                         Error = new ErrorModel()
                         {
                             Name = "Login Error",
-                            ShortDescription = "Await email adress confirmation",
-                            FullDescription = "An email adress confirmation is in progress. Please, try again later."
+                            ShortDescription = "This e-mail address has not been confirmed yet",
+                            FullDescription = "Please check your e-mail and follow confirmation instructions."
 
                         }
                     };
