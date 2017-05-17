@@ -11,6 +11,7 @@
         $scope.profileIsChanged = false;
         $scope.defaultProfileId = -1;
         $scope.oldDefaultProfileId = -1;
+        $scope.searchLangText = "";
 
         $scope.showNewProfile = function (show) {
 
@@ -207,6 +208,7 @@
 
         var batchFileConversion = function () {
 
+            var dropZone = document.getElementById('drop-zone');
             var uploadForm = document.getElementById('tformdiv');
             var uploadForm3 = document.getElementsByTagName('form');
 
@@ -263,8 +265,32 @@
 
                 $scope.$apply();
             }
+            dropZone.ondrop = function (e) {
+                e.preventDefault();
+                this.className = 'upload-drop-zone';
+                $scope.addToScopeFiles(e.dataTransfer.files);
+                document.getElementById("js-upload-files").value = '';
+            }
+
+            dropZone.ondragover = function () {
+                this.className = 'upload-drop-zone drop';
+                return false;
+            }
+
+            dropZone.ondragleave = function () {
+                this.className = 'upload-drop-zone';
+                return false;
+            }
         };
         batchFileConversion();
+
+        $('.collapse').on('shown.bs.collapse', function () {
+            $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+        }).on('hidden.bs.collapse', function () {
+            $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+        });
+
+        $('.collapse').collapse('show');
 
         $scope.changeProfile = function () {
 

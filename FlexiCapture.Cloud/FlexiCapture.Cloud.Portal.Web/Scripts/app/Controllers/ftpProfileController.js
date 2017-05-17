@@ -9,7 +9,8 @@
         $scope.newProfile = false;
         $scope.profileIsChanged = false;
         $scope.defaultProfileId =-1;
-        $scope.oldDefaultProfileId =-1;
+        $scope.oldDefaultProfileId = -1;
+        $scope.searchLangText = "";
         var ftpProfile = function () {
             $scope.loadData = true;
             manageUserProfileHttpService.getToUserProfiles($http, $scope, url, usSpinnerService, 0);

@@ -7,59 +7,58 @@
 
         <div class="panel panel-info">
             <div class="panel-heading"><strong>Upload files to recognize</strong> <small>Load files</small></div>
-            <div class="panel-body" id="tformdiv">
+            <div class="panel-body row" id="tformdiv">
 
-                <!-- Standar Form -->
-                <h4>Select file</h4>
-                <form id="lForm" action="" method="post" enctype="multipart/form-data">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <input type="file" name="filesToUpload" onchange="angular.element(this).scope().addThruChoice(this)" id="js-upload-files"
-                                accept=".zip,.png,.jpg,.jpeg,.bmp,.tif,.tiff,.pdf" multiple>
+                <div class="col-md-4">
+                    <!-- Standar Form -->
+                    <h4>Select file</h4>
+                    <form id="lForm" action="" method="post" enctype="multipart/form-data">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="file" name="filesToUpload" onchange="angular.element(this).scope().addThruChoice(this)" id="js-upload-files"
+                                       accept=".zip,.png,.jpg,.jpeg,.bmp,.tif,.tiff,.pdf" multiple>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-8">
+                    <!-- Drop Zone -->
+                    <h4>Or drop file</h4>
+                    <div class="upload-drop-zone" id="drop-zone">
+                        Drop here
+                    </div>
+                    <div class="progress" ng-show="showProgressBar">
+                        <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">0% Done</span>
                         </div>
                     </div>
-                </form>
-
-                <!-- Drop Zone -->
-                <!--<h4>Or drop file</h4>
-                <div class="upload-drop-zone" id="drop-zone">
-                    Drop here
-                </div>-->
-                <div class="progress" ng-show="showProgressBar">
-                    <div class="progress-bar" id="proBar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                        <span class="sr-only">0% Done</span>
-                    </div>
+                    <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
                 </div>
-                <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
-
-
-
-
             </div>
         </div>
         <div id="toolbar">
             <button type="button" ng-show="profileIsChanged" class="btn btn-primary orange-tooltip" ng-click="showNewProfile(true)" data-toggle="tooltip"
-                title="Add New Profile" data-placement="bottom">
-                    
-                    <span class="glyphicon glyphicon-plus" ></span>  Save to New Profile
-                    </button>
+                    title="Add New Profile" data-placement="bottom">
+
+                <span class="glyphicon glyphicon-plus"></span>  Save to New Profile
+            </button>
             <button type="button" ng-show="profileIsChanged" class="btn btn-success" ng-click="updateSettings();" data-toggle="tooltip"
-                title="Save Profile" data-placement="bottom" ng-disabled="newProfile">
-                    
-                    <span class="glyphicon glyphicon-check" ></span> Update Current Profile
-                    </button>
+                    title="Save Profile" data-placement="bottom" ng-disabled="newProfile">
+
+                <span class="glyphicon glyphicon-check"></span> Update Current Profile
+            </button>
             <div class="input-group" ng-show="newProfile">
 
                 <span class="input-group-addon">
-                            New Profile Name
-                    </span>
+                    New Profile Name
+                </span>
                 <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
                 <span class="input-group-btn">
-                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''" ><span class="glyphicon glyphicon-ok"></span></button>
+                    <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''"><span class="glyphicon glyphicon-ok"></span></button>
                 </span>
 
                 <span class="input-group-btn">
-                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
                 </span>
             </div>
         </div>
@@ -71,14 +70,14 @@
 
             <div class="input-group">
                 <span class="input-group-addon">
-                            Select Profile
-                    </span>
+                    Select Profile
+                </span>
                 <select class="form-control" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id"
-                    ng-model="currentProfile"></select>
+                        ng-model="currentProfile"></select>
 
 
             </div>
-            <br/>
+            <br />
 
 
 
@@ -87,11 +86,14 @@
 
             <!--</div>-->
 
-            <div class="panel-group">
-                <div class="panel panel-success">
+            <div class="panel-group" style="margin-top: -1.7%">
+                <div class="panel panel-success" >
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">{{currentProfile.Name}} Profile Details</a>
+                            <a href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Conversion Settings
+                            </a>
                         </h4>
                     </div>
                     <div id="collapse1" class="panel-collapse collapse">
@@ -141,33 +143,33 @@
                                                 <span class="input-group-addon" id="sizing-addon_rotation">Rotation Type</span>
 
                                                 <select class="form-control" ng-options="rotation as rotation.Name for rotation in currentProfile.AvailableRotationTypes track by rotation.Id"
-                                                    ng-model="currentProfile.SelectedRotationType" aria-describedby="sizing-addon_rotation"></select>
+                                                        ng-model="currentProfile.SelectedRotationType" aria-describedby="sizing-addon_rotation"></select>
                                             </div>
                                         </li>
 
-                                        <li class="list-group-item">
+                                        <!--<li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="input-group-addon" id="sizing-addon_out">Output Format</span>
 
                                                 <input type="text" class="form-control" ng-model="currentProfile.OutputFormat" aria-describedby="sizing-addon_out">
                                             </div>
-                                        </li>
+                                        </li>-->
 
-                                        <li class="list-group-item">
+                                        <!--<li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="input-group-addon" id="sizing-addon_res">Resolution</span>
                                                 <input type="text" class="form-control" ng-model="currentProfile.Resolution" aria-describedby="sizing-addon_res">
                                             </div>
 
-                                        </li>
+                                        </li>-->
 
-                                        <li class="list-group-item">
+                                        <!--<li class="list-group-item">
                                             <div class="input-group">
                                                 <span class="input-group-addon" id="sizing-addon_jpeg">Jpeg Quality</span>
                                                 <input type="text" class="form-control" ng-model="currentProfile.JpegQuality" aria-describedby="sizing-addon_jpeg">
                                             </div>
 
-                                        </li>
+                                        </li>-->
                                     </ul>
 
                                     <!--</div>-->
@@ -198,7 +200,7 @@
                                             <span class="input-group-addon" id="sizing-addon_analysis_mode">Analysis Mode</span>
 
                                             <select class="form-control" ng-options="aMode as aMode.Name for aMode in currentProfile.AvailableAnalysisModes track by aMode.Id"
-                                                ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
+                                                    ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
                                         </div>
                                     </li>
 
@@ -213,7 +215,7 @@
                                                 {{print.Name}}
                                                 <div class="material-switch pull-right">
                                                     <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
-                                                        checklist-change="imChanged()" />
+                                                           checklist-change="imChanged()" />
                                                     <label for="{{print.Name}}" class="label-success"></label>
                                                 </div>
                                             </li>
@@ -221,20 +223,19 @@
                                     </div>
 
                                     <div class="panel panel-info form-group">
-                                        <div class="panel-heading">Languages</div>
+                                        <input type="text" class="form-control" placeholder="Filter" ng-model="searchLangText">
+                                        <ul class="list-group" style="height: 200px; overflow-y: scroll;">
+                                                <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages | filter:searchLangText">
+                                                    {{lang.Name}}
+                                                    <div class="material-switch pull-right">
+                                                        <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
+                                                               checklist-change="imChanged()" />
+                                                        <label for="{{lang.Name}}" class="label-success"></label>
+                                                    </div>
+                                                </li>
+                                            </ul>
 
-                                        <ul class="list-group">
-                                            <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages">
-                                                {{lang.Name}}
-                                                <div class="material-switch pull-right">
-                                                    <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
-                                                        checklist-change="imChanged()" />
-                                                    <label for="{{lang.Name}}" class="label-success"></label>
-                                                </div>
-                                            </li>
-                                        </ul>
-
-                                    </div>
+</div>
                                 </div>
                             </div>
 
@@ -247,7 +248,7 @@
                                             {{format.Name}}
                                             <div class="material-switch pull-right">
                                                 <input id="{{format.Name}}" type="checkbox" checklist-model="currentProfile.SelectedExportFormats" checklist-value="format"
-                                                    checklist-comparator=".Id" checklist-change="imChanged()" />
+                                                       checklist-comparator=".Id" checklist-change="imChanged()" />
                                                 <label for="{{format.Name}}" class="label-success"></label>
                                             </div>
                                         </li>
