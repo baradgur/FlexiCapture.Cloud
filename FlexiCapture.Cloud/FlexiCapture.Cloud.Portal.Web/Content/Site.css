@@ -544,3 +544,29 @@ label {
 
     .panel-heading-btn .btn{float: right;}
 }
+
+
+.short-header{
+    width: 100px !important;
+    max-width: 100px !important;
+    word-wrap: break-word !important;
+}
+
+.fitted-header{
+    max-width: 100px !important;
+    word-wrap: break-word !important;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+    .big-menu{ width: 450px !important;}
+}
+
+@media (max-width: 767px) {
+    .big-menu{ width: 100vw;}
+}

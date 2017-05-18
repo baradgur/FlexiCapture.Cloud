@@ -1,8 +1,59 @@
+function actionFormatterEmailLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-info orange-tooltip edit-email-library" href="javascript:void(0)" title="Preview" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Preview"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-edit"></i>',
+        '</button>'
+    ].join('');
+}
+
+function deleteFormatterEmailLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-danger orange-tooltip delete-email-library" href="javascript:void(0)" title="Delete" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Delete"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</button>'
+    ].join('');
+}
+
 (function () {
     var emailLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal,documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
+
+        $window.actionEventsEmailLibrary = {
+            'click .edit-email-library': function (e, value, row, index) {
+                BootstrapDialog.show({
+                    title: 'Warning',
+                    message: 'Function is not implemented yet!',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+            },
+            'click .delete-email-library': function (e, value, row, index) {
+                BootstrapDialog.show({
+                    title: 'Delete file',
+                    message: 'Are you shure?',
+                    buttons: [{
+                        label: 'Yes',
+                        action: function (dialog) {
+                            documentsHttpService.deleteSelectedPositions($http, $scope, data,
+                                [{
+                                    'Id': row.Id,
+                                    'TaskId': row.taskId
+                                }],
+                                url, usSpinnerService);
+                            dialog.close();
+                        }
+                    }, {
+                        label: 'Cancel',
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }]
+                });
+            }
+        };
 
 
         var timer;
@@ -44,7 +95,23 @@
                         'TaskId': positionsToDelete[i].taskId
                     });
                 };
-                documentsHttpService.deleteSelectedPositions($http, $scope, data, deleteData, url, usSpinnerService);
+                BootstrapDialog.show({
+                    title: 'Delete file',
+                    message: 'Are you shure?',
+                    buttons: [{
+                        label: 'Yes',
+                        action: function (dialog) {
+                            documentsHttpService.deleteSelectedPositions($http, $scope, data, deleteData, url, usSpinnerService);
+                            dialog.close();
+                        }
+                    }, {
+                        label: 'Cancel',
+                        action: function (dialog) {
+                            deleteData = [];
+                            dialog.close();
+                        }
+                    }]
+                });
             }
             else {
                 BootstrapDialog.alert({

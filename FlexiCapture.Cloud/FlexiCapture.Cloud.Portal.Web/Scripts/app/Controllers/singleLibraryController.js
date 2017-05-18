@@ -7,28 +7,54 @@ function actionFormatterSingleLibrary(value, row, index) {
     ].join('');
 }
 
+function deleteFormatterFileSingleLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-danger orange-tooltip delete-single-library" href="javascript:void(0)" title="Delete" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Delete"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</button>'
+    ].join('');
+}
+
+
 (function () {
     var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
 
-        function actionFormatterWeight(value, row, index) {
-            return [
-                '<button class="btn btn-info orange-tooltip edit-weight" href="javascript:void(0)" title="Редактировать" style=" text-align: center;" ',
-                'data-toggle="tooltip" title="Редактировать вес"  data-placement="bottom">',
-                '<i class="glyphicon glyphicon-edit"></i>',
-                '</button>'
-            ].join('');
-        }
 
         $window.actionEventsSingleLibrary = {
             'click .edit-single-library': function (e, value, row, index) {
-                BootstrapDialog.info({
+                BootstrapDialog.show({
                     title: 'Warning',
                     message: 'Function is not implemented yet!',
                     type: BootstrapDialog.TYPE_WARNING
                 });
+            },
+            'click .delete-single-library': function (e, value, row, index) {
+                BootstrapDialog.show({
+                    title: 'Delete file',
+                    message: 'Are you shure?',
+                    buttons: [{
+                        label: 'Yes',
+                        action: function (dialog) {
+                            documentsHttpService.deleteSelectedPositions($http, $scope, data,
+                                [{
+                                    'Id': row.Id,
+                                    'TaskId': row.taskId
+                                }],
+                                url, usSpinnerService);
+                            dialog.close();
+                        }
+                    }, {
+                        label: 'Cancel',
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }]
+                });
+                
             }
         };
 
@@ -39,7 +65,7 @@ function actionFormatterSingleLibrary(value, row, index) {
                 //console.log('Start silence!');
                 documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
             }
-                , 5000);
+                , 500000);
         }
 
         $scope.killtimer = function () {
@@ -74,7 +100,24 @@ function actionFormatterSingleLibrary(value, row, index) {
                         'TaskId': positionsToDelete[i].taskId
                     });
                 };
-                documentsHttpService.deleteSelectedPositions($http, $scope, data, deleteData, url, usSpinnerService);
+                BootstrapDialog.show({
+                    title: 'Delete file',
+                    message: 'Are you shure?',
+                    buttons: [{
+                        label: 'Yes',
+                        action: function (dialog) {
+                            documentsHttpService.deleteSelectedPositions($http, $scope, data, deleteData, url, usSpinnerService);
+                            dialog.close();
+                        }
+                    }, {
+                        label: 'Cancel',
+                        action: function (dialog) {
+                            deleteData = [];
+                            dialog.close();
+                        }
+                    }]
+                });
+                
             }
             else {
                 BootstrapDialog.alert({
