@@ -1,3 +1,4 @@
+/// <reference path="singleLibraryController.js" />
 function actionFormatterSingleLibrary(value, row, index) {
     return [
         '<button class="btn btn-info orange-tooltip edit-single-library" href="javascript:void(0)" title="Preview" style=" text-align: center;" ',
@@ -6,6 +7,14 @@ function actionFormatterSingleLibrary(value, row, index) {
         '</button>'
     ].join('');
 }
+
+function downloadFormatterLibrary(value, row, index) {
+    return [
+        "<a class='download-link' href ='javascript: void(0)'><i class='fa fa-download' aria-hidden='true'></i> Original File</a>"
+
+    ].join('');
+}
+
 
 function deleteFormatterFileSingleLibrary(value, row, index) {
     return [
@@ -17,44 +26,114 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 }
 
 
+
 (function () {
     var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
 
+        $scope.saveData = (function () {
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            return function (data, fileName) {
+                var byteCharacters = atob(data);
+                var byteNumbers = new Array(byteCharacters.length);
+                for (var i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                var byteArray = new Uint8Array(byteNumbers);
+
+
+                var blob1 = new Blob([byteArray], { type: "application/octet-stream" });
+                    url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = fileName;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            };
+        }());
+
+
 
         $window.actionEventsSingleLibrary = {
-            'click .edit-single-library': function (e, value, row, index) {
+            'click .edit-single-library': function(e, value, row, index) {
                 BootstrapDialog.show({
                     title: 'Warning',
                     message: 'Function is not implemented yet!',
                     type: BootstrapDialog.TYPE_WARNING
                 });
             },
-            'click .delete-single-library': function (e, value, row, index) {
+            'click .delete-single-library': function(e, value, row, index) {
                 BootstrapDialog.show({
                     title: 'Delete file',
                     message: 'Are you shure?',
-                    buttons: [{
-                        label: 'Yes',
-                        action: function (dialog) {
-                            documentsHttpService.deleteSelectedPositions($http, $scope, data,
-                                [{
-                                    'Id': row.Id,
-                                    'TaskId': row.taskId
-                                }],
-                                url, usSpinnerService);
-                            dialog.close();
+                    buttons: [
+                        {
+                            label: 'Yes',
+                            action: function(dialog) {
+                                documentsHttpService.deleteSelectedPositions($http,
+                                    $scope,
+                                    data,
+                                    [
+                                        {
+                                            'Id': row.Id,
+                                            'TaskId': row.taskId
+                                        }
+                                    ],
+                                    url,
+                                    usSpinnerService);
+                                dialog.close();
+                            }
+                        }, {
+                            label: 'Cancel',
+                            action: function(dialog) {
+                                dialog.close();
+                            }
                         }
-                    }, {
-                        label: 'Cancel',
-                        action: function (dialog) {
-                            dialog.close();
-                        }
-                    }]
+                    ]
                 });
-                
+
+            },
+            'click .download-link': function(e, value, row, index) {
+                documentsHttpService.downloadDocumentById($http, $scope, row.Id, $$ApiUrl + "/downloadfile")
+                    .then(function(data, status, headers) {
+                        try {
+                            headers = headers();
+
+                            var filename = headers['x-filename'];
+                            var contentType = headers['content-type'];
+                            var blob = new Blob([data], { type: contentType });
+
+                            //Check if user is using IE
+                            var ua = window.navigator.userAgent;
+                            var msie = ua.indexOf("MSIE ");
+
+                            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                                window.navigator.msSaveBlob(blob, filename);
+                            } else // If another browser, return 0
+                            {
+                                //Create a url to the blob
+                                var url = window.URL.createObjectURL(blob);
+                                var linkElement = document.createElement('a');
+                                linkElement.setAttribute('href', url);
+                                linkElement.setAttribute("download", filename);
+
+                                //Force a download
+                                var clickEvent = new MouseEvent("click",
+                                {
+                                    "view": window,
+                                    "bubbles": true,
+                                    "cancelable": false
+                                });
+                                linkElement.dispatchEvent(clickEvent);
+                            }
+
+                        } catch (ex) {
+                            console.log(ex);
+                        }
+                    });
             }
         };
 

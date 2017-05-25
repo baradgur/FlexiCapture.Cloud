@@ -570,3 +570,12 @@ label {
 @media (max-width: 767px) {
     .big-menu{ width: 100vw;}
 }
+
+.store-img {
+    max-width: 100%;
+    height: 100px;
+}
+
+.navbar-default {
+    background-color: #ffffff !important;
+}

@@ -3,13 +3,15 @@ fccApp.service('documentsHttpService', function () {
     function addData(document) {
         var dElement = {};
         dElement.Id = document.Id;
+        dElement.ViewId = 12010000 + document.Id;
         dElement.taskId = document.TaskId;
+        dElement.ViewTaskId = 12010000 + parseInt(document.TaskId);
         dElement.dateTime = document.DateTime;
         dElement.fileSize = document.FileSize;
         dElement.fileName = document.OriginalFileName;
         dElement.stateName = (document.StateId==2?"<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>":"")+document.StateName;
         dElement.typeName = document.TypeName;
-        dElement.href = "<a href ='" + document.Url + "'  download='" + document.OriginalFileName + "'><i class='fa fa-download' aria-hidden='true'></i> Original File</a>";
+
 
         var link = "";
         for (var i = 0; i < document.ResultDocuments.length; i++) {
@@ -24,6 +26,30 @@ fccApp.service('documentsHttpService', function () {
         dElement.results = link;
 
         return dElement;
+    }
+
+    this.downloadDocumentById = function($http, $scope, docId, url) {
+        var dfd = $.Deferred();
+
+        $http({
+            method: 'GET',
+            url: url,
+            responseType: 'arraybuffer',
+            params: { documentId: docId }
+        }).success(function (data, status, headers) {
+
+            return dfd.resolve(data, status, headers);
+
+
+            //$http.get(url, {
+            //    params: { documentId: docId }
+            //}).then(function(response) {
+            //    return dfd.resolve(response.data);
+            //});
+            //return dfd.promise();
+        });
+
+        return dfd.promise();
     }
 
 

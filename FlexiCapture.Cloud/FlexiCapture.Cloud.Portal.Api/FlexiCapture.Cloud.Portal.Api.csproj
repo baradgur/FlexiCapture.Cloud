@@ -159,6 +159,7 @@
     <Compile Include="Controllers\CustomProfileController.cs" />
     <Compile Include="Controllers\DefaultProfileController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
+    <Compile Include="Controllers\DownloadFileController.cs" />
     <Compile Include="Controllers\EmailSettingsController.cs" />
     <Compile Include="Controllers\FTPSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Helpers\CryptHelpers\KeyGenerator.cs" />
     <Compile Include="Helpers\CryptHelpers\MD5Helper.cs" />
     <Compile Include="Helpers\CryptHelpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\DocumentsHelper.cs" />
     <Compile Include="Helpers\DocumentsHelpers\DocumentsHelper.cs" />
     <Compile Include="Helpers\EmailHelpers\EmailHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />

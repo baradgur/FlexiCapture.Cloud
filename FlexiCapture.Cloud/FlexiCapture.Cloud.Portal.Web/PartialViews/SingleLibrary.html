@@ -16,14 +16,15 @@
 
                     <tr>
                         <th data-field="state" data-checkbox="true" data-click-to-select="true"></th>
-                        <th data-field="Id" data-width="120" data-sortable="true">Conversion<br/> ID</th>
-                        <th data-field="taskId" class="fitted-header" data-width="40" data-sortable="true">Task<br/> ID</th>
+                        <th data-field="ViewId" data-width="120" data-sortable="true">Conversion<br/> ID</th>
+                        <th data-field="ViewTaskId" class="fitted-header" data-width="40" data-sortable="true">Task<br/> ID</th>
                         <th data-field="dateTime" class="short-header" data-sortable="true">Request<br/> Date</th>
                         <th data-field="fileSize" data-width="40" data-sortable="true">Size<br/> (MB)</th>
                         <th data-field="fileName" data-sortable="true">Original File Name</th>
                         <th data-field="stateName" data-sortable="true">Status</th>
                         <th data-field="typeName" class="fitted-header" data-width="50" data-sortable="true">Input<br/> File<br/> Type</th>
-                        <th data-field="href" data-sortable="true">Original File(s)</th>
+                        <th data-field="href" data-formatter="downloadFormatterLibrary"
+                            data-events="actionEventsSingleLibrary" data-sortable="true">Original File(s)</th>
                         <th data-field="results" class="fitted-header" data-width="50" data-sortable="true">Result<br/> File(s)</th>
                         <th data-field="action" data-formatter="actionFormatterSingleLibrary" 
                             data-events="actionEventsSingleLibrary" data-width="5%" 

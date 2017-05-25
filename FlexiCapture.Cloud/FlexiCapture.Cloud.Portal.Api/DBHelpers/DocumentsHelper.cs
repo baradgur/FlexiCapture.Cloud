@@ -198,5 +198,30 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 return null;
             }
         }
+
+        /// <summary>
+        /// Get document by id
+        /// </summary>
+        /// <returns></returns>
+        public static Documents GetDocumentsById(int id)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities())
+                {
+                    Documents documents = db.Documents
+                        .Include(x => x.DocumentStates)
+                        .Include(x => x.DocumentTypes)
+                        .Include(x => x.Tasks)
+                        .Include(x => x.Tasks)
+                        .Single(x => x.Id == id);
+                    return documents;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
