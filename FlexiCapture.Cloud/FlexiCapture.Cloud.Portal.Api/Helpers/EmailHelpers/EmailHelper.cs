@@ -52,10 +52,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers
                 var models = new List<EmailModel>();
                 models.Add(new EmailModel
                 {
-                    EmailContentLine = "#username#="+userName+";#password#="+password+";#buttontitle#=Go to site;#sendername#=FlexiCapture cloud;#linkto#=http://flexicapture.cloud;#linktitle#=Go To Flexi Capture Cloud",
+                    EmailContentLine = "#username#="+userName+";#password#="+password+ ";#buttontitle#=Login at DataCapture.cloud;#sendername#=Your DataCapture.cloud Support Team;#linkto#=http://datacapture.cloud;#linktitle#=This is a one-time automatically-generated e-mail.Visit http://DataCapture.cloud",
                     ToEmails = email,
-                    FromEmail = "fccemailagent@netvix.by",
-                    Subject = "FlexiCapture.cloud Recover Password",
+                    FromEmail = "support@datacapture.cloud",
+                    Subject = "Action Required - DataCapture.cloud Password Reset",
                     TypeId = 10,
                     Task = new QueuePackageTaskModel() { DeliveryDateTime = DateTime.Now }
                 });
@@ -104,10 +104,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers
                 var models = new List<EmailModel>();
                 models.Add(new EmailModel
                 {
-                    EmailContentLine = "#link#="+url+";#buttontitle#=Go to site;#sendername#=DataCapture cloud;#linkto#=http://datacapture.cloud;#linktitle#=Go To datacapture.cloud",
+                    EmailContentLine = "#link#="+url+ ";#buttontitle#=Confirm Registration;#sendername#=Your DataCapture.cloud Support Team;#linkto#=http://datacapture.cloud;#linktitle#=This is a one-time automatically-generated e-mail.Visit http://DataCapture.cloud",
                     ToEmails = email,
-                    FromEmail = "fccemailagent@netvix.by",
-                    Subject = "Datacapture Cloud Confirm Registration",
+                    FromEmail = "support@datacapture.cloud",
+                    Subject = "Action Required - DataCapture.cloud Registration Confirmation",
                     TypeId = 11,
                     Task = new QueuePackageTaskModel() { DeliveryDateTime = DateTime.Now }
                 });

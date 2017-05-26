@@ -71,8 +71,8 @@ namespace FlexiCapture.Cloud.EmailAgent
                 ServiceSettings = ServiceSettingHelper.InitServiceSettings(SystemSettings.SettingsPath);
                 
                 LogHelper.AddLog("Settings Path "+SystemSettings.SettingsPath);
-                Timer.Start();
-                // ProcessorHelper.MakeProcessing();
+                //Timer.Start();
+                 ProcessorHelper.MakeProcessing();
 
                 LogHelper.AddLog("FCC Email Agent Service started");
             }
