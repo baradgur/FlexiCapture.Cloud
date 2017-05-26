@@ -4,7 +4,7 @@
         <div class="row">
             <div id="singleSer" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/single.png">
+                    <img class="store-img" src="./Content/gfx/single.png">
 
                     <div class="caption margin-top-10">
                         <button type="button" disabled ng-class="userData.ServiceData.SingleFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'">
@@ -21,7 +21,7 @@
 
             <div id="batchCon" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/batch.png">
+                    <img class="store-img" src="./Content/gfx/batch.png">
                     <div class="caption margin-top-10">
                         <button type="button" ng-class="userData.ServiceData.BatchFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(2)">
                             <span ng-if="userData.ServiceData.BatchFileConversionService">Active</span>
@@ -39,7 +39,7 @@
             <div class="clearfix visible-sm"></div>
             <div id="emailAtt" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/email.png">
+                    <img class="store-img" src="./Content/gfx/email.png">
                     <div class="caption margin-top-10">
                         <button type="button" ng-class="userData.ServiceData.EmailAttachmentFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(4)">
                             <span ng-if="userData.ServiceData.EmailAttachmentFileConversionService">Active</span>
@@ -56,7 +56,7 @@
 
             <div id="ftpCon" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/ftp.png">
+                    <img class="store-img" src="./Content/gfx/ftp.png">
                     <div class="caption margin-top-10">
                         <button type="button" ng-class="userData.ServiceData.FTPFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(3)">
                             <span ng-if="userData.ServiceData.FTPFileConversionService">Active</span>
@@ -73,7 +73,7 @@
             <div class="clearfix hidden-xs"></div>
             <div id="cloudCon" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/cloud_storage_conversion.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -90,7 +90,7 @@
 
             <div id="agentCon" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/linux_conversion_agent.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -107,7 +107,7 @@
             <div class="clearfix visible-sm"></div>
             <div id="webOcr" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/online_web_ocr_api.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -124,7 +124,7 @@
 
             <div id="dataForm" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/data_capture_form_processing.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -141,7 +141,7 @@
             <div class="clearfix hidden-xs"></div>
             <div id="mobileCap" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/mobile_image_capture_agent.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -158,7 +158,7 @@
 
             <div id="verVal" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/verification_validation_front_end.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -175,7 +175,7 @@
             <div class="clearfix visible-sm"></div>
             <div id="mailRoom" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/document_sorting_mailroom.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -192,7 +192,7 @@
 
             <div id="efCap" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/electronic_forms_capture.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -209,7 +209,7 @@
             <div class="clearfix hidden-xs"></div>
             <div id="scrapNorm" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/data_scraping_normalization.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -226,7 +226,7 @@
 
             <div id="translation" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/translation.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
@@ -243,7 +243,7 @@
             <div class="clearfix visible-sm"></div>
             <div id="digitEye" class="col-xs-12 col-sm-6 col-md-3">
                 <div class="thumbnail-c">
-                    <img src="./Content/gfx/service-not-available.png">
+                    <img class="store-img" src="./Content/gfx/service-not-available.png">
                     <div class="caption margin-top-10">
                         <button type="button" class="btn btn-danger btn-lg btn-block"
                                 ng-disabled="true">
