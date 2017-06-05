@@ -214,6 +214,7 @@
     <Content Include="PartialViews\BatchSettings.html" />
     <Content Include="PartialViews\ConfirmEmail.html" />
     <Content Include="PartialViews\Dashboard.html" />
+    <Content Include="PartialViews\DownloadResults.html" />
     <Content Include="PartialViews\EmailLibrary.html" />
     <Content Include="PartialViews\EmailProfile.html" />
     <Content Include="PartialViews\EmailSettings.html" />

@@ -1,4 +1,4 @@
-fccApp.service('documentsHttpService', function () {
+fccApp.service('documentsHttpService', function() {
     //добавляем данные user в для таблицы
     function addData(document) {
         var dElement = {};
@@ -9,7 +9,7 @@ fccApp.service('documentsHttpService', function () {
         dElement.dateTime = document.DateTime;
         dElement.fileSize = document.FileSize;
         dElement.fileName = document.OriginalFileName;
-        dElement.stateName = (document.StateId==2?"<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>":"")+document.StateName;
+        dElement.stateName = (document.StateId == 2 ? "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>" : "") + document.StateName;
         dElement.typeName = document.TypeName;
 
 
@@ -20,12 +20,17 @@ fccApp.service('documentsHttpService', function () {
             var type = doc.TypeName;
             var origFilename = doc.OriginalFileName;
             var url = doc.Url;
-            link += "<p><a href='" + url + "' download='" + origFilename + "'><i class='fa fa-download' aria-hidden='true'></i> " + type + "</a></p>"
+            link += "<p><a ng-click='documentsHttpService.alerter(" + doc.Id + ")'> <i class='fa fa-download' aria-hidden='true'></i>" + type + "</a></p>"
 
         }
-        dElement.results = link;
+        dElement.results = "Results (" + document.ResultDocuments.length + ")";
 
         return dElement;
+    }
+
+    this.alerter = function(id) {
+        alert(id);
+
     }
 
     this.downloadDocumentById = function($http, $scope, docId, url) {
@@ -36,7 +41,7 @@ fccApp.service('documentsHttpService', function () {
             url: url,
             responseType: 'arraybuffer',
             params: { documentId: docId }
-        }).success(function (data, status, headers) {
+        }).success(function(data, status, headers) {
 
             return dfd.resolve(data, status, headers);
 
@@ -54,14 +59,14 @@ fccApp.service('documentsHttpService', function () {
 
 
     //get to clients list
-    this.getToDocuments = function ($http, $scope, $state, data, url, usSpinnerService) {
+    this.getToDocuments = function($http, $scope, $state, data, url, usSpinnerService) {
         $scope.documents = [];
-        $scope.loading=true;
+        $scope.loading = true;
         usSpinnerService.spin("spinner-1");
 
         $http.get(url, {
             params: { userId: $scope.userData.UserData.Id, serviceId: $scope.serviceStateId }
-        }).then(function (response) {
+        }).then(function(response) {
             var docs = []
             docs = JSON.parse(response.data);
             for (var i = 0; i < docs.length; i++) {
@@ -77,7 +82,7 @@ fccApp.service('documentsHttpService', function () {
             $('#table').bootstrapTable({
                 data: data,
                 height: '100%',
-                onPostBody: function () {
+                onPostBody: function() {
                     $('#table').bootstrapTable('resetView');
                 }
 
@@ -87,10 +92,10 @@ fccApp.service('documentsHttpService', function () {
 
             var $result = $('#eventsResult');
 
-            $('#table').on('all.bs.table', function (e, name, args) {
-                // console.log('Event:', name, ', data:', args);
-            })
-                .on('click-row.bs.table', function (e, row, $element) {
+            $('#table').on('all.bs.table', function(e, name, args) {
+                    // console.log('Event:', name, ', data:', args);
+                })
+                .on('click-row.bs.table', function(e, row, $element) {
                     // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.userName));
                 })
 
@@ -102,13 +107,13 @@ fccApp.service('documentsHttpService', function () {
     }
 
 
-    this.getToDocumentsSilent = function ($http, $scope, $state, data, url, usSpinnerService) {
+    this.getToDocumentsSilent = function($http, $scope, $state, data, url, usSpinnerService) {
         $scope.documents = [];
         $http.get(url, {
             params: { userId: $scope.userData.UserData.Id, serviceId: $scope.serviceStateId }
-        }).then(function (response) {
+        }).then(function(response) {
             var docs = [];
-            data =[];
+            data = [];
             docs = JSON.parse(response.data);
             for (var i = 0; i < docs.length; i++) {
                 var document = {};
@@ -124,53 +129,53 @@ fccApp.service('documentsHttpService', function () {
 
 
     // delete position
-    this.deleteSelectedPositions = function ($http, $scope, data, deleteData, url, usSpinnerService) {
+    this.deleteSelectedPositions = function($http, $scope, data, deleteData, url, usSpinnerService) {
         usSpinnerService.spin("spinner-1");
         var methodType = "DELETE";
         $http({
-            url: url,
-            method: methodType,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify(deleteData)
-        })
-            .then(function (response) {
-                $scope.loadData = false;
-                if (response.data == "Success") {
+                url: url,
+                method: methodType,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(deleteData)
+            })
+            .then(function(response) {
+                    $scope.loadData = false;
+                    if (response.data == "Success") {
 
-                    data = [];
+                        data = [];
 
-                    for (var i = 0; i < deleteData.length; i++) {
-                        for (var j = 0; j < $scope.documents.length; j++) {
-                            if (deleteData[i].Id == $scope.documents[j].Id) {
-                                $scope.documents.splice(j,1);
+                        for (var i = 0; i < deleteData.length; i++) {
+                            for (var j = 0; j < $scope.documents.length; j++) {
+                                if (deleteData[i].Id == $scope.documents[j].Id) {
+                                    $scope.documents.splice(j, 1);
+                                }
                             }
                         }
-                    }
 
-                    for (var i = 0; i < $scope.documents.length; i++) {
-                        var dElement = addData($scope.documents[i]);
-                        data.push(dElement);
-                    }
+                        for (var i = 0; i < $scope.documents.length; i++) {
+                            var dElement = addData($scope.documents[i]);
+                            data.push(dElement);
+                        }
 
-                    $('#table').bootstrapTable('load', data);
-                    showNotify("Success", "Documents have been deleted successfully!", "success");
-                    // success
-                } else {
+                        $('#table').bootstrapTable('load', data);
+                        showNotify("Success", "Documents have been deleted successfully!", "success");
+                        // success
+                    } else {
+                        showNotify("Fail", "Failed to delete documents", "danger");
+                    }
+                    usSpinnerService.stop('spinner-1');
+                    $scope.loading = false;
+                    $('#table').bootstrapTable('resetWidth');
+                },
+                function(response) { // optional
+                    // failed
+                    $scope.loading = false;
+                    usSpinnerService.stop('spinner-1');
                     showNotify("Fail", "Failed to delete documents", "danger");
-                }
-                usSpinnerService.stop('spinner-1');
-                $scope.loading = false;
-                $('#table').bootstrapTable('resetWidth');
-            },
-            function (response) { // optional
-                // failed
-                $scope.loading = false;
-                usSpinnerService.stop('spinner-1');
-                showNotify("Fail", "Failed to delete documents", "danger");
-                $('#table').bootstrapTable('resetWidth');
-            });
+                    $('#table').bootstrapTable('resetWidth');
+                });
         $('#table').bootstrapTable('resetWidth');
     }
 

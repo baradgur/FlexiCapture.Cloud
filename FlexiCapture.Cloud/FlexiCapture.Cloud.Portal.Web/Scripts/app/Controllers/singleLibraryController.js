@@ -1,4 +1,3 @@
-/// <reference path="singleLibraryController.js" />
 function actionFormatterSingleLibrary(value, row, index) {
     return [
         '<button class="btn btn-info orange-tooltip edit-single-library" href="javascript:void(0)" title="Preview" style=" text-align: center;" ',
@@ -15,6 +14,14 @@ function downloadFormatterLibrary(value, row, index) {
     ].join('');
 }
 
+function resultFormatterLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-info orange-tooltip result-link" href="javascript:void(0)" title="Results" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Results"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-download-alt"></i>',
+        '</button>'
+    ].join('');
+}
 
 function deleteFormatterFileSingleLibrary(value, row, index) {
     return [
@@ -27,17 +34,17 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
 
-(function () {
-    var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
+(function() {
+    var singleLibraryController = function($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
 
-        $scope.saveData = (function () {
+        $scope.saveData = (function() {
             var a = document.createElement("a");
             document.body.appendChild(a);
             a.style = "display: none";
-            return function (data, fileName) {
+            return function(data, fileName) {
                 var byteCharacters = atob(data);
                 var byteNumbers = new Array(byteCharacters.length);
                 for (var i = 0; i < byteCharacters.length; i++) {
@@ -47,7 +54,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
                 var blob1 = new Blob([byteArray], { type: "application/octet-stream" });
-                    url = window.URL.createObjectURL(blob);
+                url = window.URL.createObjectURL(blob);
                 a.href = url;
                 a.download = fileName;
                 a.click();
@@ -69,30 +76,25 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                 BootstrapDialog.show({
                     title: 'Delete file',
                     message: 'Are you shure?',
-                    buttons: [
-                        {
-                            label: 'Yes',
-                            action: function(dialog) {
-                                documentsHttpService.deleteSelectedPositions($http,
-                                    $scope,
-                                    data,
-                                    [
-                                        {
-                                            'Id': row.Id,
-                                            'TaskId': row.taskId
-                                        }
-                                    ],
-                                    url,
-                                    usSpinnerService);
-                                dialog.close();
-                            }
-                        }, {
-                            label: 'Cancel',
-                            action: function(dialog) {
-                                dialog.close();
-                            }
+                    buttons: [{
+                        label: 'Yes',
+                        action: function(dialog) {
+                            documentsHttpService.deleteSelectedPositions($http,
+                                $scope,
+                                data, [{
+                                    'Id': row.Id,
+                                    'TaskId': row.taskId
+                                }],
+                                url,
+                                usSpinnerService);
+                            dialog.close();
                         }
-                    ]
+                    }, {
+                        label: 'Cancel',
+                        action: function(dialog) {
+                            dialog.close();
+                        }
+                    }]
                 });
 
             },
@@ -102,7 +104,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                         try {
                             headers = headers();
 
-                            var filename = headers['x-filename'];
+                            var filename = headers['x-file-name'];
                             var contentType = headers['content-type'];
                             var blob = new Blob([data], { type: contentType });
 
@@ -121,8 +123,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                                 linkElement.setAttribute("download", filename);
 
                                 //Force a download
-                                var clickEvent = new MouseEvent("click",
-                                {
+                                var clickEvent = new MouseEvent("click", {
                                     "view": window,
                                     "bubbles": true,
                                     "cancelable": false
@@ -134,34 +135,37 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                             console.log(ex);
                         }
                     });
+            },
+
+            'click .result-link': function(e, value, row, index) {
+                alert("OK");
             }
         };
 
 
         var timer;
         if (!timer) {
-            timer = $interval(function () {
+            timer = $interval(function() {
                 //console.log('Start silence!');
                 documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
-            }
-                , 500000);
+            }, 500000);
         }
 
-        $scope.killtimer = function () {
+        $scope.killtimer = function() {
             if (angular.isDefined(timer)) {
                 $interval.cancel(timer);
                 timer = undefined;
             }
         };
 
-        $scope.$on('$destroy', function () {
+        $scope.$on('$destroy', function() {
             $scope.killtimer();
         });
 
 
 
 
-        var singleLibrary = function () {
+        var singleLibrary = function() {
             documentsHttpService.getToDocuments($http, $scope, $state, data, url, usSpinnerService);
             $scope.loadData = false;
 
@@ -169,7 +173,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
         };
         singleLibrary();
 
-        $scope.gotoDeleteSelectedPositions = function () {
+        $scope.gotoDeleteSelectedPositions = function() {
             var positionsToDelete = $('#table').bootstrapTable('getSelections');
             if (positionsToDelete.length > 0) {
                 var deleteData = [];
@@ -184,21 +188,20 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                     message: 'Are you shure?',
                     buttons: [{
                         label: 'Yes',
-                        action: function (dialog) {
+                        action: function(dialog) {
                             documentsHttpService.deleteSelectedPositions($http, $scope, data, deleteData, url, usSpinnerService);
                             dialog.close();
                         }
                     }, {
                         label: 'Cancel',
-                        action: function (dialog) {
+                        action: function(dialog) {
                             deleteData = [];
                             dialog.close();
                         }
                     }]
                 });
-                
-            }
-            else {
+
+            } else {
                 BootstrapDialog.alert({
                     title: 'Warning',
                     message: 'There were no documents selected to delete!',
