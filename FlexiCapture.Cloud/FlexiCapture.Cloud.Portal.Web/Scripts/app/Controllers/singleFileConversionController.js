@@ -212,13 +212,17 @@
             $scope.uploadImages = function () {
 
                 //alert(JSON.stringify($scope.currentProfile));
-                if ($scope.files.length > 0) {
-                    $scope.showProgressBar = true;
+                if ($scope.files.length > 0 || $scope.pastedUrl) {
+                    
                     usSpinnerService.spin('spinner-1');
                     var data = new FormData();
+                    if ($scope.files.length > 0) {
+                        $scope.showProgressBar = true;
+                        data.append("uploadedFile0", $scope.files[0]);
+                    } else {
+                        data.append("pastedUrl", $scope.pastedUrl);
+                    }
 
-
-                    data.append("uploadedFile0", $scope.files[0]);
                     data.append("serviceId", $scope.serviceStateId);
                     data.append("userId", $scope.userData.UserData.Id);
                     data.append("profile", JSON.stringify($scope.currentProfile));
@@ -260,7 +264,7 @@
 
                 $scope.files = [];
                 $scope.files.push(files[0]);
-
+                $scope.pastedUrl = null;
                 $scope.$apply();
             }
              dropZone.ondrop = function (e) {

@@ -20,7 +20,7 @@ fccApp.service('documentsHttpService', function() {
             var type = doc.TypeName;
             var origFilename = doc.OriginalFileName;
             var url = doc.Url;
-            link += "<p><a ng-click='documentsHttpService.alerter(" + doc.Id + ")'> <i class='fa fa-download' aria-hidden='true'></i>" + type + "</a></p>"
+            dElement.link += "<p><a ng-click='documentsHttpService.alerter(" + doc.Id + ")'> <i class='fa fa-download' aria-hidden='true'></i>" + type + "</a></p>"
 
         }
         dElement.results = "Results (" + document.ResultDocuments.length + ")";

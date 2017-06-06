@@ -34,17 +34,17 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
 
-(function() {
-    var singleLibraryController = function($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
+(function () {
+    var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
 
-        $scope.saveData = (function() {
+        $scope.saveData = (function () {
             var a = document.createElement("a");
             document.body.appendChild(a);
             a.style = "display: none";
-            return function(data, fileName) {
+            return function (data, fileName) {
                 var byteCharacters = atob(data);
                 var byteNumbers = new Array(byteCharacters.length);
                 for (var i = 0; i < byteCharacters.length; i++) {
@@ -65,20 +65,20 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
         $window.actionEventsSingleLibrary = {
-            'click .edit-single-library': function(e, value, row, index) {
+            'click .edit-single-library': function (e, value, row, index) {
                 BootstrapDialog.show({
                     title: 'Warning',
                     message: 'Function is not implemented yet!',
                     type: BootstrapDialog.TYPE_WARNING
                 });
             },
-            'click .delete-single-library': function(e, value, row, index) {
+            'click .delete-single-library': function (e, value, row, index) {
                 BootstrapDialog.show({
                     title: 'Delete file',
-                    message: 'Are you shure?',
+                    message: 'Are you sure?',
                     buttons: [{
                         label: 'Yes',
-                        action: function(dialog) {
+                        action: function (dialog) {
                             documentsHttpService.deleteSelectedPositions($http,
                                 $scope,
                                 data, [{
@@ -91,16 +91,16 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                         }
                     }, {
                         label: 'Cancel',
-                        action: function(dialog) {
+                        action: function (dialog) {
                             dialog.close();
                         }
                     }]
                 });
 
             },
-            'click .download-link': function(e, value, row, index) {
+            'click .download-link': function (e, value, row, index) {
                 documentsHttpService.downloadDocumentById($http, $scope, row.Id, $$ApiUrl + "/downloadfile")
-                    .then(function(data, status, headers) {
+                    .then(function (data, status, headers) {
                         try {
                             headers = headers();
 
@@ -137,35 +137,70 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                     });
             },
 
-            'click .result-link': function(e, value, row, index) {
-                alert("OK");
+            'click .result-link': function (e, value, row, index) {
+                $scope.downloadResults = [];
+                var found = $filter('filter')($scope.documents, { Id: row.Id }, true);
+                if (found.length > 0) {
+                    $scope.downloadResults = found[0].ResultDocuments;
+                }
+                if ($scope.downloadResults.length > 0) {
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'PartialViews/Modals/DownloadResults.html',
+                        controller: downloadResultsController,
+                        controllerAs: 'vm',
+                        scope: $scope,
+                        resolve: {
+                            items: function () {
+                                return $scope.items;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function () {
+                        
+                    }, function () {
+                        console.log('Modal dismissed at: ' + new Date());
+                    });
+                }
+                else {
+                    BootstrapDialog.show({
+                        title: 'Download files',
+                        message: 'There are no files to download',
+                        buttons: [{
+                            label: 'OK',
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }]
+                    });
+                }
             }
         };
 
 
         var timer;
         if (!timer) {
-            timer = $interval(function() {
+            timer = $interval(function () {
                 //console.log('Start silence!');
                 documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
             }, 500000);
         }
 
-        $scope.killtimer = function() {
+        $scope.killtimer = function () {
             if (angular.isDefined(timer)) {
                 $interval.cancel(timer);
                 timer = undefined;
             }
         };
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $scope.killtimer();
         });
 
 
 
 
-        var singleLibrary = function() {
+        var singleLibrary = function () {
             documentsHttpService.getToDocuments($http, $scope, $state, data, url, usSpinnerService);
             $scope.loadData = false;
 
@@ -173,7 +208,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
         };
         singleLibrary();
 
-        $scope.gotoDeleteSelectedPositions = function() {
+        $scope.gotoDeleteSelectedPositions = function () {
             var positionsToDelete = $('#table').bootstrapTable('getSelections');
             if (positionsToDelete.length > 0) {
                 var deleteData = [];
@@ -185,16 +220,16 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                 };
                 BootstrapDialog.show({
                     title: 'Delete file',
-                    message: 'Are you shure?',
+                    message: 'Are you sure?',
                     buttons: [{
                         label: 'Yes',
-                        action: function(dialog) {
+                        action: function (dialog) {
                             documentsHttpService.deleteSelectedPositions($http, $scope, data, deleteData, url, usSpinnerService);
                             dialog.close();
                         }
                     }, {
                         label: 'Cancel',
-                        action: function(dialog) {
+                        action: function (dialog) {
                             deleteData = [];
                             dialog.close();
                         }
@@ -213,5 +248,5 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
     };
 
 
-    fccApp.controller("singleLibraryController", ["$scope", "$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", singleLibraryController]);
+    fccApp.controller("singleLibraryController", ["$scope", "$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", singleLibraryController]);
 }())

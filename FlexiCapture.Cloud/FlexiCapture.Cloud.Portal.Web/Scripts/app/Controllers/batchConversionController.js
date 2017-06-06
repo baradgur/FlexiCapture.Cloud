@@ -221,6 +221,7 @@
                     for (var i = 0; i < $scope.files.length; i++) {
                         data.append("uploadedFile" + i, $scope.files[i]);
                     }
+                    data.append("pastedUrl", $scope.pastedUrl);
                     data.append("serviceId", $scope.serviceStateId);
                     data.append("userId", $scope.userData.UserData.Id);
                     data.append("profile", JSON.stringify($scope.currentProfile));

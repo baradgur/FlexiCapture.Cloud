@@ -281,9 +281,9 @@ input[type="checkbox"].input-validation-error {
 
 /* layout.css Style */
 .upload-drop-zone {
-    height: 200px;
+    height: 35px;
     border-width: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 /* skin.css Style*/
@@ -291,7 +291,7 @@ input[type="checkbox"].input-validation-error {
     color: #ccc;
     border-style: dashed;
     border-color: #ccc;
-    line-height: 200px;
+    line-height: 35px;
     text-align: center;
 }
 
@@ -578,4 +578,12 @@ label {
 
 .navbar-default {
     background-color: #ffffff !important;
+}
+
+.modal-header-primary {
+    background-color: #428bca;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
 }

@@ -19,7 +19,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         /// add document to database
         /// </summary>
         /// <returns></returns>
-        public static int AddDocument(int taskId, HttpPostedFile file, Guid guid, string gFileName,string path, string md5, int categoryId)
+        public static int AddDocument(int taskId, string filename, double contentLength, Guid guid, string gFileName,string path, string md5, int categoryId)
         {
             try
             {
@@ -29,13 +29,13 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     {
                         Date = DateTime.Now,
                         DocumentStateId = 1,
-                        DocumentTypeId = DocumentTypesHelper.GetToDocumentFileType(Path.GetExtension(file.FileName)),
+                        DocumentTypeId = DocumentTypesHelper.GetToDocumentFileType(Path.GetExtension(filename)),
                         FileName = gFileName,
-                        FileSize = file.ContentLength,
+                        FileSize = contentLength,
                         Hash = md5,
                         Guid = guid,
                         Path = path,
-                        OriginalFileName = file.FileName,
+                        OriginalFileName = filename,
                         TaskId = taskId,
                         DocumentCategoryId = categoryId
                         
@@ -103,7 +103,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         {
                             DocumentModel rModel = new DocumentModel()
                             {
-                                Id = document.Id,
+                                Id = rDocument.Id,
                                 DateTime = rDocument.Date.ToString(),
                                 FileSizeBytes = rDocument.FileSize,
                                 OriginalFileName = rDocument.OriginalFileName,

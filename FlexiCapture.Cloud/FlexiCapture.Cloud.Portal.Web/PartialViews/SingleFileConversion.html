@@ -20,7 +20,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <!-- Drop Zone -->
                     <h4>Or drop file</h4>
                     <div class="upload-drop-zone" id="drop-zone">
@@ -33,6 +33,17 @@
                     </div>
                     <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
 
+                </div>
+                <div class="col-md-4">
+                    <h4>Or paste URL</h4>
+                    <form name="urlForm">
+                        <div ng-class="{ true: 'has-error'}[urlForm.pastedUrlInput.$invalid && (urlForm.pastedUrlInput.$touched)]">
+                            <input name="pastedUrlInput" class="form-control" type="url" ng-model="pastedUrl" ng-change="files = []"/>
+                            <div class="help-block" ng-messages="urlForm.pastedUrlInput.$error" ng-if="urlForm.pastedUrlInput.$touched">
+                                <div ng-message="url">Please input correct URL</div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
 
@@ -106,7 +117,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="panel panel-info">
-                                    <div class="panel-heading">Cleanup Settings</div>
+                                    <div class="panel-heading">eaCleanup Settings</div>
                                     <!--<div class="panel-body">-->
 
                                     <ul class="list-group">
@@ -274,7 +285,7 @@
 
 
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">STEP 3: Start Recognition</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0 && !pastedUrl">STEP 3: Start Recognition</button>
     </div>
     <!--END PROFILES-->
 </div>
