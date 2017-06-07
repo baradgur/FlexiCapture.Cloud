@@ -1,15 +1,17 @@
 (function () {
-    var singleProfileController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageUserProfileHttpService) {
+    var singleProfileController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, manageUserProfileHttpService) {
         var data = [];
-        $scope.profiles = []
+        $scope.profiles = [];
         $scope.changeCount = 0;
+        $scope.changeNameCount = 0;
         $scope.currentProfile = {};
         var url = $$ApiUrl + "/userProfile";
         $scope.NewProfileName = "";
         $scope.newProfile = false;
         $scope.profileIsChanged = false;
-        $scope.defaultProfileId =-1;
-        $scope.oldDefaultProfileId =-1;
+        $scope.defaultProfileId = -1;
+        $scope.oldDefaultProfileId = -1;
+        $scope.searchLangText = "";
         var singleProfile = function () {
             $scope.loadData = true;
             manageUserProfileHttpService.getToUserProfiles($http, $scope, url, usSpinnerService, 0);
@@ -19,19 +21,17 @@
         };
         singleProfile();
 
-        $scope.changeDefaultProfile=function()
-        {
-             $scope.profileIsChanged = false;
-            
-            $scope.currentProfile.isDefault =true;
-            for(var i=0;i<$scope.profiles.length;i++){
-                if ($scope.profiles[i].Id==$scope.currentProfile.Id)
-                {
+        $scope.changeDefaultProfile = function () {
+            $scope.profileIsChanged = false;
+
+            $scope.currentProfile.isDefault = true;
+            for (var i = 0; i < $scope.profiles.length; i++) {
+                if ($scope.profiles[i].Id == $scope.currentProfile.Id) {
                     $scope.profiles[i].isDefault = true;
-                    $scope.defaultProfileId =$scope.profiles[i].Id;
-                } else{
+                    $scope.defaultProfileId = $scope.profiles[i].Id;
+                } else {
                     $scope.profiles[i].isDefault = false;
-                    
+
                 }
             };
 
@@ -65,9 +65,10 @@
         }
         $scope.updateSettings = function () {
             //alert(JSON.stringify($scope.profiles));
-           //$scope.currentProfile = {};
+            //$scope.currentProfile = {};
             var isEdit = $scope.profileIsChanged;
-            manageUserProfileHttpService.manageProfile($http, $scope, data, url, usSpinnerService, isEdit );
+            $scope.currentProfile.Name = $scope.currentProfile.Name.replace(" [Settings Were Changed]", "");
+            manageUserProfileHttpService.manageProfile($http, $scope, data, url, usSpinnerService, isEdit);
             $scope.showNewProfile(false);
             $scope.profileIsChanged = false;
         }
@@ -76,21 +77,19 @@
 
 
         $scope.changeProfile = function () {
-            
-            
-            for(var i=0;i<$scope.profiles.length;i++)
-            {
-                if ($scope.currentProfile.Id==$scope.profiles[i].Id)
-                {
-                    $scope.currentProfile=$scope.profiles[i];
+
+
+            for (var i = 0; i < $scope.profiles.length; i++) {
+                if ($scope.currentProfile.Id == $scope.profiles[i].Id) {
+                    $scope.currentProfile = angular.copy($scope.profiles[i]);
                     $scope.defaultProfileId = $scope.currentProfile.Id;
-                    console.log("Up");
-                    break;
                 }
+                $scope.profiles[i].Name = $scope.profiles[i].Name.replace(" [Settings Were Changed]", "");
             }
-        
-            
+
+
             $scope.changeCount = 0;
+            $scope.changeNameCount = 0;
             $scope.profileIsChanged = false;
 
         };
@@ -100,13 +99,20 @@
                 $timeout(function () {
                     //do something
                     $scope.changeCount = 0;
+                    $scope.changeNameCount = 0;
                     $scope.profileIsChanged = false;
                 }, 0);
             });
         $scope.$watchCollection('currentProfile', function () {
-        
-            if ($scope.changeCount > 0)
+
+            if ($scope.changeCount > 0) {
                 $scope.profileIsChanged = true;
+                var found = $filter('filter')($scope.profiles, { Id: $scope.currentProfile.Id }, true);
+                if (found.length > 0 && $scope.changeNameCount == 0) {
+                    found[0].Name += " [Settings Were Changed]";
+                    $scope.changeNameCount++;
+                }
+            }
             $scope.changeCount++;
 
         });
@@ -121,5 +127,5 @@
 
 
 
-    fccApp.controller("singleProfileController", ["$scope", "$http", "$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageUserProfileHttpService", singleProfileController]);
+    fccApp.controller("singleProfileController", ["$scope", "$http", "$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageUserProfileHttpService", singleProfileController]);
 }())

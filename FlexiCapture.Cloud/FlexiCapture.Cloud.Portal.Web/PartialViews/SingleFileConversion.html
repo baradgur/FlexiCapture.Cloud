@@ -75,7 +75,7 @@
 
 
             <div class="input-group">
-                <span class="input-group-addon">
+                <span class="input-group-addon input-group-addon-same-width">
                     Select Capture Profile
                 </span>
                 <select class="form-control" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id"
@@ -86,16 +86,16 @@
             <div id="toolbar">
                 <div class="input-group" ng-show="newProfile">
 
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-group-addon-same-width">
                         New Profile Name
                     </span>
                     <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
                     <span class="input-group-btn">
-                        <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''"><span class="glyphicon glyphicon-ok"></span></button>
+                        <button class="btn btn-success no-border-radius" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''"><span class="glyphicon glyphicon-ok"></span></button>
                     </span>
 
                     <span class="input-group-btn">
-                        <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button class="btn btn-danger" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
                     </span>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="panel panel-info">
-                                    <div class="panel-heading">eaCleanup Settings</div>
+                                    <div class="panel-heading">Cleanup Settings</div>
                                     <!--<div class="panel-body">-->
 
                                     <ul class="list-group">
@@ -189,6 +189,20 @@
                                     </ul>
 
                                     <!--</div>-->
+                                    <div class="panel panel-info form-group">
+                                        <div class="panel-heading">Print Types</div>
+
+                                        <ul class="list-group">
+                                            <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
+                                                {{print.Name}}
+                                                <div class="material-switch pull-right">
+                                                    <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
+                                                           checklist-change="imChanged()" />
+                                                    <label for="{{print.Name}}" class="label-success"></label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -220,23 +234,6 @@
                                         </div>
                                     </li>
 
-
-
-
-                                    <div class="panel panel-info form-group">
-                                        <div class="panel-heading">Print Types</div>
-
-                                        <ul class="list-group">
-                                            <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
-                                                {{print.Name}}
-                                                <div class="material-switch pull-right">
-                                                    <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
-                                                           checklist-change="imChanged()" />
-                                                    <label for="{{print.Name}}" class="label-success"></label>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
 
                                     <div class="panel panel-info form-group">
                                         <div class="panel-heading">Languages</div>

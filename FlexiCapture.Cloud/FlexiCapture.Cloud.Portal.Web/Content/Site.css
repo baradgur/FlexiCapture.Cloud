@@ -587,3 +587,12 @@ label {
     -webkit-border-top-right-radius: 5px;
     -webkit-border-top-left-radius: 5px;
 }
+
+.no-border-radius {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+.input-group-addon-same-width {
+    min-width: 170px;
+}

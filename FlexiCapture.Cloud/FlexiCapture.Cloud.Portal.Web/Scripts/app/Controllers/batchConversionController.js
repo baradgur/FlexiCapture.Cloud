@@ -1,8 +1,9 @@
 (function () {
-    var batchFileConversionController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
+    var batchFileConversionController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
 
-        $scope.profiles = []
+        $scope.profiles = [];
         $scope.changeCount = 0;
+        $scope.changeNameCount = 0;
         $scope.currentProfile = {};
         var profilesUrl = $$ApiUrl + "/userProfile";
         var customProfileUrl = $$ApiUrl + "/customProfile";
@@ -52,6 +53,7 @@
             var data = [];
             var isEdit = $scope.profileIsChanged;
             var purl = $$ApiUrl + "/userProfile";
+            $scope.currentProfile.Name = $scope.currentProfile.Name.replace(" [Settings Were Changed]", "");
             manageUserProfileHttpService.manageProfile($http, $scope, data, purl, usSpinnerService, isEdit);
             $scope.showNewProfile(false);
             $scope.profileIsChanged = false;
@@ -157,11 +159,10 @@
 
             for (var i = 0; i < $scope.profiles.length; i++) {
                 if ($scope.currentProfile.Id == $scope.profiles[i].Id) {
-                    $scope.currentProfile = $scope.profiles[i];
+                    $scope.currentProfile = angular.copy($scope.profiles[i]);
                     $scope.defaultProfileId = $scope.currentProfile.Id;
-                    console.log("Up");
-                    break;
                 }
+                $scope.profiles[i].Name = $scope.profiles[i].Name.replace(" [Settings Were Changed]", "");
             }
             $scope.selNames = "";
             var cLang = 0;
@@ -199,6 +200,7 @@
             }
 
             $scope.changeCount = 0;
+            $scope.changeNameCount = 0;
             $scope.profileIsChanged = false;
 
         };
@@ -298,15 +300,15 @@
 
             for (var i = 0; i < $scope.profiles.length; i++) {
                 if ($scope.currentProfile.Id == $scope.profiles[i].Id) {
-                    $scope.currentProfile = $scope.profiles[i];
+                    $scope.currentProfile = angular.copy($scope.profiles[i]);
                     $scope.defaultProfileId = $scope.currentProfile.Id;
-                    console.log("Up");
-                    break;
                 }
+                $scope.profiles[i].Name = $scope.profiles[i].Name.replace(" [Settings Were Changed]", "");
             }
 
 
             $scope.changeCount = 0;
+            $scope.changeNameCount = 0;
             $scope.profileIsChanged = false;
 
         };
@@ -316,13 +318,20 @@
                 $timeout(function () {
                     //do something
                     $scope.changeCount = 0;
+                    $scope.changeNameCount = 0;
                     $scope.profileIsChanged = false;
                 }, 0);
             });
         $scope.$watchCollection('currentProfile', function () {
 
-            if ($scope.changeCount > 0)
+            if ($scope.changeCount > 0) {
                 $scope.profileIsChanged = true;
+                var found = $filter('filter')($scope.profiles, { Id: $scope.currentProfile.Id }, true);
+                if (found.length > 0 && $scope.changeNameCount == 0) {
+                    found[0].Name += " [Settings Were Changed]";
+                    $scope.changeNameCount++;
+                }
+            }
             $scope.changeCount++;
 
         });
@@ -336,5 +345,5 @@
     };
 
 
-    fccApp.controller("batchFileConversionController", ["$scope", "$http","$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", batchFileConversionController]);
+    fccApp.controller("batchFileConversionController", ["$scope", "$http", "$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", batchFileConversionController]);
 }())

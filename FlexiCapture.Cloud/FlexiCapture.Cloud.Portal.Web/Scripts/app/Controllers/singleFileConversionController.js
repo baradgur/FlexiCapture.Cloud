@@ -1,8 +1,9 @@
 (function () {
-    var singleFileConversionController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
+    var singleFileConversionController = function ($scope, $http, $timeout, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, manageFilesHttpService, manageUserProfileHttpService) {
 
         $scope.profiles = [];
         $scope.changeCount = 0;
+        $scope.changeNameCount = 0;
         $scope.currentProfile = {};
         var profilesUrl = $$ApiUrl + "/userProfile";
         var customProfileUrl = $$ApiUrl + "/customProfile";
@@ -49,6 +50,7 @@
             var data = [];
             var isEdit = $scope.profileIsChanged;
             var purl = $$ApiUrl + "/userProfile";
+            $scope.currentProfile.Name = $scope.currentProfile.Name.replace(" [Settings Were Changed]", "");
             manageUserProfileHttpService.manageProfile($http, $scope, data, purl, usSpinnerService, isEdit);
             $scope.showNewProfile(false);
             $scope.profileIsChanged = false;
@@ -103,7 +105,7 @@
             if ($scope.NewProfileName == "") return;
             $scope.customProfile = $scope.currentProfile;
             $scope.customProfile.Name = $scope.NewProfileName;
-            
+
             manageUserProfileHttpService.addCustomProfile($http, $scope, customProfileUrl, usSpinnerService);
             $scope.hideNewProfilePanel();
 
@@ -154,11 +156,11 @@
 
             for (var i = 0; i < $scope.profiles.length; i++) {
                 if ($scope.currentProfile.Id == $scope.profiles[i].Id) {
-                    $scope.currentProfile = $scope.profiles[i];
+                    $scope.currentProfile = angular.copy($scope.profiles[i]);
                     $scope.defaultProfileId = $scope.currentProfile.Id;
                     console.log("Up");
-                    break;
                 }
+                $scope.profiles[i].Name = $scope.profiles[i].Name.replace(" [Settings Were Changed]", "");
             }
             $scope.selNames = "";
             var cLang = 0;
@@ -196,6 +198,7 @@
             }
 
             $scope.changeCount = 0;
+            $scope.changeNameCount = 0;
             $scope.profileIsChanged = false;
 
         };
@@ -205,7 +208,7 @@
         var singleFileConversion = function () {
 
 
-             var dropZone = document.getElementById('drop-zone');
+            var dropZone = document.getElementById('drop-zone');
             var uploadForm = document.getElementById('tformdiv');
             var uploadForm3 = document.getElementsByTagName('form');
 
@@ -213,7 +216,7 @@
 
                 //alert(JSON.stringify($scope.currentProfile));
                 if ($scope.files.length > 0 || $scope.pastedUrl) {
-                    
+
                     usSpinnerService.spin('spinner-1');
                     var data = new FormData();
                     if ($scope.files.length > 0) {
@@ -240,7 +243,9 @@
             }
 
             $scope.addThruChoice = function (element) {
-                $scope.addToScopeFiles(element.files);
+                if (element.files.length > 0) {
+                    $scope.addToScopeFiles(element.files);
+                }
             }
 
             $scope.removeFromFiles = function (index) {
@@ -267,22 +272,22 @@
                 $scope.pastedUrl = null;
                 $scope.$apply();
             }
-             dropZone.ondrop = function (e) {
-                 e.preventDefault();
-                 this.className = 'upload-drop-zone';
-                 $scope.addToScopeFiles(e.dataTransfer.files);
-                 document.getElementById("js-upload-files").value = '';
-             }
+            dropZone.ondrop = function (e) {
+                e.preventDefault();
+                this.className = 'upload-drop-zone';
+                $scope.addToScopeFiles(e.dataTransfer.files);
+                document.getElementById("js-upload-files").value = '';
+            }
 
-             dropZone.ondragover = function () {
-                 this.className = 'upload-drop-zone drop';
-                 return false;
-             }
+            dropZone.ondragover = function () {
+                this.className = 'upload-drop-zone drop';
+                return false;
+            }
 
-             dropZone.ondragleave = function () {
-                 this.className = 'upload-drop-zone';
-                 return false;
-             }
+            dropZone.ondragleave = function () {
+                this.className = 'upload-drop-zone';
+                return false;
+            }
 
         };
         singleFileConversion();
@@ -300,15 +305,16 @@
 
             for (var i = 0; i < $scope.profiles.length; i++) {
                 if ($scope.currentProfile.Id == $scope.profiles[i].Id) {
-                    $scope.currentProfile = $scope.profiles[i];
+                    $scope.currentProfile = angular.copy($scope.profiles[i]);
                     $scope.defaultProfileId = $scope.currentProfile.Id;
                     console.log("Up");
-                    break;
                 }
+                $scope.profiles[i].Name = $scope.profiles[i].Name.replace(" [Settings Were Changed]", "");
             }
 
 
             $scope.changeCount = 0;
+            $scope.changeNameCount = 0;
             $scope.profileIsChanged = false;
 
         };
@@ -318,13 +324,20 @@
                 $timeout(function () {
                     //do something
                     $scope.changeCount = 0;
+                    $scope.changeNameCount = 0;
                     $scope.profileIsChanged = false;
                 }, 0);
             });
         $scope.$watchCollection('currentProfile', function () {
 
-            if ($scope.changeCount > 0)
+            if ($scope.changeCount > 0) {
                 $scope.profileIsChanged = true;
+                var found = $filter('filter')($scope.profiles, { Id: $scope.currentProfile.Id }, true);
+                if (found.length > 0 && $scope.changeNameCount == 0) {
+                    found[0].Name += " [Settings Were Changed]";
+                    $scope.changeNameCount++;
+                }
+            }
             $scope.changeCount++;
 
         });
@@ -338,5 +351,5 @@
     };
 
 
-    fccApp.controller("singleFileConversionController", ["$scope", "$http", "$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", singleFileConversionController]);
+    fccApp.controller("singleFileConversionController", ["$scope", "$http", "$timeout", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "manageFilesHttpService", "manageUserProfileHttpService", singleFileConversionController]);
 }())
