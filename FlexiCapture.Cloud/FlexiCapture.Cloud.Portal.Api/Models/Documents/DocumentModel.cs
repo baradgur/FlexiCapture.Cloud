@@ -16,6 +16,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Documents
             try
             {
                 ResultDocuments = new List<DocumentModel>();
+                DocumentErrors = new List<DocumentError>();
             }
             catch (Exception)
             {
@@ -76,7 +77,9 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Documents
         /// <summary>
         /// result docs
         /// </summary>
-        public List<DocumentModel> ResultDocuments { get; set; } 
+        public List<DocumentModel> ResultDocuments { get; set; }
+
+        public List<DocumentError> DocumentErrors { get; set; }
         #endregion
     }
 }

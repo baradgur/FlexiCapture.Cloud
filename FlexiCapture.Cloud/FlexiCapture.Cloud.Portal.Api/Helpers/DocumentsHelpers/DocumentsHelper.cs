@@ -9,6 +9,7 @@ using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
 using FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.Documents;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 using Microsoft.Ajax.Utilities;
 using Microsoft.Win32;

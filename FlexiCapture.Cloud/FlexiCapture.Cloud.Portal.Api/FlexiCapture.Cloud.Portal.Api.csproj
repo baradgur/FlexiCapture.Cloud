@@ -241,9 +241,6 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
-      <DependentUpon>FCCPortalModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DB\Tasks.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -289,6 +286,12 @@
     <Compile Include="DB\UserSettings.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\ZipDocuments.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ZipTasks.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -317,6 +320,7 @@
     <Compile Include="Models\Catalogs\ExportFormatModel.cs" />
     <Compile Include="Models\Catalogs\PrintTypeModel.cs" />
     <Compile Include="Models\Catalogs\LanguageModel.cs" />
+    <Compile Include="Models\Documents\DocumentError.cs" />
     <Compile Include="Models\Documents\DocumentModel.cs" />
     <Compile Include="Models\Enums\EnumModels.cs" />
     <Compile Include="Models\Errors\ErrorModel.cs" />
@@ -345,6 +349,16 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DB\FCCPortalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\FCCPortalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -365,18 +379,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FCCPortalModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DB\FCCPortalModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="DB\FCCPortalModel.edmx.diagram">
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="DB\FCCPortalModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -136,44 +136,32 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                         }
                     });
             },
-
             'click .result-link': function (e, value, row, index) {
                 $scope.downloadResults = [];
+                $scope.currentDocument = {};
                 var found = $filter('filter')($scope.documents, { Id: row.Id }, true);
                 if (found.length > 0) {
+                    $scope.currentDocument = found[0];
                     $scope.downloadResults = found[0].ResultDocuments;
                 }
-                if ($scope.downloadResults.length > 0) {
-                    var modalInstance = $uibModal.open({
-                        templateUrl: 'PartialViews/Modals/DownloadResults.html',
-                        controller: downloadResultsController,
-                        controllerAs: 'vm',
-                        scope: $scope,
-                        resolve: {
-                            items: function () {
-                                return $scope.items;
-                            }
-                        }
-                    });
 
-                    modalInstance.result.then(function () {
-                        
-                    }, function () {
-                        console.log('Modal dismissed at: ' + new Date());
-                    });
-                }
-                else {
-                    BootstrapDialog.show({
-                        title: 'Download files',
-                        message: 'There are no files to download',
-                        buttons: [{
-                            label: 'OK',
-                            action: function (dialog) {
-                                dialog.close();
-                            }
-                        }]
-                    });
-                }
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'PartialViews/Modals/DownloadResults.html',
+                    controller: downloadResultsController,
+                    controllerAs: 'vm',
+                    scope: $scope,
+                    resolve: {
+                        items: function () {
+                            return $scope.items;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function () {
+
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
             }
         };
 

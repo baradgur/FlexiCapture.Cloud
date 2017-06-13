@@ -48,6 +48,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -120,9 +121,6 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
-      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
-    </Compile>
     <Compile Include="DB\Tasks.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
@@ -168,6 +166,12 @@
     <Compile Include="DB\UserSettings.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\ZipDocuments.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ZipTasks.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CatalogHelper.cs" />
     <Compile Include="Helpers\ManageUserProfileHelper.cs" />
     <Compile Include="Helpers\MD5Helper.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="Models\Catalogs\LanguageModel.cs" />
     <Compile Include="Models\Catalogs\PrintTypeModel.cs" />
     <Compile Include="Models\Catalogs\RotationTypeModel.cs" />
+    <Compile Include="Models\Documents\DocumentError.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -189,18 +194,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FCCPortalModel2.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DB\FCCPortalModel2.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel2.Context.cs</LastGenOutput>
-    </None>
     <None Include="DB\FCCPortalModel2.edmx.diagram">
       <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
-    </None>
-    <None Include="DB\FCCPortalModel2.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel2.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -213,7 +208,18 @@
       <Name>FlexiCapture.Cloud.OCR.Assist</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DB\FCCPortalModel2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel2.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\FCCPortalModel2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel2.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

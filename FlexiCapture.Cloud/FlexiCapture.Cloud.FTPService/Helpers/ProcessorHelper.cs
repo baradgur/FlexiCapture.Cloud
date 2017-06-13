@@ -7,10 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers;
 using FlexiCapture.Cloud.FTPService.Models;
+using FlexiCapture.Cloud.OCR.Assist.Models;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
 using FlexiCapture.Cloud.ServiceAssist;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
+using Newtonsoft.Json;
 
 namespace FlexiCapture.Cloud.FTPService.Helpers
 { 
@@ -125,7 +127,15 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                 //upload files
                 foreach (var notExecutedTask in notExecutedTasks)
                 {
-                    TaskHelper.ExecuteTask(notExecutedTask);
+                    OcrRequestModel requestModel = JsonConvert.DeserializeObject<OcrRequestModel>(notExecutedTask.ProfileContent);
+                    if (requestModel.InputFiles != null && requestModel.InputFiles.Count > 0)
+                    {
+                        string extension = Path.GetExtension(requestModel.InputFiles[0].Name);
+                        if (extension != null && extension != ".zip" && extension != ".rar")
+                        {
+                            TaskHelper.ExecuteTask(notExecutedTask);
+                        }
+                    }
                 }
 
                 //check statuses

@@ -4,9 +4,11 @@ using System.IO;
 using FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers;
 using System.Xml.Serialization;
 using FlexiCapture.Cloud.EmailAttachmentService.Models;
+using FlexiCapture.Cloud.OCR.Assist.Models;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.ServiceAssist;
 using FlexiCapture.Cloud.ServiceAssist.DB;
+using Newtonsoft.Json;
 
 namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.ProcessorHelper
 {
@@ -30,7 +32,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.ProcessorHelper
 
                 List<string> extentions = assist.GetToAvailableFileExtensions();
                 // getting IMAP setttings
-                string path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"data/settings.xml");
+                string path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "data/settings.xml");
 
                 if (File.Exists(path))
                 {
@@ -48,7 +50,15 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.ProcessorHelper
                     //upload files
                     foreach (var notExecutedTask in notExecutedTasks)
                     {
-                        TaskHelper.ExecuteTask(notExecutedTask);
+                        OcrRequestModel requestModel = JsonConvert.DeserializeObject<OcrRequestModel>(notExecutedTask.ProfileContent);
+                        if (requestModel.InputFiles != null && requestModel.InputFiles.Count > 0)
+                        {
+                            string extension = Path.GetExtension(requestModel.InputFiles[0].Name);
+                            if (extension != null && extension!=".zip" && extension != ".rar")
+                            {
+                                TaskHelper.ExecuteTask(notExecutedTask);
+                            }
+                        }
                     }
 
                     //check statuses
@@ -56,20 +66,21 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.ProcessorHelper
                     //download files
                     foreach (var processedTask in processedTasks)
                     {
+
                         TaskHelper.CheckStateTask(processedTask);
                     }
 
                     EmailHelper.CreateTasksFromEmails(settingsModel, assist, extentions, uploadUrl, uploadFolder, serviceId);
 
-                   
+
 
                 }
                 else
                 {
-                    throw new FileNotFoundException("File not found in "+path);
+                    throw new FileNotFoundException("File not found in " + path);
                 }
                 //update states
-                }
+            }
             catch (Exception exception)
             {
                 string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;

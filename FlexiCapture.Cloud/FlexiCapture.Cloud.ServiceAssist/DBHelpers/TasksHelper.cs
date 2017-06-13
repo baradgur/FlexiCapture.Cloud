@@ -5,6 +5,7 @@ using FlexiCapture.Cloud.ServiceAssist.DB;
 using System.Data.Entity;
 using System.Runtime.Remoting.Messaging;
 using FlexiCapture.Cloud.ServiceAssist.Models.UserProfiles;
+using System.IO;
 
 namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 {
@@ -39,7 +40,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         }
 
         /// <summary>
-        /// get to not executed tasks
+        /// get to not executed tasks by serviceId
         /// </summary>
         /// <returns></returns>
         public static List<Tasks> GetToNotExecuteTasks(int serviceId)
@@ -59,6 +60,175 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                 LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
                                  innerException);
                 return null;
+            }
+        }
+
+        public static void UpdateZipTaskReponseContent(int taskId, string content)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    ZipTasks task = db.ZipTasks.FirstOrDefault(x => x.Id == taskId);
+                    if (task != null)
+                    {
+                        task.ResponseContent = content;
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+            }
+        }
+
+        public static void UpdateZipTaskState(int taskId, int stateId)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    ZipTasks task = db.ZipTasks.FirstOrDefault(x => x.Id == taskId);
+                    if (task != null)
+                    {
+                        task.TaskStateId = stateId;
+                        db.SaveChanges();
+
+                        if (stateId == 4 || stateId == 3)
+                        {
+                            List<ZipTasks> cTask = db.ZipTasks.Where(x => (x.TaskStateId == 3 || x.TaskStateId == 4) && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
+
+                            foreach (var t in cTask)
+                            {
+                                t.ProfileContent = "";
+
+                            }
+                            db.SaveChanges();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+            }
+        }
+
+        public static List<ZipTasks> GetToProcessedZipTasks()
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    return
+                        db.ZipTasks.Where(x => x.TaskStateId == 2 && !string.IsNullOrEmpty(x.ResponseContent)).ToList();
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+                return null;
+            }
+        }
+
+        public static int AddZipTask(int userId, int serviceId, int outerTaskId)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    ZipTasks task = new ZipTasks()
+                    {
+                        CreationDate = DateTime.Now,
+                        TaskStateId = 1,
+                        OuterTaskId = outerTaskId,
+                        UserId = userId,
+                        ServiceId = serviceId
+                    };
+                    db.ZipTasks.Add(task);
+                    db.SaveChanges();
+                    return task.Id;
+                }
+            }
+            catch (Exception exception)
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// get to not executed tasks for zip service 
+        /// </summary>
+        /// <returns></returns>
+        public static List<Tasks> GetToNotExecuteTasks()
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    return
+                        db.Tasks.Where(x => x.TaskStateId == 1 && (x.ServiceId == 2 || x.ServiceId == 3 || x.ServiceId == 4) &&
+                !string.IsNullOrEmpty(x.ProfileContent)).ToList();
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+                return null;
+            }
+        }
+
+        public static List<ZipTasks> GetToNotExecutedZipTasks()
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    return
+                        db.ZipTasks.Where(x =>x.TaskStateId == 1 && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+                return null;
+            }
+        }
+
+        public static void UpdateZipTaskProfile(int taskId, string profileContent)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    ZipTasks task = db.ZipTasks.FirstOrDefault(x => x.Id == taskId);
+
+                    if (task != null)
+                    {
+                        task.ProfileContent = profileContent;
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 
@@ -158,9 +328,23 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
+                List<string> resultExtentions = new List<string>();
                 using (var db = new FCCPortalEntities2())
                 {
-                    return db.DocumentTypes.Select(x => x.Extension).ToList();
+                    List<DocumentTypes> types = db.DocumentTypes.Select(x => x).ToList();
+                    foreach (var type in types)
+                    {
+                        List<string> elements = type.Extension.Split(';').ToList();
+
+                        foreach (var element in elements)
+                        {
+                            if (!string.IsNullOrEmpty(element))
+                            {
+                                resultExtentions.Add(element); 
+                            }
+                        }
+                    }
+                    return resultExtentions;
                 }
             }
             catch (Exception exception)
@@ -232,6 +416,30 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             }
             catch (Exception)
             {
+            }
+        }
+
+        public static List<Tasks> GetToOuterTasks()
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    return
+                        db.Tasks
+                        .Include(x=>x.Documents)
+                        .Include(x=>x.ZipTasks)
+                        .Include(x=>x.ZipTasks.Select(xx=>xx.ZipDocuments))
+                        .Where(x => x.TaskStateId == 2 && x.ZipTasks.Count>0).ToList();
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+                return null;
             }
         }
     }

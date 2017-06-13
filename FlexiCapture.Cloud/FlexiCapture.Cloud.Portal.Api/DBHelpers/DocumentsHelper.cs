@@ -23,6 +23,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
                 using (var db = new FCCPortalEntities())
                 {
                     Documents document = new Documents()
@@ -38,8 +39,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         OriginalFileName = filename,
                         TaskId = taskId,
                         DocumentCategoryId = categoryId
-                        
-
                     };
                     db.Documents.Add(document);
                     db.SaveChanges();
@@ -63,6 +62,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
                 List<DocumentModel> models = new List<DocumentModel>();
 
                 using (var db = new FCCPortalEntities())
@@ -88,8 +88,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             TaskId = document.TaskId.ToString(),
                             TypeId = document.DocumentTypeId,
                             TypeName = document.DocumentTypes.Name,
-                            Url = document.Path
-                            
+                            Url = document.Path,
+                            DocumentErrors = serializer.Deserialize<List<DocumentError>>(document.ErrorText??"")
                         };
 
 
@@ -129,7 +129,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 }
 
                 models = models.OrderByDescending(x => x.Id).ToList();
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(models);
             }
             catch (Exception)

@@ -1,17 +1,40 @@
 ﻿<div>
-    <div  class="modal-header modal-header-primary">
+    <div class="modal-header modal-header-primary">
         <div>Download files</div>
     </div>
     <div class="modal-body">
         <div class="container">
             <div class="row">
                 <div ng-repeat="doc in downloadResults"><a ng-click="vm.downloadDoc(doc)"><i class="glyphicon glyphicon-download-alt"></i> {{doc.OriginalFileName}}</a></div>
-                    <div class="form-group">
-                        <div class="form-group text-right">
-                            <!-- Indicates a successful or positive action -->
-                            <button type="button" class="btn btn-default btn-outline" ng-click="vm.cancel();">Cancel</button>
-                        </div>
+                <div ng-show="downloadResults.length==0">There are no files to download.</div>
+                <div class="table-responsive" ng-show="currentDocument.DocumentErrors && currentDocument.DocumentErrors.length>0">
+                    <br />
+                    <table class="table table-condensed table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                File Name
+                            </th>
+                            <th>
+                                Error
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="error in currentDocument.DocumentErrors">
+                            <td>{{error.DocumentName}}</td>
+                            <td>{{error.ErrorText}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-group text-right">
+                        <!-- Indicates a successful or positive action -->
+                        <button type="button" class="btn btn-default btn-outline" ng-click="vm.cancel();">Cancel</button>
                     </div>
+                </div>
             </div>
         </div>
     </div>

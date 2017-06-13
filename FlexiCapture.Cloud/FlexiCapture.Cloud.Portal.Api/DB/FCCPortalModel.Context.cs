@@ -40,10 +40,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<RotationTypeCatalog> RotationTypeCatalog { get; set; }
         public virtual DbSet<ServiceTypes> ServiceTypes { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<TaskStates> TaskStates { get; set; }
-        public virtual DbSet<UserConfirmationEmails> UserConfirmationEmails { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserLoginStates> UserLoginStates { get; set; }
         public virtual DbSet<UserProfileExportFormats> UserProfileExportFormats { get; set; }
@@ -56,5 +54,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<UserServiceSubscribes> UserServiceSubscribes { get; set; }
         public virtual DbSet<UserServiceSubscribeStates> UserServiceSubscribeStates { get; set; }
         public virtual DbSet<UserSettings> UserSettings { get; set; }
+        public virtual DbSet<ZipDocuments> ZipDocuments { get; set; }
+        public virtual DbSet<ZipTasks> ZipTasks { get; set; }
+        public virtual DbSet<UserConfirmationEmails> UserConfirmationEmails { get; set; }
     }
 }

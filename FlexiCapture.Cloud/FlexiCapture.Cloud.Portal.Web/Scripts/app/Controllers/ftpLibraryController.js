@@ -16,6 +16,22 @@ function deleteFormatterFtpLibrary(value, row, index) {
     ].join('');
 }
 
+function downloadFormatterLibrary(value, row, index) {
+    return [
+        "<a class='download-link' href ='javascript: void(0)'><i class='fa fa-download' aria-hidden='true'></i> Original File</a>"
+
+    ].join('');
+}
+
+function resultFormatterLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-info orange-tooltip result-link" href="javascript:void(0)" title="Results" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Results"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-download-alt"></i>',
+        '</button>'
+    ].join('');
+}
+
 (function () {
     var ftpLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
         var data = [];
@@ -90,6 +106,33 @@ function deleteFormatterFtpLibrary(value, row, index) {
                             console.log(ex);
                         }
                     });
+            },
+            'click .result-link': function (e, value, row, index) {
+                $scope.downloadResults = [];
+                $scope.currentDocument = {};
+                var found = $filter('filter')($scope.documents, { Id: row.Id }, true);
+                if (found.length > 0) {
+                    $scope.currentDocument = found[0];
+                    $scope.downloadResults = found[0].ResultDocuments;
+                }
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'PartialViews/Modals/DownloadResults.html',
+                    controller: downloadResultsController,
+                    controllerAs: 'vm',
+                    scope: $scope,
+                    resolve: {
+                        items: function () {
+                            return $scope.items;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function () {
+
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
             }
         };
 
