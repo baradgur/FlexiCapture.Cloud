@@ -422,6 +422,10 @@
       <Project>{5cdf763b-ee3e-4d85-a30b-1d37019aa39d}</Project>
       <Name>FlexiCapture.Cloud.OCR.Assist</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FlexiCapture.Cloud.ServiceAssist\FlexiCapture.Cloud.ServiceAssist.csproj">
+      <Project>{C1E88B07-11E1-4421-8577-818DD384B5EA}</Project>
+      <Name>FlexiCapture.Cloud.ServiceAssist</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

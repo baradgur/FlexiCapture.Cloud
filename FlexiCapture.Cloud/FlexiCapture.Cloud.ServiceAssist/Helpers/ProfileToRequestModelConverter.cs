@@ -116,10 +116,10 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
                     {
                         Name = document.OriginalFileName,
                         Password = "",
-                        InputUrl = dUrl,
-                        //InputUrl = "",
-                        //InputBlob = ConvertFileToBase64(filePath),
-                        InputBlob = "",
+                        //InputUrl = dUrl,
+                        InputUrl = "",
+                        InputBlob = ConvertFileToBase64(filePath),
+                        //InputBlob = "",
                         InputType = document.DocumentTypes.Name,
                         PostFix = ""
                     };

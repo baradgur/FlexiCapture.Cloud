@@ -60,6 +60,16 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return TasksHelper.GetToNotExecuteTasks(serviceId);
         }
 
+        // <summary>
+        /// get to not executed tasks
+        /// </summary>
+        /// <param name="serviceId"></param>
+        /// <returns></returns>
+        public List<Tasks> GetToNotExecutedTasks()
+        {
+            return TasksHelper.GetToNotExecuteTasks();
+        }
+
         public List<string> GetToAvailableFileExtensions()
         {
             return TasksHelper.GetToAvailableFileExtensions();

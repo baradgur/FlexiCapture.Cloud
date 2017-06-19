@@ -62,6 +62,33 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             }
         }
 
+        /// <summary>
+        /// get to not executed tasks
+        /// </summary>
+        /// <returns></returns>
+        public static List<Tasks> GetToNotExecuteTasks()
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+
+                    return db.Tasks.Where(
+                        x => x.TaskStateId == 1 && (x.ServiceId == 2 || x.ServiceId == 1) && 
+                        !string.IsNullOrEmpty(x.ProfileContent)).ToList();
+                       
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// get to not executed tasks
