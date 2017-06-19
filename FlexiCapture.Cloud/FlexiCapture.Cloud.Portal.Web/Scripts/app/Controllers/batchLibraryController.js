@@ -16,17 +16,24 @@ function deleteFormatterFileBatchLibrary(value, row, index) {
     ].join('');
 }
 
-function deleteFormatterFileBatchLibrary(value, row, index) {
+function downloadFormatterLibrary(value, row, index) {
     return [
-        '<button class="btn btn-danger orange-tooltip delete-single-library" href="javascript:void(0)" title="Delete" style=" text-align: center;" ',
-        'data-toggle="tooltip" title="Delete"  data-placement="bottom">',
-        '<i class="glyphicon glyphicon-remove"></i>',
+        "<a class='download-link' href ='javascript: void(0)'><i class='fa fa-download' aria-hidden='true'></i> Original File(s)</a>"
+
+    ].join('');
+}
+
+function resultFormatterLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-info orange-tooltip result-link" href="javascript:void(0)" title="Results" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Results"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-download-alt"></i>',
         '</button>'
     ].join('');
 }
 
 (function () {
-    var batchLibraryController = function ($scope, $http,$interval, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal,documentsHttpService) {
+    var batchLibraryController = function ($scope, $http, $interval, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
 var data = [];
         var url = $$ApiUrl + "/documents";
@@ -68,7 +75,7 @@ var data = [];
                         try {
                             headers = headers();
 
-                            var filename = headers['x-filename'];
+                            var filename = headers['x-file-name'];
                             var contentType = headers['content-type'];
                             var blob = new Blob([data], { type: contentType });
 
@@ -87,8 +94,7 @@ var data = [];
                                 linkElement.setAttribute("download", filename);
 
                                 //Force a download
-                                var clickEvent = new MouseEvent("click",
-                                {
+                                var clickEvent = new MouseEvent("click", {
                                     "view": window,
                                     "bubbles": true,
                                     "cancelable": false
@@ -99,6 +105,33 @@ var data = [];
                         } catch (ex) {
                             console.log(ex);
                         }
+                    });
+            },
+            'click .result-link': function (e, value, row, index) {
+                $scope.downloadResults = [];
+                $scope.currentDocument = {};
+                var found = $filter('filter')($scope.documents, { Id: row.Id }, true);
+                if (found.length > 0) {
+                    $scope.currentDocument = found[0];
+                    $scope.downloadResults = found[0].ResultDocuments;
+                }
+                
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'PartialViews/Modals/DownloadResults.html',
+                        controller: downloadResultsController,
+                        controllerAs: 'vm',
+                        scope: $scope,
+                        resolve: {
+                            items: function () {
+                                return $scope.items;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function () {
+
+                    }, function () {
+                        console.log('Modal dismissed at: ' + new Date());
                     });
             }
         };
@@ -172,5 +205,5 @@ var data = [];
     };
 
 
-    fccApp.controller("batchLibraryController", ["$scope", "$http","$interval", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal","documentsHttpService", batchLibraryController]);
+    fccApp.controller("batchLibraryController", ["$scope", "$http", "$interval", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", batchLibraryController]);
 }())

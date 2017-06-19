@@ -38,6 +38,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
                 var sServiceId = HttpContext.Current.Request.Form.Get("serviceId");
                 var sUserId = HttpContext.Current.Request.Form.Get("userId");
                 string sProfile = HttpContext.Current.Request.Form.Get("profile");
+                string sPastedUrl = HttpContext.Current.Request.Form.Get("pastedUrl");
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
 
@@ -48,19 +49,31 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
                 if (!string.IsNullOrEmpty(sServiceId)) serviceId = Convert.ToInt32(sServiceId);
                 if (!string.IsNullOrEmpty(sUserId)) userId = Convert.ToInt32(sUserId);
                 var hfc = HttpContext.Current.Request.Files;
-                if (hfc.Count > 0)
+                if (hfc.Count > 0 || !string.IsNullOrEmpty(sPastedUrl))
                 {
-                        
-                    //foreach (HttpPostedFile file in hfc)
-                    for (int i = 0; i < hfc.Count; i++)
+                    if (hfc.Count > 0)
                     {
-                        var file = hfc[i];
+                        //foreach (HttpPostedFile file in hfc)
+                        for (int i = 0; i < hfc.Count; i++)
+                        {
+                            var file = hfc[i];
 
-                        Helpers.DocumentsHelpers.DocumentsHelper.ProcessFile(userId, serviceId, model, file, sProfile);
-                        
+                            Helpers.DocumentsHelpers.DocumentsHelper.ProcessFile(userId, serviceId, model, file,
+                                sProfile);
+
+                        }
+                    }
+                    if(!string.IsNullOrEmpty(sPastedUrl))
+                    {
+                        Helpers.DocumentsHelpers.DocumentsHelper.ProcessUrl(userId, serviceId, model, sPastedUrl,
+                                sProfile);
                     }
                     //var file = hfc[0];
                     return Ok("File Upload Completely");
+                }
+                if (!string.IsNullOrEmpty(sPastedUrl))
+                {
+                    
                 }
                 return BadRequest("No files");
             }

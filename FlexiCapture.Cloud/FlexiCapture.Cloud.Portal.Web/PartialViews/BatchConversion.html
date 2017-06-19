@@ -20,7 +20,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <!-- Drop Zone -->
                     <h4>Or drop file</h4>
                     <div class="upload-drop-zone" id="drop-zone">
@@ -33,7 +33,17 @@
                     </div>
                     <div ng-repeat="file in files">{{file.name}} <span class="glyphicon glyphicon-remove " style="color:red" ng-click="removeFromFiles(index)"></span></div>
                 </div>
-
+                <div class="col-md-4">
+                    <h4>Or paste URL</h4>
+                    <form name="urlForm">
+                        <div ng-class="{ true: 'has-error'}[urlForm.pastedUrlInput.$invalid && (urlForm.pastedUrlInput.$touched)]">
+                            <input name="pastedUrlInput" class="form-control" type="url" ng-model="pastedUrl" />
+                            <div class="help-block" ng-messages="urlForm.pastedUrlInput.$error" ng-if="urlForm.pastedUrlInput.$touched">
+                                <div ng-message="url">Please input correct URL</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
 
             </div>
@@ -66,7 +76,7 @@
 
 
         <div class="input-group">
-            <span class="input-group-addon">
+            <span class="input-group-addon input-group-addon-same-width">
                 Select Capture Profile
             </span>
             <select class="form-control" ng-change="changeProfile()" ng-options="profile as profile.Name for profile in profiles track by profile.Id"
@@ -76,16 +86,16 @@
         </div>
             <div class="input-group" ng-show="newProfile">
 
-                <span class="input-group-addon">
+                <span class="input-group-addon input-group-addon-same-width">
                     New Profile Name
                 </span>
                 <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
                 <span class="input-group-btn">
-                    <button class="btn btn-success btn-sm" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''"><span class="glyphicon glyphicon-ok"></span></button>
+                    <button class="btn btn-success no-border-radius" type="button" ng-click="addCustomProfile();" ng-disabled="NewProfileName==''"><span class="glyphicon glyphicon-ok"></span></button>
                 </span>
 
                 <span class="input-group-btn">
-                    <button class="btn btn-danger btn-sm" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button class="btn btn-danger" type="button" ng-click="hideNewProfilePanel();"><span class="glyphicon glyphicon-remove"></span></button>
                 </span>
             </div>
             <br />
@@ -177,7 +187,20 @@
 
                                         </li>-->
                                     </ul>
+                                    <div class="panel panel-info form-group">
+                                        <div class="panel-heading">Print Types</div>
 
+                                        <ul class="list-group">
+                                            <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
+                                                {{print.Name}}
+                                                <div class="material-switch pull-right">
+                                                    <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
+                                                           checklist-change="imChanged()" />
+                                                    <label for="{{print.Name}}" class="label-success"></label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <!--</div>-->
                                 </div>
                             </div>
@@ -210,38 +233,21 @@
                                         </div>
                                     </li>
 
-
-
-
                                     <div class="panel panel-info form-group">
-                                        <div class="panel-heading">Print Types</div>
-
-                                        <ul class="list-group">
-                                            <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
-                                                {{print.Name}}
+                                        <div class="panel-heading">Languages</div>
+                                        <input type="text" class="form-control" placeholder="Filter" ng-model="searchLangText">
+                                        <ul class="list-group" style="height: 200px; overflow-y: scroll;">
+                                            <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages | filter:searchLangText">
+                                                {{lang.Name}}
                                                 <div class="material-switch pull-right">
-                                                    <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
-                                                           checklist-change="imChanged()" />
-                                                    <label for="{{print.Name}}" class="label-success"></label>
+                                                    <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
+                                                           checklist-change="imChanged()"/>
+                                                    <label for="{{lang.Name}}" class="label-success"></label>
                                                 </div>
                                             </li>
                                         </ul>
+
                                     </div>
-
-                                    <div class="panel panel-info form-group">
-                                        <input type="text" class="form-control" placeholder="Filter" ng-model="searchLangText">
-                                        <ul class="list-group" style="height: 200px; overflow-y: scroll;">
-                                                <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages | filter:searchLangText">
-                                                    {{lang.Name}}
-                                                    <div class="material-switch pull-right">
-                                                        <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
-                                                               checklist-change="imChanged()" />
-                                                        <label for="{{lang.Name}}" class="label-success"></label>
-                                                    </div>
-                                                </li>
-                                            </ul>
-
-</div>
                                 </div>
                             </div>
 
@@ -274,7 +280,7 @@
 
 
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0">STEP 3: Start Recognition</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0 && !pastedUrl">STEP 3: Start Recognition</button>
     </div>
     <!--END PROFILES-->
 </div>

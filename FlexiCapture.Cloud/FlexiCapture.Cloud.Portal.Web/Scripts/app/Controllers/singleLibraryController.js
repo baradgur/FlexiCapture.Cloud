@@ -1,4 +1,3 @@
-/// <reference path="singleLibraryController.js" />
 function actionFormatterSingleLibrary(value, row, index) {
     return [
         '<button class="btn btn-info orange-tooltip edit-single-library" href="javascript:void(0)" title="Preview" style=" text-align: center;" ',
@@ -15,6 +14,14 @@ function downloadFormatterLibrary(value, row, index) {
     ].join('');
 }
 
+function resultFormatterLibrary(value, row, index) {
+    return [
+        '<button class="btn btn-info orange-tooltip result-link" href="javascript:void(0)" title="Results" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Results"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-download-alt"></i>',
+        '</button>'
+    ].join('');
+}
 
 function deleteFormatterFileSingleLibrary(value, row, index) {
     return [
@@ -28,7 +35,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
 (function () {
-    var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
+    var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
@@ -47,7 +54,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
                 var blob1 = new Blob([byteArray], { type: "application/octet-stream" });
-                    url = window.URL.createObjectURL(blob);
+                url = window.URL.createObjectURL(blob);
                 a.href = url;
                 a.download = fileName;
                 a.click();
@@ -58,51 +65,46 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
         $window.actionEventsSingleLibrary = {
-            'click .edit-single-library': function(e, value, row, index) {
+            'click .edit-single-library': function (e, value, row, index) {
                 BootstrapDialog.show({
                     title: 'Warning',
                     message: 'Function is not implemented yet!',
                     type: BootstrapDialog.TYPE_WARNING
                 });
             },
-            'click .delete-single-library': function(e, value, row, index) {
+            'click .delete-single-library': function (e, value, row, index) {
                 BootstrapDialog.show({
                     title: 'Delete file',
-                    message: 'Are you shure?',
-                    buttons: [
-                        {
-                            label: 'Yes',
-                            action: function(dialog) {
-                                documentsHttpService.deleteSelectedPositions($http,
-                                    $scope,
-                                    data,
-                                    [
-                                        {
-                                            'Id': row.Id,
-                                            'TaskId': row.taskId
-                                        }
-                                    ],
-                                    url,
-                                    usSpinnerService);
-                                dialog.close();
-                            }
-                        }, {
-                            label: 'Cancel',
-                            action: function(dialog) {
-                                dialog.close();
-                            }
+                    message: 'Are you sure?',
+                    buttons: [{
+                        label: 'Yes',
+                        action: function (dialog) {
+                            documentsHttpService.deleteSelectedPositions($http,
+                                $scope,
+                                data, [{
+                                    'Id': row.Id,
+                                    'TaskId': row.taskId
+                                }],
+                                url,
+                                usSpinnerService);
+                            dialog.close();
                         }
-                    ]
+                    }, {
+                        label: 'Cancel',
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }]
                 });
 
             },
-            'click .download-link': function(e, value, row, index) {
+            'click .download-link': function (e, value, row, index) {
                 documentsHttpService.downloadDocumentById($http, $scope, row.Id, $$ApiUrl + "/downloadfile")
-                    .then(function(data, status, headers) {
+                    .then(function (data, status, headers) {
                         try {
                             headers = headers();
 
-                            var filename = headers['x-filename'];
+                            var filename = headers['x-file-name'];
                             var contentType = headers['content-type'];
                             var blob = new Blob([data], { type: contentType });
 
@@ -121,8 +123,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                                 linkElement.setAttribute("download", filename);
 
                                 //Force a download
-                                var clickEvent = new MouseEvent("click",
-                                {
+                                var clickEvent = new MouseEvent("click", {
                                     "view": window,
                                     "bubbles": true,
                                     "cancelable": false
@@ -134,6 +135,33 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                             console.log(ex);
                         }
                     });
+            },
+            'click .result-link': function (e, value, row, index) {
+                $scope.downloadResults = [];
+                $scope.currentDocument = {};
+                var found = $filter('filter')($scope.documents, { Id: row.Id }, true);
+                if (found.length > 0) {
+                    $scope.currentDocument = found[0];
+                    $scope.downloadResults = found[0].ResultDocuments;
+                }
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'PartialViews/Modals/DownloadResults.html',
+                    controller: downloadResultsController,
+                    controllerAs: 'vm',
+                    scope: $scope,
+                    resolve: {
+                        items: function () {
+                            return $scope.items;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function () {
+
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
             }
         };
 
@@ -143,8 +171,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
             timer = $interval(function () {
                 //console.log('Start silence!');
                 documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
-            }
-                , 500000);
+            }, 500000);
         }
 
         $scope.killtimer = function () {
@@ -181,7 +208,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                 };
                 BootstrapDialog.show({
                     title: 'Delete file',
-                    message: 'Are you shure?',
+                    message: 'Are you sure?',
                     buttons: [{
                         label: 'Yes',
                         action: function (dialog) {
@@ -196,9 +223,8 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                         }
                     }]
                 });
-                
-            }
-            else {
+
+            } else {
                 BootstrapDialog.alert({
                     title: 'Warning',
                     message: 'There were no documents selected to delete!',
@@ -210,5 +236,5 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
     };
 
 
-    fccApp.controller("singleLibraryController", ["$scope", "$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", singleLibraryController]);
+    fccApp.controller("singleLibraryController", ["$scope", "$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", singleLibraryController]);
 }())

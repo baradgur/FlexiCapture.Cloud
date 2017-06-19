@@ -33,6 +33,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                 if (string.IsNullOrEmpty(response))
                 {
                     LogHelper.AddLog(error);
+                    serviceAssist.AddErrorToDocuments(task.Id, error);
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
                     serviceAssist.UpdateTaskState(task.Id, 4);
                     return;
@@ -50,6 +51,12 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                 }
                 else
                 {
+                    string errorText = "";
+                    foreach (var ocrError in model.Errors)
+                    {
+                        errorText += ocrError.ErrorName + ": " + ocrError.ErrorMessage;
+                    }
+                    serviceAssist.AddErrorToDocuments(task.Id, errorText);
                     serviceAssist.UpdateTaskState(task.Id, 4);
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
 
@@ -110,6 +117,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                         if (!File.Exists(filePath))
                         {
                             LogHelper.AddLog(error);
+                            serviceAssist.AddErrorToDocuments(task.Id, error);
                             //update task
                             serviceAssist.UpdateTaskState(task.Id, 4);
                             //update documents
@@ -131,6 +139,12 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                 else if (!model.Status.Equals("Submitted"))
                 {
                     LogHelper.AddLog("Error in JobStatus: " + jobStatus);
+                    string errorText = "";
+                    foreach (var ocrError in model.Errors)
+                    {
+                        errorText += ocrError.ErrorName + ": " + ocrError.ErrorMessage;
+                    }
+                    serviceAssist.AddErrorToDocuments(task.Id, errorText);
                     //update task
                     serviceAssist.UpdateTaskState(task.Id, 4);
                     //update documents

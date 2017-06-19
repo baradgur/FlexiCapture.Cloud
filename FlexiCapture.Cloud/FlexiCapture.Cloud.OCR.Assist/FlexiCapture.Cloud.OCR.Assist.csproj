@@ -49,6 +49,7 @@
     <Compile Include="Models\DownloadFilesModel.cs" />
     <Compile Include="Models\DownloadModel.cs" />
     <Compile Include="Models\InputFileModel.cs" />
+    <Compile Include="Models\OcrError.cs" />
     <Compile Include="Models\OcrRequestModel.cs" />
     <Compile Include="Models\OcrResponseStatisticModel.cs" />
     <Compile Include="Models\OcrResponseModel.cs" />

@@ -214,6 +214,7 @@
     <Content Include="PartialViews\BatchSettings.html" />
     <Content Include="PartialViews\ConfirmEmail.html" />
     <Content Include="PartialViews\Dashboard.html" />
+    <Content Include="PartialViews\Modals\DownloadResults.html" />
     <Content Include="PartialViews\EmailLibrary.html" />
     <Content Include="PartialViews\EmailProfile.html" />
     <Content Include="PartialViews\EmailSettings.html" />
@@ -262,6 +263,7 @@
     <Content Include="Scripts\app\Controllers\ftpSettingManageController.js" />
     <Content Include="Scripts\app\Controllers\ftpSettingsController.js" />
     <Content Include="Scripts\app\Controllers\loginController.js" />
+    <Content Include="Scripts\app\Controllers\downloadResultsController.js" />
     <Content Include="Scripts\app\Controllers\singleFileConversionController.js" />
     <Content Include="Scripts\app\Controllers\singleLibraryController.js" />
     <Content Include="Scripts\app\Controllers\singleProfileController.js" />

@@ -22,7 +22,7 @@
         </div>
         <div class="panel-body">
             <div class="input-group">
-                <span class="input-group-addon">
+                <span class="input-group-addon input-group-addon-same-width">
                     <input type="checkbox" aria-label="Checkbox for following text input"
                            ng-model="currentProfile.isDefault" ng-change="changeDefaultProfile()" ng-disabled="currentProfile.isDefault"> Is Default
                 </span>
@@ -32,19 +32,19 @@
             <div id="toolbar">
                 <div class="input-group" ng-show="newProfile">
 
-                    <span class="input-group-addon">
+                    <span class="input-group-addon input-group-addon-same-width">
                         New Profile Name
                     </span>
                     <input type="text" class="form-control" placeholder="New profile name" ng-model="NewProfileName">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-success orange-tooltip btn-sm" ng-click="createNewSettings();" data-toggle="tooltip" title="Create new profile"
+                        <button type="button" class="btn btn-success orange-tooltip no-border-radius" ng-click="createNewSettings();" data-toggle="tooltip" title="Create new profile"
                                 data-placement="bottom">
                             <span class="glyphicon glyphicon-ok"></span>
                         </button>
                     </span>
 
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger orange-tooltip btn-sm" ng-click="showNewProfile(false);" data-toggle="tooltip" title="Hide"
+                        <button type="button" class="btn btn-danger orange-tooltip" ng-click="showNewProfile(false);" data-toggle="tooltip" title="Hide"
                                 data-placement="bottom">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
@@ -132,6 +132,20 @@
                         </ul>
 
                         <!--</div>-->
+                        <div class="panel panel-info form-group">
+                            <div class="panel-heading">Print Types</div>
+
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
+                                    {{print.Name}}
+                                    <div class="material-switch pull-right">
+                                        <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
+                                               checklist-change="imChanged()" />
+                                        <label for="{{print.Name}}" class="label-success"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -162,24 +176,6 @@
                                         ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
                             </div>
                         </li>
-
-
-
-
-                        <div class="panel panel-info form-group">
-                            <div class="panel-heading">Print Types</div>
-
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
-                                    {{print.Name}}
-                                    <div class="material-switch pull-right">
-                                        <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
-                                               checklist-change="imChanged()" />
-                                        <label for="{{print.Name}}" class="label-success"></label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
 
                         <div class="panel panel-info form-group">
                             <div class="panel-heading">Languages</div>

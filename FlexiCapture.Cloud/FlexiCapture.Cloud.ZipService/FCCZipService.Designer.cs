@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.eventLog = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).BeginInit();
             // 
             // FCCZipService
             // 
             this.ServiceName = "FCCZipService";
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog)).EndInit();
 
         }
 
         #endregion
+
+        public System.Diagnostics.EventLog eventLog;
     }
 }

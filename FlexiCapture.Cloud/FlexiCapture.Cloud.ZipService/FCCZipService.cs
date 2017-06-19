@@ -8,17 +8,19 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
-using FlexiCapture.Cloud.ZipService.ProcessorHelpers;
+using FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper;
 
 namespace FlexiCapture.Cloud.ZipService
 {
     public partial class FCCZipService : ServiceBase
     {
         public Timer Timer = new Timer();
+
         public FCCZipService()
         {
             InitializeComponent();
         }
+
         /// <summary>
         /// debug mode method
         /// </summary>
@@ -37,6 +39,7 @@ namespace FlexiCapture.Cloud.ZipService
             try
             {
                 Timer.Stop();
+
                 ProcessorHelper.MakeProcessing();
                 Timer.Start();
             }
@@ -57,7 +60,7 @@ namespace FlexiCapture.Cloud.ZipService
             try
             {
                 Timer = new Timer();
-                Timer.Interval = 5000;
+                Timer.Interval = 4000;
                 Timer.Elapsed += Timer_Elapsed;
                 Timer.Start();
             }

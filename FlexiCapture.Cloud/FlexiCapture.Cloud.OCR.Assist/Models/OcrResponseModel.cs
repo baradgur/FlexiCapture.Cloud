@@ -42,6 +42,10 @@ namespace FlexiCapture.Cloud.OCR.Assist.Models
         [JsonProperty("statistics")]
         public OcrResponseStatisticModel Statistics { get; set; }
 
+        [JsonProperty("errors")]
+        public List<OcrError> Errors { get; set; }
+        
+
 
     }
 }

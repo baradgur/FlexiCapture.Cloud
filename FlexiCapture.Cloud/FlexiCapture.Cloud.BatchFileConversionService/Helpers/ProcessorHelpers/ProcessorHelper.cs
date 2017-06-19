@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using FlexiCapture.Cloud.BatchFileConversionService.Helpers.TasksHelpers;
+using FlexiCapture.Cloud.OCR.Assist.Models;
 using FlexiCapture.Cloud.ServiceAssist;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
+using Newtonsoft.Json;
 
 namespace FlexiCapture.Cloud.BatchFileConversionService.Helpers.ProcessorHelpers
 {
@@ -27,7 +30,15 @@ namespace FlexiCapture.Cloud.BatchFileConversionService.Helpers.ProcessorHelpers
                 //upload files
                 foreach (var notExecutedTask in notExecutedTasks)
                 {
-                    TaskHelper.ExecuteTask(notExecutedTask);
+                    OcrRequestModel requestModel = JsonConvert.DeserializeObject<OcrRequestModel>(notExecutedTask.ProfileContent);
+                    if (requestModel.InputFiles != null && requestModel.InputFiles.Count > 0)
+                    {
+                        string extension = Path.GetExtension(requestModel.InputFiles[0].Name);
+                        if (extension != null && extension != ".zip" && extension != ".rar")
+                        {
+                            TaskHelper.ExecuteTask(notExecutedTask);
+                        }
+                    }
                 }
 
                 //check statuses

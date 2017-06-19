@@ -17,16 +17,16 @@ namespace FlexiCapture.Cloud.BatchFileConversionService
         {
             Service = new BatchFileConversionService();
 
-            //#if DEBUG
-            //            Service.OnDebug();
-            //#else
+//#if DEBUG
+//            Service.OnDebug();
+//#else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
                 Service
             };
             ServiceBase.Run(ServicesToRun);
-           // #endif
+//#endif
         }
     }
 }

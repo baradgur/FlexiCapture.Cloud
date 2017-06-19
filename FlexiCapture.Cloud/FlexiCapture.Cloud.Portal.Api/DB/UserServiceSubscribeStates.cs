@@ -14,6 +14,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
     
     public partial class UserServiceSubscribeStates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserServiceSubscribeStates()
         {
             this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
@@ -22,6 +23,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public int Id { get; set; }
         public string Name { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserServiceSubscribes> UserServiceSubscribes { get; set; }
     }
 }

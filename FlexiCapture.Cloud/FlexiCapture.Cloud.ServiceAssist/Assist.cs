@@ -19,6 +19,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
 
         public ManageUserProfileModel UserProfile { get; set; }
         public List<Documents> Documents { get; set; }
+        public List<ZipDocuments> ZipDocuments { get; set; }
 
 
         #endregion
@@ -29,27 +30,14 @@ namespace FlexiCapture.Cloud.ServiceAssist
         /// </summary>
         public int AddTask(int userId, int serviceId)
         {
-            try
-            {
-                using (var db = new FCCPortalEntities2())
-                {
-                    Tasks task = new Tasks()
-                    {
-                        CreationDate = DateTime.Now,
-                        TaskStateId = 1,
-                        UserId = userId,
-                        ServiceId = serviceId
-                    };
-                    db.Tasks.Add(task);
-                    db.SaveChanges();
-                    return task.Id;
-                }
-            }
-            catch (Exception exception)
-            {
-                return -1;
-            }
+           return TasksHelper.AddTask(userId, serviceId);
         }
+
+        public void AddErrorToDocuments(int taskId, string error)
+        {
+            DocumentsHelper.AddErrorToDocuments(taskId, error);
+        }
+
         /// <summary>
         /// get to not executed tasks
         /// </summary>
@@ -60,11 +48,21 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return TasksHelper.GetToNotExecuteTasks(serviceId);
         }
 
-        // <summary>
-        /// get to not executed tasks
-        /// </summary>
-        /// <param name="serviceId"></param>
-        /// <returns></returns>
+        public void UpdateZipDocumentStatesByZipTaskId(int taskId, int stateId)
+        {
+            DocumentsHelper.UpdateZipDocumentStatesByZipTaskId(taskId, stateId);
+        }
+
+        public void UpdateZipTaskState(int taskId, int stateId)
+        {
+            TasksHelper.UpdateZipTaskState(taskId, stateId);
+        }
+
+        public void UpdateZipTaskReponseContent(int taskId, string response)
+        {
+            TasksHelper.UpdateZipTaskReponseContent(taskId, response);
+        }
+
         public List<Tasks> GetToNotExecutedTasks()
         {
             return TasksHelper.GetToNotExecuteTasks();
@@ -73,6 +71,11 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public List<string> GetToAvailableFileExtensions()
         {
             return TasksHelper.GetToAvailableFileExtensions();
+        }
+
+        public int AddZipTask(int userId, int serviceId, int outerTaskId)
+        {
+            return TasksHelper.AddZipTask(userId, serviceId, outerTaskId);
         }
 
         /// <summary>
@@ -85,6 +88,11 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return TasksHelper.GetToProcessedTasks(serviceId);
         }
 
+        public int AddZipDocument(int taskId, FileInfo fileInfo, string originalFileName, Guid newNameGuid, string uploadName, string localName, string md5, int categoryId)
+        {
+            return DocumentsHelper.AddZipDocument(taskId, fileInfo, originalFileName, newNameGuid, uploadName, localName, md5, categoryId);
+        }
+
         /// <summary>
         /// update task state
         /// </summary>
@@ -93,6 +101,36 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public void UpdateTaskState(int taskId, int stateId)
         {
             TasksHelper.UpdateTaskState(taskId, stateId);
+        }
+        
+        public List<ZipDocuments> GetZipDocumentsByZipTaskId(int taskId)
+        {
+            return DocumentsHelper.GetToZipDocumentsByZipTaskId(taskId);
+        }
+
+        public string ConvertProfileToRequestModel(List<ZipDocuments> zipDocuments, ManageUserProfileModel userProfile)
+        {
+            return ProfileToRequestModelConverter.ConvertProfileToRequestModel(zipDocuments, userProfile);
+        }
+
+        public List<ZipTasks> GetToProcessedZipTasks()
+        {
+            return TasksHelper.GetToProcessedZipTasks();
+        }
+
+        public List<ZipTasks> GetToNotExecutedZipTasks()
+        {
+            return TasksHelper.GetToNotExecutedZipTasks();
+        }
+
+        public void UpdateZipTaskProfile(int taskId, string content)
+        {
+            TasksHelper.UpdateZipTaskProfile(taskId, content);
+        }
+
+        public ZipDocuments GetToZipDocumentByTaskId(int taskId)
+        {
+            return DocumentsHelper.GetToZipDocumentByTaskId(taskId);
         }
 
         /// <summary>
@@ -152,6 +190,11 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public string GetSettingValueByName(string settingName)
         {
             return SettingsHelper.GetSettingValueByName(settingName);
+        }
+
+        public void AddErrorToZipDocuments(int taskId, string errorText)
+        {
+            DocumentsHelper.AddErrorToZipDocuments(taskId, errorText);
         }
 
         /// <summary>
@@ -220,6 +263,21 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public ManageUserProfileModel GetUserProfile(int objUserId, int i)
         {
             return Helpers.ManageUserProfileHelper.GetToUserProfile(objUserId, i);
+        }
+
+        public void AddResultZipDocument(int taskId, Guid guid, string originalFileName, string realFileName, string filePath)
+        {
+            DocumentsHelper.AddResultZipDocument(taskId, guid, originalFileName, realFileName, filePath);
+        }
+
+        public List<Tasks> GetToOuterTasks()
+        {
+            return TasksHelper.GetToOuterTasks();
+        }
+
+        public void UpdateDocumentErrorsFromZipDocs(int outerTaskId)
+        {
+            DocumentsHelper.UpdateDocumentErrorsFromZipDocs(outerTaskId);
         }
     }
 }

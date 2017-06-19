@@ -58,19 +58,19 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers
                 int counter = 0;
                 foreach (var selectedPrintType in profile.SelectedPrintTypes)
                 {
-                    printTypes += selectedPrintType.Name ;
+                    printTypes += selectedPrintType.Name;
                     counter++;
                     if (counter < profile.SelectedPrintTypes.Count)
                     {
                         printTypes += ";";
                     }
                 }
-                
+
                 string languages = "";
                 counter = 0;
                 foreach (var selectedLanguages in profile.SelectedLanguages)
                 {
-                    languages += selectedLanguages.Name ;
+                    languages += selectedLanguages.Name;
                     counter++;
                     if (counter < profile.SelectedLanguages.Count)
                     {
@@ -111,14 +111,15 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.RequestHelpers
                     string filePath = Path.Combine(serverPath, document.Path);
                     string dUrl = Path.Combine(url, document.Path);
                     dUrl = dUrl.Replace("\\", "/");
-                LogHelper.AddLog("DownloadUrl: "+dUrl);
+                    LogHelper.AddLog("DownloadUrl: " + dUrl);
                     InputFileModel model = new InputFileModel()
                     {
                         Name = document.OriginalFileName,
                         Password = "",
-                        InputUrl = "",
+                        //InputUrl = dUrl,
+                        //InputBlob = "",
                         InputBlob = ConvertFileToBase64(filePath),
-                       // InputBlob = "",
+                        InputUrl = "",
                         InputType = document.DocumentTypes.Name,
                         PostFix = ""
                     };

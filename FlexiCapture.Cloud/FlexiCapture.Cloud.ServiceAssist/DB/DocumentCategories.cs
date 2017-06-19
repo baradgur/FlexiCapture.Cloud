@@ -14,14 +14,19 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     
     public partial class DocumentCategories
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DocumentCategories()
         {
             this.Documents = new HashSet<Documents>();
+            this.ZipDocuments = new HashSet<ZipDocuments>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documents> Documents { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ZipDocuments> ZipDocuments { get; set; }
     }
 }
