@@ -6,6 +6,16 @@ fccApp.run([
     function ($rootScope, $state, $stateParams,$window, $cookies) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+
+        $rootScope.$on('$stateChangeStart',
+            function (event, toState, toParams, fromState, fromParams) {
+
+                
+                $window.sessionStorage.lastState = toState.name;
+
+
+            });
+
     }
 ]);
 

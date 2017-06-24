@@ -2,6 +2,8 @@
 
     $urlRouterProvider.otherwise("/login");
 
+
+
     //main page (abstract view)
     $stateProvider
         .state("main",
@@ -10,7 +12,7 @@
             abstract: true,
             template: "<div ui-view></div>",
             data: { pageTitle: "FCC Portal" },
-            onEnter: function($window) { $window.document.title = "FCC Portal"; }
+            onEnter: function ($window) { $window.document.title = "FCC Portal"; }
 
         })
 
@@ -20,13 +22,13 @@
             url: "/login",
             templateUrl: "PartialViews/Login.html",
             data: { pageTitle: "Sign In" },
-            onEnter: function($window, $cookies, $state) {
+            onEnter: function ($window, $cookies, $state) {
 
                 if ($cookies.getObject("UserData")) {
                     $window.sessionStorage.setItem("UserData", JSON.stringify($cookies.getObject("UserData")));
                     $state.go("main.dashboard");
                 }
-                                $window.document.title = "Sign In";
+                $window.document.title = "Sign In";
             }
 
         })
@@ -37,7 +39,7 @@
             url: "/registration",
             templateUrl: "PartialViews/UserRegistration.html",
             data: { pageTitle: "User Registration" },
-            onEnter: function($window, $cookies, $state) {
+            onEnter: function ($window, $cookies, $state) {
                 $window.document.title = "User Registration";
             }
         })
@@ -48,18 +50,18 @@
             url: "/restore",
             templateUrl: "PartialViews/UserRestore.html",
             data: { pageTitle: "User Restore Account" },
-            onEnter: function($window, $cookies, $state) {
+            onEnter: function ($window, $cookies, $state) {
                 $window.document.title = "User Restore Account";
             }
         })
 
-  
+
         ////dashboard container
         .state("main.dashboard",
         {
             url: "/dashboard",
             templateUrl: "PartialViews/Dashboard.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -72,7 +74,7 @@
         {
             url: "/users",
             templateUrl: "PartialViews/Users.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -83,7 +85,7 @@
         {
             url: "/adminsettings",
             templateUrl: "PartialViews/AdminSettings.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -94,7 +96,7 @@
         {
             url: "/profile",
             templateUrl: "PartialViews/UserProfile.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -116,7 +118,7 @@
         .state("main.dashboard.systemSettings", {
             url: "/systemsettings",
             templateUrl: "PartialViews/SystemSettings.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -127,7 +129,7 @@
         {
             url: "/adminstatistics",
             templateUrl: "PartialViews/AdminStatistics.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -138,7 +140,7 @@
         {
             url: "/single",
             templateUrl: "PartialViews/SingleFileConversion.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -149,7 +151,7 @@
         {
             url: "/singlelibrary",
             templateUrl: "PartialViews/SingleLibrary.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -160,7 +162,7 @@
         {
             url: "/singlesettings",
             templateUrl: "PartialViews/SingleSettings.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -171,7 +173,7 @@
         {
             url: "/singleprofile",
             templateUrl: "PartialViews/SingleProfile.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -182,7 +184,7 @@
         {
             url: "/batch",
             templateUrl: "PartialViews/BatchConversion.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -193,7 +195,7 @@
         {
             url: "/batchlibrary",
             templateUrl: "PartialViews/BatchLibrary.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -204,7 +206,7 @@
         {
             url: "/batchsettings",
             templateUrl: "PartialViews/BatchSettings.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -215,7 +217,7 @@
         {
             url: "/batchprofile",
             templateUrl: "PartialViews/BatchProfile.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -226,7 +228,7 @@
         {
             url: "/emaillibrary",
             templateUrl: "PartialViews/EmailLibrary.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -247,7 +249,7 @@
         .state("main.dashboard.emailsettings", {
             url: "/emailsettings",
             templateUrl: "PartialViews/EmailSettings.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -260,7 +262,7 @@
         .state("main.dashboard.ftplibrary", {
             url: "/ftplibrary",
             templateUrl: "PartialViews/FtpLibrary.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
@@ -281,27 +283,70 @@
         .state("main.dashboard.ftpsettings", {
             url: "/ftpsettings",
             templateUrl: "PartialViews/FtpSettings.html",
-            onEnter: function($window, $state) {
+            onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
                 $window.document.title = "FTP File Settings";
             }
         })
-        
-        
+
+        .state("main.dashboard.subscr", {
+            url: "/subscriptions",
+            templateUrl: "PartialViews/UserSubscription.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Upgrade to Paid Plan";
+            }
+        })
+
+        .state("main.dashboard.subscriptionsPlansLibrary", {
+            url: "/subscriptionsPlansLibrary",
+            templateUrl: "PartialViews/SubscriptionsPlansLibrary.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Upgrade to Paid Plan";
+            }
+        })
+
+        .state("main.dashboard.subPlans", {
+            url: "/changeSubscriptions",
+            templateUrl: "PartialViews/SubscriptionsManagement.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Upgrade to Paid Plan";
+            }
+        })
+
+        .state("main.dashboard.notifPref", {
+            url: "/notificationsPreferences",
+            templateUrl: "PartialViews/NotificationsPreferences.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Notifications Preferences";
+            }
+        })
+
         .state("main.confirmEmail", {
             url: "/confirmEmail?guid",
             templateUrl: "PartialViews/ConfirmEmail.html",
-            onEnter: function($window, $state) {
-                
+            onEnter: function ($window, $state) {
+
                 $window.document.title = "Confirm Email";
             }
         });
 
-        
 
-   
+
+
     // use the HTML5 History API
     //$locationProvider.html5Mode(true);
 });

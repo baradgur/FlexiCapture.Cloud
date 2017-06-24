@@ -1,0 +1,76 @@
+﻿<div ng-controller="userSubscriptionsController">
+    <hr>
+    <div class="container">
+        <div class="row" style="padding-left: 10%;">
+                    <div ng-class="{'switched': !monthToYearSwitcher}" class="col-md-4" style="padding-top: 1%; text-align: right; font-size: 18px; padding-top: 0.5%">One-time purchase</div>
+                    <div class="col-md-1">
+                        <label class="switch">
+                            <input ng-model="monthToYearSwitcher" type="checkbox">
+                            <div class="slider round"></div>
+                        </label>
+                    </div>
+                    <div ng-class="{'switched': monthToYearSwitcher}" class="col-md-6" style="padding-top: 1%; font-size: 18px; padding-top: 0.5%">Monthly Subscription</div>
+                
+        </div>
+
+
+        <div class="row">
+            <div id="singleSer" ng-if="!monthToYearSwitcher" class="col-xs-12 col-sm-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Choose a pack</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div ng-repeat="block in oneTimePurchaseBlocks" class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="subscr-block">
+                                            <div ng-if="block.cost == 0" class="subscr-type">Free subscription</div>
+                                            <div ng-if="block.cost > 0" class="subscr-type">One-time Purchase</div>
+                                            <div><span class="subscr-pages-number">{{block.pagesCount}}</span> pages</div>
+                                            <div class="subscr-term">for <span style="font-size: 26px;">{{block.termNum}}</span> {{block.term}}</div>
+                                            <!--<div class="subscr-price">free</div>-->
+                                            <button ng-if="block.cost == 0"  type="button" disabled="true" class="btn btn-default buy-btn">Free</button>
+                                            <button ng-if="block.cost > 0" type="button" class="btn btn-default buy-btn">Buy  <span class="buy-btn-price">  ${{block.cost}}</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="singleSer" ng-if="monthToYearSwitcher" class="col-xs-12 col-sm-12 col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Choose a pack</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div ng-repeat="block in monthlySubscriptionBlocks" class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="subscr-block">
+                                            <div class="subscr-type">Monthly Subscription</div>
+                                            <div><span class="subscr-pages-number">{{block.pagesCount}}</span> pages</div>
+                                            <div class="subscr-term">per {{block.term}}</div>
+                                            <!--<div class="subscr-price">free</div>-->
+                                            <button type="button" class="btn btn-default buy-btn">Buy  <span class="buy-btn-price">  ${{block.cost}}</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!--/row-->
+    </div>
+    <!--/container -->
+</div>

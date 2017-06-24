@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using FlexiCapture.Cloud.Portal.Api.DB;
+using FlexiCapture.Cloud.ServiceAssist.DB;
+using UserLogins = FlexiCapture.Cloud.Portal.Api.DB.UserLogins;
 
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
@@ -18,7 +20,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
                 using (var db = new FCCPortalEntities())
                 {
-                    UserConfirmationEmails email =
+                    FlexiCapture.Cloud.Portal.Api.DB.UserConfirmationEmails email =
                         db.UserConfirmationEmails.FirstOrDefault(x => x.ConfirmationGuid == guid);
 
                     if (email == null)
@@ -62,7 +64,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 {
                     DateTime expirationDate = DateTime.Now;
                     expirationDate = expirationDate.AddDays(1);
-                    UserConfirmationEmails email = new UserConfirmationEmails();
+                    FlexiCapture.Cloud.Portal.Api.DB.UserConfirmationEmails email = new FlexiCapture.Cloud.Portal.Api.DB.UserConfirmationEmails();
                     email.ConfirmationGuid = guid;
                     email.ExpirationDate = expirationDate;
                     email.UserLoginId = loginId;

@@ -28,7 +28,7 @@
                     title: response.data.Error.Name,
                     type: BootstrapDialog.TYPE_WARNING,
                     cssClass: 'bp-z',
-                    message: response.data.Error.ShortDescription + "</br>" + response.data.Error.FullDescription
+                    message: /*response.data.Error.ShortDescription + "</br>" +*/ response.data.Error.FullDescription
                 });
             }
             else {

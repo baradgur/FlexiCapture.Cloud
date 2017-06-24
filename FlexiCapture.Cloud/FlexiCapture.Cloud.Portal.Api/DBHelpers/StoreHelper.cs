@@ -54,6 +54,12 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                                     break;
                             }
 
+                            Guid devKeyForOcrApi = new Guid();
+                            if (model.ServiceId == 5)
+                            {
+                                devKeyForOcrApi = Guid.NewGuid();
+                            }
+
                             profile.ProfileName = name + " Default Capture Profile ";
                             var mdl = ManageUserProfileHelper.CreateNewProfile(profile);
                             var serializer = new JavaScriptSerializer();

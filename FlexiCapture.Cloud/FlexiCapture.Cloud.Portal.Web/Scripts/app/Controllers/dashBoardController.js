@@ -8,13 +8,21 @@
 
             switch ($scope.userData.UserData.UserRoleId) {
                 case 1:
-                    $state.go("main.dashboard.users");
+                    if ($window.sessionStorage.lastState != null && $window.sessionStorage.lastState != "main.dashboard") {
+                        $state.go($window.sessionStorage.lastState);
+                    } else {
+                        $state.go("main.dashboard.users");
+                    }
                     $scope.serviceStateId = -1;
                     break;
 
                 case 2:
                 case 3:
-                    $state.go("main.dashboard.single");
+                    if ($window.sessionStorage.lastState != null && $window.sessionStorage.lastState != "main.dashboard") {
+                        $state.go($window.sessionStorage.lastState);
+                    } else {
+                        $state.go("main.dashboard.single");
+                    }
                     break;
 
                 default:
@@ -92,6 +100,14 @@
         };
         $scope.start();
 
+        $scope.navigate = function(navId) {
+            switch (navId) {
+                case 1:
+                    $state.go("main.dashboard.subscr");
+                    break;
+            }
+        }
+
         //navigate
         $scope.selectService = function (serviceId, anchor, isAvailable) {
             if (serviceId == $scope.serviceStateId) return;
@@ -123,6 +139,7 @@
                 case 6:
                     $state.go("main.dashboard.store", { '#': anchor });
                     break;
+                    
 
             }
         };

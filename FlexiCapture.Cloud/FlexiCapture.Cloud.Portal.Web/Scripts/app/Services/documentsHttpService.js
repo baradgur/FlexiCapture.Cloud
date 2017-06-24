@@ -9,8 +9,10 @@ fccApp.service('documentsHttpService', function() {
         dElement.dateTime = document.DateTime;
         dElement.fileSize = document.FileSize;
         dElement.fileName = document.OriginalFileName;
-        dElement.stateName = (document.StateId == 2 ? "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>" : "") + document.StateName;
+        dElement.stateName = (document.StateId == 2 || document.StateId == 1 ? "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>" : "") + document.StateName;
         dElement.typeName = document.TypeName;
+
+
 
 
         var link = "";
@@ -20,10 +22,23 @@ fccApp.service('documentsHttpService', function() {
             var type = doc.TypeName;
             var origFilename = doc.OriginalFileName;
             var url = doc.Url;
-            dElement.link += "<p><a ng-click='documentsHttpService.alerter(" + doc.Id + ")'> <i class='fa fa-download' aria-hidden='true'></i>" + type + "</a></p>"
+            link += "<p><a id='" + doc.Id + "' class='download-link' ng-click='documentsHttpService.downloadDocument(" + doc.Id + ")'> <i class='fa fa-download' aria-hidden='true'></i>" + doc.OriginalFileName + "</a></p>";//"<p><a href='" + doc.Url + "'> <i class='fa fa-download' aria-hidden='true'></i>" + doc.OriginalFileName + "</a></p>"
+           
+        }
+
+        if (document.DocumentErrors != null) {
+            for (var k in document.DocumentErrors) {
+                link += "<p><a id='" +
+                    document.Id +
+                    "' style='color: red;' class='result-link'> <i class='fa fa-download' aria-hidden='true'></i>" +
+                    document.DocumentErrors[k].DocumentName +
+                    "</a></p>";
+            }
 
         }
-        dElement.results = "Results (" + document.ResultDocuments.length + ")";
+
+       
+        dElement.results = link;
 
         return dElement;
     }
@@ -31,6 +46,45 @@ fccApp.service('documentsHttpService', function() {
     this.alerter = function(id) {
         alert(id);
 
+    }
+    this.downloadDocument = function (docId) {
+        this.downloadDocumentById($http, $scope, docId, $$ApiUrl + "/downloadfile")
+            .then(function (data, status, headers) {
+                try {
+                    headers = headers();
+
+                    var filename = headers['x-file-name'];
+                    var contentType = headers['content-type'];
+                    var blob = new Blob([data], { type: contentType });
+
+                    //Check if user is using IE
+                    var ua = window.navigator.userAgent;
+                    var msie = ua.indexOf("MSIE ");
+
+                    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+                        window.navigator.msSaveBlob(blob, filename);
+                    } else // If another browser, return 0
+                    {
+                        //Create a url to the blob
+                        var url = window.URL.createObjectURL(blob);
+                        var linkElement = document.createElement('a');
+                        linkElement.setAttribute('href', url);
+                        linkElement.setAttribute("download", filename);
+
+                        //Force a download
+                        var clickEvent = new MouseEvent("click",
+                        {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                    }
+
+                } catch (ex) {
+                    console.log(ex);
+                }
+            });
     }
 
     this.downloadDocumentById = function($http, $scope, docId, url) {
@@ -63,6 +117,8 @@ fccApp.service('documentsHttpService', function() {
         $scope.documents = [];
         $scope.loading = true;
         usSpinnerService.spin("spinner-1");
+
+        var dfd = $.Deferred();
 
         $http.get(url, {
             params: { userId: $scope.userData.UserData.Id, serviceId: $scope.serviceStateId }
@@ -103,7 +159,10 @@ fccApp.service('documentsHttpService', function() {
             usSpinnerService.stop('spinner-1');
             $scope.loading = false;
             window.scope = $scope;
+            return dfd.resolve($scope.documents);
         });
+
+        return dfd.promise();
     }
 
 
