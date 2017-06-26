@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Helpers\ZipHelper.cs" />
     <Compile Include="Helpers\ProcessorHelper\ProcessorHelper.cs" />
     <Compile Include="Helpers\TaskHelpers\TaskHelper.cs" />

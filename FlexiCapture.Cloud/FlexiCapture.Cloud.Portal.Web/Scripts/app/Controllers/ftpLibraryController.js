@@ -33,7 +33,7 @@ function resultFormatterLibrary(value, row, index) {
 }
 
 (function () {
-    var ftpLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
+    var ftpLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies,$filter, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
         var data = [];
         var url = $$ApiUrl + "/documents";
 
@@ -205,5 +205,5 @@ function resultFormatterLibrary(value, row, index) {
     };
 
 
-    fccApp.controller("ftpLibraryController", ["$scope","$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", ftpLibraryController]);
+    fccApp.controller("ftpLibraryController", ["$scope", "$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", ftpLibraryController]);
 }())

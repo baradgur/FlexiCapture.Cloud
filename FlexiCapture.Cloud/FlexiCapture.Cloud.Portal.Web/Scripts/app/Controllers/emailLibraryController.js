@@ -33,7 +33,7 @@ function resultFormatterLibrary(value, row, index) {
 }
 
 (function () {
-    var emailLibraryController = function ($scope,$interval, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal,documentsHttpService) {
+    var emailLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
         var url = $$ApiUrl + "/documents";
@@ -207,5 +207,5 @@ function resultFormatterLibrary(value, row, index) {
     };
 
 
-    fccApp.controller("emailLibraryController", ["$scope","$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal","documentsHttpService", emailLibraryController]);
+    fccApp.controller("emailLibraryController", ["$scope", "$interval", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "$filter", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "documentsHttpService", emailLibraryController]);
 }())

@@ -6,6 +6,8 @@ using System.Xml.Serialization;
 using FlexiCapture.Cloud.OCR.Assist.Models;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.ServiceAssist;
+
+using FlexiCapture.Cloud.ServiceAssist;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using Newtonsoft.Json;
 
@@ -13,6 +15,16 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper
 {
     public static class ProcessorHelper
     {
+        public static void Test()
+        {
+            try
+            {
+                LogHelper.AddLog("TEST");
+            }
+            catch (Exception e)
+            {
+            }
+        }
         /// <summary>
         /// make processing 
         /// </summary>
@@ -20,21 +32,32 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper
         {
             try
             {
+                LogHelper.AddLog("Make Processing XYZ");
+
                 //getting available file extentions
                 Assist serviceAssist = new Assist();
+                LogHelper.AddLog("Make assist");
 
                 string serverPath = serviceAssist.GetSettingValueByName("MainPath");
+                LogHelper.AddLog("ServerPath:"+serverPath);
                 string uploadFolder = serviceAssist.GetSettingValueByName("UploadFolder");
                 string resultFolder = serviceAssist.GetSettingValueByName("ResultFolder");
                 string resultZipFolder = serviceAssist.GetSettingValueByName("ResultZipFolder");
+                LogHelper.AddLog("RZF:"+resultZipFolder);
                 string uploadZipFolder = serviceAssist.GetSettingValueByName("UploadZipFolder");
+                LogHelper.AddLog("UZF:"+uploadZipFolder);
                 string uploadUrl = Path.Combine(serverPath, uploadFolder);
-                string uploadZipUrl = Path.Combine(serverPath, uploadZipFolder);
+                LogHelper.AddLog("UURL:" + uploadUrl);
 
+                string uploadZipUrl = Path.Combine(serverPath, uploadZipFolder);
+                LogHelper.AddLog("UZipURL:" + uploadZipUrl);
+                LogHelper.AddLog("Zip Make Processing");
                 List<string> extentions = serviceAssist.GetToAvailableFileExtensions();
-                
+
                 //check tasks
                 List<Tasks> notExecutedTasks = serviceAssist.GetToNotExecutedTasks();
+                LogHelper.AddLog("Zip Not ExecutedTasks =" + notExecutedTasks.Count);
+
                 //upload files
                 foreach (var notExecutedTask in notExecutedTasks)
                 {
@@ -43,7 +66,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper
                     if (document != null)
                     {
                         string extension = Path.GetExtension(document.OriginalFileName);
-                        if (extension != null && (extension == ".zip" || extension == ".rar"))
+                        if (extension != null && (extension.ToLower().Equals(".zip") || extension.ToLower().Equals(".rar")))
                         {
                             string inputPath = Path.Combine(serverPath, document.Path);
                             ZipHelper.CreateZipTasksFromTasks(serviceAssist, extentions, notExecutedTask, uploadUrl,

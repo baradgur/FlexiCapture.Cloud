@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -913,7 +913,8 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1090,6 +1091,16 @@
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskStates" FromRole="TaskStates" ToRole="Tasks" />
           <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_TaskStates" FromRole="TaskStates" ToRole="ZipTasks" />
         </EntityType>
+        <EntityType Name="UserConfirmationEmails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserLoginId" Type="Int32" Nullable="false" />
+          <Property Name="ConfirmationGuid" Type="Guid" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserConfirmationEmails_UserLogins" FromRole="UserConfirmationEmails" ToRole="UserLogins" />
+        </EntityType>
         <EntityType Name="UserLogins">
           <Key>
             <PropertyRef Name="Id" />
@@ -1102,10 +1113,10 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
           <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserConfirmationEmails" Relationship="Self.FK_UserConfirmationEmails_UserLogins" FromRole="UserLogins" ToRole="UserConfirmationEmails" />
           <NavigationProperty Name="UserLoginStates" Relationship="Self.FK_UserLogins_UserLoginStates" FromRole="UserLogins" ToRole="UserLoginStates" />
           <NavigationProperty Name="UserRoleTypes" Relationship="Self.FK_UserLogins_UserRoleTypes" FromRole="UserLogins" ToRole="UserRoleTypes" />
           <NavigationProperty Name="Users" Relationship="Self.FK_UserLogins_Users" FromRole="UserLogins" ToRole="Users" />
-          <NavigationProperty Name="UserConfirmationEmails" Relationship="FCCPortalModel.FK_UserConfirmationEmails_UserLogins" FromRole="UserLogins" ToRole="UserConfirmationEmails" />
         </EntityType>
         <EntityType Name="UserLoginStates">
           <Key>
@@ -1542,6 +1553,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserConfirmationEmails_UserLogins">
+          <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="1" />
+          <End Role="UserConfirmationEmails" Type="Self.UserConfirmationEmails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserLogins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserConfirmationEmails">
+              <PropertyRef Name="UserLoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserLogins_UserLoginStates">
           <End Role="UserLoginStates" Type="Self.UserLoginStates" Multiplicity="1" />
           <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="*" />
@@ -1715,6 +1738,7 @@
           <EntitySet Name="Settings" EntityType="Self.Settings" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" />
+          <EntitySet Name="UserConfirmationEmails" EntityType="Self.UserConfirmationEmails" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" />
           <EntitySet Name="UserLoginStates" EntityType="Self.UserLoginStates" />
           <EntitySet Name="UserProfileExportFormats" EntityType="Self.UserProfileExportFormats" />
@@ -1817,6 +1841,10 @@
             <End Role="TaskStates" EntitySet="TaskStates" />
             <End Role="ZipTasks" EntitySet="ZipTasks" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserConfirmationEmails_UserLogins" Association="Self.FK_UserConfirmationEmails_UserLogins">
+            <End Role="UserLogins" EntitySet="UserLogins" />
+            <End Role="UserConfirmationEmails" EntitySet="UserConfirmationEmails" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserLogins_UserLoginStates" Association="Self.FK_UserLogins_UserLoginStates">
             <End Role="UserLoginStates" EntitySet="UserLoginStates" />
             <End Role="UserLogins" EntitySet="UserLogins" />
@@ -1869,34 +1897,7 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
             <End Role="ZipDocuments" EntitySet="ZipDocuments" />
           </AssociationSet>
-          <EntitySet Name="UserConfirmationEmails" EntityType="FCCPortalModel.UserConfirmationEmails" />
-          <AssociationSet Name="FK_UserConfirmationEmails_UserLogins" Association="FCCPortalModel.FK_UserConfirmationEmails_UserLogins">
-            <End Role="UserLogins" EntitySet="UserLogins" />
-            <End Role="UserConfirmationEmails" EntitySet="UserConfirmationEmails" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="UserConfirmationEmails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserLoginId" Type="Int32" Nullable="false" />
-          <Property Name="ConfirmationGuid" Type="Guid" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="UserLogins" Relationship="FCCPortalModel.FK_UserConfirmationEmails_UserLogins" FromRole="UserConfirmationEmails" ToRole="UserLogins" />
-        </EntityType>
-        <Association Name="FK_UserConfirmationEmails_UserLogins">
-          <End Type="FCCPortalModel.UserLogins" Role="UserLogins" Multiplicity="1" />
-          <End Type="FCCPortalModel.UserConfirmationEmails" Role="UserConfirmationEmails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserLogins">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserConfirmationEmails">
-              <PropertyRef Name="UserLoginId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2064,6 +2065,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserConfirmationEmails">
+            <EntityTypeMapping TypeName="FCCPortalModel.UserConfirmationEmails">
+              <MappingFragment StoreEntitySet="UserConfirmationEmails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+                <ScalarProperty Name="ConfirmationGuid" ColumnName="ConfirmationGuid" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserLogins">
             <EntityTypeMapping TypeName="FCCPortalModel.UserLogins">
               <MappingFragment StoreEntitySet="UserLogins">
@@ -2220,16 +2231,6 @@
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="ProfileContent" ColumnName="ProfileContent" />
                 <ScalarProperty Name="ResponseContent" ColumnName="ResponseContent" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserConfirmationEmails">
-            <EntityTypeMapping TypeName="FCCPortalModel.UserConfirmationEmails">
-              <MappingFragment StoreEntitySet="UserConfirmationEmails">
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="ConfirmationGuid" ColumnName="ConfirmationGuid" />
-                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
