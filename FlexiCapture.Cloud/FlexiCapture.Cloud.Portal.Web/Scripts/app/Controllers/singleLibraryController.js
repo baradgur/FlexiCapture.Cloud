@@ -10,16 +10,25 @@ function actionFormatterSingleLibrary(value, row, index) {
 function downloadFormatterLibrary(value, row, index) {
     return [
         "<a class='download-link' href ='javascript: void(0)'><i class='fa fa-download' aria-hidden='true'></i> Original File</a>"
-
+       
+        
     ].join('');
 }
 
 function resultFormatterLibrary(value, row, index) {
     return [
-        '<button class="btn btn-info orange-tooltip result-link" href="javascript:void(0)" title="Results" style=" text-align: center;" ',
-        'data-toggle="tooltip" title="Results"  data-placement="bottom">',
-        '<i class="glyphicon glyphicon-download-alt"></i>',
-        '</button>'
+        //'<button class="btn btn-info orange-tooltip result-link" href="javascript:void(0)" title="Results" style=" text-align: center;" ',
+        //'data-toggle="tooltip" title="Results"  data-placement="bottom">',
+        //'<i class="glyphicon glyphicon-download-alt"></i>',
+        //'</button>'
+        "<div ng-repeat='doc in downloadResults'><a ng-click='vm.downloadDoc(doc)'><i class='glyphicon glyphicon-download-alt'></i> {{doc.OriginalFileName}}</a></div>"
+    ].join('');
+}
+
+function resultFilesFormatter() {
+    return [
+
+        "<div ng-repeat='doc in downloadResults'><a ng-click='vm.downloadDoc(doc)'><i class='glyphicon glyphicon-download-alt'></i> {{doc.OriginalFileName}}</a></div>"
     ].join('');
 }
 
@@ -38,6 +47,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
     var singleLibraryController = function ($scope, $interval, $http, $location, $state, $rootScope, $window, $cookies, $filter, usSpinnerService, Idle, Keepalive, $uibModal, documentsHttpService) {
 
         var data = [];
+        $scope.downloadResults = [];
         var url = $$ApiUrl + "/documents";
 
         $scope.saveData = (function () {
@@ -62,6 +72,28 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
             };
         }());
 
+        var singleLibrary = function () {
+            return documentsHttpService.getToDocuments($http, $scope, $state, data, url, usSpinnerService);
+
+
+        };
+        singleLibrary().then(function(documents) {
+            $scope.documents = documents;
+            
+            $scope.currentDocument = {};
+
+            for (var k in $scope.documents) {
+                var found = $filter('filter')($scope.documents, { Id: $scope.documents[k].Id}, true);
+                if (found.length > 0) {
+                    $scope.currentDocument = found[0];
+                    $scope.downloadResults[k] = found[0].ResultDocuments;
+                }
+            }
+
+            
+        });
+
+        
 
 
         $window.actionEventsSingleLibrary = {
@@ -99,7 +131,10 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
             },
             'click .download-link': function (e, value, row, index) {
-                documentsHttpService.downloadDocumentById($http, $scope, row.Id, $$ApiUrl + "/downloadfile")
+                var docId = row.Id;
+                if (e.currentTarget.id != "")
+                    docId = e.currentTarget.id;
+                documentsHttpService.downloadDocumentById($http, $scope, docId, $$ApiUrl + "/downloadfile")
                     .then(function (data, status, headers) {
                         try {
                             headers = headers();
@@ -188,13 +223,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
 
 
-        var singleLibrary = function () {
-            documentsHttpService.getToDocuments($http, $scope, $state, data, url, usSpinnerService);
-            $scope.loadData = false;
-
-
-        };
-        singleLibrary();
+        
 
         $scope.gotoDeleteSelectedPositions = function () {
             var positionsToDelete = $('#table').bootstrapTable('getSelections');

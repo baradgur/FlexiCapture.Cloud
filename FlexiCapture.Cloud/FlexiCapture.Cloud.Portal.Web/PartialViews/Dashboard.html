@@ -303,11 +303,19 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a ng-click="selectService(5);"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b>                                </a>
+                            <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b>                                </a>
                         </li>
 
                         <li>
                             <a href="#"><i class="fa fa-gear fa-fw"></i> Account Settings</a>
+                        </li>
+                        
+                        <li>
+                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell" aria-hidden="true"></i> Notifications Preferences</a>
+                        </li>
+                        
+                        <li>
+                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd" aria-hidden="true"></i> Upgrade to Paid Plan</a>
                         </li>
 
                         <li class="divider"></li>
@@ -340,6 +348,10 @@
 
                         <li>
                             <a ui-sref="main.dashboard.adminStatistics"><i class="fa fa-pie-chart"></i> Statistics</a>
+                        </li>
+                        
+                        <li>
+                            <a ui-sref="main.dashboard.subscriptionsPlansLibrary"><i class="fa fa-bell"></i> Subscription plans</a>
                         </li>
                     </ul>
                     <!--end ADMIN-->

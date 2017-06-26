@@ -14,6 +14,7 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
     
     public partial class EmailStates
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EmailStates()
         {
             this.Emails = new HashSet<Emails>();
@@ -22,6 +23,7 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
         public int Id { get; set; }
         public string State { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Emails> Emails { get; set; }
     }
 }

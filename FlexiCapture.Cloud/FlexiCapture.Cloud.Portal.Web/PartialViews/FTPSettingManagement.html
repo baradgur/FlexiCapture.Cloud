@@ -55,7 +55,7 @@
                     <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.path.$invalid && (settingForm.path.$touched || submitted)]">
                         <label class="col-sm-4 control-label">Path<i class="red-star">*</i></label>
                         <div class="col-sm-7">
-                            <input type="text" name="path" class="form-control" placeholder="Path" ng-model="setting.Path" required>
+                            <input type="text" name="path" class="form-control" placeholder="/public_html/ftp_service_test/input/" ng-model="setting.Path" required>
                             <div class="help-block" ng-messages="settingForm.path.$error" ng-if="settingForm.path.$touched || submitted">
                                 <div ng-message="required">Field "Path" must be filled</div>
                             </div>

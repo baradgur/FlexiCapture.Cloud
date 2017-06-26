@@ -1,0 +1,30 @@
+﻿<div ng-controller="subscriptionsPlansLibraryController">
+
+    <div class="container">
+        <div class="row">
+            <div id="toolbar">
+                <button type="button" id="delete-plan" ng-click="gotoDeleteSelectedPositions()" class="btn btn-danger orange-tooltip" title="Delete selected">
+                    <span class="glyphicon glyphicon-trash"></span> Delete selected
+                </button>
+                <button id="add-plan" type="button" class="btn btn-default orange-tooltip" ng-click="addNewPlanDialog()" title="Add new plan">
+                    <span class="glyphicon glyphicon-plus"></span> Add new
+                </button>
+            </div>
+            <div class="form-inline">
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true" data-height="300" data-toggle="table">
+                    <thead>
+
+                    <tr>
+                        <th data-checkbox="true" data-click-to-select="true"></th>
+                        <th data-field="name" data-sortable="true">Name</th>
+                        <th data-field="autoRenewal" data-sortable="true">Auto renewal</th>
+                        <th data-field="expiration" data-sortable="true">Expiration</th>
+                        <th data-field="cost" data-sortable="true">Cost (per page)</th>
+                        <th data-field="pagesPerInterval" data-sortable="true">Pages per renewal interval</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

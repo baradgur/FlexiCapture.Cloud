@@ -67,6 +67,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
                 using (var db = new FCCPortalEntities())
                 {
+                    
                     List<Documents> documents = db.Documents
                         .Include(x => x.DocumentStates)
                         .Include(x => x.DocumentTypes)

@@ -71,64 +71,61 @@
     <Compile Include="DBHelpers\TaskHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
     <Compile Include="DB\EmailContents.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Emails.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\EmailStates.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\EmailTransactions.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\EmailTransactionStates.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\EmailTypes.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\FCCEmailAgentModel.Context.cs">
+    <Compile Include="DB\FCCEmailAgent.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FCCEmailAgentModel.Context.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\FCCEmailAgentModel.cs">
+    <Compile Include="DB\FCCEmailAgent.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\FCCEmailAgentModel.Designer.cs">
+    <Compile Include="DB\FCCEmailAgent.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
+      <DependentUpon>FCCEmailAgent.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB\Log.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Queue.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\QueueStates.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Settings.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\sysdiagrams.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Tasks.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\TaskStates.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\TaskTypes.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Users.cs">
-      <DependentUpon>FCCEmailAgentModel.tt</DependentUpon>
+      <DependentUpon>FCCEmailAgent.tt</DependentUpon>
     </Compile>
     <Compile Include="FCCEmailAgent.cs">
       <SubType>Component</SubType>
@@ -168,22 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="DB\FCCEmailAgentModel.edmx">
+    <EntityDeploy Include="DB\FCCEmailAgent.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FCCEmailAgentModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>FCCEmailAgent.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DB\FCCEmailAgentModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
-      <LastGenOutput>FCCEmailAgentModel.Context.cs</LastGenOutput>
-    </None>
-    <None Include="DB\FCCEmailAgentModel.edmx.diagram">
-      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
-    </None>
-    <None Include="DB\FCCEmailAgentModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCEmailAgentModel.edmx</DependentUpon>
-      <LastGenOutput>FCCEmailAgentModel.cs</LastGenOutput>
+    <None Include="DB\FCCEmailAgent.edmx.diagram">
+      <DependentUpon>FCCEmailAgent.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -197,6 +184,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB\FCCEmailAgent.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCEmailAgent.edmx</DependentUpon>
+      <LastGenOutput>FCCEmailAgent.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\FCCEmailAgent.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FCCEmailAgent.edmx</DependentUpon>
+      <LastGenOutput>FCCEmailAgent.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -18,7 +18,6 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
         public FCCEmailAgentEntities()
             : base("name=FCCEmailAgentEntities")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -36,7 +35,6 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
         public virtual DbSet<Queue> Queue { get; set; }
         public virtual DbSet<QueueStates> QueueStates { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<TaskStates> TaskStates { get; set; }
         public virtual DbSet<TaskTypes> TaskTypes { get; set; }

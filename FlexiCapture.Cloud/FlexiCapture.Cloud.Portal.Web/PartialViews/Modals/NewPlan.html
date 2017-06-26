@@ -1,0 +1,59 @@
+﻿<div>
+    <div class="modal-header-primary">
+        <h3>Add Plan</h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="addPlanForm" id="addPlanForm" role="form" novalidate>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Plan name:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="planName" class="form-control" ng-model="vm.name" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Plan auto-renewal:</label>
+                        <div class="col-sm-8">
+                            <select name="autoRenSelect" class="form-control" ng-model="vm.autoRenewal">
+                                <option value="1">One-time-purchase</option>
+                                <option value="2">Monthly</option>
+                                <option value="3">Annual</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Plan expiration:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.planExpiration" type="text" name="planExp" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Cost per page:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.cost" type="text" name="costPer" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Pages per renewal interval:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.pagesInInterval" type="text" name="pagesPer" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default orange-tooltip" ng-click="vm.addPlan()" title="Submit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

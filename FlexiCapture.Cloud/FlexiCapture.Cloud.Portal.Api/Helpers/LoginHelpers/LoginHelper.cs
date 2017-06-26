@@ -89,8 +89,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
                     Error = new ErrorModel()
                     {
                         Name = "Login Error",
-                        ShortDescription = "Error data",
-                        FullDescription = "A user with this credentials was not found. Please check the credentials and try again."
+                        ShortDescription = "Incorrect username or password!",
+                        FullDescription = "A user with these credentials was not found. Please check the credentials and try again."
 
                     }
                 };
