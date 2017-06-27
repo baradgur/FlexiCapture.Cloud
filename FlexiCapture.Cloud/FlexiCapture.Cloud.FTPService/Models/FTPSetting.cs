@@ -17,10 +17,11 @@ namespace FlexiCapture.Cloud.FTPService.Models
         public string Password { get; set; }
         public string Path { get; set; }
         public bool UseSsl { get; set; }
+        public bool DeleteFile { get; set; }
         #endregion
 
         public FTPSetting(int id, int userId, string userName, string host, int port, string password,
-            string path, bool useSsl)
+            string path, bool useSsl, bool deleteFile)
         {
             Id = id;
             UserId = userId;
@@ -30,6 +31,7 @@ namespace FlexiCapture.Cloud.FTPService.Models
             Password = password;
             Path = path;
             UseSsl = useSsl;
+            DeleteFile = deleteFile;
         }
 
     }

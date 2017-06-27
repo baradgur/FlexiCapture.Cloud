@@ -109,6 +109,12 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                                 string content = assist.ConvertProfileToRequestModel(assist.Documents,
                                     assist.UserProfile);
                                 assist.UpdateTaskProfile(taskId, content);
+
+                                if (x.DeleteFile)
+                                {
+                                    if (File.Exists(filePathNew))
+                                        File.Delete(filePathNew);
+                                }
                             }
                         });
 

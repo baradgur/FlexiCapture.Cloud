@@ -22,6 +22,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public string Password { get; set; }
         public string Path { get; set; }
         public bool UseSSL { get; set; }
+        public Nullable<bool> DeleteFile { get; set; }
     
         public virtual Users Users { get; set; }
     }

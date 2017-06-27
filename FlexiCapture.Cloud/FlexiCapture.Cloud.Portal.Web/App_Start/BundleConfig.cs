@@ -43,7 +43,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Content/lightbox.css",
                 "~/Scripts/chat/chat.css",
                 "~/Content/chat_list.css",
-                "~/Content/chk-multi-select.css"
+                "~/Content/chk-multi-select.css",
+                 "~/Content/wordpress-header.css"
                 //"~/Content/bootstrap-datetimepicker.min.css"
                 ));
 

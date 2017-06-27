@@ -620,7 +620,9 @@ label {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #2196F3;
+  /*background-color: #2196F3;*/
+  background-color: #abd372;
+    background-image: linear-gradient(to top, #abd372 0%, #90b954 100%);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -632,17 +634,23 @@ label {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  /*background-color: white;*/
+   background-color: #fcfcfc;
+    background-image: linear-gradient(to bottom, #fcfcfc 0%, #ebebeb 100%);
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  /*background-color: #2196F3;*/
+  background-color: #abd372;
+    background-image: linear-gradient(to top, #abd372 0%, #90b954 100%);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  /*box-shadow: 0 0 1px #2196F3;*/
+  background-color: #abd372;
+    background-image: linear-gradient(to top, #abd372 0%, #90b954 100%);
 }
 
 input:checked + .slider:before {
@@ -674,7 +682,12 @@ input:checked + .slider:before {
 }
 
 .subscr-pages-number {
-    font-size: 36px;
+    font: 42px Arial, sans-serif;
+    letter-spacing: -1px;
+}
+
+.subscr-calendar {
+    background: url(Content/icons/store-period.png) left center/25px auto no-repeat;
 }
 
 .subscr-price {
@@ -682,16 +695,23 @@ input:checked + .slider:before {
 }
 
 .buy-btn {
+    background-color: #abd372;
+    background-image: linear-gradient(to bottom, #abd372 0%, #90b954 100%);
     width: 50%;
-    margin-left: 25%
+    margin-left: 25%;
+    border-color: #86ab4f;
+    color: whitesmoke;
+    font-size: 17px;
 }
 
 .buy-btn-price {
-    border-left: 1px solid #86c7fe;
+    border-left: 1px solid #86ab4f;
+
 }
 
 .switched {
-    color: #2196F3;
+    /*color: #2196F3;*/
+    color: #76a635;
 }
 
 .email-input {

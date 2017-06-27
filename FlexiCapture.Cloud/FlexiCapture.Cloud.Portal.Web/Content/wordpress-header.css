@@ -1,0 +1,65 @@
+#top-header {
+    background-color: #edb059;
+    height: 34px;
+    color: white;
+    padding-top: 0.3em;
+    font-size: 15px;
+    font-weight: 600;
+    /*letter-spacing: 1px;*/
+}
+
+.et-info-phone .et-info-email {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#et-info-email:before {
+    margin-right: 4px;
+    /*content: "\e076";*/
+}
+
+.et-info {
+    padding-top: 0.3em;
+}
+
+.et-info > span {
+    display: inline-block;
+}
+
+
+.et-info > a {
+    display: inline-block;
+}
+
+.et-info > .et-social-icons {
+    display: inline-block;
+}
+.et-social-icons li {
+    display: inline-block;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.et-social-icons {
+    display: inline-block;
+}
+
+.et-info-email {
+    font-family: "Open Sans", Arial, sans-serif;
+    font-weight: 600;
+}
+
+.et-info-info {
+    font-family: "Open Sans", Arial, sans-serif;
+    font-weight: 600;
+}
+
+#top-header a {
+    color: white;
+}
+
+#top-header a:hover {
+    color: white;
+    text-decoration: none;
+}
+

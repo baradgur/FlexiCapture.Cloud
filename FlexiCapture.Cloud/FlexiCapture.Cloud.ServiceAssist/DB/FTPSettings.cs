@@ -22,6 +22,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public string Password { get; set; }
         public string Path { get; set; }
         public bool UseSSL { get; set; }
+        public bool DeleteFile { get; set; }
     
         public virtual Users Users { get; set; }
     }

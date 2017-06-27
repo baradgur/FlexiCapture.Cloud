@@ -10,6 +10,7 @@
         dElement.settingPassword = setting.Password;
         dElement.settingPath = setting.Path;
         dElement.settingUseSSL = setting.UseSSL;
+        dElement.settingDeleteFile = setting.DeleteFile;
 
         return dElement;
     }

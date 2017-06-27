@@ -29,7 +29,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     db.FTPSettings.Select(x => x).ToList().ForEach(x =>
                     {
                         settings.Add(new FTPSetting(x.Id, x.UserId, x.UserName, x.Host, x.Port ?? 0, x.Password, x.Path,
-                            x.UseSSL));
+                            x.UseSSL, x.DeleteFile));
                     });
 
                     return settings;

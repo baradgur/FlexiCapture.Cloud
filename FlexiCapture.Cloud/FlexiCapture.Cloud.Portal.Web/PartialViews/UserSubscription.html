@@ -29,10 +29,10 @@
                                             <div ng-if="block.cost == 0" class="subscr-type">Free subscription</div>
                                             <div ng-if="block.cost > 0" class="subscr-type">One-time Purchase</div>
                                             <div><span class="subscr-pages-number">{{block.pagesCount}}</span> pages</div>
-                                            <div class="subscr-term">for <span style="font-size: 26px;">{{block.termNum}}</span> {{block.term}}</div>
+                                            <div class="subscr-term"><i class="fa fa-calendar" aria-hidden="true"></i> for <span style="font-size: 26px;">{{block.termNum}}</span> {{block.term}}</div>
                                             <!--<div class="subscr-price">free</div>-->
                                             <button ng-if="block.cost == 0"  type="button" disabled="true" class="btn btn-default buy-btn">Free</button>
-                                            <button ng-if="block.cost > 0" type="button" class="btn btn-default buy-btn">Buy  <span class="buy-btn-price">  ${{block.cost}}</span></button>
+                                            <button ng-if="block.cost > 0" type="button" class="btn btn-default buy-btn"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.cost}}</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -56,9 +56,9 @@
                                         <div class="subscr-block">
                                             <div class="subscr-type">Monthly Subscription</div>
                                             <div><span class="subscr-pages-number">{{block.pagesCount}}</span> pages</div>
-                                            <div class="subscr-term">per {{block.term}}</div>
+                                            <div class="subscr-term"><i class="fa fa-calendar" aria-hidden="true"></i> per {{block.term}}</div>
                                             <!--<div class="subscr-price">free</div>-->
-                                            <button type="button" class="btn btn-default buy-btn">Buy  <span class="buy-btn-price">  ${{block.cost}}</span></button>
+                                            <button ng-if="block.cost > 0" type="button" class="btn btn-default buy-btn"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.cost}}</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +66,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>

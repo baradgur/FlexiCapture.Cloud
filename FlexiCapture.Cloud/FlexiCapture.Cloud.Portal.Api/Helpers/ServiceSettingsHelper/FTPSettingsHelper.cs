@@ -52,7 +52,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                             Path = setting.Path,
                             Port = setting.Port??21,
                             Host = setting.Host,
-                            UseSSL = setting.UseSSL
+                            UseSSL = setting.UseSSL,
+                            DeleteFile = setting.DeleteFile == null ? false : (bool)setting.DeleteFile
                         };
                         model.Settings.Add(settingModel);
                     }
@@ -87,6 +88,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                     setting.Port = model.Port;
                     setting.Host = model.Host;
                     setting.UseSSL = model.UseSSL;
+                    setting.DeleteFile = model.DeleteFile;
 
                     db.SaveChanges();
 
@@ -113,7 +115,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                         Path = model.Path,
                         Port = model.Port,
                         Host = model.Host,
-                        UseSSL = model.UseSSL
+                        UseSSL = model.UseSSL,
+                        DeleteFile = (bool)model.DeleteFile
                     };
 
                     db.FTPSettings.Add(dbModel);
@@ -151,7 +154,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                         Path = setting.Path,
                         Port = setting.Port ?? 21,
                         Host = setting.Host,
-                        UseSSL = setting.UseSSL
+                        UseSSL = setting.UseSSL,
+                        DeleteFile = (bool)setting.DeleteFile
                     };
                     return model;
                 }

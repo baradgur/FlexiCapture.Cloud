@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -85,6 +85,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="UseSSL" Type="bit" Nullable="false" />
+          <Property Name="DeleteFile" Type="bit" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -913,8 +914,7 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1012,6 +1012,7 @@
           <Property Name="Path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UseSSL" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_FTPSettings_Users" FromRole="FTPSettings" ToRole="Users" />
+          <Property Name="DeleteFile" Type="Boolean" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -1982,6 +1983,7 @@
           <EntitySetMapping Name="FTPSettings">
             <EntityTypeMapping TypeName="FCCPortalModel.FTPSettings">
               <MappingFragment StoreEntitySet="FTPSettings">
+                <ScalarProperty Name="DeleteFile" ColumnName="DeleteFile" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />

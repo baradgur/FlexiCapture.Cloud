@@ -40,6 +40,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.SettingsModels
         /// use SSL bool param for ftp conection
         /// </summary>
         public bool UseSSL { get; set; }
+        public bool DeleteFile { get; set; }
         /// <summary>
         /// model providing errors to user
         /// </summary>

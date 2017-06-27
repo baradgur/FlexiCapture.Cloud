@@ -187,6 +187,7 @@
     <Content Include="Content\icons\pdf.png" />
     <Content Include="Content\icons\ppt.png" />
     <Content Include="Content\icons\rtf.png" />
+    <Content Include="Content\icons\store-period.png" />
     <Content Include="Content\icons\txt.png" />
     <Content Include="Content\icons\xls.png" />
     <Content Include="Content\icons\xml.png" />
@@ -203,6 +204,7 @@
     <Content Include="Content\sb-admin-rtl.css" />
     <Content Include="Content\sb-admin.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="Content\wordpress-header.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
