@@ -9,13 +9,13 @@ namespace FlexiCapture.Cloud.ZipService
 {
     static class Program
     {
-        public static FCCZipService Service;
+        public static FccZipService Service;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main()
         {
-            Service = new FCCZipService();
+            Service = new FccZipService();
 //#if DEBUG
 //            Service.OnDebug();
 //#else
@@ -23,7 +23,7 @@ namespace FlexiCapture.Cloud.ZipService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new FCCZipService()
+                Service
             };
             ServiceBase.Run(ServicesToRun);
 

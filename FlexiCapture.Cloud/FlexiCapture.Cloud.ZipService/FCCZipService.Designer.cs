@@ -1,6 +1,6 @@
 ﻿namespace FlexiCapture.Cloud.ZipService
 {
-    partial class FCCZipService
+    partial class FccZipService
     {
         /// <summary> 
         /// Required designer variable.

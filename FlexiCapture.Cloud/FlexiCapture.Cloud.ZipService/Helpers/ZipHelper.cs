@@ -38,7 +38,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers
             try
             {
                 string url = assist.GetSettingValueByName("ApiUrl");
-                
+                LogHelper.AddLog("ZIP Path="+inputZipPath);
                 using (ZipArchive archive = ZipFile.OpenRead(inputZipPath))
                 {
                     foreach (ZipArchiveEntry entry in archive.Entries)
@@ -49,6 +49,9 @@ namespace FlexiCapture.Cloud.ZipService.Helpers
                             
                             var newNameGuid = Guid.NewGuid();
                             var uploadName = newNameGuid + entryExtention;
+
+                            string uZipUrl = SettingsHelper.GetSettingValueByName("UploadZipFolder");
+                            string uZipFilePath = Path.Combine(uZipUrl, uploadName);
                             var filePath = Path.Combine(uploadZipUrl, uploadName);
                             string originalFileName = Path.GetFileName(entry.FullName);
                             entry.ExtractToFile(filePath);
@@ -61,7 +64,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers
                             //add document
                             var fileInfo = new FileInfo(filePath);
 
-                            var documentId = assist.AddZipDocument(taskId, fileInfo, originalFileName, newNameGuid, uploadName, filePath, md5, 1);
+                            var documentId = assist.AddZipDocument(taskId, fileInfo, originalFileName, newNameGuid, uploadName, uZipFilePath, md5, 1);
 
                             assist.ZipDocuments = assist.GetZipDocumentsByZipTaskId(taskId);
 
