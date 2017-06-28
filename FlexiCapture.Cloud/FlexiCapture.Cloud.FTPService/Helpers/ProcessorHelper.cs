@@ -37,8 +37,12 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                string innerException = e.InnerException == null ? "" : e.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + e.Message + " Innner Exception: " +
+                                   innerException);
                 return false;
             }
         }

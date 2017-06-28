@@ -70,6 +70,8 @@ var data = [];
                 });
             },
             'click .download-link': function (e, value, row, index) {
+                if (e.currentTarget.id != "")
+                    docId = e.currentTarget.id;
                 documentsHttpService.downloadDocumentById($http, $scope, row.Id, $$ApiUrl + "/downloadfile")
                     .then(function (data, status, headers) {
                         try {

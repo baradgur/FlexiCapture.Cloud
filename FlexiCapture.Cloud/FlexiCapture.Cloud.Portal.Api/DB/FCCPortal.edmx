@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -914,7 +914,8 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1011,8 +1012,8 @@
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UseSSL" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_FTPSettings_Users" FromRole="FTPSettings" ToRole="Users" />
           <Property Name="DeleteFile" Type="Boolean" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_FTPSettings_Users" FromRole="FTPSettings" ToRole="Users" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -1983,7 +1984,6 @@
           <EntitySetMapping Name="FTPSettings">
             <EntityTypeMapping TypeName="FCCPortalModel.FTPSettings">
               <MappingFragment StoreEntitySet="FTPSettings">
-                <ScalarProperty Name="DeleteFile" ColumnName="DeleteFile" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1992,6 +1992,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="UseSSL" ColumnName="UseSSL" />
+                <ScalarProperty Name="DeleteFile" ColumnName="DeleteFile" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

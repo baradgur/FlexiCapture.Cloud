@@ -16,7 +16,7 @@
     <div id="wrapper">
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed; width: 100%;">
-        <div id="top-header">
+        <div id="top-header" class="hidden-xs">
             <div class="container clearfix">
 
 
@@ -81,10 +81,11 @@
                     </div>
                 </div> <!-- #et-secondary-menu -->
 
-            </div> <!-- .container -->
-        </div>
+              </div> <!-- .container -->
+          </div>
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"
+                style="position: absolute; right: 0px;">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -361,7 +362,7 @@
     <!-- /.dropdown -->
     </ul>
 
-    <ul class="nav navbar-top-links navbar-right">
+    <ul class="nav navbar-top-links navbar-right hidden-xs">
         <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>
         <!-- /.dropdown -->
         <li class="dropdown">
@@ -439,6 +440,29 @@
 
                 <li>
                     <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear"></i> Service Settings</a>
+                </li>
+                <li class="visible-xs">
+                    <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>
+                </li>
+                <li class="visible-xs">
+                    <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b> </a>
+                </li>
+
+                <li class="visible-xs">
+                    <a href="#"><i class="fa fa-gear fa-fw"></i> Account Settings</a>
+                </li>
+
+                <li class="visible-xs">
+                    <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell" aria-hidden="true"></i> Notifications Preferences</a>
+                </li>
+
+                <li class="visible-xs">
+                    <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd" aria-hidden="true"></i> Upgrade to Paid Plan</a>
+                </li>
+
+                <li class="divider visible-xs"></li>
+                <li class="visible-xs">
+                    <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
                 </li>
             </ul>
             <!--end SFC-->
