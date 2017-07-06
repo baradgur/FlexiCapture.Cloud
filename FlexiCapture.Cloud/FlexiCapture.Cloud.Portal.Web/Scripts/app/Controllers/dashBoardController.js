@@ -5,6 +5,9 @@
         var dash = function () {
             $scope.serviceStateId = 1;
             $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
+            if ($window.sessionStorage.serviceStateId !== undefined) {
+                $scope.serviceStateId = parseInt($window.sessionStorage.serviceStateId);
+            }
 
             switch ($scope.userData.UserData.UserRoleId) {
                 case 1:
@@ -114,6 +117,7 @@
             if (!isAvailable && serviceId !== 5  && serviceId!== 6) {
                 serviceId = 6;
             }
+            $window.sessionStorage.serviceStateId = serviceId;
             $scope.serviceStateId = serviceId;
             switch (serviceId) {
                 case 1:

@@ -132,8 +132,11 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
             },
             'click .download-link': function (e, value, row, index) {
                 var docId = row.Id;
+                var isPreview = false;
                 if (e.currentTarget.id != "")
                     docId = e.currentTarget.id;
+                isPreview = (e.currentTarget.classList[1] == "preview");
+
                 documentsHttpService.downloadDocumentById($http, $scope, docId, $$ApiUrl + "/downloadfile")
                     .then(function (data, status, headers) {
                         try {
@@ -141,6 +144,8 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
 
                             var filename = headers['x-file-name'];
                             var contentType = headers['content-type'];
+                            if (filename.indexOf(".pdf") > -1)
+                                contentType = "application/pdf";
                             var blob = new Blob([data], { type: contentType });
 
                             //Check if user is using IE
@@ -155,6 +160,13 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
                                 var url = window.URL.createObjectURL(blob);
                                 var linkElement = document.createElement('a');
                                 linkElement.setAttribute('href', url);
+
+                                if (isPreview) {
+                                    var win = window.open(url, '_new');
+                                    win.focus();
+                                    return;
+                                }
+
                                 linkElement.setAttribute("download", filename);
 
                                 //Force a download
@@ -206,7 +218,7 @@ function deleteFormatterFileSingleLibrary(value, row, index) {
             timer = $interval(function () {
                 //console.log('Start silence!');
                 documentsHttpService.getToDocumentsSilent($http, $scope, $state, data, url, usSpinnerService);
-            }, 500000);
+            }, 5000);
         }
 
         $scope.killtimer = function () {

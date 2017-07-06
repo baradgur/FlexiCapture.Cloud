@@ -54,6 +54,88 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             
         }
 
+        public static string GetDocumentsByUserId(string baseUrl, int userId)
+        {
+            try
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                List<DocumentModel> models = new List<DocumentModel>();
+
+                using (var db = new FCCPortalEntities())
+                {
+
+                    List<Documents> documents = db.Documents
+                        .Include(x => x.DocumentStates)
+                        .Include(x => x.DocumentTypes)
+                        .Include(x => x.Tasks)
+                        .Include(x => x.Tasks)
+                        .Where(x => x.Tasks.UserId == userId && x.DocumentCategoryId == 1).ToList();
+
+                    foreach (var document in documents)
+                    {
+                        DocumentModel model = new DocumentModel()
+                        {
+                            Id = document.Id,
+                            DateTime = document.Date.ToString(),
+                            FileSizeBytes = document.FileSize,
+                            OriginalFileName = document.OriginalFileName,
+                            FileSize = Math.Round((double)(document.FileSize) / (1024 * 1024), 2),
+                            StateName = document.DocumentStates.Name,
+                            StateId = document.DocumentStateId,
+                            TaskId = document.TaskId.ToString(),
+                            TypeId = document.DocumentTypeId,
+                            TypeName = document.DocumentTypes.Name,
+                            Url = document.Path,
+                            ServiceId = document.Tasks.ServiceId,
+                            DocumentErrors = serializer.Deserialize<List<DocumentError>>(document.ErrorText ?? "")
+                        };
+
+
+                        List<Documents> resultDocs = db.Documents
+                       .Include(x => x.DocumentStates)
+                       .Include(x => x.DocumentTypes)
+                       .Include(x => x.Tasks)
+                       .Include(x => x.Tasks)
+                       .Where(x => x.Tasks.UserId == userId && x.TaskId == document.TaskId && x.DocumentCategoryId == 2).ToList();
+                        foreach (var rDocument in resultDocs)
+                        {
+                            DocumentModel rModel = new DocumentModel()
+                            {
+                                Id = rDocument.Id,
+                                DateTime = rDocument.Date.ToString(),
+                                FileSizeBytes = rDocument.FileSize,
+                                OriginalFileName = rDocument.OriginalFileName,
+                                FileSize = Math.Round((double)(rDocument.FileSize) / (1024 * 1024), 2),
+                                StateName = rDocument.DocumentStates.Name,
+                                StateId = rDocument.DocumentStateId,
+                                TaskId = rDocument.TaskId.ToString(),
+                                TypeId = rDocument.DocumentTypeId,
+                                TypeName = rDocument.DocumentTypes.Name,
+                                Url = rDocument.Path,
+                                ServiceId = rDocument.Tasks.ServiceId
+
+                            };
+                            rModel.Url = baseUrl + "/" + rModel.Url;
+                            model.ResultDocuments.Add(rModel);
+                        }
+
+                        //этот момент переделать, чтобы не давать полный адрес к файлу
+                        model.Url = baseUrl + "/" + model.Url;
+
+                        models.Add(model);
+
+                    }
+                }
+
+                models = models.OrderByDescending(x => x.Id).ToList();
+                return serializer.Serialize(models);
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+
         /// <summary>
         /// get to all documents by user id and service id
         /// </summary>
@@ -90,6 +172,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             TypeId = document.DocumentTypeId,
                             TypeName = document.DocumentTypes.Name,
                             Url = document.Path,
+                            ServiceId = serviceId,
                             DocumentErrors = serializer.Deserialize<List<DocumentError>>(document.ErrorText??"")
                         };
 
@@ -114,7 +197,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                                 TaskId = rDocument.TaskId.ToString(),
                                 TypeId = rDocument.DocumentTypeId,
                                 TypeName = rDocument.DocumentTypes.Name,
-                                Url = rDocument.Path
+                                Url = rDocument.Path,
+                                ServiceId = serviceId
 
                             };
                             rModel.Url = baseUrl + "/" + rModel.Url;

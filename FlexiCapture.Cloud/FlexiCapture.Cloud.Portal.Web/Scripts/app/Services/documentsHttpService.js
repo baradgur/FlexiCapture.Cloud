@@ -12,6 +12,26 @@ fccApp.service('documentsHttpService', function() {
         dElement.stateName = (document.StateId == 2 || document.StateId == 1 ? "<i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i>" : "") + document.StateName;
         dElement.typeName = document.TypeName;
 
+        switch (document.ServiceId) {
+            case 1:
+                dElement.serviceName = "Single";
+                break;
+            case 2:
+                dElement.serviceName = "Batch";
+                break;
+            case 3:
+                dElement.serviceName = "FTP";
+                break;
+            case 4:
+                dElement.serviceName = "Email";
+                break;
+            case 5:
+                dElement.serviceName = "WebOCRApi";
+                break;
+        }
+
+        
+
 
 
 
@@ -22,7 +42,10 @@ fccApp.service('documentsHttpService', function() {
             var type = doc.TypeName;
             var origFilename = doc.OriginalFileName;
             var url = doc.Url;
-            link += "<p><a id='" + doc.Id + "' class='download-link' ng-click='documentsHttpService.downloadDocument(" + doc.Id + ")'> <i class='fa fa-download' aria-hidden='true'></i>" + doc.OriginalFileName + "</a></p>";//"<p><a href='" + doc.Url + "'> <i class='fa fa-download' aria-hidden='true'></i>" + doc.OriginalFileName + "</a></p>"
+            link += "<p><a id='" + doc.Id + "' href='javascript: void(0);' class='download-link'>" + ((doc.TypeName == "ZIP")?"Results (Zip)":doc.TypeName) +
+                " <i class='fa fa-download' aria-hidden='true'></i></a>" +
+                "<a class='download-link preview' style='margin-left: 25px;' id='" + doc.Id + "' href='javascript: void(0);'><i class='fa fa-sticky-note-o'></i></a>"
+                + "</p>";//"<p><a href='" + doc.Url + "'> <i class='fa fa-download' aria-hidden='true'></i>" + doc.OriginalFileName + "</a></p>"
            
         }
 
@@ -67,6 +90,7 @@ fccApp.service('documentsHttpService', function() {
                     {
                         //Create a url to the blob
                         var url = window.URL.createObjectURL(blob);
+
                         var linkElement = document.createElement('a');
                         linkElement.setAttribute('href', url);
                         linkElement.setAttribute("download", filename);
