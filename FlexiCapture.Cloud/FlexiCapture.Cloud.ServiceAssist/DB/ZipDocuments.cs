@@ -31,8 +31,6 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual DocumentCategories DocumentCategories { get; set; }
         public virtual DocumentStates DocumentStates { get; set; }
         public virtual DocumentTypes DocumentTypes { get; set; }
-        public virtual ZipDocuments ZipDocuments1 { get; set; }
-        public virtual ZipDocuments ZipDocuments2 { get; set; }
         public virtual ZipTasks ZipTasks { get; set; }
     }
 }
