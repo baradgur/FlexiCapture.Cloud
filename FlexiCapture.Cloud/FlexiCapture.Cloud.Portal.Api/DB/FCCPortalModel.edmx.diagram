@@ -4,38 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2825468501ba456a9c27506088e18d7d" Name="Diagram1">
+      <Diagram DiagramId="d0cff6ecde284e04817439b346a9f3d4" Name="Diagram1">
         <EntityTypeShape EntityType="FCCPortalModel.AnalysisModeCatalog" Width="1.5" PointX="6.75" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.DocumentCategories" Width="1.5" PointX="11.25" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.Documents" Width="1.5" PointX="11.25" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.DocumentStates" Width="1.5" PointX="11.25" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.DocumentTypes" Width="1.5" PointX="11.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.DocumentCategories" Width="1.5" PointX="11.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.Documents" Width="1.5" PointX="11.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.DocumentStates" Width="1.5" PointX="11.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.DocumentTypes" Width="1.5" PointX="11.25" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.EmailSettings" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.ExportFormatsCatalog" Width="1.5" PointX="12" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.ExportFormatsCatalog" Width="1.5" PointX="12" PointY="30.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.FTPSettings" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.LanguagesCatalog" Width="1.5" PointX="12" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.LanguagesCatalog" Width="1.5" PointX="12" PointY="27.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.Log" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.PrintTypeCatalog" Width="1.5" PointX="12" PointY="33.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.RotationTypeCatalog" Width="1.5" PointX="6.75" PointY="28.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.ServiceTypes" Width="1.5" PointX="3.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.PrintTypeCatalog" Width="1.5" PointX="12" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.RotationTypeCatalog" Width="1.5" PointX="6.75" PointY="28.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.ServiceTypes" Width="1.5" PointX="3.75" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.Settings" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.Tasks" Width="1.5" PointX="6" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.TaskStates" Width="1.5" PointX="3.75" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserConfirmationEmails" Width="1.5" PointX="5.25" PointY="25.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserLogins" Width="1.5" PointX="3" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.Tasks" Width="1.5" PointX="6" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.TaskStates" Width="1.5" PointX="3.75" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserConfirmationEmails" Width="1.5" PointX="5.25" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserLogins" Width="1.5" PointX="3" PointY="24.625" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.UserLoginStates" Width="1.5" PointX="0.75" PointY="24.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserProfileExportFormats" Width="1.5" PointX="14.25" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserProfileLanguages" Width="1.5" PointX="14.25" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserProfilePrintTypes" Width="1.5" PointX="14.25" PointY="23.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserProfiles" Width="1.5" PointX="9" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserProfileServiceDefault" Width="1.5" PointX="11.25" PointY="24.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserRoleTypes" Width="1.5" PointX="0.75" PointY="26.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.Users" Width="1.5" PointX="0.75" PointY="19.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserServiceSubscribes" Width="1.5" PointX="6" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserProfileExportFormats" Width="1.5" PointX="14.25" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserProfileLanguages" Width="1.5" PointX="14.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserProfilePrintTypes" Width="1.5" PointX="14.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserProfiles" Width="1.5" PointX="9" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserProfileServiceDefault" Width="1.5" PointX="11.25" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserRoleTypes" Width="1.5" PointX="0.75" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.Users" Width="1.5" PointX="0.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserServiceSubscribes" Width="1.5" PointX="6" PointY="16.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.UserServiceSubscribeStates" Width="1.5" PointX="3.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.UserSettings" Width="1.5" PointX="3" PointY="41" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.ZipDocuments" Width="1.5" PointX="13.5" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.ZipTasks" Width="1.5" PointX="11.25" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.UserSettings" Width="1.5" PointX="3" PointY="41.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.ZipDocuments" Width="1.5" PointX="13.5" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.ZipTasks" Width="1.5" PointX="11.25" PointY="14.5" IsExpanded="true" />
         <AssociationConnector Association="FCCPortalModel.FK_UserProfiles_AnalysisModeCatalog" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_Documents_DocumentCategories" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_ZipDocuments_DocumentCategories" ManuallyRouted="false" />

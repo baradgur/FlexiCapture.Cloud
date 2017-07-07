@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FCCPortalModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FCCPortalModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -85,6 +85,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="UseSSL" Type="bit" Nullable="false" />
+          <Property Name="DeleteFile" Type="bit" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -913,7 +914,8 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FCCPortalModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -950,11 +952,11 @@
           <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
           <Property Name="Hash" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DocumentCategoryId" Type="Int32" />
+          <Property Name="ErrorText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DocumentCategories" Relationship="Self.FK_Documents_DocumentCategories" FromRole="Documents" ToRole="DocumentCategories" />
           <NavigationProperty Name="DocumentStates" Relationship="Self.FK_Documents_DocumentStates" FromRole="Documents" ToRole="DocumentStates" />
           <NavigationProperty Name="DocumentTypes" Relationship="Self.FK_Documents_DocumentTypes" FromRole="Documents" ToRole="DocumentTypes" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Documents_Tasks" FromRole="Documents" ToRole="Tasks" />
-          <Property Name="ErrorText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DocumentStates">
           <Key>
@@ -1010,6 +1012,7 @@
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UseSSL" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteFile" Type="Boolean" />
           <NavigationProperty Name="Users" Relationship="Self.FK_FTPSettings_Users" FromRole="FTPSettings" ToRole="Users" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
@@ -1079,7 +1082,7 @@
           <NavigationProperty Name="ServiceTypes" Relationship="Self.FK_Tasks_ServiceTypes" FromRole="Tasks" ToRole="ServiceTypes" />
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
-          <NavigationProperty Name="ZipTasks" Relationship="FCCPortalModel2.FK_ZipTasks_Tasks" FromRole="Tasks" ToRole="ZipTasks" />
+          <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_Tasks" FromRole="Tasks" ToRole="ZipTasks" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -1089,6 +1092,16 @@
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskStates" FromRole="TaskStates" ToRole="Tasks" />
           <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_TaskStates" FromRole="TaskStates" ToRole="ZipTasks" />
+        </EntityType>
+        <EntityType Name="UserConfirmationEmails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserLoginId" Type="Int32" Nullable="false" />
+          <Property Name="ConfirmationGuid" Type="Guid" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserConfirmationEmails_UserLogins" FromRole="UserConfirmationEmails" ToRole="UserLogins" />
         </EntityType>
         <EntityType Name="UserLogins">
           <Key>
@@ -1102,10 +1115,10 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
           <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserConfirmationEmails" Relationship="Self.FK_UserConfirmationEmails_UserLogins" FromRole="UserLogins" ToRole="UserConfirmationEmails" />
           <NavigationProperty Name="UserLoginStates" Relationship="Self.FK_UserLogins_UserLoginStates" FromRole="UserLogins" ToRole="UserLoginStates" />
           <NavigationProperty Name="UserRoleTypes" Relationship="Self.FK_UserLogins_UserRoleTypes" FromRole="UserLogins" ToRole="UserRoleTypes" />
           <NavigationProperty Name="Users" Relationship="Self.FK_UserLogins_Users" FromRole="UserLogins" ToRole="Users" />
-          <NavigationProperty Name="UserConfirmationEmails" Relationship="FCCPortalModel2.FK_UserConfirmationEmails_UserLogins" FromRole="UserLogins" ToRole="UserConfirmationEmails" />
         </EntityType>
         <EntityType Name="UserLoginStates">
           <Key>
@@ -1254,19 +1267,18 @@
           <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
           <Property Name="Hash" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DocumentCategoryId" Type="Int32" />
+          <Property Name="ErrorText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DocumentCategories" Relationship="Self.FK_ZipDocuments_DocumentCategories" FromRole="ZipDocuments" ToRole="DocumentCategories" />
           <NavigationProperty Name="DocumentStates" Relationship="Self.FK_ZipDocuments_DocumentStates" FromRole="ZipDocuments" ToRole="DocumentStates" />
           <NavigationProperty Name="DocumentTypes" Relationship="Self.FK_ZipDocuments_DocumentTypes" FromRole="ZipDocuments" ToRole="DocumentTypes" />
-          <NavigationProperty Name="ZipDocuments1" Relationship="Self.FK_ZipDocuments_ZipDocuments3" FromRole="ZipDocuments" ToRole="ZipDocuments1" />
-          <NavigationProperty Name="ZipDocuments2" Relationship="Self.FK_ZipDocuments_ZipDocuments3" FromRole="ZipDocuments1" ToRole="ZipDocuments" />
-          <NavigationProperty Name="ZipTasks" Relationship="FCCPortalModel2.FK_ZipDocuments_ZipTasks" FromRole="ZipDocuments" ToRole="ZipTasks" />
-          <Property Name="ErrorText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipDocuments_ZipTasks" FromRole="ZipDocuments" ToRole="ZipTasks" />
         </EntityType>
         <EntityType Name="ZipTasks">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OuterTaskId" Type="Int32" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TaskStateId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
@@ -1274,11 +1286,10 @@
           <Property Name="ProfileContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ResponseContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ServiceTypes" Relationship="Self.FK_ZipTasks_ServiceTypes" FromRole="ZipTasks" ToRole="ServiceTypes" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_ZipTasks_Tasks" FromRole="ZipTasks" ToRole="Tasks" />
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_ZipTasks_TaskStates" FromRole="ZipTasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_ZipTasks_Users" FromRole="ZipTasks" ToRole="Users" />
-          <Property Name="OuterTaskId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tasks" Relationship="FCCPortalModel2.FK_ZipTasks_Tasks" FromRole="ZipTasks" ToRole="Tasks" />
-          <NavigationProperty Name="ZipDocuments" Relationship="FCCPortalModel2.FK_ZipDocuments_ZipTasks" FromRole="ZipTasks" ToRole="ZipDocuments" />
+          <NavigationProperty Name="ZipDocuments" Relationship="Self.FK_ZipDocuments_ZipTasks" FromRole="ZipTasks" ToRole="ZipDocuments" />
         </EntityType>
         <Association Name="FK_UserProfiles_AnalysisModeCatalog">
           <End Role="AnalysisModeCatalog" Type="Self.AnalysisModeCatalog" Multiplicity="1" />
@@ -1520,6 +1531,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ZipTasks_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="ZipTasks" Type="Self.ZipTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ZipTasks">
+              <PropertyRef Name="OuterTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ZipTasks_TaskStates">
           <End Role="TaskStates" Type="Self.TaskStates" Multiplicity="1" />
           <End Role="ZipTasks" Type="Self.ZipTasks" Multiplicity="*" />
@@ -1529,6 +1552,18 @@
             </Principal>
             <Dependent Role="ZipTasks">
               <PropertyRef Name="TaskStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserConfirmationEmails_UserLogins">
+          <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="1" />
+          <End Role="UserConfirmationEmails" Type="Self.UserConfirmationEmails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserLogins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserConfirmationEmails">
+              <PropertyRef Name="UserLoginId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1676,15 +1711,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ZipDocuments_ZipDocuments3">
-          <End Role="ZipDocuments" Type="Self.ZipDocuments" Multiplicity="1" />
-          <End Role="ZipDocuments1" Type="Self.ZipDocuments" Multiplicity="0..1" />
+        <Association Name="FK_ZipDocuments_ZipTasks">
+          <End Role="ZipTasks" Type="Self.ZipTasks" Multiplicity="1" />
+          <End Role="ZipDocuments" Type="Self.ZipDocuments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ZipDocuments">
+            <Principal Role="ZipTasks">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ZipDocuments1">
-              <PropertyRef Name="Id" />
+            <Dependent Role="ZipDocuments">
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1705,6 +1740,7 @@
           <EntitySet Name="Settings" EntityType="Self.Settings" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" />
+          <EntitySet Name="UserConfirmationEmails" EntityType="Self.UserConfirmationEmails" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" />
           <EntitySet Name="UserLoginStates" EntityType="Self.UserLoginStates" />
           <EntitySet Name="UserProfileExportFormats" EntityType="Self.UserProfileExportFormats" />
@@ -1799,9 +1835,17 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Tasks" EntitySet="Tasks" />
           </AssociationSet>
+          <AssociationSet Name="FK_ZipTasks_Tasks" Association="Self.FK_ZipTasks_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="ZipTasks" EntitySet="ZipTasks" />
+          </AssociationSet>
           <AssociationSet Name="FK_ZipTasks_TaskStates" Association="Self.FK_ZipTasks_TaskStates">
             <End Role="TaskStates" EntitySet="TaskStates" />
             <End Role="ZipTasks" EntitySet="ZipTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserConfirmationEmails_UserLogins" Association="Self.FK_UserConfirmationEmails_UserLogins">
+            <End Role="UserLogins" EntitySet="UserLogins" />
+            <End Role="UserConfirmationEmails" EntitySet="UserConfirmationEmails" />
           </AssociationSet>
           <AssociationSet Name="FK_UserLogins_UserLoginStates" Association="Self.FK_UserLogins_UserLoginStates">
             <End Role="UserLoginStates" EntitySet="UserLoginStates" />
@@ -1851,70 +1895,11 @@
             <End Role="UserServiceSubscribeStates" EntitySet="UserServiceSubscribeStates" />
             <End Role="UserServiceSubscribes" EntitySet="UserServiceSubscribes" />
           </AssociationSet>
-          <AssociationSet Name="FK_ZipDocuments_ZipDocuments3" Association="Self.FK_ZipDocuments_ZipDocuments3">
-            <End Role="ZipDocuments" EntitySet="ZipDocuments" />
-            <End Role="ZipDocuments1" EntitySet="ZipDocuments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ZipTasks_Tasks" Association="FCCPortalModel2.FK_ZipTasks_Tasks">
-            <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="ZipTasks" EntitySet="ZipTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ZipDocuments_ZipTasks" Association="FCCPortalModel2.FK_ZipDocuments_ZipTasks">
+          <AssociationSet Name="FK_ZipDocuments_ZipTasks" Association="Self.FK_ZipDocuments_ZipTasks">
             <End Role="ZipTasks" EntitySet="ZipTasks" />
             <End Role="ZipDocuments" EntitySet="ZipDocuments" />
-          </AssociationSet>
-          <EntitySet Name="UserConfirmationEmails" EntityType="FCCPortalModel2.UserConfirmationEmails" />
-          <AssociationSet Name="FK_UserConfirmationEmails_UserLogins" Association="FCCPortalModel2.FK_UserConfirmationEmails_UserLogins">
-            <End Role="UserLogins" EntitySet="UserLogins" />
-            <End Role="UserConfirmationEmails" EntitySet="UserConfirmationEmails" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_ZipTasks_Tasks">
-          <End Type="FCCPortalModel2.Tasks" Role="Tasks" Multiplicity="1" />
-          <End Type="FCCPortalModel2.ZipTasks" Role="ZipTasks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ZipTasks">
-              <PropertyRef Name="OuterTaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ZipDocuments_ZipTasks">
-          <End Type="FCCPortalModel2.ZipTasks" Role="ZipTasks" Multiplicity="1" />
-          <End Type="FCCPortalModel2.ZipDocuments" Role="ZipDocuments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ZipTasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ZipDocuments">
-              <PropertyRef Name="TaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="UserConfirmationEmails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserLoginId" Type="Int32" Nullable="false" />
-          <Property Name="ConfirmationGuid" Type="Guid" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="UserLogins" Relationship="FCCPortalModel2.FK_UserConfirmationEmails_UserLogins" FromRole="UserConfirmationEmails" ToRole="UserLogins" />
-        </EntityType>
-        <Association Name="FK_UserConfirmationEmails_UserLogins">
-          <End Type="FCCPortalModel2.UserLogins" Role="UserLogins" Multiplicity="1" />
-          <End Type="FCCPortalModel2.UserConfirmationEmails" Role="UserConfirmationEmails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserLogins">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserConfirmationEmails">
-              <PropertyRef Name="UserLoginId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1940,7 +1925,6 @@
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="FCCPortalModel2.Documents">
               <MappingFragment StoreEntitySet="Documents">
-                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -1953,6 +1937,7 @@
                 <ScalarProperty Name="DocumentTypeId" ColumnName="DocumentTypeId" />
                 <ScalarProperty Name="Hash" ColumnName="Hash" />
                 <ScalarProperty Name="DocumentCategoryId" ColumnName="DocumentCategoryId" />
+                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2007,6 +1992,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="UseSSL" ColumnName="UseSSL" />
+                <ScalarProperty Name="DeleteFile" ColumnName="DeleteFile" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2079,6 +2065,16 @@
               <MappingFragment StoreEntitySet="TaskStates">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserConfirmationEmails">
+            <EntityTypeMapping TypeName="FCCPortalModel2.UserConfirmationEmails">
+              <MappingFragment StoreEntitySet="UserConfirmationEmails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+                <ScalarProperty Name="ConfirmationGuid" ColumnName="ConfirmationGuid" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2211,7 +2207,6 @@
           <EntitySetMapping Name="ZipDocuments">
             <EntityTypeMapping TypeName="FCCPortalModel2.ZipDocuments">
               <MappingFragment StoreEntitySet="ZipDocuments">
-                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -2224,30 +2219,21 @@
                 <ScalarProperty Name="DocumentTypeId" ColumnName="DocumentTypeId" />
                 <ScalarProperty Name="Hash" ColumnName="Hash" />
                 <ScalarProperty Name="DocumentCategoryId" ColumnName="DocumentCategoryId" />
+                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ZipTasks">
             <EntityTypeMapping TypeName="FCCPortalModel2.ZipTasks">
               <MappingFragment StoreEntitySet="ZipTasks">
-                <ScalarProperty Name="OuterTaskId" ColumnName="OuterTaskId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OuterTaskId" ColumnName="OuterTaskId" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="TaskStateId" ColumnName="TaskStateId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="ProfileContent" ColumnName="ProfileContent" />
                 <ScalarProperty Name="ResponseContent" ColumnName="ResponseContent" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserConfirmationEmails">
-            <EntityTypeMapping TypeName="FCCPortalModel2.UserConfirmationEmails">
-              <MappingFragment StoreEntitySet="UserConfirmationEmails">
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="ConfirmationGuid" ColumnName="ConfirmationGuid" />
-                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

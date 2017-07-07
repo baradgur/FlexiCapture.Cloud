@@ -21,18 +21,18 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         }
     
         public int Id { get; set; }
+        public int OuterTaskId { get; set; }
         public System.DateTime CreationDate { get; set; }
         public int TaskStateId { get; set; }
         public int UserId { get; set; }
         public int ServiceId { get; set; }
         public string ProfileContent { get; set; }
         public string ResponseContent { get; set; }
-        public int OuterTaskId { get; set; }
     
         public virtual ServiceTypes ServiceTypes { get; set; }
+        public virtual Tasks Tasks { get; set; }
         public virtual TaskStates TaskStates { get; set; }
         public virtual Users Users { get; set; }
-        public virtual Tasks Tasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ZipDocuments> ZipDocuments { get; set; }
     }
