@@ -19,7 +19,7 @@
             return 'Search';
         },
         formatNoMatches: function () {
-            return 'No matching records found';
+            return '<div id="e-message">No matching records found</div>';
         },
         formatPaginationSwitch: function () {
             return 'Hide/Show pagination';

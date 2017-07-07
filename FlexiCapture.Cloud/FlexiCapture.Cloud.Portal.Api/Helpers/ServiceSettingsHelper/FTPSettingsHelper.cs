@@ -30,16 +30,16 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                                     where s.UserId == userId
                                     select s).ToList();
 
-                    if (settings.Count == 0)
-                    {
-                        model.Error = new ErrorModel()
-                        {
-                            Name = "No settings found",
-                            ShortDescription = "No settings found in the database.",
-                            FullDescription = "No settings found in the database. Please add settings to use FTP File Conversion Service."
-                        };
-                        return model;
-                    }
+                    //if (settings.Count == 0)
+                    //{
+                    //    model.Error = new ErrorModel()
+                    //    {
+                    //        Name = "No settings found",
+                    //        ShortDescription = "No settings found in the database.",
+                    //        FullDescription = "No settings found in the database. Please add settings to use FTP File Conversion Service."
+                    //    };
+                    //    return model;
+                    //}
 
                     foreach (var setting in settings)
                     {

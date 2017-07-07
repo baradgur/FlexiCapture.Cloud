@@ -54,6 +54,12 @@
 
             });
 
+            if (response.data.Settings.length == 0) {
+                $("#e-message")
+                    .text("FTP is not configured yet. Please click [+] " +
+                    "button above to configure FTP Settings.");
+            }
+
             $('[data-toggle="tooltip"]').tooltip();
 
             var $result = $('#eventsResult');

@@ -74,6 +74,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Documents
         /// </summary>
         public string TypeName { get; set; }
 
+        public int ServiceId { get; set; }
+
         /// <summary>
         /// result docs
         /// </summary>

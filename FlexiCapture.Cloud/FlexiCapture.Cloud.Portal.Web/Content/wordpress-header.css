@@ -63,3 +63,15 @@
     text-decoration: none;
 }
 
+.portal-header {
+    /*color: rgba(0, 0, 0, 0.6);*/
+    /*font-weight: 600;*/
+    font-size: 18px;
+    margin-bottom: 0px; 
+}
+
+.wp-header {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+

@@ -184,6 +184,7 @@
     <Content Include="Content\icons\csv.png" />
     <Content Include="Content\icons\db.png" />
     <Content Include="Content\icons\doc.png" />
+    <Content Include="Content\icons\Logo-OCR.-Data-capture-Cloud-Service-ABBYY-FineReader-Nuance-AnyDoc-Kofax-logo-500x300.png" />
     <Content Include="Content\icons\pdf.png" />
     <Content Include="Content\icons\ppt.png" />
     <Content Include="Content\icons\rtf.png" />

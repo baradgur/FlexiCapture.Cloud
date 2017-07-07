@@ -53,24 +53,31 @@
 
             });
 
+            if (response.data.Settings.length == 0) {
+                $("#e-message")
+                    .text("Email is not configured yet. Please click [+] " +
+                        "button above to configure Email Settings.");
+            }
+
             $('[data-toggle="tooltip"]').tooltip();
 
-            var $result = $('#eventsResult');
+                var $result = $('#eventsResult');
 
-            $('#emailSettingstable').on('all.bs.table',
-                    function (e, name, args) {
-                        // console.log('Event:', name, ', data:', args);
-                    })
-                .on('click-row.bs.table',
-                    function (e, row, $element) {
-                        // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.settingName));
-                    });
+                $('#emailSettingstable').on('all.bs.table',
+                        function(e, name, args) {
+                            // console.log('Event:', name, ', data:', args);
+                        })
+                    .on('click-row.bs.table',
+                        function(e, row, $element) {
+                            // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.settingName));
+                        });
 
-            $('#emailSettingstable').bootstrapTable('resetWidth');
+                $('#emailSettingstable').bootstrapTable('resetWidth');
 
-            usSpinnerService.stop('spinner-1');
-            $scope.loading = false;
-            window.scope = $scope;
+                usSpinnerService.stop('spinner-1');
+                $scope.loading = false;
+                window.scope = $scope;
+            
         });
     }
 

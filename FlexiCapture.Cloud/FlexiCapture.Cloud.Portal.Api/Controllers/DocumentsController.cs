@@ -22,7 +22,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         {
             var baseUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority)
                           + Configuration.VirtualPathRoot;
-            return DocumentsHelper.GetDocumentsByUserServiceId(baseUrl, userId, serviceId);
+            //return DocumentsHelper.GetDocumentsByUserServiceId(baseUrl, userId, serviceId);
+            return DocumentsHelper.GetDocumentsByUserId(baseUrl, userId);
         }
 
         public string Get(int documentId)

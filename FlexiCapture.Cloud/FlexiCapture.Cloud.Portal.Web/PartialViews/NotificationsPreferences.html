@@ -1,10 +1,10 @@
 ﻿<div ng-controller="notificationsPreferencesController">
     <h1 style="font-size: 24px">E-mail notifications</h1>
     <div style="margin-bottom: 22px">You can subscribe to notifications and news letters</div>
-    <div style="display: inline-block;">E-mail address: </div>  <div style="display: inline-block;"><input type="text" class="form-control" ng-model="userData.UserData.Email" /></div>
+    <div style="display: inline-block;">E-mail address: </div>  <div style="display: inline-block;"><input type="text" style="width: 300px;" class="form-control" ng-model="userData.UserData.Email" readonly/></div>
     <div class="email-input"><input type="checkbox" ng-model="portalUpdatedNotif"/> Portal updates and new releases</div>
     <div class="email-input"><input type="checkbox" disabled="true" ng-model="importantNotif" checked="true" /> Important notifications</div>
     <div class="email-input"><input type="checkbox" ng-model="monthlyUse"/> Monthly use & payment summary</div>
-    <input type="button" class="btn btn-default" value="Submit"/>
+    <input type="button" class="btn btn-default" value="Save"/>
 
 </div>
