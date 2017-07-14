@@ -92,9 +92,9 @@
                     <nav class="navbar portal-header">
                         <div class="container-fluid">
                             <ul class="nav navbar-nav">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Plans & Pricing</a></li>
-                                <li><a href="#">Log In</a></li>
+                                <li><a href="http://www.datacapture.cloud/">Home</a></li>
+                                <li><a href="http://www.datacapture.cloud/portal_support">Plans & Pricing</a></li>
+                                <li><a href="http://www.datacapture.cloud/portal_faq">Log In</a></li>
                                 <li><a href="#">Support</a></li>
                                 <li><a href="#"><i class="fa fa-search"></i></a></li>
                             </ul>
@@ -114,7 +114,7 @@
                 <!--<a class="navbar-brand" style="color: #3914AF" ng-click="exitQuestion();"><img border="0" alt="FCC Portal" src="Content/puzzle.png" height="24"> DataCapture.cloud Portal</a>-->
             </div>
             <!-- /.navbar-header -->
-            <ul class="nav navbar-top-links navbar-left" style="cursor: pointer" ng-show="userData.UserData.UserRoleId==3">
+            <ul class="nav navbar-top-links navbar-left" style="cursor: pointer" ng-show="userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2">
                 <!--
                 <!-- /.dropdown -->
                 <li class="dropdown">
@@ -419,7 +419,7 @@
             <!-- /.navbar-top-links -->
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <!-- ADMIN -->
+                    <!-- ADMIN & ACCOUNTS OWNER-->
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==1">
 
                         <li>
@@ -442,23 +442,31 @@
                             <a ui-sref="main.dashboard.subscriptionsPlansLibrary"><i class="fa fa-bell"></i> Subscription plans</a>
                         </li>
                     </ul>
-                    <!--end ADMIN-->
-                    <!-- SINGLE FILE Conversion -->
-                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==1">
+                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==2">
 
                         <li>
+                            <a ui-sref="main.dashboard.users"><i class="fa fa-users"></i> Users</a>
+                        </li>
+
+                      
+                    </ul>
+                    <!--end ADMIN-->
+                    <!-- SINGLE FILE Conversion -->
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==1">
+
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.single"><i class="fa fa-eye"></i> Convert Document</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.singlelibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                         <li class="visible-xs">
@@ -487,61 +495,61 @@
                     </ul>
                     <!--end SFC-->
                     <!-- BATCH Conversion -->
-                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==2">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==2">
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.batch"><i class="fa fa-file-archive-o"></i> Load Batch</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.batchlibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.batchsettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end BATCh-->
                     <!-- email Attachment -->
-                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==4">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==4">
 
 
                         <li>
-                            <a ui-sref="main.dashboard.emaillibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.emailprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end EMAIL-->
                     <!-- FTP -->
-                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==3">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==3">
 
 
                         <li>
-                            <a ui-sref="main.dashboard.ftplibrary"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.ftpprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
                         </li>
 
-                        <li>
+                        <li ng-show="userData.UserData.UserRoleId!=4">
                             <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end FTP-->
                     <!--PROFILE -->
-                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==5">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==5">
 
                         <li>
                             <a ui-sref="main.dashboard.profile"><i class="fa fa-user fa-fw"></i> Profile Details</a>
@@ -550,7 +558,7 @@
                     </ul>
                     <!--end PROFILE-->
                     <!--STORE -->
-                    <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==3 && serviceStateId==6">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==6">
 
                         <li>
                             <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart"></i> Store Details</a>

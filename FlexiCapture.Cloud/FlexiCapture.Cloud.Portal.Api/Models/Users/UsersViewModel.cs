@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FlexiCapture.Cloud.Portal.Api.Users;
 using Khingal.Models.Users;
 
 namespace FlexiCapture.Cloud.Portal.Api.Models.Users

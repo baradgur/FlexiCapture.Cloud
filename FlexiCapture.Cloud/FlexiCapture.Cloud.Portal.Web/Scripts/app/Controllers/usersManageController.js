@@ -4,6 +4,7 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
     var vm = this;
     var roleId = null;
     var loginStateId = null;
+    
     if ($scope.user.UserData) {
         $scope.user.LoginData.UserLogin = angular.copy($scope.user.UserData.Email);
         roleId = $scope.user.UserData.UserRoleId;
@@ -25,6 +26,8 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
 
     var roleSelectList = function (roleId) {
         for (var i = 0; i < $scope.availableRoles.length; i++) {
+            if ($scope.userData.UserData.UserRoleId == 2 && i < 2)
+                i = 2;
             var user = { id: $scope.availableRoles[i].Id, name: $scope.availableRoles[i].Name };
             $scope.userRoles.availableOptions.push(user);
         }
@@ -75,6 +78,8 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
             $scope.user.UserData.UserRoleId = $scope.userRoles.selectedOption.id;
         }
 
+      
+
         vm.stateChanged = function () {
             $scope.user.LoginData.UserLoginStateId = $scope.loginStates.selectedOption.id;
         }
@@ -92,3 +97,13 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
 
 
 fccApp.controller("usersManageController", ["$scope", "$http", "$location", "$state", "$uibModal", "$stateParams", "usSpinnerService", "usersHttpService", usersManageController]);
+fccApp.filter('females', [function () {
+    return function (object) {
+        var array = [];
+        angular.forEach(object, function (person) {
+            if (person.gender == 'female')
+                array.push(person);
+        });
+        return array;
+    };
+}]);

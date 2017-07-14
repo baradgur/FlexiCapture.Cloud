@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d0cff6ecde284e04817439b346a9f3d4" Name="Diagram1">
+      <Diagram DiagramId="05eae72bed944cba8752e23ce0a78447" Name="Diagram1">
         <EntityTypeShape EntityType="FCCPortalModel.AnalysisModeCatalog" Width="1.5" PointX="6.75" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.DocumentCategories" Width="1.5" PointX="11.25" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.Documents" Width="1.5" PointX="11.25" PointY="19.125" IsExpanded="true" />
@@ -30,7 +30,7 @@
         <EntityTypeShape EntityType="FCCPortalModel.UserProfiles" Width="1.5" PointX="9" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.UserProfileServiceDefault" Width="1.5" PointX="11.25" PointY="24.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.UserRoleTypes" Width="1.5" PointX="0.75" PointY="26.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCPortalModel.Users" Width="1.5" PointX="0.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCPortalModel.Users" Width="1.5" PointX="0.75" PointY="19.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.UserServiceSubscribes" Width="1.5" PointX="6" PointY="16.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.UserServiceSubscribeStates" Width="1.5" PointX="3.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.UserSettings" Width="1.5" PointX="3" PointY="41.25" IsExpanded="true" />
@@ -67,6 +67,7 @@
         <AssociationConnector Association="FCCPortalModel.FK_UserProfilePrintTypes_UserProfiles" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserProfiles_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserProfileServiceDefault_UserProfiles" ManuallyRouted="false" />
+        <AssociationConnector Association="FCCPortalModel.FK_Users_Users1" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserServiceStates_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_UserSettings_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel.FK_ZipTasks_Users" ManuallyRouted="false" />

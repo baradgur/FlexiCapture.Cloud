@@ -14,11 +14,11 @@
 
         var url = $$ApiUrl + "/users";
         var data = [];
-        
+        $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
         
         $scope.loading = true;
         var getToUsersList = function () {
-            usersHttpService.getToUsersList($http, $scope, $state, data, url, usSpinnerService)
+            usersHttpService.getToUsersList($http, $scope, $state, data, url, usSpinnerService);
         };
         getToUsersList();
         

@@ -6,12 +6,12 @@ using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
 using FlexiCapture.Cloud.Portal.Api.Models.Users;
-using Khingal.Models.Users;
 using System.Data.Entity;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 using System.Data.Entity;
 using FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.StoreModels;
+using FlexiCapture.Cloud.Portal.Api.Users;
 
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
@@ -21,13 +21,15 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         ///    получаем данные всех пользователей
         /// </summary>
         /// <returns></returns>
-        public static UsersViewModel GetToUsers()
+        public static UsersViewModel GetToUsers(UserModel model)
         {
             try
             {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 UsersViewModel models = new UsersViewModel();
-                models.UsersData = GetToUsersData();
+
+
+                models.UsersData = GetToUsersData(model);
                 models.UserRolesData = GetToUserRolesData();
                 models.LoginStatesData = LoginHelper.GetToLoginStates();
 
@@ -199,6 +201,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         Email = login.Users.Email,
                         CompanyName = login.Users.CompanyName,
                         PhoneNumber = login.Users.PhoneNumber,
+                        ParentUserId = login.Users.ParentUserId ?? 0
 
                     };
 
@@ -215,16 +218,29 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         /// получение данных пользователей для UserViewModel представления
         /// </summary>
         /// <returns></returns>
-        private static List<UserViewModel> GetToUsersData()
+        private static List<UserViewModel> GetToUsersData(UserModel userModel)
         {
             try
             {
                 var models = new List<UserViewModel>();
                 using (FCCPortalEntities db = new FCCPortalEntities())
                 {
-                    var users = db.Users
-                        .Include(x=>x.UserServiceSubscribes)
-                        .ToList();
+                    List<DB.Users> users;
+
+                    if (userModel.UserRoleId == 1)
+                    {
+                        users = db.Users
+                            .Include(x => x.UserServiceSubscribes)
+                            .ToList();
+                    }
+                    else
+                    {
+                        users = db.Users
+                            .Where(x => x.ParentUserId == userModel.Id)
+                            .Include(x => x.UserServiceSubscribes)
+                            .ToList();
+                    }
+                    
 
                     foreach (var user in users)
                     {

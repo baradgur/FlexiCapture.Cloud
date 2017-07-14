@@ -147,15 +147,15 @@
                 $window.document.title = "Single File Conversion";
             }
         })
-        .state("main.dashboard.singlelibrary",
+        .state("main.dashboard.library",
         {
-            url: "/singlelibrary",
+            url: "/library",
             templateUrl: "PartialViews/SingleLibrary.html",
             onEnter: function ($window, $state) {
                 if (!$window.sessionStorage.getItem("UserData")) {
                     $state.go("main.login");
                 }
-                $window.document.title = "Single File Library";
+                $window.document.title = "File Library";
             }
         })
         .state("main.dashboard.singlesettings",

@@ -18,50 +18,59 @@
         $scope.users = [];
         usSpinnerService.spin("spinner-1");
 
-        $http.get(url).then(function (response) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            data: { model: $scope.userData.UserData },
+            success: function(response) {
+                //$scope.userData.UserData
+                for (i = 0; i < response.UsersData.length; i++) {
+                    var user = {};
 
-            for (i = 0; i < response.data.UsersData.length; i++) {
-                var user = {};
+                    user = response.UsersData[i];
 
-                user = response.data.UsersData[i];
+                    $scope.users.push(user);
 
-                $scope.users.push(user);
-
-                $scope.loading = true;
-                var dElement = addData(user);
-                data.push(dElement);
-            }
-            $scope.availableRoles = response.data.UserRolesData;
-            $scope.availableCompanies = response.data.CompaniesData;
-            $scope.availableCompanyUnits = response.data.CompanyUnitsData;
-            $scope.availableLoginStates = response.data.LoginStatesData;
-
-            $('#table').bootstrapTable({
-                data: data,
-                height: '100%',
-                onPostBody: function () {
-                    $('#table').bootstrapTable('resetView');
+                    $scope.loading = true;
+                    var dElement = addData(user);
+                    data.push(dElement);
                 }
+                $scope.availableRoles = response.UserRolesData;
+                $scope.availableCompanies = response.CompaniesData;
+                $scope.availableCompanyUnits = response.CompanyUnitsData;
+                $scope.availableLoginStates = response.LoginStatesData;
 
-            });
+                $('#table').bootstrapTable({
+                    data: data,
+                    height: '100%',
+                    onPostBody: function() {
+                        $('#table').bootstrapTable('resetView');
+                        usSpinnerService.stop('spinner-1');
+                    }
 
-            $('[data-toggle="tooltip"]').tooltip()
+                });
 
-            var $result = $('#eventsResult');
+                $('[data-toggle="tooltip"]').tooltip()
 
-            $('#table').on('all.bs.table',
-                    function(e, name, args) {
-                        // console.log('Event:', name, ', data:', args);
-                    })
-                .on('click-row.bs.table',
-                    function(e, row, $element) {
-                        // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.userName));
-                    });
+                var $result = $('#eventsResult');
 
-            $('#table').bootstrapTable('resetWidth');
-            usSpinnerService.stop('spinner-1');
-            $scope.loading = false;
-            window.scope = $scope;
+                $('#table').on('all.bs.table',
+                        function(e, name, args) {
+                            // console.log('Event:', name, ', data:', args);
+                        })
+                    .on('click-row.bs.table',
+                        function(e, row, $element) {
+                            // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.userName));
+                        });
+
+                $('#table').bootstrapTable('resetWidth');
+                
+                    
+                
+                $scope.loading = false;
+                window.scope = $scope;
+            }
         });
     }
 

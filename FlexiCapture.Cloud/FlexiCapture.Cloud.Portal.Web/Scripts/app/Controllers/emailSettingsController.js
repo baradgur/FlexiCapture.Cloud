@@ -65,8 +65,12 @@ function actionFormatterEmailSetting(value, row, index) {
 
             modalInstance.result.then(function () {
 
-                $scope.setting.UserId = $scope.choosedUserId;
+                $scope.choosedUserId = ($scope.choosedUserId !== undefined)
+                    ? $scope.choosedUserId
+                    : $scope.userData.UserData.Id;
 
+                $scope.setting.UserId = $scope.choosedUserId;
+                
                 emailSettingsHttpService.manageSetting($http, $scope, data, url, usSpinnerService, $scope.isEdit);
             }, function () {
 

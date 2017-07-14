@@ -5,7 +5,7 @@ using System.Web;
 using FlexiCapture.Cloud.Portal.Api.Models.Errors;
 using FlexiCapture.Cloud.Portal.Api.Models.Users;
 
-namespace Khingal.Models.Users
+namespace FlexiCapture.Cloud.Portal.Api.Users
 {       /// <summary>
         /// модель пользователя определяет представление
         /// пользователя в таблице пользователей

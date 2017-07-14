@@ -7,20 +7,21 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
-using Khingal.Models.Users;
+using FlexiCapture.Cloud.Portal.Api.Models.Users;
+using FlexiCapture.Cloud.Portal.Api.Users;
 
 namespace FlexiCapture.Cloud.Portal.Api.Controllers
 {
     public class UsersController : ApiController
     {
         // GET api/users
-        public IHttpActionResult Get()
+        public IHttpActionResult Get([FromUri] UserModel model)
         {
             try
             {
-                return Ok(UsersHelper.GetToUsers());
+                return Ok(UsersHelper.GetToUsers(model));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return BadRequest("Error!");
 
@@ -39,6 +40,19 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         {
             return UsersHelper.AddUserAdmin(model);
         }
+
+        //public IHttpActionResult Post([FromBody]UserModel model)
+        //{
+        //    try
+        //    {
+        //        return Ok(UsersHelper.GetToUsers(model));
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        return BadRequest("Error!");
+
+        //    }
+        //}
 
         // PUT api/users/5
         public string Put(UserViewModel model)

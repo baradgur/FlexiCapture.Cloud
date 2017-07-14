@@ -24,11 +24,11 @@
 
                         switch ($scope.serviceStateId) {
                             case 1:
-                                $state.go("main.dashboard.singlelibrary");
+                                $state.go("main.dashboard.library");
                                 break;
 
                             case 2:
-                                $state.go("main.dashboard.batchlibrary");
+                                $state.go("main.dashboard.library");
                                 break;
 
                             default: break;

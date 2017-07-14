@@ -53,7 +53,7 @@ fccApp.service('documentsHttpService', function() {
             for (var k in document.DocumentErrors) {
                 link += "<p><a id='" +
                     document.Id +
-                    "' style='color: red;' class='result-link'> <i class='fa fa-download' aria-hidden='true'></i>" +
+                    "' style='color: red;' class='result-link'> <i class='fa fa-download' aria-hidden='true'></i>  " +
                     document.DocumentErrors[k].DocumentName +
                     "</a></p>";
             }

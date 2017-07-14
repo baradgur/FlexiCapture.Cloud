@@ -22,6 +22,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
             this.Tasks = new HashSet<Tasks>();
             this.UserLogins = new HashSet<UserLogins>();
             this.UserProfiles = new HashSet<UserProfiles>();
+            this.Users1 = new HashSet<Users>();
             this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
             this.UserSettings = new HashSet<UserSettings>();
             this.ZipTasks = new HashSet<ZipTasks>();
@@ -33,6 +34,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string CompanyName { get; set; }
+        public Nullable<int> ParentUserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailSettings> EmailSettings { get; set; }
@@ -44,6 +46,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual ICollection<UserLogins> UserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfiles> UserProfiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users1 { get; set; }
+        public virtual Users Users2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserServiceSubscribes> UserServiceSubscribes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

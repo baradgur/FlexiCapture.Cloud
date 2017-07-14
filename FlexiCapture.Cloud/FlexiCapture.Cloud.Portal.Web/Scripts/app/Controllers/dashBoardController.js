@@ -20,11 +20,24 @@
                     break;
 
                 case 2:
+                    if ($window.sessionStorage.lastState != null && $window.sessionStorage.lastState != "main.dashboard") {
+                        $state.go($window.sessionStorage.lastState);
+                    } else {
+                        $state.go("main.dashboard.single");
+                    }
+                    break;
                 case 3:
                     if ($window.sessionStorage.lastState != null && $window.sessionStorage.lastState != "main.dashboard") {
                         $state.go($window.sessionStorage.lastState);
                     } else {
                         $state.go("main.dashboard.single");
+                    }
+                    break;
+                case 4:
+                    if ($window.sessionStorage.lastState != null && $window.sessionStorage.lastState != "main.dashboard") {
+                        $state.go($window.sessionStorage.lastState);
+                    } else {
+                        $state.go("main.dashboard.library");
                     }
                     break;
 
