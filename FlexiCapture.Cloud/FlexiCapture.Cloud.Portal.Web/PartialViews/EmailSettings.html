@@ -1,9 +1,47 @@
-﻿<div ng-controller="emailSettingsController">
+﻿<div ng-controller="emailResponseSettingsController">
+    <div class="panel panel-default">
+        <div class="panel-heading">Email Response Settings</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="form-horizontal">
+                        <div class="checkbox">
+                            <label><input ng-model="responseSetting.ShowJob" type="checkbox"> Add conversion jobs to the Library</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input aria-label="Toggle ngShow" ng-model="responseSetting.SendReply" type="checkbox"> Reply to Sender’s ‘from’ e-mail address with conversion results</label>
+                        </div>
+                        <div ng-show="responseSetting.SendReply" class="checkbox">
+                            <label><input ng-model="responseSetting.AddAttachment" type="checkbox"> Include conversion result as attachment</label>
+                        </div>
+                        <div ng-show="responseSetting.SendReply" class="checkbox">
+                            <label><input ng-model="responseSetting.AddLink" type="checkbox"> Include conversion result link in e-mail body</label>
+                        </div>
+                        <div ng-show="responseSetting.SendReply" class="checkbox">
+                            <label><input ng-model="responseSetting.CCResponse" type="checkbox"> CC the response with conversion result to the following e-mail address(es)</label>
+                        </div>
+                        <button type="submit" style="margin: 20px;" ng-click="updateSetting()"  class="btn btn-default">Submit</button>
+
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="comment">Separate multiple addresses with a comma:</label>
+                        <textarea ng-model="responseSetting.Addresses" class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div ng-controller="emailSettingsController">
 
     <div class="container">
 
         <div class="row" ng-show="!loading">
-            <div id="toolbar"  ng-show="true">
+            <div id="toolbar" ng-show="true">
                 <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add New Settings Item" data-placement="bottom">
 
                     <span class="glyphicon glyphicon-plus"></span>
@@ -25,7 +63,7 @@
                             <th data-field="settingHost" data-sortable="true">Host</th>
                             <th data-field="settingPort" data-sortable="true">Port</th>
                             <th data-field="settingUseSSL" data-sortable="true">Use SSL</th>
-                            <th data-field="action"  ng-show="userData.UserData.UserRoleId == 1" data-formatter="actionFormatterEmailSetting" data-events="actionEventsEmailSetting" data-width="5%" style="text-align:center;"></th>
+                            <th data-field="action" ng-show="userData.UserData.UserRoleId == 1" data-formatter="actionFormatterEmailSetting" data-events="actionEventsEmailSetting" data-width="5%" style="text-align:center;"></th>
                         </tr>
                     </thead>
                 </table>

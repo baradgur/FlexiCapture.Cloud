@@ -27,6 +27,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public string Hash { get; set; }
         public Nullable<int> DocumentCategoryId { get; set; }
         public string ErrorText { get; set; }
+        public bool IsShown { get; set; }
     
         public virtual DocumentCategories DocumentCategories { get; set; }
         public virtual DocumentStates DocumentStates { get; set; }

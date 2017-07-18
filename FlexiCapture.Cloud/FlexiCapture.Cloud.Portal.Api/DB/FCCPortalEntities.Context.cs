@@ -30,6 +30,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual DbSet<Documents> Documents { get; set; }
         public virtual DbSet<DocumentStates> DocumentStates { get; set; }
         public virtual DbSet<DocumentTypes> DocumentTypes { get; set; }
+        public virtual DbSet<EmailResponseSettings> EmailResponseSettings { get; set; }
         public virtual DbSet<EmailSettings> EmailSettings { get; set; }
         public virtual DbSet<ExportFormatsCatalog> ExportFormatsCatalog { get; set; }
         public virtual DbSet<FTPSettings> FTPSettings { get; set; }
