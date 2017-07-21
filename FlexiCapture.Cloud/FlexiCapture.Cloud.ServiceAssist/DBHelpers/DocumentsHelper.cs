@@ -331,7 +331,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             }
         }
 
-        public static int AddDocument(int taskId, FileInfo file, string originalFileName, Guid guid, string gFileName, string path, string md5, int categoryId)
+        public static int AddDocument(int taskId, FileInfo file, string originalFileName, Guid guid, string gFileName, string path, string md5, int categoryId, bool showJob)
         {
             try
             {
@@ -349,9 +349,8 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                         Path = path,
                         OriginalFileName = originalFileName,
                         TaskId = taskId,
-                        DocumentCategoryId = categoryId
-
-
+                        DocumentCategoryId = categoryId,
+                        IsShown = showJob
                     };
                     db.Documents.Add(document);
                     db.SaveChanges();
@@ -372,7 +371,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         /// <param name="taskId"></param>
         /// <param name="guid"></param>
         /// <param name="originalFileName"></param>
-        public static void AddResultDocument(int taskId, Guid guid, string originalFileName,string realFileName,string filePath)
+        public static int AddResultDocument(int taskId, Guid guid, string originalFileName,string realFileName,string filePath)
         {
             try
             {
@@ -396,6 +395,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                     document.Path = path;
                     db.Documents.Add(document);
                     db.SaveChanges();
+                    return document.Id;
                 }
             }
             catch (Exception exception)
@@ -404,6 +404,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
                 LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
                                  innerException);
+                return 0;
             }
         }
 

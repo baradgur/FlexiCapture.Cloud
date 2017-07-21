@@ -49,6 +49,14 @@ namespace FlexiCapture.Cloud.EmailAgent.Models
                     List<string> separateElements = value.Split('=').ToList();
                     if (separateElements.Count == 2)
                     {
+                        if (separateElements[0].Contains("*~*"))
+                        {
+                            separateElements[0] = separateElements[0].Replace("*~*", "=");
+                        }
+                        if (separateElements[1].Contains("*~*"))
+                        {
+                            separateElements[1] = separateElements[1].Replace("*~*", "=");
+                        }
                         if (ex)
                         {
                             Elements.Add(new EmailContentElementModel() { Name = separateElements[0], Value = separateElements[1].Replace("~", "confirmEmail?guid=") });

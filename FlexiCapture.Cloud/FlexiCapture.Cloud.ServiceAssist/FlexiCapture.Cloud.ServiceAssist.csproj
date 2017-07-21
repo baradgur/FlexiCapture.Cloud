@@ -59,9 +59,11 @@
     <Compile Include="Assist.cs" />
     <Compile Include="DBHelpers\DocumentsHelper.cs" />
     <Compile Include="DBHelpers\DocumentTypesHelper.cs" />
+    <Compile Include="DBHelpers\EmailHelper.cs" />
     <Compile Include="DBHelpers\ExportFormatHelper.cs" />
     <Compile Include="DBHelpers\LogHelper.cs" />
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
+    <Compile Include="DBHelpers\EmailSettingsHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DB\AnalysisModeCatalog.cs">
@@ -77,6 +79,9 @@
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\DocumentTypes.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\EmailResponseSettings.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\EmailSettings.cs">
@@ -184,6 +189,10 @@
     <Compile Include="Models\Catalogs\PrintTypeModel.cs" />
     <Compile Include="Models\Catalogs\RotationTypeModel.cs" />
     <Compile Include="Models\Documents\DocumentError.cs" />
+    <Compile Include="Models\Errors\ErrorModel.cs" />
+    <Compile Include="Models\SettingsModels\EmailResponseSettingsModel.cs" />
+    <Compile Include="Models\SettingsModels\EmailSettingsModel.cs" />
+    <Compile Include="Models\SettingsModels\EmailSettingsViewModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,6 +212,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FlexiCapture.Cloud.EmailAgent\FlexiCapture.Cloud.EmailAgent\FlexiCapture.Cloud.EmailAgent.csproj">
+      <Project>{920a26eb-fa4e-4ac4-9279-2e067110d2e2}</Project>
+      <Name>FlexiCapture.Cloud.EmailAgent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FlexiCapture.Cloud.OCR.Assist\FlexiCapture.Cloud.OCR.Assist.csproj">
       <Project>{5CDF763B-EE3E-4D85-A30B-1D37019AA39D}</Project>
       <Name>FlexiCapture.Cloud.OCR.Assist</Name>

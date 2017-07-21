@@ -36,6 +36,15 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                     serviceAssist.AddErrorToDocuments(task.Id, error);
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
                     serviceAssist.UpdateTaskState(task.Id, 4);
+
+                    serviceAssist.EmailSettings = serviceAssist.GetToEmailConversionSettings(task.UserId);
+
+                    if (serviceAssist.EmailSettings != null && serviceAssist.EmailSettings.ResponseSettings != null
+                        && serviceAssist.EmailSettings.ResponseSettings.SendReply)
+                    {
+                        serviceAssist.SendEmailResponseFail(task.UserId, "DataCapture.Cloud received a conversion request form this e - mail address. Error occured while processing request.","");
+                    }
+
                     return;
                 }
 
@@ -83,12 +92,23 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                 OcrResponseModel model = new OcrResponseModel();
                 model = JsonConvert.DeserializeObject<OcrResponseModel>(task.ResponseContent);
 
+                serviceAssist.EmailSettings = serviceAssist.GetToEmailConversionSettings(task.UserId);
+                if (serviceAssist.EmailSettings == null || serviceAssist.EmailSettings.ResponseSettings == null)
+                {
+                    return;
+                }
+
                 string jobStatus = assist.GetJobStatus(model.JobUrl);
 
                 model = JsonConvert.DeserializeObject<OcrResponseModel>(jobStatus);
 
                 if (model.Status.Equals("Finished"))
                 {
+                    List<Tuple<int, string>> downloadIds = new List<Tuple<int, string>>();
+                    List <Tuple<string, string>> attachmentsLinks = new List<Tuple<string, string>>();
+
+
+
                     string pathToDownload = serviceAssist.GetSettingValueByName("MainPath");
                     string resultFolder = serviceAssist.GetSettingValueByName("ResultFolder");
                     string jobPattern = serviceAssist.GetSettingValueByName("ApiUrlJobState");
@@ -125,9 +145,24 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                             return;
                         }
                         //add document
-                        serviceAssist.AddResultDocument(task.Id, g, originalName, newName, filePath);
-                    }
+                        int resultDocumentId = serviceAssist.AddResultDocument(task.Id, g, originalName, newName, filePath);
+                        if (serviceAssist.EmailSettings.ResponseSettings.AddAttachment)
+                        {
+                            attachmentsLinks.Add(new Tuple<string, string>(filePath, originalName));
+                        }
+                        if (serviceAssist.EmailSettings.ResponseSettings.AddAttachment)
+                        {
+                            downloadIds.Add(new Tuple<int, string>(resultDocumentId, originalName));
+                        }
 
+                    }
+                    if (serviceAssist.EmailSettings.ResponseSettings.SendReply)
+                    {
+                        string text = "DataCapture.Cloud received a conversion request form this e-mail address.  Here is your conversion result:";
+                        serviceAssist.SendEmailResponse(task.UserId, downloadIds, attachmentsLinks, 
+                            serviceAssist.EmailSettings.ResponseSettings.CCResponse? serviceAssist.EmailSettings.ResponseSettings.Addresses:"",
+                            text);
+                    }
                     //update task
                     serviceAssist.UpdateTaskState(task.Id, 3);
                     //update documents
@@ -149,6 +184,11 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                     serviceAssist.UpdateTaskState(task.Id, 4);
                     //update documents
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+
+                    if (serviceAssist.EmailSettings.ResponseSettings.SendReply)
+                    {
+                        serviceAssist.SendEmailResponseFail(task.UserId, "DataCapture.Cloud received a conversion request form this e - mail address. Error occured while processing request.", "");
+                    }
                 }
 
             }

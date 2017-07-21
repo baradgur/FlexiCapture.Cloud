@@ -27,6 +27,8 @@
           <Property Name="TypeId" Type="int" Nullable="false" />
           <Property Name="TaskId" Type="int" />
           <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="CcResponseTo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Attachments" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="EmailStates">
           <Key>
@@ -328,6 +330,8 @@
           <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="TaskId" Type="Int32" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="CcResponseTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Attachments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="EmailContents" Relationship="Self.FK_EmailContents_Emails" FromRole="Emails" ToRole="EmailContents" />
           <NavigationProperty Name="EmailStates" Relationship="Self.FK_Emails_EmailStates" FromRole="Emails" ToRole="EmailStates" />
           <NavigationProperty Name="EmailTypes" Relationship="Self.FK_Emails_EmailTypes" FromRole="Emails" ToRole="EmailTypes" />
@@ -648,6 +652,8 @@
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CcResponseTo" ColumnName="CcResponseTo" />
+                <ScalarProperty Name="Attachments" ColumnName="Attachments" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

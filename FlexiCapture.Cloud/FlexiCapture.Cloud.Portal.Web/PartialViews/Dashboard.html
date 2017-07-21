@@ -383,7 +383,7 @@
             </ul>
 
             <ul class="nav navbar-top-links navbar-right hidden-xs">
-                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>
+                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart"></i> Services Store</a>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -558,7 +558,7 @@
                     </ul>
                     <!--end PROFILE-->
                     <!--STORE -->
-                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==6">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2) && serviceStateId==6">
 
                         <li>
                             <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart"></i> Store Details</a>

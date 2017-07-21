@@ -11,7 +11,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 {
     public static class TasksHelper
     {
-       
+
         /// <summary>
         /// add task to db
         /// </summary>
@@ -47,7 +47,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db=new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities2())
                 {
                     return
                         db.Tasks.Where(x => x.TaskStateId == 1 && x.ServiceId == serviceId && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
@@ -199,7 +199,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                 using (var db = new FCCPortalEntities2())
                 {
                     return
-                        db.ZipTasks.Where(x =>x.TaskStateId == 1 && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
+                        db.ZipTasks.Where(x => x.TaskStateId == 1 && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
                 }
             }
             catch (Exception exception)
@@ -244,7 +244,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                 using (var db = new FCCPortalEntities2())
                 {
                     return
-                        db.Tasks.Where(x => x.TaskStateId == 2 && x.ServiceId ==serviceId && !string.IsNullOrEmpty(x.ResponseContent)).ToList();
+                        db.Tasks.Where(x => x.TaskStateId == 2 && x.ServiceId == serviceId && !string.IsNullOrEmpty(x.ResponseContent)).ToList();
                 }
             }
             catch (Exception exception)
@@ -274,7 +274,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 
                         if (stateId == 4 || stateId == 3)
                         {
-                            List<Tasks> cTask = db.Tasks.Where(x => (x.TaskStateId == 3 || x.TaskStateId==4) && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
+                            List<Tasks> cTask = db.Tasks.Where(x => (x.TaskStateId == 3 || x.TaskStateId == 4) && !string.IsNullOrEmpty(x.ProfileContent)).ToList();
 
                             foreach (var t in cTask)
                             {
@@ -305,7 +305,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
         {
             try
             {
-                using (var db =new FCCPortalEntities2())
+                using (var db = new FCCPortalEntities2())
                 {
                     Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
                     if (task != null)
@@ -340,7 +340,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                         {
                             if (!string.IsNullOrEmpty(element))
                             {
-                                resultExtentions.Add(element); 
+                                resultExtentions.Add(element);
                             }
                         }
                     }
@@ -362,85 +362,151 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
             try
             {
                 using (var db = new FCCPortalEntities2())
-                {// ServiceId == 4 means it's email attachment
+                {
+// ServiceId == 4 means it's email attachment
                     db.Configuration.ProxyCreationEnabled = false;
-
-                    var subscribe = db.UserServiceSubscribes
-                            .Include(x => x.Users)
-                            .Include(x => x.Users.UserProfiles.Select(xx => xx.UserProfileServiceDefault))
-                            .Where(x => x.ServiceId == 4 && x.Users.Email == fromAddress && x.SubscribeStateId == 1)
-                            .Select(x => x).FirstOrDefault();
-
-                    int profileId = 0;
-                    foreach (var userProfile in subscribe.Users.UserProfiles)
+                    var user = db.Users
+                        .Include(x => x.Users2.Users2.Users2)
+                        .Include(x => x.UserLogins)
+                        .FirstOrDefault(x => x.Email == fromAddress);
+                    int parentId = 0;
+                    if (user != null)
                     {
-                        foreach (var defaultService in userProfile.UserProfileServiceDefault)
+                        if (user.UserLogins.FirstOrDefault() != null && user.UserLogins.FirstOrDefault().UserRoleId == 4)
                         {
-                            if (defaultService.ServiceTypeId == 4)
+                            return new ManageUserProfileModel
                             {
-                                profileId = userProfile.Id;
-                            }
+                                Id = -3,
+                                Name = "Viewer can't send emails"
+                            };
+                        }
+                        if (user.Users2 != null)
+                        {
+                            parentId = user.Users2.Id;
+                        }
+                        else
+                        {
+                            parentId = user.Id;
                         }
                     }
-                    if (profileId != 0)
+                    else
                     {
-                        return Helpers.ManageUserProfileHelper.GetToUserProfileById(profileId, 4);
+                        return new ManageUserProfileModel
+                        {
+                            Id = 0,
+                            Name = "User not found"
+                        };
                     }
-                    return null;
+                    if (parentId == 0)
+                    {
+                        return new ManageUserProfileModel
+                        {
+                            Id = 0,
+                            Name = "User not found"
+                        };
+                    }
+
+                    var subscribes = db.UserServiceSubscribes
+                            .Where(x => x.ServiceId == 4 && x.UserId == parentId)
+                            .Select(x => x);
+
+                    int profileId = 0;
+                    foreach (var subscribe in subscribes)
+                    {
+                        if (subscribe.SubscribeStateId == 1)
+                        {
+                            var userProfiles = db.UserProfiles
+                                .Include(x => x.UserProfileServiceDefault)
+                                .Where(x => x.UserId == user.Id);
+                            foreach (var userProfile in userProfiles)
+                            {
+                                foreach (var defaultService in userProfile.UserProfileServiceDefault)
+                                {
+                                    if (defaultService.ServiceTypeId == 4)
+                                    {
+                                        profileId = userProfile.Id;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            profileId = -1;
+                        }
+                    }
+                    if (profileId == 0)
+                    {
+                        return new ManageUserProfileModel
+                        {
+                            Id = -1,
+                            Name = "Account is not available"
+                        };
+
+                    }
+                    else if (profileId == -1)
+                    {
+                        return new ManageUserProfileModel
+                        {
+                            Id = -2,
+                            Name = "Subscribe is not available"
+                        };
+                    }
+                    return Helpers.ManageUserProfileHelper.GetToUserProfileById(profileId, 4);
                 }
+            
             }
             catch (Exception exception)
             {
                 string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
-                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+        string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+        LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
                                  innerException);
                 return null;
             }
-        }
+}
 
-        public static void UpdateTaskProfile(int taskId, string profileContent)
+public static void UpdateTaskProfile(int taskId, string profileContent)
+{
+    try
+    {
+        using (var db = new FCCPortalEntities2())
         {
-            try
-            {
-                using (var db = new FCCPortalEntities2())
-                {
-                    Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
+            Tasks task = db.Tasks.FirstOrDefault(x => x.Id == taskId);
 
-                    if (task != null)
-                    {
-                        task.ProfileContent = profileContent;
-                        db.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception)
+            if (task != null)
             {
+                task.ProfileContent = profileContent;
+                db.SaveChanges();
             }
         }
+    }
+    catch (Exception)
+    {
+    }
+}
 
-        public static List<Tasks> GetToOuterTasks()
+public static List<Tasks> GetToOuterTasks()
+{
+    try
+    {
+        using (var db = new FCCPortalEntities2())
         {
-            try
-            {
-                using (var db = new FCCPortalEntities2())
-                {
-                    return
-                        db.Tasks
-                        .Include(x=>x.Documents)
-                        .Include(x=>x.ZipTasks)
-                        .Include(x=>x.ZipTasks.Select(xx=>xx.ZipDocuments))
-                        .Where(x => x.TaskStateId == 2 && x.ZipTasks.Count>0).ToList();
-                }
-            }
-            catch (Exception exception)
-            {
-                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
-                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
-                                 innerException);
-                return null;
-            }
+            return
+                db.Tasks
+                .Include(x => x.Documents)
+                .Include(x => x.ZipTasks)
+                .Include(x => x.ZipTasks.Select(xx => xx.ZipDocuments))
+                .Where(x => x.TaskStateId == 2 && x.ZipTasks.Count > 0).ToList();
         }
+    }
+    catch (Exception exception)
+    {
+        string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+        string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+        LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                         innerException);
+        return null;
+    }
+}
     }
 }

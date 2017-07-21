@@ -130,6 +130,7 @@
             if (!isAvailable && serviceId !== 5  && serviceId!== 6) {
                 serviceId = 6;
             }
+            var previousServiceStateId = angular.copy($scope.serviceStateId);
             $window.sessionStorage.serviceStateId = serviceId;
             $scope.serviceStateId = serviceId;
             switch (serviceId) {
@@ -154,7 +155,12 @@
                     break;
 
                 case 6:
-                    $state.go("main.dashboard.store", { '#': anchor });
+                    if ($scope.userData.UserData.UserRoleId == 1 || $scope.userData.UserData.UserRoleId == 2) {
+                        $state.go("main.dashboard.store", { '#': anchor });
+                    } else {
+                        $window.sessionStorage.serviceStateId = previousServiceStateId;
+                        $scope.serviceStateId = previousServiceStateId;
+                    }
                     break;
                     
 

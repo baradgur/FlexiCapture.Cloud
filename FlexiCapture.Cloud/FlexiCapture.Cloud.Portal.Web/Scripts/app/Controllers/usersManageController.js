@@ -64,7 +64,10 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
 
                 if (!$scope.isEdit) {
                     $scope.user.UserData.Id = -1;
-                    $scope.user.LoginData.UserLoginStateId = 1;// loginStateIsActive
+                    $scope.user.LoginData.UserLoginStateId = 1; // loginStateIsActive
+                    $scope.user.UserData.UserName = $scope.user.LoginData.UserLogin;
+                    $scope.user.UserData.Email = $scope.user.UserData.UserName;
+                } else {
                     $scope.user.UserData.UserName = $scope.user.LoginData.UserLogin;
                     $scope.user.UserData.Email = $scope.user.UserData.UserName;
                 }

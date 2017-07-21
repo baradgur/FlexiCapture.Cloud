@@ -75,7 +75,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.Interfaces
         /// <summary>
         /// add result document to db
         /// </summary>
-        void AddResultDocument(int taskId, Guid guid, string originalFileName,string realFileName,string filePath);
+        int AddResultDocument(int taskId, Guid guid, string originalFileName,string realFileName,string filePath);
 
         /// <summary>
         /// add log

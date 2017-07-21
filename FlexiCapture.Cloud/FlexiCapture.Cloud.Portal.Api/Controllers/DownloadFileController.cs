@@ -12,12 +12,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
 {
     public class DownloadFileController : ApiController
     {
-        public HttpResponseMessage Get(int documentId)
+        public HttpResponseMessage Get([FromUri]int id)
         {
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 
-            Documents document = DBHelpers.DocumentsHelper.GetDocumentsById(documentId);
+            Documents document = DBHelpers.DocumentsHelper.GetDocumentsById(id);
             var file = Helpers.DocumentsHelper.GetDocumentFromFileSystem(document);
 
             //result.Content = new StreamContent(stream);

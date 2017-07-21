@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using FlexiCapture.Cloud.Portal.Api.Models.Errors;
+using FlexiCapture.Cloud.ServiceAssist.Models.Errors;
 
-namespace FlexiCapture.Cloud.Portal.Api.Models.SettingsModels
+namespace FlexiCapture.Cloud.ServiceAssist.Models.SettingsModels
 {
     public class EmailSettingsViewModel
     {

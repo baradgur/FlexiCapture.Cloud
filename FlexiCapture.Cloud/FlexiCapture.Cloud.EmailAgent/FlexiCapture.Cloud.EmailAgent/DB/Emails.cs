@@ -31,6 +31,8 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
         public int TypeId { get; set; }
         public Nullable<int> TaskId { get; set; }
         public int StateId { get; set; }
+        public string CcResponseTo { get; set; }
+        public string Attachments { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailContents> EmailContents { get; set; }

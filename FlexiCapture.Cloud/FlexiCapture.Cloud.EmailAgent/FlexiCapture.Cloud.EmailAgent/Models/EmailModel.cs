@@ -62,6 +62,11 @@ namespace FlexiCapture.Cloud.EmailAgent.Models
         public string EmailContentLine { get; set; }
 
         /// <summary>
+        /// string CcResponseTo
+        /// </summary>
+        public string CcResponseTo { get; set; }
+
+        /// <summary>
         /// task
         /// </summary>
         public QueuePackageTaskModel Task { get; set; }

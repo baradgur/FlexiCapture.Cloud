@@ -9,6 +9,7 @@ using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
 using FlexiCapture.Cloud.ServiceAssist.Helpers;
 using FlexiCapture.Cloud.ServiceAssist.Interfaces;
+using FlexiCapture.Cloud.ServiceAssist.Models.SettingsModels;
 using FlexiCapture.Cloud.ServiceAssist.Models.UserProfiles;
 
 namespace FlexiCapture.Cloud.ServiceAssist
@@ -20,7 +21,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public ManageUserProfileModel UserProfile { get; set; }
         public List<Documents> Documents { get; set; }
         public List<ZipDocuments> ZipDocuments { get; set; }
-
+        public EmailSettingsViewModel EmailSettings { get; set; }
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
         /// </summary>
         public int AddTask(int userId, int serviceId)
         {
-           return TasksHelper.AddTask(userId, serviceId);
+            return TasksHelper.AddTask(userId, serviceId);
         }
 
         public void AddErrorToDocuments(int taskId, string error)
@@ -102,7 +103,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             TasksHelper.UpdateTaskState(taskId, stateId);
         }
-        
+
         public List<ZipDocuments> GetZipDocumentsByZipTaskId(int taskId)
         {
             return DocumentsHelper.GetToZipDocumentsByZipTaskId(taskId);
@@ -142,7 +143,6 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             TasksHelper.UpdateTaskReponseContent(taskId, content);
         }
-
         #endregion
 
         #region documents
@@ -203,9 +203,9 @@ namespace FlexiCapture.Cloud.ServiceAssist
         /// <param name="taskId"></param>
         /// <param name="guid"></param>
         /// <param name="originalFileName"></param>
-        public void AddResultDocument(int taskId, Guid guid, string originalFileName, string realFileName, string filePath)
+        public int AddResultDocument(int taskId, Guid guid, string originalFileName, string realFileName, string filePath)
         {
-            DocumentsHelper.AddResultDocument(taskId, guid, originalFileName, realFileName, filePath);
+            return DocumentsHelper.AddResultDocument(taskId, guid, originalFileName, realFileName, filePath);
         }
 
 
@@ -217,6 +217,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             LogHelper.AddLog(message);
         }
+
 
         #endregion
 
@@ -240,9 +241,9 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return MD5Helper.GetMD5HashFromFile(uploadPath);
         }
 
-        public int AddDocument(int taskId, FileInfo attachment, string originalFileName, Guid newNameGuid, string uploadName, string localName, string md5, int categoryId)
+        public int AddDocument(int taskId, FileInfo attachment, string originalFileName, Guid newNameGuid, string uploadName, string localName, string md5, int categoryId, bool showJob)
         {
-            return DocumentsHelper.AddDocument(taskId, attachment, originalFileName, newNameGuid, uploadName, localName, md5, categoryId);
+            return DocumentsHelper.AddDocument(taskId, attachment, originalFileName, newNameGuid, uploadName, localName, md5, categoryId, showJob);
         }
 
         public void UpdateTaskProfile(int taskId, string content)
@@ -255,7 +256,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return DocumentsHelper.GetToDocumentsByTaskId(taskId);
         }
 
-        public string ConvertProfileToRequestModel(List<Documents> documents , ManageUserProfileModel userProfile)
+        public string ConvertProfileToRequestModel(List<Documents> documents, ManageUserProfileModel userProfile)
         {
             return ProfileToRequestModelConverter.ConvertProfileToRequestModel(documents, userProfile);
         }
@@ -278,6 +279,24 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public void UpdateDocumentErrorsFromZipDocs(int outerTaskId)
         {
             DocumentsHelper.UpdateDocumentErrorsFromZipDocs(outerTaskId);
+        }
+
+        public void SendEmailResponseFail(string email, string text, string ccAddresses)
+        {
+            EmailHelper.SendEmailResponseFail(email, text, ccAddresses);
+        }
+        public void SendEmailResponseFail(int userId, string text, string ccAddresses)
+        {
+            EmailHelper.SendEmailResponseFail(userId, text, ccAddresses);
+        }
+        public EmailSettingsViewModel GetToEmailConversionSettings(int userId)
+        {
+            return EmailSettingsHelper.GetToEmailConversionSettings(userId);
+        }
+
+        public void SendEmailResponse(int taskUserId, List<Tuple<int, string>> downloadIds, List<Tuple<string, string>> attachmentsLinks, string ccAddresses, string text)
+        {
+            EmailHelper.SendEmailResponse(taskUserId, downloadIds, attachmentsLinks, ccAddresses, text);
         }
     }
 }

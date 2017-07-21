@@ -1,4 +1,4 @@
-fccApp.service('documentsHttpService', function() {
+fccApp.service('documentsHttpService', function () {
     //добавляем данные user в для таблицы
     function addData(document) {
         var dElement = {};
@@ -30,7 +30,7 @@ fccApp.service('documentsHttpService', function() {
                 break;
         }
 
-        
+
 
 
 
@@ -42,11 +42,11 @@ fccApp.service('documentsHttpService', function() {
             var type = doc.TypeName;
             var origFilename = doc.OriginalFileName;
             var url = doc.Url;
-            link += "<p><a id='" + doc.Id + "' href='javascript: void(0);' class='download-link'>" + ((doc.TypeName == "ZIP")?"Results (Zip)":doc.TypeName) +
+            link += "<p><a id='" + doc.Id + "' href='javascript: void(0);' class='download-link'>" + ((doc.TypeName == "ZIP") ? "Results (Zip)" : doc.TypeName) +
                 " <i class='fa fa-download' aria-hidden='true'></i></a>" +
                 "<a class='download-link preview' style='margin-left: 25px;' id='" + doc.Id + "' href='javascript: void(0);'><i class='fa fa-sticky-note-o'></i></a>"
                 + "</p>";//"<p><a href='" + doc.Url + "'> <i class='fa fa-download' aria-hidden='true'></i>" + doc.OriginalFileName + "</a></p>"
-           
+
         }
 
         if (document.DocumentErrors != null) {
@@ -60,13 +60,13 @@ fccApp.service('documentsHttpService', function() {
 
         }
 
-       
+
         dElement.results = link;
 
         return dElement;
     }
 
-    this.alerter = function(id) {
+    this.alerter = function (id) {
         alert(id);
 
     }
@@ -111,15 +111,14 @@ fccApp.service('documentsHttpService', function() {
             });
     }
 
-    this.downloadDocumentById = function($http, $scope, docId, url) {
+    this.downloadDocumentById = function ($http, $scope, docId, url) {
         var dfd = $.Deferred();
 
         $http({
             method: 'GET',
-            url: url,
-            responseType: 'arraybuffer',
-            params: { documentId: docId }
-        }).success(function(data, status, headers) {
+            url: url + "/" + docId,
+            responseType: 'arraybuffer'
+        }).success(function (data, status, headers) {
 
             return dfd.resolve(data, status, headers);
 
@@ -137,7 +136,7 @@ fccApp.service('documentsHttpService', function() {
 
 
     //get to clients list
-    this.getToDocuments = function($http, $scope, $state, data, url, usSpinnerService) {
+    this.getToDocuments = function ($http, $scope, $state, data, url, usSpinnerService) {
         $scope.documents = [];
         $scope.loading = true;
         usSpinnerService.spin("spinner-1");
@@ -146,7 +145,7 @@ fccApp.service('documentsHttpService', function() {
 
         $http.get(url, {
             params: { userId: $scope.userData.UserData.Id, serviceId: $scope.serviceStateId }
-        }).then(function(response) {
+        }).then(function (response) {
             var docs = []
             docs = JSON.parse(response.data);
             for (var i = 0; i < docs.length; i++) {
@@ -162,7 +161,7 @@ fccApp.service('documentsHttpService', function() {
             $('#table').bootstrapTable({
                 data: data,
                 height: '100%',
-                onPostBody: function() {
+                onPostBody: function () {
                     $('#table').bootstrapTable('resetView');
                 }
 
@@ -172,10 +171,10 @@ fccApp.service('documentsHttpService', function() {
 
             var $result = $('#eventsResult');
 
-            $('#table').on('all.bs.table', function(e, name, args) {
-                    // console.log('Event:', name, ', data:', args);
-                })
-                .on('click-row.bs.table', function(e, row, $element) {
+            $('#table').on('all.bs.table', function (e, name, args) {
+                // console.log('Event:', name, ', data:', args);
+            })
+                .on('click-row.bs.table', function (e, row, $element) {
                     // $result.text('Event: click-row.bs.table'+ JSON.stringify(row.userName));
                 })
 
@@ -190,11 +189,11 @@ fccApp.service('documentsHttpService', function() {
     }
 
 
-    this.getToDocumentsSilent = function($http, $scope, $state, data, url, usSpinnerService) {
+    this.getToDocumentsSilent = function ($http, $scope, $state, data, url, usSpinnerService) {
         $scope.documents = [];
         $http.get(url, {
             params: { userId: $scope.userData.UserData.Id, serviceId: $scope.serviceStateId }
-        }).then(function(response) {
+        }).then(function (response) {
             var docs = [];
             data = [];
             docs = JSON.parse(response.data);
@@ -212,47 +211,47 @@ fccApp.service('documentsHttpService', function() {
 
 
     // delete position
-    this.deleteSelectedPositions = function($http, $scope, data, deleteData, url, usSpinnerService) {
+    this.deleteSelectedPositions = function ($http, $scope, data, deleteData, url, usSpinnerService) {
         usSpinnerService.spin("spinner-1");
         var methodType = "DELETE";
         $http({
-                url: url,
-                method: methodType,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify(deleteData)
-            })
-            .then(function(response) {
-                    $scope.loadData = false;
-                    if (response.data == "Success") {
+            url: url,
+            method: methodType,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(deleteData)
+        })
+            .then(function (response) {
+                $scope.loadData = false;
+                if (response.data == "Success") {
 
-                        data = [];
+                    data = [];
 
-                        for (var i = 0; i < deleteData.length; i++) {
-                            for (var j = 0; j < $scope.documents.length; j++) {
-                                if (deleteData[i].Id == $scope.documents[j].Id) {
-                                    $scope.documents.splice(j, 1);
-                                }
+                    for (var i = 0; i < deleteData.length; i++) {
+                        for (var j = 0; j < $scope.documents.length; j++) {
+                            if (deleteData[i].Id == $scope.documents[j].Id) {
+                                $scope.documents.splice(j, 1);
                             }
                         }
-
-                        for (var i = 0; i < $scope.documents.length; i++) {
-                            var dElement = addData($scope.documents[i]);
-                            data.push(dElement);
-                        }
-
-                        $('#table').bootstrapTable('load', data);
-                        showNotify("Success", "Documents have been deleted successfully!", "success");
-                        // success
-                    } else {
-                        showNotify("Fail", "Failed to delete documents", "danger");
                     }
-                    usSpinnerService.stop('spinner-1');
-                    $scope.loading = false;
-                    $('#table').bootstrapTable('resetWidth');
-                },
-                function(response) { // optional
+
+                    for (var i = 0; i < $scope.documents.length; i++) {
+                        var dElement = addData($scope.documents[i]);
+                        data.push(dElement);
+                    }
+
+                    $('#table').bootstrapTable('load', data);
+                    showNotify("Success", "Documents have been deleted successfully!", "success");
+                    // success
+                } else {
+                    showNotify("Fail", "Failed to delete documents", "danger");
+                }
+                usSpinnerService.stop('spinner-1');
+                $scope.loading = false;
+                $('#table').bootstrapTable('resetWidth');
+            },
+                function (response) { // optional
                     // failed
                     $scope.loading = false;
                     usSpinnerService.stop('spinner-1');

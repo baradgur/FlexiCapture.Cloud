@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1eb2d075da9e475d9fc977c3eaf1cdc2" Name="Diagram1">
+      <Diagram DiagramId="be9db86999ab4bfdbc0f530f0aad13ed" Name="Diagram1">
         <EntityTypeShape EntityType="FCCEmailAgentModel.EmailContents" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="FCCEmailAgentModel.Emails" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FCCEmailAgentModel.Emails" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCEmailAgentModel.EmailStates" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCEmailAgentModel.EmailTransactions" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCEmailAgentModel.EmailTransactionStates" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />

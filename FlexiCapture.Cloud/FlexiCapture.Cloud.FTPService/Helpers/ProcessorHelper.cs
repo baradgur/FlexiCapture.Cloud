@@ -102,7 +102,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
 
 
                                 var documentId = assist.AddDocument(taskId, fileInfo, originalFileName, newNameGuid,
-                                    uploadName, localName, md5, 1);
+                                    uploadName, localName, md5, 1, true);
 
                                 System.IO.File.Move(filePathOld, filePathNew);
                                 if (File.Exists(filePathOld))

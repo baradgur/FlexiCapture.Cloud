@@ -21,16 +21,29 @@ namespace FlexiCapture.Cloud.EmailAgent.DBHelpers
             {
                 using (var db = new FCCEmailAgentEntities())
                 {
+                    EmailContentModel content = new EmailContentModel(emailModel.EmailContentLine);
+                    var attachmentsContentModel = content.Elements.Find(x => x.Name == "#attachmentslist#");
+                    
                     Emails email = new Emails();
                     email.Subject = emailModel.Subject;
                     email.FromEmail = emailModel.FromEmail;
                     email.ReceiverUserId = UsersHelper.CheckExistsUserByEmail(emailModel.ToEmails);
                     email.StateId = 1;
                     email.TaskId = taskId;
+                    email.CcResponseTo = string.IsNullOrWhiteSpace(emailModel.CcResponseTo)?"": emailModel.CcResponseTo;
                     email.TypeId = emailModel.TypeId;
                     email.Host = Program.Agent.ServiceSettings.SMTPSettings.Server;
                     email.Port = Program.Agent.ServiceSettings.SMTPSettings.Port;
-                    email.Body = EmailGeneratorHelper.GenerateEmailBody(emailModel.TypeId, emailModel.EmailContentLine);
+                    email.Body = EmailGeneratorHelper.GenerateEmailBody(emailModel.TypeId, content.Elements);
+
+                    if (attachmentsContentModel != null)
+                    {
+                        email.Attachments = EmailGeneratorHelper.GenerateStringAttachments(attachmentsContentModel.Value);
+                    }
+                    else
+                    {
+                        email.Attachments = EmailGeneratorHelper.GenerateStringAttachments("");
+                    }
 
                     db.Emails.Add(email);
                     db.SaveChanges();

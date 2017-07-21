@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using FlexiCapture.Cloud.EmailAgent.DB;
 using FlexiCapture.Cloud.EmailAgent.DBHelpers;
+using FlexiCapture.Cloud.EmailAgent.Helpers.EmailGeneratorHelpers;
 using FlexiCapture.Cloud.EmailAgent.Models;
 using ImapX;
 using ImapX.Enums;
@@ -25,22 +28,41 @@ namespace FlexiCapture.Cloud.EmailAgent.Helpers.EmailHelpers
         {
             try
             {
+                List<EmailAttachmentModel> attachmentModels = new List<EmailAttachmentModel>();
+                XmlSerializer serializer = new XmlSerializer(typeof(List<EmailAttachmentModel>));
+                using (var reader = new StringReader(email.Attachments))
+                {
+                    attachmentModels = (List<EmailAttachmentModel>)serializer.Deserialize(reader);
+                }
+
                 Users user = UsersHelper.GetToUserInfo(email.ReceiverUserId);
-                if (user==null) return "ERROR";
-                
+                if (user == null) return "ERROR";
+
                 var settings = Program.Agent.ServiceSettings;
                 MailMessage mail = new MailMessage(email.FromEmail, user.UserEmail);
                 SmtpClient client = new SmtpClient();
                 client.Port = settings.SMTPSettings.Port;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 //client.UseDefaultCredentials = false;
-                client.Credentials= new System.Net.NetworkCredential(settings.Credentials.UserName, settings.Credentials.Password);
+                client.Credentials = new System.Net.NetworkCredential(settings.Credentials.UserName, settings.Credentials.Password);
                 client.Host = settings.SMTPSettings.Server;
                 mail.Subject = email.Subject;
                 mail.IsBodyHtml = true;
                 mail.Body = email.Body;
+                if (!string.IsNullOrWhiteSpace(email.CcResponseTo))
+                {
+                    mail.CC.Add(email.CcResponseTo);
+                }
+                foreach (var attachment in attachmentModels)
+                {
+                    var attach = EmailGeneratorHelper.GenerateAttachments(attachment);
+                    if (attach != null)
+                    {
+                        mail.Attachments.Add(attach);
+                    }
+                }
                 client.Send(mail);
-                LogHelper.AddLog("Email to: "+mail.To+" succesfully sent");
+                LogHelper.AddLog("Email to: " + mail.To + " succesfully sent");
                 return "OK";
             }
             catch (Exception exception)
@@ -53,7 +75,7 @@ namespace FlexiCapture.Cloud.EmailAgent.Helpers.EmailHelpers
             }
 
         }
-        
+
         #endregion
         #region imap helpers
         /// <summary>
@@ -64,14 +86,14 @@ namespace FlexiCapture.Cloud.EmailAgent.Helpers.EmailHelpers
             try
             {
                 List<EmailMessageModel> models = new List<EmailMessageModel>();
-                var client = new ImapClient(model.ImapSettings.Server,model.ImapSettings.Port,model.ImapSettings.UseSSL);
+                var client = new ImapClient(model.ImapSettings.Server, model.ImapSettings.Port, model.ImapSettings.UseSSL);
                 if (client.Connect())
                 {
 
                     if (client.Login(model.Credentials.UserName, model.Credentials.Password))
                     {
                         // login successful
-                        
+
                         List<string> lst = new List<string>();
 
                         foreach (var folder in client.Folders)
@@ -89,9 +111,9 @@ namespace FlexiCapture.Cloud.EmailAgent.Helpers.EmailHelpers
                                         models.Add(new EmailMessageModel()
                                         {
                                             Body = message.Body.Text,
-                                            DateTime =message.Date,
+                                            DateTime = message.Date,
                                             ReceiverEmail = model.Credentials.UserName,
-                                            SenderEmail =  message.From.Address,
+                                            SenderEmail = message.From.Address,
                                             Subject = message.Subject
                                         });
 
@@ -127,9 +149,9 @@ namespace FlexiCapture.Cloud.EmailAgent.Helpers.EmailHelpers
 
                 switch (model.ReceiveType)
                 {
-                        case ReceiveType.IMAP:
-                        return ReceiveEmailsFromIMAP(model)!=null;
-                        
+                    case ReceiveType.IMAP:
+                        return ReceiveEmailsFromIMAP(model) != null;
+
                 }
                 return false;
             }
@@ -152,47 +174,47 @@ namespace FlexiCapture.Cloud.EmailAgent.Helpers.EmailHelpers
             try
             {
                 List<Tasks> overdueTasks = TaskHelper.GetToOverdueTasks();
-                
-                    foreach (var overdueTask in overdueTasks)
+
+                foreach (var overdueTask in overdueTasks)
+                {
+                    List<Emails> emails = DBHelpers.EmailHelper.GetToNotExecutedEmailsByTaskId(overdueTask.Id);
+
+                    foreach (var email in emails)
                     {
-                        List<Emails> emails = DBHelpers.EmailHelper.GetToNotExecutedEmailsByTaskId(overdueTask.Id);
-
-                        foreach (var email in emails)
+                        //send email
+                        string sendResult = SendMessage(email);
+                        //update email state
+                        int state = 2;
+                        switch (sendResult)
                         {
-                            //send email
-                            string sendResult =SendMessage(email);
-                            //update email state
-                            int state = 2;
-                            switch (sendResult)
-                            {
-                                case "OK":
-                                    state = 2;
-                                    break;
+                            case "OK":
+                                state = 2;
+                                break;
 
-                                case "ERROR":
-                                    state = 3;
-                                    break;
-                            }
-                            
-                             DBHelpers.EmailHelper.UpdateEmailState(email.Id,state);
-
+                            case "ERROR":
+                                state = 3;
+                                break;
                         }
-                        LogHelper.AddLog("Succesfully completed task #"+overdueTask.Id+". Total processed emails: "+emails.Count);
 
-                        DBHelpers.TaskHelper.UpdateTaskState(overdueTask.Id,2);
+                        DBHelpers.EmailHelper.UpdateEmailState(email.Id, state);
+
                     }
-                
+                    LogHelper.AddLog("Succesfully completed task #" + overdueTask.Id + ". Total processed emails: " + emails.Count);
+
+                    DBHelpers.TaskHelper.UpdateTaskState(overdueTask.Id, 2);
+                }
+
             }
             catch (Exception exception)
             {
                 string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                LogHelper.AddLog("Error in method: "+methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
                                  innerException);
             }
         }
         #endregion
 
-       
+
     }
 }

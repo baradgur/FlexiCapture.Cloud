@@ -18,7 +18,6 @@ namespace FlexiCapture.Cloud.EmailAgent.DB
         public FCCEmailAgentEntities()
             : base("name=FCCEmailAgentEntities")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

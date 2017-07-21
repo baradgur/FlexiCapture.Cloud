@@ -144,6 +144,7 @@
     <Compile Include="Models\EmailContentElementModel.cs" />
     <Compile Include="Models\EmailCredentials.cs" />
     <Compile Include="Models\EmailMessageModel.cs" />
+    <Compile Include="Models\EmailAttachmentModel.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IMAPConnectionProtocolModel.cs" />
     <Compile Include="Models\QueueModel.cs" />
@@ -185,7 +186,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="DB\FCCEmailAgentModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

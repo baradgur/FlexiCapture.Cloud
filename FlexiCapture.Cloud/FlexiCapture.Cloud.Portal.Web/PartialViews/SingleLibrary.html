@@ -4,7 +4,7 @@
 
         <div class="row" ng-show="!loading">
             <div id="toolbar">
-                <button type="button" class="btn btn-danger orange-tooltip" ng-click="gotoDeleteSelectedPositions();" data-toggle="tooltip" title="Delete selected" data-placement="bottom">
+                <button type="button" class="btn btn-danger orange-tooltip" ng-if="userData.UserData.UserRoleId!=4" ng-click="gotoDeleteSelectedPositions();" data-toggle="tooltip" title="Delete selected" data-placement="bottom">
 
                     <span class="glyphicon glyphicon-trash"></span> Delete selected
                 </button>
@@ -14,7 +14,7 @@
                     <thead>
 
                         <tr>
-                            <th data-field="state" data-checkbox="true" data-click-to-select="true"></th>
+                            <th data-field="state" data-checkbox="true" data-click-to-select="true" ng-if="userData.UserData.UserRoleId!=4"></th>
                             <th data-field="ViewId" data-visible="false" data-sortable="true">Conversion ID</th>
                             <th data-field="ViewTaskId" data-sortable="true">Task ID</th>
                             <th data-field="dateTime" data-sortable="true">Request Date</th>

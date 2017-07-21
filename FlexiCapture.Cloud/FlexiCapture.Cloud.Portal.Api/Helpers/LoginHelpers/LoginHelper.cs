@@ -78,7 +78,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
                 aModel.UserData.UserRoleId = userLogin.UserRoleId;
                 aModel.UserData.LastActivityDate = userLogin.LastLoginDate.ToString();
                 aModel.UserData.CompanyName = userLogin.Users.CompanyName;
-                aModel.ServiceData = UserServiceDataHelper.GetToUserDataServices(userLogin.Users.Id);
+                aModel.ServiceData = UserServiceDataHelper.GetToUserDataServices(userLogin.Users.ParentUserId ?? userLogin.Users.Id);
                 return aModel;
             }
             catch (Exception exception)

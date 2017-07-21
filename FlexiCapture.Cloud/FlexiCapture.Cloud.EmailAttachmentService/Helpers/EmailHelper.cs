@@ -65,7 +65,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                    
                                         // check whether this email is active and user has email service
                                         assist.UserProfile = assist.CheckServiceAvailabilityByEmail(message.From.Address);
-                                        if (assist.UserProfile != null)
+                                        if (assist.UserProfile != null && assist.UserProfile.Id>0)
                                         {
 
                                             if (message.Body != null)
@@ -76,7 +76,8 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                             foreach (var attachment in message.Attachments)
                                             {
                                                 var extension = Path.GetExtension(attachment.FileName);
-                                                if (CheckExtensions(extensions,extension))// check whether file extension is in the extensions list
+                                                if (CheckExtensions(extensions, extension))
+                                                    // check whether file extension is in the extensions list
                                                 {
                                                     var newNameGuid = Guid.NewGuid();
                                                     var uploadName = newNameGuid + extension;
@@ -85,7 +86,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                                     string originalFileName = attachment.FileName;
                                                     attachment.Download();
                                                     attachment.Save(uploadPath, uploadName);
-                                                    assist.AddLog("Download file: "+uploadName);
+                                                    assist.AddLog("Download file: " + uploadName);
                                                     //add task to db
                                                     var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
                                                     assist.AddLog("Add task: " + taskId);
@@ -93,16 +94,49 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers
                                                     var md5 = assist.GetMD5HashFromFile(filePath);
                                                     //add document
                                                     var fileInfo = new FileInfo(filePath);
-
-                                                    var documentId = assist.AddDocument(taskId, fileInfo, originalFileName, newNameGuid, uploadName, localName, md5, 1);
+                                                    assist.EmailSettings =
+                                                        assist.GetToEmailConversionSettings(assist.UserProfile.UserId);
+                                                    if (assist.EmailSettings != null) { 
+                                                    var documentId = assist.AddDocument(taskId, fileInfo,
+                                                        originalFileName, newNameGuid, uploadName, localName, md5, 1, assist.EmailSettings.ResponseSettings.ShowJob);
 
                                                     assist.Documents = assist.GetDocumentsByTaskId(taskId);
 
-                                                    string content =assist.ConvertProfileToRequestModel(assist.Documents, assist.UserProfile);
+                                                    string content =
+                                                        assist.ConvertProfileToRequestModel(assist.Documents,
+                                                            assist.UserProfile);
                                                     assist.UpdateTaskProfile(taskId, content);
+                                                    }
                                                 }
                                             }
 
+                                        }
+                                        else if(assist.UserProfile!=null)
+                                        {
+                                            string text = "";
+                                            switch (assist.UserProfile.Id)
+                                            {
+                                                case 0:
+                                                    text =
+                                                        "DataCapture.Cloud received a conversion request form this e - mail address." +
+                                                        " This address is not currently registered with a valid account.";
+                                                    break;
+                                                case -1:
+                                                    text = "DataCapture.Cloud received a conversion request form this e-mail address. " +
+                                                           "Subscription to E-mail Attachment Conversion Service is disabled.";
+                                                    break;
+                                                case -2:
+                                                    text = "DataCapture.Cloud received a conversion request form this e-mail address. " +
+                                                           "Subscription to E-mail Attachment Conversion Service is disabled.";
+                                                    break;
+                                                case -3:
+                                                    text = "DataCapture.Cloud received a conversion request form this e-mail address. " +
+                                                           "Viewer doesn't have rights to use E-mail Attachment Conversion Service.";
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            assist.SendEmailResponseFail(message.From.Address, text, "");
                                         }
                                         message.Seen = true;
                                     }
