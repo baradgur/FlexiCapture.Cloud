@@ -67,6 +67,7 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
                     $scope.user.LoginData.UserLoginStateId = 1; // loginStateIsActive
                     $scope.user.UserData.UserName = $scope.user.LoginData.UserLogin;
                     $scope.user.UserData.Email = $scope.user.UserData.UserName;
+                    $scope.user.UserData.ParentUserId = $scope.userData.UserData.Id;
                 } else {
                     $scope.user.UserData.UserName = $scope.user.LoginData.UserLogin;
                     $scope.user.UserData.Email = $scope.user.UserData.UserName;
