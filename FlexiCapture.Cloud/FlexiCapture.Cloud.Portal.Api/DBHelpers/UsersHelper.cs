@@ -10,6 +10,7 @@ using System.Data.Entity;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 using System.Data.Entity;
 using FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers;
+using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.StoreModels;
 using FlexiCapture.Cloud.Portal.Api.Users;
 
@@ -104,30 +105,51 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
                     if (user.ParentUserId.HasValue)
                     {
-                        var subscribes = db.UserServiceSubscribes.Include(x => x.ServiceTypes
+                        IList<DB.UserServiceSubscribes> subscribes = db.UserServiceSubscribes.Include(x => x.ServiceTypes
                                 .UserProfileServiceDefault.Select(xx => xx.UserProfiles))
-                            .Where(x => x.UserId == user.ParentUserId);
+                            .Where(x => x.UserId == user.ParentUserId).ToList();
 
                         foreach (var subscribe in subscribes)
                         {
-                            foreach (var item in subscribe.ServiceTypes.UserProfileServiceDefault)
+                            var profile = new NewProfileModel();
+                            profile.UserId = user.Id;
+                            var name = "";
+                            switch (subscribe.ServiceId)
                             {
-                                DB.UserProfiles userProfiles = new UserProfiles()
-                                {
-                                    UserId = user.Id,
-                                    AnalysisModeId = item.UserProfiles.AnalysisModeId,
-                                    CreationDateTime = item.UserProfiles.CreationDateTime,
-                                    Deskew = item.UserProfiles.Deskew,
-                                    JpegQuality = item.UserProfiles.JpegQuality,
-                                    LookForBarcodes = item.UserProfiles.LookForBarcodes,
-                                    Name = item.UserProfiles.Name,
-                                    OutputFormat = item.UserProfiles.OutputFormat
-                                };
-
-                                db.UserProfiles.Add(userProfiles);
-                                db.SaveChanges();
-
+                                case 1:
+                                    name = "Single File Service";
+                                    break;
+                                case 2:
+                                    name = "Batch Service";
+                                    break;
+                                case 3:
+                                    name = "FTP Service";
+                                    break;
+                                case 4:
+                                    name = "Email Service";
+                                    break;
                             }
+
+                            Guid devKeyForOcrApi = new Guid();
+                            if (subscribe.ServiceId == 5)
+                            {
+                                devKeyForOcrApi = Guid.NewGuid();
+                            }
+
+                            profile.ProfileName = name + " Default Capture Profile ";
+                            var mdl = ManageUserProfileHelper.CreateNewProfile(profile);
+                            //var serializer = new JavaScriptSerializer();
+                            var pModel = serializer.Deserialize<ManageUserProfileModel>(mdl);
+
+                            UserProfileServiceDefault userProfileServiceDefault = new UserProfileServiceDefault()
+                            {
+                                UserProfileId = pModel.Id,
+                                ServiceTypeId = subscribe.ServiceId
+                            };
+
+                            db.UserProfileServiceDefault.Add(userProfileServiceDefault);
+
+                            db.SaveChanges();
                         }
                     }
                     else
@@ -387,7 +409,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         UserName = model.UserName,
                         UserPassword = PasswordHelper.Crypt.EncryptString(model.Password),
                         UserLoginStateId = 2,
-                        UserRoleId = 3,
+                        UserRoleId = 2,
                         UserId = user.Id,
                         LastLoginDate = DateTime.Now,
                         RegistrationDate = DateTime.Now
