@@ -14,6 +14,30 @@
         return dElement;
     }
 
+    this.getResponseEmailSettings = function($http, $scope, $state, data, url, usSpinnerService) {
+        $http.get(url,
+        {
+            params: { userId: $scope.userData.UserData.Id }
+        }).then(function(response) {
+            $scope.responseSetting = response.data;
+        });
+    }
+
+    this.addResponseEmailSettings = function($http, $scope, $state, data, url, usSpinnerService) {
+        $http({
+            url: url,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify($scope.responseSetting)
+        }).then(function (response) {
+            if (response.status == 200) {
+                showNotify("Успех", "Setting was successfully added", "success");
+            } else {
+                showNotify("Успех", "Problems while updating settings", "danger");
+            }
+        });
+    }
+
 
     //get to clients list
     this.getToEmailSettingsList = function ($http, $scope, $state, data, url, usSpinnerService) {

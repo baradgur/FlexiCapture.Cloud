@@ -27,7 +27,6 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/lightbox.js",
                 "~/Scripts/validator.min.js",
                 "~/Scripts/validator.js"
-                // "~/Scripts/bootstrap-datetimepicker.min.js"
                 //
                 ));
 
@@ -72,7 +71,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/mask.js",
                 "~/Scripts/angularjs-dropdown-multiselect.min.js",
                 "~/Scripts/chk-multi-select.js",
-                "~/Scripts/angular-recaptcha.js"
+                "~/Scripts/angular-recaptcha.js",
+                "~/Scripts/angular-animate.min.js"
                 //angularjs-dropdown-multiselect.min.js
                 ));
 
@@ -111,6 +111,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                   "~/Scripts/app/Controllers/emailProfileController.js",
                 "~/Scripts/app/Controllers/emailSettingsController.js",
                 "~/Scripts/app/Controllers/emailSettingManageController.js",
+                "~/Scripts/app/Controllers/emailResponseSettingsController.js",
 
                 "~/Scripts/app/Controllers/storeController.js",
                 "~/Scripts/app/Controllers/userProfileController.js",

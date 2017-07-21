@@ -40,5 +40,23 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.SettingsModels
         /// e-mail address(es).  Separate multiple addresses with a comma.
         /// </summary>
         public string Addresses { get; set; }
+
+        public EmailResponseSettingsModel(int id, int userId, bool showJob, bool sendReply,
+            bool addAttachment, bool addLink, bool ccResponse, string addreses)
+        {
+            Id = id;
+            UserId = userId;
+            ShowJob = showJob;
+            SendReply = sendReply;
+            AddAttachment = addAttachment;
+            AddLink = addLink;
+            CCResponse = ccResponse;
+            Addresses = addreses;
+        }
+
+        public EmailResponseSettingsModel()
+        {
+            
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
+            this.EmailResponseSettings = new HashSet<EmailResponseSettings>();
             this.EmailSettings = new HashSet<EmailSettings>();
             this.FTPSettings = new HashSet<FTPSettings>();
             this.Tasks = new HashSet<Tasks>();
@@ -36,6 +37,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public string CompanyName { get; set; }
         public Nullable<int> ParentUserId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmailResponseSettings> EmailResponseSettings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailSettings> EmailSettings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

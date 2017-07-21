@@ -36,6 +36,7 @@
           <Property Name="Hash" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="DocumentCategoryId" Type="int" />
           <Property Name="ErrorText" Type="nvarchar(max)" />
+          <Property Name="IsShown" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DocumentStates">
           <Key>
@@ -51,6 +52,19 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Extension" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailResponseSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ShowJob" Type="bit" Nullable="false" />
+          <Property Name="SendReply" Type="bit" Nullable="false" />
+          <Property Name="AddAttachment" Type="bit" Nullable="false" />
+          <Property Name="AddLink" Type="bit" Nullable="false" />
+          <Property Name="CCResponse" Type="bit" Nullable="false" />
+          <Property Name="Addresses" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="EmailSettings">
           <Key>
@@ -351,6 +365,18 @@
             </Principal>
             <Dependent Role="Documents">
               <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailResponseSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="EmailResponseSettings" Type="Self.EmailResponseSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailResponseSettings">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -756,6 +782,7 @@
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentStates" EntityType="Self.DocumentStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentTypes" EntityType="Self.DocumentTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailResponseSettings" EntityType="Self.EmailResponseSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailSettings" EntityType="Self.EmailSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExportFormatsCatalog" EntityType="Self.ExportFormatsCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FTPSettings" EntityType="Self.FTPSettings" Schema="dbo" store:Type="Tables" />
@@ -797,6 +824,10 @@
           <AssociationSet Name="FK_Documents_Tasks" Association="Self.FK_Documents_Tasks">
             <End Role="Tasks" EntitySet="Tasks" />
             <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailResponseSettings_Users" Association="Self.FK_EmailResponseSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="EmailResponseSettings" EntitySet="EmailResponseSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_EmailSettings_Users" Association="Self.FK_EmailSettings_Users">
             <End Role="Users" EntitySet="Users" />
@@ -970,6 +1001,7 @@
           <Property Name="Hash" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DocumentCategoryId" Type="Int32" />
           <Property Name="ErrorText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsShown" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DocumentCategories" Relationship="Self.FK_Documents_DocumentCategories" FromRole="Documents" ToRole="DocumentCategories" />
           <NavigationProperty Name="DocumentStates" Relationship="Self.FK_Documents_DocumentStates" FromRole="Documents" ToRole="DocumentStates" />
           <NavigationProperty Name="DocumentTypes" Relationship="Self.FK_Documents_DocumentTypes" FromRole="Documents" ToRole="DocumentTypes" />
@@ -993,6 +1025,20 @@
           <Property Name="Extension" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Documents" Relationship="Self.FK_Documents_DocumentTypes" FromRole="DocumentTypes" ToRole="Documents" />
           <NavigationProperty Name="ZipDocuments" Relationship="Self.FK_ZipDocuments_DocumentTypes" FromRole="DocumentTypes" ToRole="ZipDocuments" />
+        </EntityType>
+        <EntityType Name="EmailResponseSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ShowJob" Type="Boolean" Nullable="false" />
+          <Property Name="SendReply" Type="Boolean" Nullable="false" />
+          <Property Name="AddAttachment" Type="Boolean" Nullable="false" />
+          <Property Name="AddLink" Type="Boolean" Nullable="false" />
+          <Property Name="CCResponse" Type="Boolean" Nullable="false" />
+          <Property Name="Addresses" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_EmailResponseSettings_Users" FromRole="EmailResponseSettings" ToRole="Users" />
         </EntityType>
         <EntityType Name="EmailSettings">
           <Key>
@@ -1231,6 +1277,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompanyName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
           <Property Name="ParentUserId" Type="Int32" />
+          <NavigationProperty Name="EmailResponseSettings" Relationship="Self.FK_EmailResponseSettings_Users" FromRole="Users" ToRole="EmailResponseSettings" />
           <NavigationProperty Name="EmailSettings" Relationship="Self.FK_EmailSettings_Users" FromRole="Users" ToRole="EmailSettings" />
           <NavigationProperty Name="FTPSettings" Relationship="Self.FK_FTPSettings_Users" FromRole="Users" ToRole="FTPSettings" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Users" FromRole="Users" ToRole="Tasks" />
@@ -1404,6 +1451,18 @@
             </Principal>
             <Dependent Role="ZipDocuments">
               <PropertyRef Name="DocumentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailResponseSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="EmailResponseSettings" Type="Self.EmailResponseSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmailResponseSettings">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1761,6 +1820,7 @@
           <EntitySet Name="Documents" EntityType="Self.Documents" />
           <EntitySet Name="DocumentStates" EntityType="Self.DocumentStates" />
           <EntitySet Name="DocumentTypes" EntityType="Self.DocumentTypes" />
+          <EntitySet Name="EmailResponseSettings" EntityType="Self.EmailResponseSettings" />
           <EntitySet Name="EmailSettings" EntityType="Self.EmailSettings" />
           <EntitySet Name="ExportFormatsCatalog" EntityType="Self.ExportFormatsCatalog" />
           <EntitySet Name="FTPSettings" EntityType="Self.FTPSettings" />
@@ -1818,6 +1878,10 @@
           <AssociationSet Name="FK_ZipDocuments_DocumentTypes" Association="Self.FK_ZipDocuments_DocumentTypes">
             <End Role="DocumentTypes" EntitySet="DocumentTypes" />
             <End Role="ZipDocuments" EntitySet="ZipDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailResponseSettings_Users" Association="Self.FK_EmailResponseSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="EmailResponseSettings" EntitySet="EmailResponseSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_EmailSettings_Users" Association="Self.FK_EmailSettings_Users">
             <End Role="Users" EntitySet="Users" />
@@ -1974,6 +2038,7 @@
                 <ScalarProperty Name="Hash" ColumnName="Hash" />
                 <ScalarProperty Name="DocumentCategoryId" ColumnName="DocumentCategoryId" />
                 <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
+                <ScalarProperty Name="IsShown" ColumnName="IsShown" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1991,6 +2056,20 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Extension" ColumnName="Extension" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailResponseSettings">
+            <EntityTypeMapping TypeName="FCCPortalModel.EmailResponseSettings">
+              <MappingFragment StoreEntitySet="EmailResponseSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ShowJob" ColumnName="ShowJob" />
+                <ScalarProperty Name="SendReply" ColumnName="SendReply" />
+                <ScalarProperty Name="AddAttachment" ColumnName="AddAttachment" />
+                <ScalarProperty Name="AddLink" ColumnName="AddLink" />
+                <ScalarProperty Name="CCResponse" ColumnName="CCResponse" />
+                <ScalarProperty Name="Addresses" ColumnName="Addresses" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
