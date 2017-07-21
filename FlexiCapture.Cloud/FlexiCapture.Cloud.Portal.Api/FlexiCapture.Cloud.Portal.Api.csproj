@@ -160,7 +160,6 @@
     <Compile Include="Controllers\DefaultProfileController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\DownloadFileController.cs" />
-    <Compile Include="Controllers\EmailResponseSettingsController.cs" />
     <Compile Include="Controllers\EmailSettingsController.cs" />
     <Compile Include="Controllers\FTPSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -186,115 +185,115 @@
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
     <Compile Include="DB\AnalysisModeCatalog.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\DocumentCategories.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Documents.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\DocumentStates.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\DocumentTypes.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\EmailResponseSettings.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\EmailSettings.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ExportFormatsCatalog.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\FCCPortalEntities.Context.cs">
+    <Compile Include="DB\FCCPortalModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FCCPortalEntities.Context.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\FCCPortalEntities.cs">
+    <Compile Include="DB\FCCPortalModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DB\FCCPortalEntities.Designer.cs">
+    <Compile Include="DB\FCCPortalModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FCCPortalEntities.edmx</DependentUpon>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DB\FTPSettings.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\LanguagesCatalog.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Log.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\PrintTypeCatalog.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\RotationTypeCatalog.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ServiceTypes.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Settings.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Tasks.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\TaskStates.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserConfirmationEmails.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserLogins.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserLoginStates.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserProfileExportFormats.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserProfileLanguages.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserProfilePrintTypes.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserProfiles.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserProfileServiceDefault.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserRoleTypes.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Users.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserServiceSubscribes.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserServiceSubscribeStates.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserSettings.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ZipDocuments.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ZipTasks.cs">
-      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -307,7 +306,6 @@
     <Compile Include="Helpers\DocumentsHelper.cs" />
     <Compile Include="Helpers\DocumentsHelpers\DocumentsHelper.cs" />
     <Compile Include="Helpers\EmailHelpers\EmailHelper.cs" />
-    <Compile Include="Helpers\EmailHelpers\EmailResponseSettingsHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\LoginHelpers\LoginHelper.cs" />
     <Compile Include="Helpers\ManageUserHelpers\ManageUserHelper.cs" />
@@ -355,15 +353,15 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DB\FCCPortalEntities.Context.tt">
+    <Content Include="DB\FCCPortalModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalEntities.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalEntities.Context.cs</LastGenOutput>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DB\FCCPortalEntities.tt">
+    <Content Include="DB\FCCPortalModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FCCPortalEntities.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalEntities.cs</LastGenOutput>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+      <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -381,12 +379,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="DB\FCCPortalEntities.edmx">
+    <EntityDeploy Include="DB\FCCPortalModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FCCPortalEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>FCCPortalModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DB\FCCPortalEntities.edmx.diagram">
-      <DependentUpon>FCCPortalEntities.edmx</DependentUpon>
+    <Content Include="DB\FCCPortalModel.edmx.diagram">
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

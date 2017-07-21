@@ -168,6 +168,17 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
             {
                 // check whether all zip tasks are completed
                 bool hasSuccess = false;
+
+                List<Tuple<int, string>> downloadIds = new List<Tuple<int, string>>();
+                List<Tuple<string, string>> attachmentsLinks = new List<Tuple<string, string>>();
+                if (outerTask.ServiceId == 4) //if email attachment service
+                {
+                    assist.EmailSettings = assist.GetToEmailConversionSettings(outerTask.UserId);
+                    if (assist.EmailSettings == null || assist.EmailSettings.ResponseSettings == null)
+                    {
+                        return;
+                    }
+                }
                 foreach (var zipTask in outerTask.ZipTasks)
                 {
                     if (zipTask.TaskStateId == 1 || zipTask.TaskStateId == 2)
@@ -225,8 +236,42 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                 assist.UpdateDocumentErrorsFromZipDocs(outerTask.Id);
                 assist.UpdateTaskState(outerTask.Id, hasSuccess ? 3 : 4);
                 assist.UpdateDocumentStatesByTaskId(outerTask.Id, hasSuccess ? 3 : 4);
-                assist.AddResultDocument(outerTask.Id, archiveGuid, originalArchiveName, newName, filePath);
+                if (hasSuccess)
+                {
+                    int resultDocumentId = assist.AddResultDocument(outerTask.Id, archiveGuid, originalArchiveName,
+                        newName, filePath);
+                    if (assist.EmailSettings != null && assist.EmailSettings.ResponseSettings != null &&
+                        assist.EmailSettings.ResponseSettings.AddAttachment)
+                    {
+                        attachmentsLinks.Add(new Tuple<string, string>(filePath, originalArchiveName));
+                    }
+                    if (assist.EmailSettings != null && assist.EmailSettings.ResponseSettings != null &&
+                        assist.EmailSettings.ResponseSettings.AddAttachment)
+                    {
+                        downloadIds.Add(new Tuple<int, string>(resultDocumentId, originalArchiveName));
+                    }
+                }
+                if (outerTask.ServiceId == 4) //if email attachment service
+                {
 
+                    if (assist.EmailSettings != null && assist.EmailSettings.ResponseSettings != null && assist.EmailSettings.ResponseSettings.SendReply)
+                    {
+                        if (hasSuccess)
+                        {
+                            string text =
+                                "DataCapture.Cloud received a conversion request form this e-mail address.  Here is your conversion result:";
+                            assist.SendEmailResponse(outerTask.UserId, downloadIds, attachmentsLinks,
+                                assist.EmailSettings.ResponseSettings.CCResponse
+                                    ? assist.EmailSettings.ResponseSettings.Addresses
+                                    : "",
+                                text);
+                        }
+                        else
+                        {
+                            assist.SendEmailResponseFail(outerTask.UserId, "DataCapture.Cloud received a conversion request form this e - mail address. Error occured while processing request.", "");
+                        }
+                    }
+                }
             }
             catch (Exception exception)
             {

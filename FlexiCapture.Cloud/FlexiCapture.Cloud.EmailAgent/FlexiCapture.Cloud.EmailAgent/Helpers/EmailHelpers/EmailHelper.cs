@@ -30,9 +30,12 @@ namespace FlexiCapture.Cloud.EmailAgent.Helpers.EmailHelpers
             {
                 List<EmailAttachmentModel> attachmentModels = new List<EmailAttachmentModel>();
                 XmlSerializer serializer = new XmlSerializer(typeof(List<EmailAttachmentModel>));
-                using (var reader = new StringReader(email.Attachments))
+                if (!string.IsNullOrWhiteSpace(email.Attachments))
                 {
-                    attachmentModels = (List<EmailAttachmentModel>)serializer.Deserialize(reader);
+                    using (var reader = new StringReader(email.Attachments))
+                    {
+                        attachmentModels = (List<EmailAttachmentModel>)serializer.Deserialize(reader);
+                    }
                 }
 
                 Users user = UsersHelper.GetToUserInfo(email.ReceiverUserId);

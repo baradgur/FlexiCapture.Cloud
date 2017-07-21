@@ -32,36 +32,27 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper
         {
             try
             {
-                LogHelper.AddLog("Make Processing XYZ");
-
                 //getting available file extentions
                 Assist serviceAssist = new Assist();
-                LogHelper.AddLog("Make assist");
 
                 string serverPath = serviceAssist.GetSettingValueByName("MainPath");
-                LogHelper.AddLog("ServerPath:"+serverPath);
                 string uploadFolder = serviceAssist.GetSettingValueByName("UploadFolder");
                 string resultFolder = serviceAssist.GetSettingValueByName("ResultFolder");
                 string resultZipFolder = serviceAssist.GetSettingValueByName("ResultZipFolder");
-                LogHelper.AddLog("RZF:"+resultZipFolder);
                 string uploadZipFolder = serviceAssist.GetSettingValueByName("UploadZipFolder");
-                LogHelper.AddLog("UZF:"+uploadZipFolder);
                 string uploadUrl = Path.Combine(serverPath, uploadFolder);
-                LogHelper.AddLog("UURL:" + uploadUrl);
 
                 string uploadZipUrl = Path.Combine(serverPath, uploadZipFolder);
-                LogHelper.AddLog("UZipURL:" + uploadZipUrl);
-                LogHelper.AddLog("Zip Make Processing");
+
                 List<string> extentions = serviceAssist.GetToAvailableFileExtensions();
 
                 //check tasks
                 List<Tasks> notExecutedTasks = serviceAssist.GetToNotExecutedTasks();
-                LogHelper.AddLog("Zip Not ExecutedTasks =" + notExecutedTasks.Count);
 
                 //upload files
                 foreach (var notExecutedTask in notExecutedTasks)
                 {
-                    serviceAssist.UserProfile = serviceAssist.GetUserProfile(notExecutedTask.UserId, notExecutedTask.ServiceId);
+                    serviceAssist.UserProfile = serviceAssist.GetToUserProfileForZipConversion(notExecutedTask.UserId, notExecutedTask.ServiceId);
                     Documents document = serviceAssist.GetToDocumentByTaskId(notExecutedTask.Id);
                     if (document != null)
                     {

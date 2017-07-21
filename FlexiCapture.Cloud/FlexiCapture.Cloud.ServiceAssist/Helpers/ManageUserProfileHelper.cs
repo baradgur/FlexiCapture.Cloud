@@ -117,5 +117,41 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
                 return null;
             }
         }
+        public static ManageUserProfileModel GetToUserProfileForZipConversion(int objUserId, int i)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    var userProfiles = db.UserProfiles
+                            .Include(x => x.UserProfileServiceDefault)
+                            .Where(x => x.UserId == objUserId);
+                    int profileId = 0;
+                    foreach (var userProfile in userProfiles)
+                    {
+                        foreach (var defaultService in userProfile.UserProfileServiceDefault)
+                        {
+                            if (defaultService.ServiceTypeId == i)
+                            {
+                                profileId = userProfile.Id;
+                            }
+                        }
+                    }
+                    if (profileId != 0)
+                    {
+                        return Helpers.ManageUserProfileHelper.GetToUserProfileById(profileId, i);
+                    }
+                    return null;
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+                return null;
+            }
+        }
     }
 }

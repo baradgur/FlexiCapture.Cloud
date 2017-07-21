@@ -266,6 +266,11 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return Helpers.ManageUserProfileHelper.GetToUserProfile(objUserId, i);
         }
 
+        public ManageUserProfileModel GetToUserProfileForZipConversion(int objUserId, int i)
+        {
+            return Helpers.ManageUserProfileHelper.GetToUserProfileForZipConversion(objUserId, i);
+        }
+
         public void AddResultZipDocument(int taskId, Guid guid, string originalFileName, string realFileName, string filePath)
         {
             DocumentsHelper.AddResultZipDocument(taskId, guid, originalFileName, realFileName, filePath);
