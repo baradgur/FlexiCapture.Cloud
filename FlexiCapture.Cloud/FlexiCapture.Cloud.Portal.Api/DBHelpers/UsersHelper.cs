@@ -81,7 +81,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         LastName = model.UserData.LastName,
                         Email = model.UserData.Email,
                         PhoneNumber = model.UserData.PhoneNumber,
-                        CompanyName = model.UserData.CompanyName
+                        CompanyName = model.UserData.CompanyName,
+                        ParentUserId = model.UserData.ParentUserId
 
                     };
 
@@ -101,48 +102,80 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     db.UserLogins.Add(uLogin);
                     db.SaveChanges();
 
-                    if (model.ServiceData.SingleFileConversionService)
+                    if (user.ParentUserId.HasValue)
                     {
-                        StoreModel stmModel = new StoreModel()
-                        {
-                            UserId = user.Id,
-                            ServiceId = (int)Models.Enums.ServiceTypes.Single,
-                            State = true
-                        };
-                        StoreHelper.SetStoreState(stmModel);
-                    }
+                        var subscribes = db.UserServiceSubscribes.Include(x => x.ServiceTypes
+                                .UserProfileServiceDefault.Select(xx => xx.UserProfiles))
+                            .Where(x => x.UserId == user.ParentUserId);
 
-                    if (model.ServiceData.BatchFileConversionService)
-                    {
-                        StoreModel stmModel = new StoreModel()
+                        foreach (var subscribe in subscribes)
                         {
-                            UserId = user.Id,
-                            ServiceId = (int)Models.Enums.ServiceTypes.Batch,
-                            State = true
-                        };
-                        StoreHelper.SetStoreState(stmModel);
-                    }
+                            foreach (var item in subscribe.ServiceTypes.UserProfileServiceDefault)
+                            {
+                                DB.UserProfiles userProfiles = new UserProfiles()
+                                {
+                                    UserId = user.Id,
+                                    AnalysisModeId = item.UserProfiles.AnalysisModeId,
+                                    CreationDateTime = item.UserProfiles.CreationDateTime,
+                                    Deskew = item.UserProfiles.Deskew,
+                                    JpegQuality = item.UserProfiles.JpegQuality,
+                                    LookForBarcodes = item.UserProfiles.LookForBarcodes,
+                                    Name = item.UserProfiles.Name,
+                                    OutputFormat = item.UserProfiles.OutputFormat
+                                };
 
-                    if (model.ServiceData.EmailAttachmentFileConversionService)
-                    {
-                        StoreModel stmModel = new StoreModel()
-                        {
-                            UserId = user.Id,
-                            ServiceId = (int)Models.Enums.ServiceTypes.Email,
-                            State = true
-                        };
-                        StoreHelper.SetStoreState(stmModel);
-                    }
+                                db.UserProfiles.Add(userProfiles);
+                                db.SaveChanges();
 
-                    if (model.ServiceData.FTPFileConversionService)
+                            }
+                        }
+                    }
+                    else
                     {
-                        StoreModel stmModel = new StoreModel()
+                        if (model.ServiceData.SingleFileConversionService)
                         {
-                            UserId = user.Id,
-                            ServiceId = (int)Models.Enums.ServiceTypes.FTP,
-                            State = true
-                        };
-                        StoreHelper.SetStoreState(stmModel);
+                            StoreModel stmModel = new StoreModel()
+                            {
+                                UserId = user.Id,
+                                ServiceId = (int) Models.Enums.ServiceTypes.Single,
+                                State = true
+                            };
+                            StoreHelper.SetStoreState(stmModel);
+                        }
+
+
+                        if (model.ServiceData.BatchFileConversionService)
+                        {
+                            StoreModel stmModel = new StoreModel()
+                            {
+                                UserId = user.Id,
+                                ServiceId = (int) Models.Enums.ServiceTypes.Batch,
+                                State = true
+                            };
+                            StoreHelper.SetStoreState(stmModel);
+                        }
+
+                        if (model.ServiceData.EmailAttachmentFileConversionService)
+                        {
+                            StoreModel stmModel = new StoreModel()
+                            {
+                                UserId = user.Id,
+                                ServiceId = (int) Models.Enums.ServiceTypes.Email,
+                                State = true
+                            };
+                            StoreHelper.SetStoreState(stmModel);
+                        }
+
+                        if (model.ServiceData.FTPFileConversionService)
+                        {
+                            StoreModel stmModel = new StoreModel()
+                            {
+                                UserId = user.Id,
+                                ServiceId = (int) Models.Enums.ServiceTypes.FTP,
+                                State = true
+                            };
+                            StoreHelper.SetStoreState(stmModel);
+                        }
                     }
 
                     var response = GetToUsersData(user.Id);

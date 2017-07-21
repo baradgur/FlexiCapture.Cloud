@@ -64,7 +64,21 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 using (var db = new FCCPortalEntities())
                 {
 
-                    List<Documents> documents = db.Documents
+                    List<Documents> documents;
+
+                    //DB.UserLogins user = db.UserLogins.SingleOrDefault(x => x.UserId == userId);
+
+                    //if (user.UserRoleId == 4)
+                    //{
+                    //    documents = db.Documents
+                    //    .Include(x => x.DocumentStates)
+                    //    .Include(x => x.DocumentTypes)
+                    //    .Include(x => x.Tasks)
+                    //    .Include(x => x.Tasks)
+                    //    .Where(x => x.Tasks.UserId == userId && x.DocumentCategoryId == 1).ToList();
+                    //}
+
+                      documents =  db.Documents
                         .Include(x => x.DocumentStates)
                         .Include(x => x.DocumentTypes)
                         .Include(x => x.Tasks)
