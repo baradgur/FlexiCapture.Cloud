@@ -13,6 +13,7 @@ using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
+using FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
 {
@@ -161,6 +162,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
                 //send confirmation email
                 
                 Helpers.ConfirmationEmailHelpers.ConfirmationEmailHelper.SendConfirmUserEmail(model.Id);
+                EmailHelper.SendNewUserInfoEmail(model.FirstName, model.LastName, model.Email, model.CompanyName, model.PhoneNumber,
+                    "Account Owner");
                 return serializer.Serialize(model);
             }
             catch (Exception exception)

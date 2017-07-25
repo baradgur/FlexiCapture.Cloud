@@ -35,37 +35,50 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers
             }
         }
 
-        public static void AddSettings(EmailResponseSettingsModel model)
+        public static EmailResponseSettingsModel AddSettings(EmailResponseSettingsModel model)
         {
             try
             {
                 using (FCCPortalEntities db = new FCCPortalEntities())
                 {
                     var settings = db.EmailResponseSettings
-                        .SingleOrDefault(x => x.UserId == model.UserId);
+                        .FirstOrDefault(x => x.Id == model.Id);
 
-                    if (settings == null)
-                        throw new NullReferenceException();
+                    if (settings != null)
+                    {
+                        settings.UserId = model.UserId;
+                        settings.AddAttachment = model.AddAttachment;
+                        settings.AddLink = model.AddLink;
+                        settings.Addresses = model.Addresses;
+                        settings.CCResponse = model.CCResponse;
+                        settings.SendReply = model.SendReply;
+                        settings.ShowJob = model.ShowJob;
 
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        settings = new DB.EmailResponseSettings();
+                        settings.UserId = model.UserId;
+                        settings.AddAttachment = model.AddAttachment;
+                        settings.AddLink = model.AddLink;
+                        settings.Addresses = model.Addresses;
+                        settings.CCResponse = model.CCResponse;
+                        settings.SendReply = model.SendReply;
+                        settings.ShowJob = model.ShowJob;
 
-                    settings.Id = model.Id;
-                    settings.UserId = model.UserId;
-                    settings.AddAttachment = model.AddAttachment;
-                    settings.AddLink = model.AddLink;
-                    settings.Addresses = model.Addresses;
-                    settings.CCResponse = model.CCResponse;
-                    settings.SendReply = model.SendReply;
-                    settings.ShowJob = model.ShowJob;
-                    
+                        db.EmailResponseSettings.Add(settings);
+                        db.SaveChanges();
+                        model.Id = settings.Id;
+                    }
 
-                    db.SaveChanges();
+                    return model;
 
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return null;
             }
         }
     }

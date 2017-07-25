@@ -104,7 +104,7 @@
             <!--</div>-->
 
             <div class="panel-group">
-                <div class="panel panel-success" style="margin-top: -2%">
+                <div class="panel" style="margin-top: -2%">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a href="javascript:;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">
@@ -281,9 +281,14 @@
             </div>
         </div>
 
+        <div class="panel panel-info">
+            <div class="panel-heading"><strong>STEP 3: Start Recognition</strong></div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0 && !pastedUrl">Start Conversion</button>
+            </div>
+        </div>
 
-
-        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0 && !pastedUrl">STEP 3: Start Recognition</button>
+        
     </div>
     <!--END PROFILES-->
 </div>

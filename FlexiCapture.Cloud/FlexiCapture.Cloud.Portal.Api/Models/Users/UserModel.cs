@@ -48,6 +48,7 @@
         public string UserName { get; set; }
         public string RegistrationDate { get; set; }
         public int ParentUserId { get; set; }
+        public string ParentUserName { get; set; }
 
         /// <summary>
        /// constructor

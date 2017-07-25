@@ -143,11 +143,11 @@
                     break;
 
                 case 3:
-                    $state.go("main.dashboard.ftplibrary");
+                    $state.go("main.dashboard.ftpsettings");
                     break;
 
                 case 4:
-                    $state.go("main.dashboard.emaillibrary");
+                    $state.go("main.dashboard.emailsettings");
                     break;
 
                 case 5:

@@ -732,3 +732,6 @@ input:checked + .slider:before {
   transition: all linear 0.5s;
 }
 
+.highlighted-service-menu {
+    background-color: #eeeeee;
+}

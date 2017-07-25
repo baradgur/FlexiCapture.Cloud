@@ -3,10 +3,16 @@
     function addData(user) {
         var dElement = {};
         dElement.userId = user.UserData.Id;
+        dElement.viewId = 110000 + user.UserData.Id;
         dElement.userName = user.UserData.FirstName;
         dElement.userLastName = user.UserData.LastName;
         dElement.roleName = user.UserRoleData.ShortDescription;
         dElement.lastActivityDate = user.UserData.LastActivityDate;
+        dElement.phoneNum = user.UserData.PhoneNumber;
+        dElement.parentName = user.UserData.ParentUserName;
+        dElement.regDate = user.LoginData.RegistrationDate;
+        dElement.companyName = user.UserData.CompanyName;
+        dElement.email = user.UserData.Email;
         
         
         return dElement;

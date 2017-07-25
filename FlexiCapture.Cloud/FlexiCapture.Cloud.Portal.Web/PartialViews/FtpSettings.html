@@ -3,7 +3,7 @@
     <div class="container">
 
         <div class="row" ng-show="!loading">
-            <div id="toolbar"  ng-show="userData.UserData.UserRoleId == 1">
+            <div id="toolbar"  ng-show="userData.UserData.UserRoleId == 1 || userData.UserData.UserRoleId == 2">
                 <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add New Settings Item" data-placement="bottom">
 
                     <span class="glyphicon glyphicon-plus"></span>
@@ -16,7 +16,8 @@
             </div>-->
             <div class="form-inline">
                 <table id="ftpSettingstable" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true"
-                       data-height="300" data-toggle="table">
+                       data-height="300" data-toggle="table"
+                       data-page-list="[5,10, 25, 50, 100, 250, 500, All]">
                     <thead>
                         <tr>
                             <th data-field="settingId" data-sortable="true">Id</th>

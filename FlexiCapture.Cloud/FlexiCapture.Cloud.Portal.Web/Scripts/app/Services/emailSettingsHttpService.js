@@ -18,8 +18,20 @@
         $http.get(url,
         {
             params: { userId: $scope.userData.UserData.Id }
-        }).then(function(response) {
+        }).then(function (response) {
             $scope.responseSetting = response.data;
+            if ($scope.userData.UserData.Id != $scope.responseSetting.UserId) {
+
+                $scope.responseSetting.ShowJob = true;
+                $scope.responseSetting.SendReply = true;
+                $scope.responseSetting.AddAttachment = true;
+
+                $scope.responseSettingToCompare = angular.copy($scope.responseSetting);
+
+                $scope.responseSetting.UserId = $scope.userData.UserData.Id;
+            } else {
+                $scope.responseSettingToCompare = angular.copy($scope.responseSetting);
+            }
         });
     }
 
@@ -30,8 +42,10 @@
             contentType: "application/json",
             data: JSON.stringify($scope.responseSetting)
         }).then(function (response) {
-            if (response.status == 200) {
-                showNotify("Успех", "Setting was successfully added", "success");
+            if (response.data != null) {
+                $scope.responseSetting = response.data;
+                $scope.responseSettingToCompare = angular.copy($scope.responseSetting);
+                showNotify("Успех", "Setting were successfully updated", "success");
             } else {
                 showNotify("Успех", "Problems while updating settings", "danger");
             }

@@ -69,8 +69,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             Error = new ErrorModel()
                             {
                                 Name = "Error registration",
-                                ShortDescription = "User exists",
-                                FullDescription = "User with this credentials is exists"
+                                ShortDescription = "",
+                                FullDescription = "User with this e-mail address already exists"
 
                             }
                         });
@@ -201,6 +201,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     }
 
                     var response = GetToUsersData(user.Id);
+
+                    EmailHelper.SendNewUserInfoEmail(response.UserData.FirstName, response.UserData.LastName, response.UserData.Email, response.UserData.CompanyName,
+                        response.UserData.PhoneNumber, response.UserData.UserRoleName);
+
                     return serializer.Serialize(response);
 
                 }
@@ -237,7 +241,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 using (var db = new FCCPortalEntities())
                 {
                     var login = db.UserLogins
-                        .Include(x => x.Users)
+                        .Include(x => x.Users.Users2)
                         .Include(x => x.UserLoginStates)
                         .Include(x => x.UserRoleTypes)
                         .FirstOrDefault(x => x.Users.Id == id);
@@ -256,8 +260,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         Email = login.Users.Email,
                         CompanyName = login.Users.CompanyName,
                         PhoneNumber = login.Users.PhoneNumber,
-                        ParentUserId = login.Users.ParentUserId ?? 0
-
+                        ParentUserId = login.Users.ParentUserId ?? 0,
+                        ParentUserName = login.Users.Users2!=null? login.Users.Users2.FirstName+" "+ login.Users.Users2.LastName:""
                     };
 
                     return model;
@@ -293,6 +297,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         users = db.Users
                             .Where(x => x.ParentUserId == userModel.Id)
                             .Include(x => x.UserServiceSubscribes)
+                            .Include(x => x.Users2)
                             .ToList();
                     }
                     
@@ -705,5 +710,34 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 return serializer.Serialize(model);
             }
         }
+
+
+
+
+        /// <summary>
+        /// delete users
+        /// </summary>
+        /// <returns></returns>
+        //public static string DeleteUsers(List<int> userIds)
+        //{
+        //    try
+        //    {
+        //        JavaScriptSerializer serializer = new JavaScriptSerializer();
+                
+        //        using (var db = new FCCPortalEntities())
+        //        {
+        //            var users = 
+        //        }
+        //        return "";
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+        //        string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+        //        LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+        //                           innerException);
+        //        return "";
+        //    }
+        //}
     }
 }

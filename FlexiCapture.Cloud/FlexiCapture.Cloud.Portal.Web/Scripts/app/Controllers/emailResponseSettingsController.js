@@ -33,8 +33,29 @@ fccApp.controller("emailResponseSettingsController", ["$scope", "$http", "$locat
     }
     $scope.getResponseSetting();
 
-    $scope.updateSetting = function() {
+    $scope.updateSetting = function () {
+        if ($scope.responseSetting.SendReply) {
+            if (!($scope.responseSetting.AddAttachment || $scope.responseSetting.AddLink)) {
+                $scope.mustChooseRespSetting = true;
+                return;
+            }
+        }
+
+        if (!$scope.responseSetting.SendReply) {
+            $scope.responseSetting.AddAttachment = false;
+            $scope.responseSetting.AddLink = false;
+            $scope.responseSetting.CCResponse = false;
+        }
+        if (!$scope.responseSetting.CCResponse) {
+            $scope.responseSetting.Addresses = "";
+        }
         emailSettingsHttpService.addResponseEmailSettings($http, $scope, $state, data, url, usSpinnerService);
+        $scope.mustChooseRespSetting = false;
+
     }
+
+    $scope.compareResponseSettings = function () {
+        return angular.equals($scope.responseSetting, $scope.responseSettingToCompare);
+    };
 
 }]);

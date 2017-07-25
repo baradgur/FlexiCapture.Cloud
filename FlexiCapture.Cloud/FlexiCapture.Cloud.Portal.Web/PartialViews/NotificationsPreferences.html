@@ -1,10 +1,53 @@
 ﻿<div ng-controller="notificationsPreferencesController">
-    <h1 style="font-size: 24px">E-mail notifications</h1>
-    <div style="margin-bottom: 22px">You can subscribe to notifications and news letters</div>
-    <div style="display: inline-block;">E-mail address: </div>  <div style="display: inline-block;"><input type="text" style="width: 300px;" class="form-control" ng-model="userData.UserData.Email" readonly/></div>
-    <div class="email-input"><input type="checkbox" ng-model="portalUpdatedNotif"/> Portal updates and new releases</div>
-    <div class="email-input"><input type="checkbox" disabled="true" ng-model="importantNotif" checked="true" /> Important notifications</div>
-    <div class="email-input"><input type="checkbox" ng-model="monthlyUse"/> Monthly use & payment summary</div>
-    <input type="button" class="btn btn-default" value="Save"/>
+    <form class="form-horizontal">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>E-mail notifications</legend>
+            <div style="margin-bottom: 22px">You can subscribe to notifications and news letters</div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">E-mail address:</label>
+                <div class="col-md-4">
+                    <input type="text" style="width: 300px;" class="form-control" ng-model="userData.UserData.Email" readonly />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-4">
+                    <label><input type="checkbox" ng-model="portalUpdatedNotif" /> Portal updates and new releases</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-4">
+                    <label><input type="checkbox" disabled="true" ng-model="importantNotif" checked="true" /> Important notifications</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-4">
+                    <label><input type="checkbox" ng-model="monthlyUse" /> Monthly use & payment summary</label>
+                </div>
+            </div>
+
+        </fieldset>
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+                <input type="button" class="btn btn-default" value="Save" />
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+
+
 
 </div>

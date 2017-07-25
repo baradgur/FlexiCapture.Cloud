@@ -1,32 +1,54 @@
 ﻿<div ng-controller="emailResponseSettingsController">
+    <div class="panel panel-info">
+        <div class="panel-heading">Instructions</div>
+        <div class="panel-body">
+            <div>Send in images and PDFs as e-mail attachments and receive back conversion results by e-mail.</div>
+            <br />
+            <div>Supported attachments are (PDF, JPG, TIF, BMP, PCX, DCX, PNG, or archives ZIP, RAR, Z7).  Total size of attachments should not exceed 30 MB.  Results will be returned by a reply e-mail address to the 'from' sender's address.</div>
+            <br />
+            <div>Attachments will be processed with the default E-mail Conversion Profile conversion settings unless e-mail body contains one of the control tags listed below to overwrite settings for that one e-mail transaction.  E-mail subject is ignored.</div>
+            <br />
+            <!--<div>Control tags:</div>
+            <br />
+            <ul>
+                <li>one control tag</li>
+            </ul>-->
+            <div>Your main subscription e-mail address <b>{{userData.UserData.Email}}</b> is already registered. All other Users listed in your your Account Settings will be linked to this conversion service automatically by their e-mail addresses.</div>
+        </div>
+    </div>
     <div class="panel panel-default">
         <div class="panel-heading">Email Response Settings</div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-6">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" name="emailRespForm">
                         <div class="checkbox">
-                            <label><input ng-model="responseSetting.ShowJob" type="checkbox"> Add conversion jobs to the Library</label>
+                            <label><input ng-model="responseSetting.ShowJob" type="checkbox"> Add conversion jobs to Conversion Library</label>
                         </div>
                         <div class="checkbox">
                             <label><input aria-label="Toggle ngShow" ng-model="responseSetting.SendReply" type="checkbox"> Reply to Sender’s ‘from’ e-mail address with conversion results</label>
                         </div>
-                        <div ng-show="responseSetting.SendReply" class="checkbox">
-                            <label><input ng-model="responseSetting.AddAttachment" type="checkbox"> Include conversion result as attachment</label>
-                        </div>
-                        <div ng-show="responseSetting.SendReply" class="checkbox">
-                            <label><input ng-model="responseSetting.AddLink" type="checkbox"> Include conversion result link in e-mail body</label>
-                        </div>
+                        <fieldset ng-class="{ true: 'has-error'}[!responseSetting.AddLink&&!responseSetting.AddAttachment&&responseSetting.SendReply&&(emailRespForm.addLink.$touched || emailRespForm.addLink.$touched || mustChooseRespSetting)]">
+                            <div ng-show="responseSetting.SendReply" class="checkbox">
+                                <label><input ng-model="responseSetting.AddAttachment" name="addAttach" type="checkbox"> Include conversion result as attachment</label>
+                            </div>
+                            <div ng-show="responseSetting.SendReply" class="checkbox">
+                                <label><input ng-model="responseSetting.AddLink" name="addLink" type="checkbox"> Include conversion result link in e-mail body</label>
+                            </div>
+                            <div class="help-block has-error" ng-show="!responseSetting.AddLink&&!responseSetting.AddAttachment&&responseSetting.SendReply&&(emailRespForm.addLink.$touched || emailRespForm.addLink.$touched || mustChooseRespSetting)">
+                                Choose Include conversion result as attachment or Include conversion result link in e-mail body option
+                            </div>
+                        </fieldset>
                         <div ng-show="responseSetting.SendReply" class="checkbox">
                             <label><input ng-model="responseSetting.CCResponse" type="checkbox"> CC the response with conversion result to the following e-mail address(es)</label>
                         </div>
-                        <button type="submit" style="margin: 20px;" ng-click="updateSetting()"  class="btn btn-default">Submit</button>
+                        <button type="submit" style="margin: 20px;" ng-click="updateSetting()" class="btn btn-default">Submit <span ng-show="!compareResponseSettings();">(settings are not submitted)</span></button>
 
                     </form>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" ng-show="responseSetting.CCResponse">
                     <div class="form-group">
-                        <label for="comment">Separate multiple addresses with a comma:</label>
+                        <div for="comment">Separate multiple addresses with a comma:</div>
                         <textarea ng-model="responseSetting.Addresses" class="form-control" rows="5" id="comment"></textarea>
                     </div>
                 </div>
@@ -40,7 +62,7 @@
 
     <div class="container">
 
-        <div class="row" ng-show="!loading">
+        <!--<div class="row" ng-show="!loading">
             <div id="toolbar" ng-show="true">
                 <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add New Settings Item" data-placement="bottom">
 
@@ -49,12 +71,10 @@
 
             </div>
 
-            <!--<div class="alert alert-success" id="eventsResult">
-                Here is the result of event.
-            </div>-->
             <div class="form-inline">
                 <table id="emailSettingstable" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true"
-                       data-height="300" data-toggle="table">
+                       data-height="300" data-toggle="table"
+                       data-page-list="[5,10, 25, 50, 100, 250, 500, All]">
                     <thead>
                         <tr>
                             <th data-field="settingId" data-sortable="true">Id</th>
@@ -68,6 +88,6 @@
                     </thead>
                 </table>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>

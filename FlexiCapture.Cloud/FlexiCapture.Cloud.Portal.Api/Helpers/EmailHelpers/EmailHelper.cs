@@ -144,5 +144,65 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers
                 // Console.WriteLine(exception.Message);
             }
         }
+
+        /// <summary>
+        ///     test method to send single emails
+        /// </summary>
+        public static void SendNewUserInfoEmail(string firstName, string lastName, string email, string companyName,
+            string phoneNumber, string userRoleName)
+        {
+            try
+            {
+                QueuePackageModel package = new QueuePackageModel();
+                var models = new List<EmailModel>();
+                models.Add(new EmailModel
+                {
+                    EmailContentLine = "#fullname#=" + firstName + " "+lastName+ ";" +
+                    "#email#=" + email + ";" +
+                    "#company#=" + companyName + ";" +
+                    "#phone#=" + phoneNumber + ";" +
+                    "#userrole#=" + userRoleName + ";" +
+                    "#sendername#=Your DataCapture.cloud Support Team;" +
+                    "#link#=http://datacapture.cloud;#linkto#=http://datacapture.cloud;" +
+                    "#linktitle#=This is a one-time automatically-generated e-mail.Visit http://DataCapture.cloud",
+                    ToEmails = "NewUserRegistration@DataCapture.cloud",
+                    FromEmail = "support@datacapture.cloud",
+                    Subject = "New user registered",
+                    TypeId = 15,
+                    Task = new QueuePackageTaskModel() { DeliveryDateTime = DateTime.Now }
+                });
+
+                package.Emails.AddRange(models);
+
+                var model = new QueueModel();
+                model.StateId = 1;
+
+                var settings = new XmlWriterSettings();
+                settings.Encoding = new UnicodeEncoding(false, false); // no BOM in a .NET string
+                settings.Indent = true;
+                settings.OmitXmlDeclaration = true;
+
+                var formatter = new XmlSerializer(typeof(QueuePackageModel));
+                string content = "";
+
+                using (StringWriter textWriter = new StringWriter())
+                {
+                    using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
+                    {
+                        formatter.Serialize(xmlWriter, package);
+                    }
+                    content = textWriter.ToString();
+
+                }
+
+                model.EmailContent = content;
+                AddQueueToDb(model);
+
+            }
+            catch (Exception exception)
+            {
+                // Console.WriteLine(exception.Message);
+            }
+        }
     }
 }

@@ -26,16 +26,15 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
         
         // POST: api/FTPSettings
-        public IHttpActionResult Post([FromBody]EmailResponseSettingsModel model)
+        public EmailResponseSettingsModel Post([FromBody]EmailResponseSettingsModel model)
         {
             try
             {
-                EmailResponseSettingsHelper.AddSettings(model);
-                return Ok();
+                return EmailResponseSettingsHelper.AddSettings(model);
             }
             catch (Exception exception)
             {
-                return BadRequest();
+                return null;
             }
         }
 
