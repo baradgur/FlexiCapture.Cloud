@@ -150,7 +150,7 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                         {
                             attachmentsLinks.Add(new Tuple<string, string>(filePath, originalName));
                         }
-                        if (serviceAssist.EmailSettings.ResponseSettings.AddAttachment)
+                        if (serviceAssist.EmailSettings.ResponseSettings.AddLink)
                         {
                             downloadIds.Add(new Tuple<int, string>(resultDocumentId, originalName));
                         }

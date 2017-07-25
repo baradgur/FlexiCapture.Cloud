@@ -63,27 +63,36 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
                 using (var db = new FCCPortalEntities())
                 {
+                    List<int> userIds = new List<int>();
+                    var parent = db.Users
+                        .Include(x => x.Users2.Users1)
+                        .Include(x => x.Users1)
+                        .FirstOrDefault(x => x.Id == userId);
+
+                    if (parent != null && parent.Users2 != null)
+                    {
+                        userIds.Add(parent.Users2.Id);
+                        foreach (var user in parent.Users2.Users1)
+                        {
+                            userIds.Add(user.Id);
+                        }
+                    }
+                    else if(parent != null)
+                    {
+                        userIds.Add(parent.Id);
+                        foreach (var user in parent.Users1)
+                        {
+                            userIds.Add(user.Id);
+                        }
+                    }
 
                     List<Documents> documents;
-
-                    //DB.UserLogins user = db.UserLogins.SingleOrDefault(x => x.UserId == userId);
-
-                    //if (user.UserRoleId == 4)
-                    //{
-                    //    documents = db.Documents
-                    //    .Include(x => x.DocumentStates)
-                    //    .Include(x => x.DocumentTypes)
-                    //    .Include(x => x.Tasks)
-                    //    .Include(x => x.Tasks)
-                    //    .Where(x => x.Tasks.UserId == userId && x.DocumentCategoryId == 1).ToList();
-                    //}
-
-                      documents =  db.Documents
+                    documents =  db.Documents
                         .Include(x => x.DocumentStates)
                         .Include(x => x.DocumentTypes)
                         .Include(x => x.Tasks)
                         .Include(x => x.Tasks)
-                        .Where(x => x.Tasks.UserId == userId && x.DocumentCategoryId == 1).ToList();
+                        .Where(x => userIds.Contains(x.Tasks.UserId) && x.DocumentCategoryId == 1).ToList();
 
                     foreach (var document in documents)
                     {
@@ -110,7 +119,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                        .Include(x => x.DocumentTypes)
                        .Include(x => x.Tasks)
                        .Include(x => x.Tasks)
-                       .Where(x => x.Tasks.UserId == userId && x.TaskId == document.TaskId && x.DocumentCategoryId == 2).ToList();
+                       .Where(x => userIds.Contains(x.Tasks.UserId) && x.TaskId == document.TaskId && x.DocumentCategoryId == 2).ToList();
                         foreach (var rDocument in resultDocs)
                         {
                             DocumentModel rModel = new DocumentModel()
@@ -144,7 +153,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 models = models.OrderByDescending(x => x.Id).ToList();
                 return serializer.Serialize(models);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return "";
             }

@@ -246,7 +246,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                         attachmentsLinks.Add(new Tuple<string, string>(filePath, originalArchiveName));
                     }
                     if (assist.EmailSettings != null && assist.EmailSettings.ResponseSettings != null &&
-                        assist.EmailSettings.ResponseSettings.AddAttachment)
+                        assist.EmailSettings.ResponseSettings.AddLink)
                     {
                         downloadIds.Add(new Tuple<int, string>(resultDocumentId, originalArchiveName));
                     }
