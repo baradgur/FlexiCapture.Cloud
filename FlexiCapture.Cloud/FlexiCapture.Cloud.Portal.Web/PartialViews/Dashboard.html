@@ -83,26 +83,29 @@
 
                 </div> <!-- .container -->
             </div>
-            <div class="container wp-header">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img style="height: 49px; width: 81px;" src="Content/icons/Logo-OCR.-Data-capture-Cloud-Service-ABBYY-FineReader-Nuance-AnyDoc-Kofax-logo-500x300.png" />
+            <div class="wp-header">
+                <img class="pull-left" style="width: 130px; padding-left: 10px; padding-right: 10px; margin-bottom: -15px;" src="Content/icons/Logo-OCR.-Data-capture-Cloud-Service-ABBYY-FineReader-Nuance-AnyDoc-Kofax-logo-500x300.png" />
+                <nav class="navbar portal-header pull-left" style="margin-top: 10px;">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav">
+                            <li><a href="javascript:void(0)">DataCapture.cloud Portal</a></li>
+                        </ul>
                     </div>
-                    <div style="position: absolute; margin-left: 64%" class="col-md-6">
-                        <nav class="navbar portal-header">
-                            <div class="container-fluid">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="http://www.datacapture.cloud/">Home</a></li>
-                                    <li><a href="http://www.datacapture.cloud/portal_support">Support</a></li>
-                                    <li><a href="http://www.datacapture.cloud/portal_faq">FAQ</a></li>
-                                    <li><a href="http://www.datacapture.cloud/portal_documentation">Documentation</a></li>
-                                    <li><a href="#"><i class="fa fa-search"></i></a></li>
-                                </ul>
-                            </div>
-                        </nav>
+                </nav>
+
+                <nav class="navbar portal-header pull-right hidden-xs hidden-sm" style="margin-top: 10px;">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav">
+                            <li><a href="http://www.datacapture.cloud/">Home</a></li>
+                            <li><a href="http://www.datacapture.cloud/portal_support">Support</a></li>
+                            <li><a href="http://www.datacapture.cloud/portal_faq">FAQ</a></li>
+                            <li><a href="http://www.datacapture.cloud/portal_documentation">Documentation</a></li>
+                            <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                        </ul>
                     </div>
-                </div>
+                </nav>
             </div>
+            <div class="container clearfix"></div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"
                         style="position: absolute; right: 0px;">
@@ -114,10 +117,11 @@
                 <!--<a class="navbar-brand" style="color: #3914AF" ng-click="exitQuestion();"><img border="0" alt="FCC Portal" src="Content/puzzle.png" height="24"> DataCapture.cloud Portal</a>-->
             </div>
             <!-- /.navbar-header -->
-            <ul class="nav navbar-top-links navbar-left" style="cursor: pointer" ng-show="userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2">
-                <!--
-                <!-- /.dropdown -->
-                <li class="dropdown">
+            <ul class="nav navbar-top-links navbar-left" style="cursor: pointer">
+            <!--
+            <!-- /.dropdown -->
+            <li ng-show="userData.UserData.UserRoleId==1 || userData.UserData.UserRoleId==4" style="padding: 15px; min-height: 50px;"></li>
+                <li class="dropdown" ng-show="userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <span ng-if="serviceStateId==1"><i class="fa fa-file-o fa-fw"></i> <b>Single File Conversion</b></span>
                         <span ng-if="serviceStateId==2"><i class="fa fa-file-archive-o fa-fw"></i> <b>Batch File Conversion</b></span>
@@ -383,7 +387,7 @@
             </ul>
 
             <ul class="nav navbar-top-links navbar-right hidden-xs">
-                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart"></i> Services Store</a>
+                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart fa-fw"></i> Services Store</a>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -395,17 +399,22 @@
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId==2">
-                            <a ui-sref="main.dashboard.users"><i class="fa fa-users"></i> Users</a>
+                            <a ui-sref="main.dashboard.users"><i class="fa fa-users fa-fw"></i> Users</a>
                         </li>
 
                         <li ng-if="userData.UserData.UserRoleId == 2">
-                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell" aria-hidden="true"></i> Notifications Preferences</a>
+                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications Preferences</a>
                         </li>
 
                         <li ng-if="userData.UserData.UserRoleId == 2">
-                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd" aria-hidden="true"></i> Upgrade to Paid Plan</a>
+                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd fa-fw" aria-hidden="true"></i> Upgrade to Paid Plan</a>
                         </li>
-
+                        <li class="divider visible-sm"></li>
+                        <li class="visible-sm"><a href="http://www.datacapture.cloud/">Home</a></li>
+                        <li class="visible-sm"><a href="http://www.datacapture.cloud/portal_support">Support</a></li>
+                        <li class="visible-sm"><a href="http://www.datacapture.cloud/portal_faq">FAQ</a></li>
+                        <li class="visible-sm"><a href="http://www.datacapture.cloud/portal_documentation">Documentation</a></li>
+                        <li class="visible-sm"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="divider"></li>
                         <li>
                             <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
@@ -423,23 +432,23 @@
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==1">
 
                         <li>
-                            <a ui-sref="main.dashboard.users"><i class="fa fa-users"></i> Users</a>
+                            <a ui-sref="main.dashboard.users"><i class="fa fa-users fa-fw"></i> Users</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.adminSettings"><i class="fa fa-gear"></i> Settings</a>
+                            <a ui-sref="main.dashboard.adminSettings"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.systemSettings"><i class="fa fa-database"></i> System Settings</a>
+                            <a ui-sref="main.dashboard.systemSettings"><i class="fa fa-database fa-fw"></i> System Settings</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.adminStatistics"><i class="fa fa-pie-chart"></i> Statistics</a>
+                            <a ui-sref="main.dashboard.adminStatistics"><i class="fa fa-pie-chart fa-fw"></i> Statistics</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.subscriptionsPlansLibrary"><i class="fa fa-bell"></i> Subscription plans</a>
+                            <a ui-sref="main.dashboard.subscriptionsPlansLibrary"><i class="fa fa-bell fa-fw"></i> Subscription plans</a>
                         </li>
                     </ul>
 
@@ -448,58 +457,36 @@
                     <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==1">
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.single')}">
-                            <a ui-sref="main.dashboard.single"><i class="fa fa-eye"></i> Convert Document</a>
+                            <a ui-sref="main.dashboard.single"><i class="fa fa-eye fa-fw"></i> Convert Document</a>
                         </li>
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.singleprofile')}">
-                            <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
                         </li>
 
                         <!--<li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.singlesettings')}">
                             <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear"></i> Service Settings</a>
                         </li>-->
-                        <li class="visible-xs">
-                            <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId!=1"><i class="fa fa-shopping-cart"></i> Services Store</a>
-                        </li>
-                        <li class="visible-xs">
-                            <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b> </a>
-                        </li>
 
-                        <li class="visible-xs">
-                            <a href="javascript: void(0);"><i class="fa fa-gear fa-fw"></i> Account Settings</a>
-                        </li>
-
-                        <li class="visible-xs">
-                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell" aria-hidden="true"></i> Notifications Preferences</a>
-                        </li>
-
-                        <li class="visible-xs">
-                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd" aria-hidden="true"></i> Upgrade to Paid Plan</a>
-                        </li>
-
-                        <li class="divider visible-xs"></li>
-                        <li class="visible-xs">
-                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
-                        </li>
                     </ul>
                     <!--end SFC-->
                     <!-- BATCH Conversion -->
                     <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==2">
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.batch')}">
-                            <a ui-sref="main.dashboard.batch"><i class="fa fa-file-archive-o"></i> Load Batch</a>
+                            <a ui-sref="main.dashboard.batch"><i class="fa fa-file-archive-o fa-fw"></i> Load Batch</a>
                         </li>
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.batchprofile')}">
-                            <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
                         </li>
 
                         <!--<li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.batchsettings')}">
@@ -512,15 +499,15 @@
 
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.emailprofile')}">
-                            <a ui-sref="main.dashboard.emailprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.emailprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.emailsettings')}">
-                            <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear"></i> Service Settings</a>
+                            <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear fa-fw"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end EMAIL-->
@@ -529,15 +516,15 @@
 
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.ftpprofile')}">
-                            <a ui-sref="main.dashboard.ftpprofile"><i class="fa fa-bolt"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.ftpprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
                         </li>
 
-                        <li ng-show="userData.UserData.UserRoleId==2"  ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.ftpsettings')}">
-                            <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear"></i> Service Settings</a>
+                        <li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.ftpsettings')}">
+                            <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear fa-fw"></i> Service Settings</a>
                         </li>
                     </ul>
                     <!--end FTP-->
@@ -554,9 +541,42 @@
                     <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2) && serviceStateId==6">
 
                         <li>
-                            <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart"></i> Store Details</a>
+                            <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart fa-fw"></i> Store Details</a>
                         </li>
 
+                    </ul>
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2)">
+                        <li class="divider visible-xs"></li>
+                        <li class="visible-xs">
+                            <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart"></i> Services Store</a>
+                        </li>
+                        <li class="visible-xs">
+                            <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b> </a>
+                        </li>
+
+                        <li class="visible-xs">
+                            <a href="javascript: void(0);"><i class="fa fa-gear fa-fw"></i> Account Settings</a>
+                        </li>
+
+                        <li class="visible-xs">
+                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications Preferences</a>
+                        </li>
+
+                        <li class="visible-xs">
+                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd fa-fw" aria-hidden="true"></i> Upgrade to Paid Plan</a>
+                        </li>
+                    </ul>
+                    <ul class="nav" id="side-menu">
+                        <li class="divider visible-xs"></li>
+                        <li class="visible-xs"><a href="http://www.datacapture.cloud/">Home</a></li>
+                        <li class="visible-xs"><a href="http://www.datacapture.cloud/portal_support">Support</a></li>
+                        <li class="visible-xs"><a href="http://www.datacapture.cloud/portal_faq">FAQ</a></li>
+                        <li class="visible-xs"><a href="http://www.datacapture.cloud/portal_documentation">Documentation</a></li>
+                        <li class="visible-xs"><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                        <li class="divider visible-xs"></li>
+                        <li class="visible-xs">
+                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
+                        </li>
                     </ul>
                     <!--end PROFILE-->
                 </div>
@@ -567,7 +587,7 @@
     </div>
     <div id="page-wrapper" class="dashboard-container">
         <span us-spinner spinner-key="spinner-1" spinner-start-active="false"></span>
-        <div style="margin-top: 9%;" ui-view></div>
+        <div ui-view></div>
 
 
     </div>
