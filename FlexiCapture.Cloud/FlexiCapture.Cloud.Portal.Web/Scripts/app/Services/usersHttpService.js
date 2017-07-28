@@ -1,4 +1,4 @@
-﻿fccApp.service('usersHttpService', function () {
+﻿fccApp.service('usersHttpService', function() {
     //добавляем данные user в для таблицы
     function addData(user) {
         var dElement = {};
@@ -13,14 +13,14 @@
         dElement.regDate = user.LoginData.RegistrationDate;
         dElement.companyName = user.UserData.CompanyName;
         dElement.email = user.UserData.Email;
-        
-        
+
+
         return dElement;
     }
 
 
     //get to clients list
-    this.getToUsersList = function ($http, $scope, $state, data, url, usSpinnerService) {
+    this.getToUsersList = function($http, $scope, $state, data, url, usSpinnerService) {
         $scope.users = [];
         usSpinnerService.spin("spinner-1");
 
@@ -71,9 +71,9 @@
                         });
 
                 $('#table').bootstrapTable('resetWidth');
-                
-                    
-                
+
+
+
                 $scope.loading = false;
                 window.scope = $scope;
             }
@@ -81,7 +81,7 @@
     }
 
     //add or Edit user
-    this.manageUser = function (callback, $http, $scope, data, url, usSpinnerService, isEdit) {
+    this.manageUser = function(callback, $http, $scope, data, url, usSpinnerService, isEdit) {
         var responseSuccess = null;
         var responseNoError = null;
 
@@ -92,79 +92,78 @@
         }
 
         $http({
-            url: url,
-            method: methodType,
-            contentType: "application/json",
-            data: JSON.stringify($scope.user)
-        })
-            .then(function (response) {
+                url: url,
+                method: methodType,
+                contentType: "application/json",
+                data: JSON.stringify($scope.user)
+            })
+            .then(function(response) {
                     responseSuccess = true;
-                usSpinnerService.stop('spinner-1');
-                $scope.loadData = false;
-                console.log(JSON.stringify(response.data));
-                var user = JSON.parse(response.data);
-                
-                if (user.Error != null) {
-                    BootstrapDialog.alert({
-                        title: user.Error.Name,
-                        type: BootstrapDialog.TYPE_WARNING,
-                        message: user.Error.ShortDescription + "</br>" + user.Error.FullDescription
-                    });
-                }
-                else {
-                    responseNoError = true;
-                    var dElement = addData(user);
-                    if (!isEdit) {
-                        data.push(dElement);
-                        $scope.users.push(user);
+                    usSpinnerService.stop('spinner-1');
+                    $scope.loadData = false;
+                    console.log(JSON.stringify(response.data));
+                    var user = JSON.parse(response.data);
+
+                    if (user.Error != null) {
+                        BootstrapDialog.alert({
+                            title: user.Error.Name,
+                            type: BootstrapDialog.TYPE_WARNING,
+                            message: user.Error.ShortDescription + "</br>" + user.Error.FullDescription
+                        });
                     } else {
-                        for (var i = 0; i < data.length; i++) {
+                        responseNoError = true;
+                        var dElement = addData(user);
+                        if (!isEdit) {
+                            data.push(dElement);
+                            $scope.users.push(user);
+                        } else {
+                            for (var i = 0; i < data.length; i++) {
 
-                            var obj = data[i];
-                            if (obj.userId == dElement.userId) {
-                                data[i] = dElement;
-                                break;
+                                var obj = data[i];
+                                if (obj.userId == dElement.userId) {
+                                    data[i] = dElement;
+                                    break;
+                                }
+                            }
+                            for (var j = 0; j < $scope.users.length; j++) {
+                                if (user.UserData.Id == $scope.users[j].UserData.Id) {
+                                    $scope.users[j] = user;
+                                    break;
+                                }
                             }
                         }
-                        for (var j = 0; j < $scope.users.length; j++) {
-                            if (user.UserData.Id == $scope.users[j].UserData.Id) {
-                                $scope.users[j] = user;
-                                break;
-                            }
-                        }
+                        $('#table').bootstrapTable('load', data);
+                        var notificationT = "added";
+                        if (isEdit) notificationT = "updated";
+
+                        showNotify("Успех", "User " + $scope.user.UserData.FirstName + " was successfully" + notificationT, "success");
+                        $('#table').bootstrapTable('resetWidth');
+                        // success
                     }
-                    $('#table').bootstrapTable('load', data);
-                    var notificationT = "added";
-                    if (isEdit) notificationT = "updated";
-
-                    showNotify("Успех", "User " + $scope.user.UserData.FirstName + " was successfully" + notificationT, "success");
+                    callback(responseSuccess, responseNoError);
+                },
+                function(response) { // optional
+                    // failed
+                    usSpinnerService.stop('spinner-1');
+                    showNotify("Успех", "Error occurred while adding user", "danger");
                     $('#table').bootstrapTable('resetWidth');
-                    // success
-                }
-                callback(responseSuccess, responseNoError);
-            },
-            function (response) { // optional
-                // failed
-                usSpinnerService.stop('spinner-1');
-                showNotify("Успех", "Error occurred while adding user", "danger");
-                $('#table').bootstrapTable('resetWidth');
-                callback(responseSuccess, responseNoError);
-            });
+                    callback(responseSuccess, responseNoError);
+                });
         $('#table').bootstrapTable('resetWidth');
-        
+
     }
 
     //get to clients list
-    this.getToUserProfile = function ($http, $scope, $state, url, usSpinnerService) {
+    this.getToUserProfile = function($http, $scope, $state, url, usSpinnerService) {
         $scope.user = {};
         usSpinnerService.spin("spinner-1");
 
-        $http.get(url,{
-                params: { userId:$scope.userData.UserData.Id}
-            })
-        
-        .then(function (response) {
-           // alert(JSON.stringify(response.data));
+        $http.get(url, {
+            params: { userId: $scope.userData.UserData.Id }
+        })
+
+        .then(function(response) {
+            // alert(JSON.stringify(response.data));
             $scope.currentUser = JSON.parse(response.data);
             $scope.user = angular.copy($scope.currentUser);
             usSpinnerService.stop('spinner-1');
@@ -174,40 +173,70 @@
     }
 
     //edit user profile
-    this.updateUserProfile = function ($http, $scope, url, usSpinnerService) {
+    this.updateUserProfile = function($http, $scope, url, usSpinnerService) {
 
 
         usSpinnerService.spin("spinner-1");
         var methodType = "PUT";
 
         $http({
-            url: url,
-            method: methodType,
-            contentType: "application/json",
-            data: JSON.stringify($scope.currentUser)
-        })
-            .then(function (response) {
-                usSpinnerService.stop('spinner-1');
-                $scope.loadData = false;
-                console.log(JSON.stringify(response.data));
-                var user = JSON.parse(response.data);
-                if (user.Error != null) {
-                    BootstrapDialog.alert({
-                        title: user.Error.Name,
-                        type: BootstrapDialog.TYPE_WARNING,
-                        message: user.Error.ShortDescription + "</br>" + user.Error.FullDescription
-                    });
-                }
-                else {
-                    $scope.user = user;
-                    showNotify("Успех", user.FirstName + "! Your profile has been successfully updated", "success");
-                    // success
-                }
-            },
-            function (response) { // optional
-                // failed
-                usSpinnerService.stop('spinner-1');
-                showNotify("Успех", "Unable to update profile", "danger");
-            });
+                url: url,
+                method: methodType,
+                contentType: "application/json",
+                data: JSON.stringify($scope.currentUser)
+            })
+            .then(function(response) {
+                    usSpinnerService.stop('spinner-1');
+                    $scope.loadData = false;
+                    console.log(JSON.stringify(response.data));
+                    var user = JSON.parse(response.data);
+                    if (user.Error != null) {
+                        BootstrapDialog.alert({
+                            title: user.Error.Name,
+                            type: BootstrapDialog.TYPE_WARNING,
+                            message: user.Error.ShortDescription + "</br>" + user.Error.FullDescription
+                        });
+                    } else {
+                        $scope.user = user;
+                        showNotify("Успех", user.FirstName + "! Your profile has been successfully updated", "success");
+                        // success
+                    }
+                },
+                function(response) { // optional
+                    // failed
+                    usSpinnerService.stop('spinner-1');
+                    showNotify("Успех", "Unable to update profile", "danger");
+                });
+    };
+
+    //delete by ID
+    this.deleteUser = function($http, $scope, usSpinnerService, url, rParams) {
+
+
+        usSpinnerService.spin("spinner-1");
+
+        $http.delete(url, {
+                params: rParams
+            })
+            .success(function(result) {
+                    if (result == "OK") {
+                        usSpinnerService.stop('spinner-1');
+                        showNotify("Success", "Data deleted successfully", "success");
+
+                        $scope.loading = false;
+                        return result;
+                    } else {
+                        showNotify("Error", "Error while performing data deletion", "danger");
+                        usSpinnerService.stop('spinner-1');
+                        $scope.loading = false;
+                    }
+                },
+                function(result) {
+                    showNotify("Error", "Error while performing data deletion", "danger");
+                    usSpinnerService.stop('spinner-1');
+                    $scope.loading = false;
+                });
     }
+
+
 });
