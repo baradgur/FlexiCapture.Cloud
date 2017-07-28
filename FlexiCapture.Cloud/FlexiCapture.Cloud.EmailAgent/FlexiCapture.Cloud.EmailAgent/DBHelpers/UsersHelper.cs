@@ -103,5 +103,23 @@ namespace FlexiCapture.Cloud.EmailAgent.DBHelpers
             }
 
         }
+
+        /// <summary>
+        /// delete user from db
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static string DeleteUser(int id)
+        {
+            try
+            {
+                return "OK";
+
+            }
+            catch (Exception e)
+            {
+                return "Error";
+            }
+        }
     }
 }

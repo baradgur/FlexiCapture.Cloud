@@ -171,6 +171,7 @@
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UserRegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UsersManagmentController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DBHelpers\ConfirmationEmailHelper.cs" />
     <Compile Include="DBHelpers\DefaultProfileHelper.cs" />

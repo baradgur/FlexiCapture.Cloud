@@ -41,18 +41,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
             return UsersHelper.AddUserAdmin(model);
         }
 
-        //public IHttpActionResult Post([FromBody]UserModel model)
-        //{
-        //    try
-        //    {
-        //        return Ok(UsersHelper.GetToUsers(model));
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        return BadRequest("Error!");
-
-        //    }
-        //}
+       
 
         // PUT api/users/5
         public string Put(UserViewModel model)
@@ -60,9 +49,15 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
             return UsersHelper.UpdateUser(model);
         }
 
+        
         // DELETE api/users/5
-        public void Delete(int id)
+        public string Delete(int id)
         {
+            return "OK";
+            string p = "";
+            //return p;
+          //  return Ok("HAHAHA!!");
+            //return UsersHelper.DeleteUser(id);
         }
     }
 }

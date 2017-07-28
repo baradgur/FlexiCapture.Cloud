@@ -4,7 +4,7 @@
 
         <div class="row" ng-show="true">
             <div id="toolbar">
-                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User"  data-placement="bottom">
+                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User" data-placement="bottom">
                     
                     <span class="glyphicon glyphicon-plus" ></span>
                     </button>
@@ -15,9 +15,7 @@
                 Here is the result of event.
             </div>-->
             <div class="form-inline">
-                <table  id="table" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true"
-                        data-height="300" data-toggle="table"
-                       data-page-list="[5,10, 25, 50, 100, 250, 500, All]">
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true" data-height="300" data-toggle="table" data-page-list="[5,10, 25, 50, 100, 250, 500, All]">
                     <thead>
                         <tr>
                             <th data-field="viewId" data-sortable="true">UserId</th>
@@ -31,6 +29,7 @@
                             <th data-field="regDate" data-visible="false" data-sortable="true">Registration Date</th>
                             <th data-field="parentName" data-visible="false" data-sortable="true" ng-show="userData.UserData.UserRoleId==1">User's Account Owner</th>
                             <th data-field="action" data-formatter="actionFormatterUser" data-events="actionEventsUser" data-width="5%" style="text-align:center;"></th>
+                            <th data-field="delete" data-formatter="actionDeleteUser" data-events="actionEventsUser" data-width="5%" style="text-align:center;"></th>
                         </tr>
                     </thead>
                 </table>

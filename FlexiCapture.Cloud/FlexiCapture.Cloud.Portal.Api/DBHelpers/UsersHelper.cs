@@ -712,7 +712,17 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         }
 
 
-
+        public static string DeleteUser(int id)
+        {
+            try
+            {
+                return "OK";
+            }
+            catch (Exception e)
+            {
+                return "Error";
+            }
+        }
 
         /// <summary>
         /// delete users
