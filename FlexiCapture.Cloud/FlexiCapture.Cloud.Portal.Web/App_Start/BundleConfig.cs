@@ -25,6 +25,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/bootstrap-notify.js",
                 "~/Scripts/BootstrapMenu.min.js",
                 "~/Scripts/lightbox.js",
+                "~/Scripts/loader.js",
                 "~/Scripts/validator.min.js",
                 "~/Scripts/validator.js"
                 //
@@ -120,7 +121,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/emailConfirmController.js",
                 "~/Scripts/app/Controllers/userSubscriptionsController.js",
                 "~/Scripts/app/Controllers/notificationsPreferencesController.js",
-                "~/Scripts/app/Controllers/subscriptionsPlansLibraryController.js"
+                "~/Scripts/app/Controllers/subscriptionsPlansLibraryController.js",
+                "~/Scripts/app/Controllers/statisticController.js"
 
 
 
@@ -135,7 +137,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Services/ftpSettingsHttpService.js",
                 "~/Scripts/app/Services/emailSettingsHttpService.js",
                 "~/Scripts/app/Services/storeHttpService.js",
-                "~/Scripts/app/Services/subscriptionsPlansHttpService.js"
+                "~/Scripts/app/Services/subscriptionsPlansHttpService.js",
+                "~/Scripts/app/Services/statisticHttpService.js"
                 //manageFilesHttpService
                 )
                 );

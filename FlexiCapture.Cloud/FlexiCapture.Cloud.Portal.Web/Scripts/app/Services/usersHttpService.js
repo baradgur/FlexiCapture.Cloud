@@ -30,6 +30,7 @@
             dataType: 'json',
             data: { model: $scope.userData.UserData },
             success: function(response) {
+                $scope.loading = true;
                 //$scope.userData.UserData
                 for (i = 0; i < response.UsersData.length; i++) {
                     var user = {};
@@ -52,7 +53,7 @@
                     height: '100%',
                     onPostBody: function() {
                         $('#table').bootstrapTable('resetView');
-                        usSpinnerService.stop('spinner-1');
+                        //usSpinnerService.stop('spinner-1');
                     }
 
                 });
