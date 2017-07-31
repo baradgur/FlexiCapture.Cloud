@@ -11,12 +11,19 @@
 
 @media(max-width: 767px) {
     #page-wrapper {
-        padding-top: 110px !important;
+        padding-top: 130px !important;
     }
+    #login-container {
+        padding-top: 60px !important;
+    }
+    
 }
 
 @media(min-width: 768px) {
     #page-wrapper {
+        padding-top: 150px !important;
+    }
+    #login-container {
         padding-top: 80px !important;
     }
 }

@@ -1,13 +1,107 @@
-﻿<div class="container" ng-controller="loginController">
-    <div class="row">
-        <span us-spinner spinner-key="spinner-1" spinner-start-active="false"></span>
-        <div class="col-md-4 col-md-offset-4">
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Sign In</h3>
+﻿<div class="container-fluid" ng-controller="loginController">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; position: fixed; width: 100%;">
+        <div id="top-header" class="hidden-xs">
+            <div class="container clearfix">
+
+
+                <div id="et-info">
+                    <span class="fa fa-phone"></span><span id="et-info-phone">(510)754-9866</span>
+
+                    <span style="margin-left: 10px;" class="fa fa-envelope"></span><a href="mailto:support@datacapture.cloud"><span id="et-info-email">  support@datacapture.cloud</span></a>
+
+                    <ul class="et-social-icons">
+
+                        <li class="et-social-icon et-social-facebook">
+                            <a href="#" class="icon">
+                                <span class="fa fa-facebook"></span>
+                            </a>
+                        </li>
+                        <li class="et-social-icon et-social-twitter">
+                            <a href="#" class="icon">
+                                <span class="fa fa-twitter"></span>
+                            </a>
+                        </li>
+                        <li class="et-social-icon et-social-google-plus">
+                            <a href="#" class="icon">
+                                <span class="fa fa-google-plus"></span>
+                            </a>
+                        </li>
+                        <li class="et-social-icon et-social-rss">
+                            <a href="http://www.datacapture.cloud/feed/" class="icon">
+                                <span class="fa fa-rss"></span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div> <!-- #et-info -->
+
+
+                <div id="et-secondary-menu">
+                    <div class="et_duplicate_social_icons">
+                        <ul class="et-social-icons">
+
+                            <li class="et-social-icon et-social-facebook">
+                                <a href="#" class="icon">
+                                    <span>Facebook</span>
+                                </a>
+                            </li>
+                            <li class="et-social-icon et-social-twitter">
+                                <a href="#" class="icon">
+                                    <span>Twitter</span>
+                                </a>
+                            </li>
+                            <li class="et-social-icon et-social-google-plus">
+                                <a href="#" class="icon">
+                                    <span>Google</span>
+                                </a>
+                            </li>
+                            <li class="et-social-icon et-social-rss">
+                                <a href="http://www.datacapture.cloud/feed/" class="icon">
+                                    <span>RSS</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div> <!-- #et-secondary-menu -->
+
+            </div> <!-- .container -->
+        </div>
+        <div class="wp-header" style="min-height: 70px;">
+            <img class="pull-left" style="width: 130px; padding-left: 10px; padding-right: 10px; margin-bottom: -15px;" src="Content/icons/Logo-OCR.-Data-capture-Cloud-Service-ABBYY-FineReader-Nuance-AnyDoc-Kofax-logo-500x300.png" />
+            <nav class="navbar portal-header pull-left" style="margin-top: 10px;">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li><a href="javascript:void(0)">DataCapture.cloud Portal</a></li>
+                    </ul>
                 </div>
-                <div class="panel-body">
-                    <form role="form" name="loginForm" novalidate>
+            </nav>
+
+            <nav class="navbar portal-header pull-right hidden-xs hidden-sm" style="margin-top: 10px;">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li><a href="http://www.datacapture.cloud/">Home</a></li>
+                        <li><a href="http://www.datacapture.cloud/portal_support">Support</a></li>
+                        <li><a href="http://www.datacapture.cloud/portal_faq">FAQ</a></li>
+                        <li><a href="http://www.datacapture.cloud/portal_documentation">Documentation</a></li>
+                        <li><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="container clearfix"></div>
+        
+    </nav>
+    <div class="container" id="login-container">
+        <div class="row">
+            <span us-spinner spinner-key="spinner-1" spinner-start-active="false"></span>
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" name="loginForm" novalidate>
                             <div class="form-group" ng-class="{ true: 'has-error'}[loginForm.login.$invalid && (loginForm.login.$touched || submitted)]">
                                 <input class="form-control input-lg" id="login" name="login" placeholder="Login" ng-model="Login" type="text" ng-maxlength="32" autofocus required>
                                 <div class="help-block" ng-messages="loginForm.login.$error" ng-if="loginForm.login.$touched || submitted">
@@ -33,10 +127,11 @@
                             <a ng-click="loginUser()" class="btn btn-lg btn-success btn-block">Sign In</a>
                             <!--<span us-spinner spinner-key="spinner-2"></span>-->
 
-                            <a ng-click="registrationUser()"  class="btn btn-lg btn-primary btn-block">Sign Up</a>
-                            <a ng-click="restoreUser()" >Forgot your passsword?</a>
-                    
-                    </form>
+                            <a ng-click="registrationUser()" class="btn btn-lg btn-primary btn-block">Sign Up</a>
+                            <a ng-click="restoreUser()">Forgot your passsword?</a>
+
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
