@@ -88,12 +88,16 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                                     case 4:
                                         name = "Email Service";
                                         break;
+
+                                   
                                 }
 
                                 Guid devKeyForOcrApi = new Guid();
                                 if (model.ServiceId == 5)
                                 {
                                     devKeyForOcrApi = Guid.NewGuid();
+
+                                    string guid = OcrApiHelper.InsertGuid();
                                 }
 
                                 profile.ProfileName = name + " Default Capture Profile ";

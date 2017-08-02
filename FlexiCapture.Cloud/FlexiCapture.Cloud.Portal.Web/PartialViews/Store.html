@@ -47,7 +47,7 @@
                         </button>
                         <h4>E-mail Conversion</h4>
                         <p>
-                            Convenient service to perform image to text OCR conversion directly from any e-mail application.  Send an attachment by e-mail to receive a converted attachment back to your e-mail.
+                            Convenient service to perform image to text OCR conversion directly from any e-mail application. Send an attachment by e-mail to receive a converted attachment back to your e-mail.
                         </p>
 
                     </div>
@@ -64,7 +64,8 @@
                         </button>
                         <h4>FTP Conversion</h4>
                         <p>
-                            Automated image to text conversion service that uses an FTP location (provided or your own) to perform one-time or on-going conversions.  Images and documents uploaded to FTP are processed in real-time with on-going monitoring for new uploads.  This service is suitable for manual use as well as for software application development where FTP is used as a transport layer protocol.
+                            Automated image to text conversion service that uses an FTP location (provided or your own) to perform one-time or on-going conversions. Images and documents uploaded to FTP are processed in real-time with on-going monitoring for new uploads. This service
+                            is suitable for manual use as well as for software application development where FTP is used as a transport layer protocol.
                         </p>
 
                     </div>
@@ -75,13 +76,13 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/cloud_storage_conversion.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Cloud Storage Conversion</h4>
                         <p>
-                            This service provides automated file conversion for files located in popular Cloud file storage platforms (Amazon S3, Box, Dropbox, Google Drive).  Provide cloud storage access credentials to a specific Input (with possible sub-folders), Output and Exceptions folders and our crawler will monitor and processes all encountered images and PDFs automatically.
+                            This service provides automated file conversion for files located in popular Cloud file storage platforms (Amazon S3, Box, Dropbox, Google Drive). Provide cloud storage access credentials to a specific Input (with possible sub-folders), Output and Exceptions
+                            folders and our crawler will monitor and processes all encountered images and PDFs automatically.
                         </p>
 
                     </div>
@@ -92,13 +93,13 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/linux_conversion_agent.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block">
                             Disabled
                         </button>
                         <h4>Windows/Mac/Linux Conversion Agent</h4>
                         <p>
-                            Download and install a small application that will run 24/7 in background on your server or workstation and monitor for new images and PDFs to process from your designated local or network Input folder.  Results will be automatically downloaded into your designated local or network Output folder.
+                            Download and install a small application that will run 24/7 in background on your server or workstation and monitor for new images and PDFs to process from your designated local or network Input folder. Results will be automatically downloaded into your
+                            designated local or network Output folder.
                         </p>
 
                     </div>
@@ -109,13 +110,15 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/online_web_ocr_api.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
-                            Disabled
+                        <button type="button" ng-class="userData.ServiceData.FTPFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(5)">
+                            <span ng-if="userData.ServiceData.OnlineWebOcrApiService">Active</span>
+                            <span ng-if="!userData.ServiceData.OnlineWebOcrApiService">Disabled</span>
+
                         </button>
                         <h4>Online Web OCR API</h4>
                         <p>
-                            Automated image to text conversion service that uses POST requests to perform image to text conversions.  Images and documents are submitted and processed in real-time with options to control all settings. This service is suitable for software application and mobile app development where images are submitted as URL references or Blobs and results are returned programmatically.
+                            Automated image to text conversion service that uses POST requests to perform image to text conversions. Images and documents are submitted and processed in real-time with options to control all settings. This service is suitable for software application
+                            and mobile app development where images are submitted as URL references or Blobs and results are returned programmatically.
                         </p>
 
                     </div>
@@ -126,13 +129,13 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/data_capture_form_processing.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Data Capture & Form Processing</h4>
                         <p>
-                            Powerful service to automate gathering of specific targeted data from structured and semi-structured documents, including handwritten forms.  Common examples include forms like surveys, questionnaires, registration cards, as well as documents like Invoice, Purchase Orders, bank statements, medical forms. Data is returned in structured Excel-like or Database-like formats.
+                            Powerful service to automate gathering of specific targeted data from structured and semi-structured documents, including handwritten forms. Common examples include forms like surveys, questionnaires, registration cards, as well as documents like Invoice,
+                            Purchase Orders, bank statements, medical forms. Data is returned in structured Excel-like or Database-like formats.
                         </p>
 
                     </div>
@@ -143,8 +146,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/mobile_image_capture_agent.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Mobile Image Capture Front End</h4>
@@ -160,8 +162,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/verification_validation_front_end.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Verification & Validation Front End</h4>
@@ -177,8 +178,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/document_sorting_mailroom.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Document Sorting/Mailroom</h4>
@@ -194,13 +194,12 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/electronic_forms_capture.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Electronic Forms Capture</h4>
                         <p>
-                            Service to easily create online fillable forms from paper and statically created digital forms, and effective collection of data.  This service is designed to replace paper forms in cases where on-screen data filling is possible.
+                            Service to easily create online fillable forms from paper and statically created digital forms, and effective collection of data. This service is designed to replace paper forms in cases where on-screen data filling is possible.
                         </p>
 
                     </div>
@@ -211,8 +210,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/data_scraping_normalization.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Data Scraping and Normalization</h4>
@@ -228,8 +226,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/translation.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Translation</h4>
@@ -245,8 +242,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/service-not-available.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                ng-disabled="true">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>DigitEYE Desktop Lamp & Document Scanner</h4>

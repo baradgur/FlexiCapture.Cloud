@@ -1,1 +1,52 @@
-﻿HELLO ADMIN STATISTIC!
+﻿<div ng-controller="statisticController">
+    <div class="container " ng-show="!loading">
+        <div class="row " ng-show="true">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <strong>Statistic</strong>
+                    <button type="button" class="btn btn-success btn-sm material-switch pull-right" ng-click="showStatistic();" data-toggle="tooltip" title="Show Statistic" data-placement="bottom">
+                                <span class="glyphicon glyphicon-ok"></span> Show Statistic
+                            </button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+
+                    <div class="row ">
+                        <form class="form-horizontal" name="statisticForm" id="statisticForm" role="form" data-toggle="validator">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="exampleSelect2">Statistic Types</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" ng-options="statisticType.Name for statisticType in statisticModel.StatisticTypes track by statisticType.Name" ng-model="statisticModel.StatisticType"></select>
+                                </div>
+
+                                <label class="col-md-2 control-label" for="exampleSelect2">Date Range</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" ng-options="statisticDateRange.Name for statisticDateRange in statisticModel.StatisticDateRanges track by statisticDateRange.Name" ng-model="statisticModel.DateRange" ng-change="changeDateRange()"></select>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="statisticModel.ShowDateRange">
+
+                                <label class="col-md-2 control-label">From</label>
+                                <div class="col-md-3">
+                                    <input type="date" class="form-control" ng-model="statisticModel.StartDate">
+
+                                </div>
+
+                                <label class="col-md-2 control-label">To</label>
+                                <div class="col-md-3">
+                                    <input type="date" class="form-control" ng-model="statisticModel.EndDate">
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="row" ng-show="showChart">
+                        <div id="chart_div" style="height: 500px; width:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -156,3 +156,4 @@ $RECYCLE.BIN/
 .DS_Store
 /FlexiCapture.Cloud/.vs/config/applicationhost.config
 /FlexiCapture.Cloud/FlexiCapture.Cloud.Portal.Api/data
+/FlexiCapture.Cloud/FlexiCapture.Cloud.Portal.Api/DB_OcrApi

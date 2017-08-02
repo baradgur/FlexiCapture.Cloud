@@ -39,5 +39,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Users
         /// 
         /// </summary>
         public bool BatchFileConversionService { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool OnlineWebOcrApiService { get; set; }
     }
 }

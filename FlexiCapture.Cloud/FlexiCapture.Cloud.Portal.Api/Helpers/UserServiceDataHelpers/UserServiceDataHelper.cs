@@ -24,6 +24,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserServiceDataHelpers
                     service.BatchFileConversionService = subscribes.FirstOrDefault(x => x.ServiceId == 2 && x.SubscribeStateId == 1) != null;
                     service.EmailAttachmentFileConversionService = subscribes.FirstOrDefault(x => x.ServiceId == 4 && x.SubscribeStateId == 1) != null;
                     service.FTPFileConversionService = subscribes.FirstOrDefault(x => x.ServiceId == 3 && x.SubscribeStateId == 1) != null;
+                    service.OnlineWebOcrApiService = subscribes.FirstOrDefault(x=>x.ServiceId==5 && x.SubscribeStateId == 1) != null;
                 }
                 return service;
             }

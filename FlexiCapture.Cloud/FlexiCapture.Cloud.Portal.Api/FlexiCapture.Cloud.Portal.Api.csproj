@@ -168,6 +168,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
     <Compile Include="Controllers\RestoreDataController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UserRegistrationController.cs" />
@@ -182,8 +183,10 @@
     <Compile Include="DBHelpers\LogHelper.cs" />
     <Compile Include="DBHelpers\LoginHelper.cs" />
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
+    <Compile Include="DBHelpers\OcrApiHelper.cs" />
     <Compile Include="DBHelpers\ServicesHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\StatisticHelper.cs" />
     <Compile Include="DBHelpers\StoreHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
@@ -254,6 +257,9 @@
     <Compile Include="DB\Settings.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\FCCPortalEntities.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Tasks.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -305,6 +311,39 @@
     <Compile Include="DB\ZipTasks.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB_OcrApi\ApiKey.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\C__EFMigrationsHistory.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\Job.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\JobError.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\JobFile.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\JobResultFile.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\OcrApiModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OcrApiModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\OcrApiModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\OcrApiModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -325,6 +364,10 @@
     <Compile Include="Helpers\RestoreHelpers\RestoreHelper.cs" />
     <Compile Include="Helpers\ServiceSettingsHelper\EmailSettingsHelper.cs" />
     <Compile Include="Helpers\ServiceSettingsHelper\FTPSettingsHelper.cs" />
+    <Compile Include="Helpers\StatisticHelpers\DateValueModel.cs" />
+    <Compile Include="Helpers\StatisticHelpers\DocumentsStatisticHelper.cs" />
+    <Compile Include="Helpers\StatisticHelpers\NewUsersStatisticHelper.cs" />
+    <Compile Include="Helpers\StatisticHelpers\StatisticHelper.cs" />
     <Compile Include="Helpers\StoreHelpers\StoreHelper.cs" />
     <Compile Include="Helpers\UserProfileHelpers\UserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
@@ -347,6 +390,10 @@
     <Compile Include="Models\SettingsModels\EmailSettingsViewModel.cs" />
     <Compile Include="Models\SettingsModels\FTPSettingsViewModel.cs" />
     <Compile Include="Models\Preflight\PreflightRequestsHandler.cs" />
+    <Compile Include="Models\StatisticModels\ChartModel.cs" />
+    <Compile Include="Models\StatisticModels\StatisticDateRangeModel.cs" />
+    <Compile Include="Models\StatisticModels\StatisticRequestModel.cs" />
+    <Compile Include="Models\StatisticModels\StatisticTypeModel.cs" />
     <Compile Include="Models\StoreModels\StoreModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
@@ -375,6 +422,16 @@
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
       <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
     </Content>
+    <Content Include="DB_OcrApi\OcrApiModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
+      <LastGenOutput>OcrApiModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB_OcrApi\OcrApiModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
+      <LastGenOutput>OcrApiModel.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -397,6 +454,13 @@
     </EntityDeploy>
     <Content Include="DB\FCCPortalModel.edmx.diagram">
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="DB_OcrApi\OcrApiModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OcrApiModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DB_OcrApi\OcrApiModel.edmx.diagram">
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
