@@ -63,6 +63,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
                         user.CompanyName = model.CompanyName;
                         user.PhoneNumber = model.PhoneNumber;
                         user.Email = model.Email;
+                        user.GetUsePaymentNotif = model.GetUsePaymentNotif;
+                        user.GetReleaseUpdateNotif = model.GetReleaseUpdateNotif;
                     }
                     else
                     {

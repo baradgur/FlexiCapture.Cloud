@@ -50,6 +50,14 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.UserProfiles
         /// PhoneNumber
         /// </summary>
         public string PhoneNumber { get; set; }
+        /// <summary>
+        /// get release and update notifications
+        /// </summary>
+        public bool GetReleaseUpdateNotif { get; set; }
+        /// <summary>
+        /// get Monthly use and payment notifications
+        /// </summary>
+        public bool GetUsePaymentNotif { get; set; }
 
         /// <summary>
         /// error

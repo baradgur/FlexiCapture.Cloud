@@ -324,6 +324,17 @@
             }
         })
 
+        .state("main.dashboard.communication", {
+            url: "/communication",
+            templateUrl: "PartialViews/Communication.html",
+            onEnter: function ($window, $state) {
+                if (!$window.sessionStorage.getItem("UserData")) {
+                    $state.go("main.login");
+                }
+                $window.document.title = "Communication";
+            }
+        })
+
         .state("main.dashboard.notifPref", {
             url: "/notificationsPreferences",
             templateUrl: "PartialViews/NotificationsPreferences.html",

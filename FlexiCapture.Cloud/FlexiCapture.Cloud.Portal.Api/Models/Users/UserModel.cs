@@ -47,12 +47,20 @@
         public string LoginState { get; set; }
         public string UserName { get; set; }
         public string RegistrationDate { get; set; }
-        public int ParentUserId { get; set; }
+        public int? ParentUserId { get; set; }
         public string ParentUserName { get; set; }
+        /// <summary>
+        /// get release and update notifications
+        /// </summary>
+        public bool GetReleaseUpdateNotif { get; set; }
+        /// <summary>
+        /// get Monthly use and payment notifications
+        /// </summary>
+        public bool GetUsePaymentNotif { get; set; }
 
         /// <summary>
-       /// constructor
-       /// </summary>
+        /// constructor
+        /// </summary>
         public UserModel()
         {
         }

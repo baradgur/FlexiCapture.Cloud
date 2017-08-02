@@ -15,11 +15,11 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
     public class UsersController : ApiController
     {
         // GET api/users
-        public IHttpActionResult Get([FromUri] UserModel model)
+        public IHttpActionResult Get(int userId, int userRoleId)
         {
             try
             {
-                return Ok(UsersHelper.GetToUsers(model));
+                return Ok(UsersHelper.GetToUsers(userId, userRoleId));
             }
             catch (Exception exception)
             {
@@ -51,13 +51,9 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
 
         
         // DELETE api/users/5
-        public string Delete(int id)
+        public List<int> Delete(int id)
         {
-            return "OK";
-            string p = "";
-            //return p;
-          //  return Ok("HAHAHA!!");
-            //return UsersHelper.DeleteUser(id);
+           return UsersHelper.DeleteUser(id);
         }
     }
 }

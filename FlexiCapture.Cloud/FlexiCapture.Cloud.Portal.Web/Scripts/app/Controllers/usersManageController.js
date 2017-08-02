@@ -4,7 +4,7 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
     var vm = this;
     var roleId = null;
     var loginStateId = null;
-    
+
     if ($scope.user.UserData) {
         $scope.user.LoginData.UserLogin = angular.copy($scope.user.UserData.Email);
         roleId = $scope.user.UserData.UserRoleId;
@@ -67,7 +67,8 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
                     $scope.user.LoginData.UserLoginStateId = 1; // loginStateIsActive
                     $scope.user.UserData.UserName = $scope.user.LoginData.UserLogin;
                     $scope.user.UserData.Email = $scope.user.UserData.UserName;
-                    $scope.user.UserData.ParentUserId = $scope.userData.UserData.Id;
+
+                    $scope.user.UserData.ParentUserId = $scope.userData.UserData.UserRoleId == 2 ? $scope.userData.UserData.Id : null;
                 } else {
                     $scope.user.UserData.UserName = $scope.user.LoginData.UserLogin;
                     $scope.user.UserData.Email = $scope.user.UserData.UserName;
@@ -82,7 +83,7 @@ var usersManageController = function ($scope, $http, $location, $state, $uibModa
             $scope.user.UserData.UserRoleId = $scope.userRoles.selectedOption.id;
         }
 
-      
+
 
         vm.stateChanged = function () {
             $scope.user.LoginData.UserLoginStateId = $scope.loginStates.selectedOption.id;

@@ -2,13 +2,17 @@
 
     <div class="container">
 
-        <div class="row" ng-show="true">
+        <div class="row" ng-show="!loading">
             <div id="toolbar">
                 <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewUserView();" data-toggle="tooltip" title="Add New User" data-placement="bottom">
                     
                     <span class="glyphicon glyphicon-plus" ></span>
                     </button>
+                
+                <button type="button" class="btn btn-success orange-tooltip" ng-click="downloadUsersCsv();" data-toggle="tooltip" title="Download user's info" data-placement="bottom">
 
+                    <span class="glyphicon glyphicon-download-alt"></span> Download users' info
+                </button>
             </div>
 
             <!--<div class="alert alert-success" id="eventsResult">
@@ -28,6 +32,7 @@
                             <th data-field="phoneNum" data-visible="false" data-sortable="true">Phone</th>
                             <th data-field="regDate" data-visible="false" data-sortable="true">Registration Date</th>
                             <th data-field="parentName" data-visible="false" data-sortable="true" ng-show="userData.UserData.UserRoleId==1">User's Account Owner</th>
+                            <th data-field="action" data-formatter="actionCsvUser" data-events="actionEventsUser" data-width="5%" style="text-align:center;"></th>
                             <th data-field="action" data-formatter="actionFormatterUser" data-events="actionEventsUser" data-width="5%" style="text-align:center;"></th>
                             <th data-field="delete" data-formatter="actionDeleteUser" data-events="actionEventsUser" data-width="5%" style="text-align:center;"></th>
                         </tr>

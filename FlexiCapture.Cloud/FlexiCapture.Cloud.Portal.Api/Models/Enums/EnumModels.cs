@@ -29,8 +29,9 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Enums
     public enum UserRoleTypes
     {
         Administrator = 1,
-        Operator = 2,
-        Viewer = 3
+        AccountOwner = 2,
+        Operator = 3,
+        Viewer = 4
     }
 
     public enum DocumentStates
@@ -55,5 +56,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Enums
         RTF = 10,
         ZIP = 12,
         BMP = 13
+    }
+
+    public enum CommunicationTypes
+    {
+        Important = 1,
+        MonthlyUsePayment = 2,
+        PortalUpdatesReleases = 3,
     }
 }

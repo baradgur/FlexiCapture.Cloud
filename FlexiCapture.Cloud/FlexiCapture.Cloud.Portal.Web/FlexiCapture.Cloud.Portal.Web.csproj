@@ -215,6 +215,7 @@
     <Content Include="PartialViews\BatchLibrary.html" />
     <Content Include="PartialViews\BatchProfile.html" />
     <Content Include="PartialViews\BatchSettings.html" />
+    <Content Include="PartialViews\Communication.html" />
     <Content Include="PartialViews\ConfirmEmail.html" />
     <Content Include="PartialViews\Dashboard.html" />
     <Content Include="PartialViews\Modals\DownloadResults.html" />
@@ -262,6 +263,7 @@
     <Content Include="Scripts\app\Controllers\batchLibraryController.js" />
     <Content Include="Scripts\app\Controllers\batchProfileController.js" />
     <Content Include="Scripts\app\Controllers\batchSettingsController.js" />
+    <Content Include="Scripts\app\Controllers\communicationController.js" />
     <Content Include="Scripts\app\Controllers\dashBoardController.js" />
     <Content Include="Scripts\app\Controllers\emailConfirmController.js" />
     <Content Include="Scripts\app\Controllers\emailLibraryController.js" />
@@ -300,6 +302,7 @@
     <Content Include="Scripts\app\Services\manageFilesHttpService.js" />
     <Content Include="Scripts\app\Services\manageUserProfileHttpService.js" />
     <Content Include="Scripts\app\Services\storeHttpService.js" />
+    <Content Include="Scripts\app\Services\communicationHttpService.js" />
     <Content Include="Scripts\app\Services\subscriptionsPlansHttpService.js" />
     <Content Include="Scripts\app\Services\usersHttpService.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />

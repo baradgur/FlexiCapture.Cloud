@@ -41,6 +41,35 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers
 
             }
         }
+
+
+        public static void AddQueueToDb(List<QueueModel> queueModels)
+        {
+            try
+            {
+                using (var db = new FCCEmailAgentEntities())
+                {
+                    foreach (var model in queueModels)
+                    {
+                    Queue queue = new Queue()
+                    {
+                        EmailContent = model.EmailContent,
+                        StateId = 1
+                    };
+                    db.Queue.Add(queue);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+
+            }
+        }
         /// <summary>
         ///     test method to send single emails
         /// </summary>
@@ -144,7 +173,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.EmailHelpers
                 // Console.WriteLine(exception.Message);
             }
         }
-
+        
         /// <summary>
         ///     test method to send single emails
         /// </summary>

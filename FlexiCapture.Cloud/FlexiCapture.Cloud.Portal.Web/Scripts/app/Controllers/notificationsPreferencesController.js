@@ -9,15 +9,31 @@
         usSpinnerService,
         Idle,
         Keepalive,
-        $uibModal) {
-
+        $uibModal,
+        usersHttpService) {
+        var url = $$ApiUrl + "/users";
         $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
 
-        $scope.portalUpdatedNotif = false;
+
+        var userProfile = function () {
+
+            $scope.loadData = false;
+            usersHttpService.getToUserProfile($http, $scope, $state, url, usSpinnerService);
+        };
+        userProfile();
+
+        $scope.updateUserProfile = function () {
+            
+                $scope.submitted = false;
+                $scope.currentUser.Password = null;
+            
+            var anotherUrl = $$ApiUrl + "/manageuserprofile";
+            usersHttpService.updateUserProfile($http, $scope, anotherUrl, usSpinnerService);
+        }
+
         $scope.importantNotif = true;
-        $scope.monthlyUse = false;
     }
 
 
-    fccApp.controller("notificationsPreferencesController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", notificationsPreferencesController]);
+    fccApp.controller("notificationsPreferencesController", ["$scope", "$http", "$location", "$state", "$rootScope", "$window", "$cookies", "usSpinnerService", "Idle", "Keepalive", "$uibModal", "usersHttpService", notificationsPreferencesController]);
 }())

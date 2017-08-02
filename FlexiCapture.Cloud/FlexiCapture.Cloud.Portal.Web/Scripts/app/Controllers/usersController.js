@@ -16,6 +16,15 @@ function actionDeleteUser(value, row, index) {
     ].join('');
 }
 
+function actionCsvUser(value, row, index) {
+    return [
+        '<button class="btn btn-success orange-tooltip csv-user" href="javascript:void(0)" title="Download csv" style=" text-align: center;" ',
+        'data-toggle="tooltip" title="Download csv"  data-placement="bottom">',
+        '<i class="glyphicon glyphicon-download-alt"></i>',
+        '</button>'
+    ].join('');
+}
+
 (function() {
 
 
@@ -35,6 +44,10 @@ function actionDeleteUser(value, row, index) {
             'click .edit-user': function(e, value, row, index) {
                 $scope.updateUser(row);
                 $scope.choosedUserId = row.userId;
+            },
+
+            'click .csv-user': function (e, value, row, index) {
+                $scope.downloadCsv(row.userId);
             },
 
             'click .delete-user': function(e, value, row, index) {
@@ -72,8 +85,8 @@ function actionDeleteUser(value, row, index) {
 
         $scope.deleteUser = function(id) {
             var rParams = { id: id };
-            url = $$ApiUrl + "/users"
-            usersHttpService.deleteUser($http, $scope, usSpinnerService, url, rParams);
+            url = $$ApiUrl + "/users";
+            usersHttpService.deleteUser($http, $scope, usSpinnerService, url, rParams, data);
         };
 
         $scope.editFtpSettings = function() {
@@ -137,10 +150,25 @@ function actionDeleteUser(value, row, index) {
                 $log.info('Modal dismissed at: ' + new Date());
             });
         }
+
+
+        $scope.downloadCsv = function (userId) {
+            var url = $$ApiUrl + "/UsersManagment/" + userId;
+            usersHttpService.downloadCsv($scope.callbackDownloadCsv, $http, $scope, url, usSpinnerService, false);
+        }
+
+        $scope.downloadUsersCsv = function () {
+            var url = $$ApiUrl + "/UsersManagment";
+            usersHttpService.downloadCsv($scope.callbackDownloadCsv, $http, $scope, url, usSpinnerService, true);
+        }
+
+        $scope.callbackDownloadCsv = function (responseSuccess, responseNoError) {
+            if (!(responseSuccess && responseNoError)) {
+                showNotify("Fail", "Failed to upload the csv file", "danger");
+            };
+        }
+
     };
-
-
-
 
     fccApp.controller("usersController", ["$scope", "$http", "$location", "$state", "$uibModal", "$log", "$window", "$filter", "usSpinnerService", "usersHttpService", usersController]);
 }())

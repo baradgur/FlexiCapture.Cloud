@@ -26,6 +26,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/BootstrapMenu.min.js",
                 "~/Scripts/lightbox.js",
                 "~/Scripts/validator.min.js",
+                "~/Scripts/moment-with-locales.min.js",
                 "~/Scripts/validator.js"
                 //
                 ));
@@ -120,6 +121,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/emailConfirmController.js",
                 "~/Scripts/app/Controllers/userSubscriptionsController.js",
                 "~/Scripts/app/Controllers/notificationsPreferencesController.js",
+                "~/Scripts/app/Controllers/communicationController.js",
                 "~/Scripts/app/Controllers/subscriptionsPlansLibraryController.js"
 
 
@@ -135,6 +137,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Services/ftpSettingsHttpService.js",
                 "~/Scripts/app/Services/emailSettingsHttpService.js",
                 "~/Scripts/app/Services/storeHttpService.js",
+                "~/Scripts/app/Services/communicationHttpService.js",
                 "~/Scripts/app/Services/subscriptionsPlansHttpService.js"
                 //manageFilesHttpService
                 )
