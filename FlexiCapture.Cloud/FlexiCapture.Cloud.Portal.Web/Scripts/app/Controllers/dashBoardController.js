@@ -1,8 +1,8 @@
-﻿(function () {
-    var dashBoardController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
+﻿(function() {
+    var dashBoardController = function($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal) {
 
         $scope.profileShowing = false;
-        var dash = function () {
+        var dash = function() {
             $scope.serviceStateId = 1;
             $scope.userData = JSON.parse($window.sessionStorage.getItem("UserData"));
             if ($window.sessionStorage.serviceStateId !== undefined) {
@@ -50,7 +50,7 @@
         };
         dash();
 
-        $scope.exitQuestion = function () {
+        $scope.exitQuestion = function() {
             var dialog = BootstrapDialog.confirm({
                 title: 'Warning',
                 message: 'Do you really want to quit?',
@@ -60,7 +60,7 @@
                 btnCancelLabel: 'No',
                 btnOKLabel: 'OK',
                 btnOKClass: 'btn-warning',
-                callback: function (result) {
+                callback: function(result) {
                     if (result) {
                         $scope.exitApp();
                     }
@@ -69,20 +69,20 @@
             dialog.setSize(BootstrapDialog.SIZE_SMALL);
         };
 
-        $scope.exitApp = function () {
+        $scope.exitApp = function() {
 
-            for (var key in $rootScope.sockets) {
-                $rootScope.sockets[key].emit('dis');
-                $rootScope.sockets[key].disconnect(true);
+                for (var key in $rootScope.sockets) {
+                    $rootScope.sockets[key].emit('dis');
+                    $rootScope.sockets[key].disconnect(true);
+                }
+
+                $rootScope.sockets = undefined;
+                $rootScope.socketsActive = false;
+                $cookies.remove("UserData", { path: "/" });
+                $window.sessionStorage.clear();
+                $state.go("main.login");
             }
-
-            $rootScope.sockets = undefined;
-            $rootScope.socketsActive = false;
-            $cookies.remove("UserData", { path: "/" });
-            $window.sessionStorage.clear();
-            $state.go("main.login");
-        }
-        /// add a session timeout
+            /// add a session timeout
         $scope.started = false;
 
         function closeModals() {
@@ -92,7 +92,7 @@
             }
         }
 
-        $scope.$on('IdleStart', function () {
+        $scope.$on('IdleStart', function() {
             closeModals();
             $scope.warning = $uibModal.open({
                 templateUrl: 'warning-dialog.html',
@@ -100,16 +100,16 @@
             });
         });
 
-        $scope.$on('IdleEnd', function () {
+        $scope.$on('IdleEnd', function() {
             closeModals();
         });
 
-        $scope.$on('IdleTimeout', function () {
+        $scope.$on('IdleTimeout', function() {
             closeModals();
             $scope.exitApp();
         });
 
-        $scope.start = function () {
+        $scope.start = function() {
             closeModals();
             Idle.watch();
             $scope.started = true;
@@ -125,9 +125,9 @@
         }
 
         //navigate
-        $scope.selectService = function (serviceId, anchor, isAvailable) {
+        $scope.selectService = function(serviceId, anchor, isAvailable) {
             if (serviceId == $scope.serviceStateId) return;
-            if (!isAvailable && serviceId !== 5  && serviceId!== 6) {
+            if (!isAvailable && serviceId !== 5 && serviceId !== 6) {
                 serviceId = 6;
             }
             var previousServiceStateId = angular.copy($scope.serviceStateId);
@@ -162,7 +162,10 @@
                         $scope.serviceStateId = previousServiceStateId;
                     }
                     break;
-                    
+
+                case 7:
+                    $state.go("main.dashboard.onlinewebocrsettings");
+                    break;
 
             }
         };

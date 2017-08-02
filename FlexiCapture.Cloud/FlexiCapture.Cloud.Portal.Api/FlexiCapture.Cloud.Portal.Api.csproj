@@ -181,6 +181,7 @@
     <Compile Include="DBHelpers\LogHelper.cs" />
     <Compile Include="DBHelpers\LoginHelper.cs" />
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
+    <Compile Include="DBHelpers\OcrApiHelper.cs" />
     <Compile Include="DBHelpers\ServicesHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
     <Compile Include="DBHelpers\StatisticHelper.cs" />
@@ -302,6 +303,39 @@
     <Compile Include="DB\ZipTasks.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB_OcrApi\ApiKey.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\C__EFMigrationsHistory.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\Job.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\JobError.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\JobFile.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\JobResultFile.cs">
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\OcrApiModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OcrApiModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\OcrApiModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OcrApiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB_OcrApi\OcrApiModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -379,6 +413,16 @@
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
       <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
     </Content>
+    <Content Include="DB_OcrApi\OcrApiModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
+      <LastGenOutput>OcrApiModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB_OcrApi\OcrApiModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
+      <LastGenOutput>OcrApiModel.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -401,6 +445,13 @@
     </EntityDeploy>
     <Content Include="DB\FCCPortalModel.edmx.diagram">
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="DB_OcrApi\OcrApiModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OcrApiModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DB_OcrApi\OcrApiModel.edmx.diagram">
+      <DependentUpon>OcrApiModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

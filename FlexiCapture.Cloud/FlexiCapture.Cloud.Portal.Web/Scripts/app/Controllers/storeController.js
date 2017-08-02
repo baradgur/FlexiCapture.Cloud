@@ -1,8 +1,8 @@
-(function () {
-    var storeController = function ($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, storeHttpService) {
+(function() {
+    var storeController = function($scope, $http, $location, $state, $rootScope, $window, $cookies, usSpinnerService, Idle, Keepalive, $uibModal, storeHttpService) {
         var url = $$ApiUrl + "/store";
 
-        var store = function () {
+        var store = function() {
 
             $scope.loadData = false;
 
@@ -10,7 +10,7 @@
         store();
 
 
-        $scope.setServiceState = function (serviceId) {
+        $scope.setServiceState = function(serviceId) {
             var serviceState = {};
             serviceState.ServiceId = serviceId;
             serviceState.UserId = $scope.userData.UserData.Id;
@@ -27,6 +27,11 @@
 
                 case 3:
                     serviceState.State = !$scope.userData.ServiceData.FTPFileConversionService;
+                    storeHttpService.setServiceState($http, $scope, url, usSpinnerService, serviceState);
+                    break;
+
+                case 5:
+                    serviceState.State = !$scope.userData.ServiceData.OnlineWebOcrApiService;
                     storeHttpService.setServiceState($http, $scope, url, usSpinnerService, serviceState);
                     break;
 

@@ -49,7 +49,8 @@
                             </li>
 
                         </ul>
-                    </div> <!-- #et-info -->
+                    </div>
+                    <!-- #et-info -->
 
 
                     <div id="et-secondary-menu">
@@ -79,9 +80,11 @@
 
                             </ul>
                         </div>
-                    </div> <!-- #et-secondary-menu -->
+                    </div>
+                    <!-- #et-secondary-menu -->
 
-                </div> <!-- .container -->
+                </div>
+                <!-- .container -->
             </div>
             <div class="wp-header">
                 <img class="pull-left" style="width: 130px; padding-left: 10px; padding-right: 10px; margin-bottom: -15px;" src="Content/icons/Logo-OCR.-Data-capture-Cloud-Service-ABBYY-FineReader-Nuance-AnyDoc-Kofax-logo-500x300.png" />
@@ -107,8 +110,7 @@
             </div>
             <div class="container clearfix"></div>
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"
-                        style="position: absolute; right: 0px;">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="position: absolute; right: 0px;">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -118,15 +120,16 @@
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-left" style="cursor: pointer">
-            <!--
+                <!--
             <!-- /.dropdown -->
-            <li ng-show="userData.UserData.UserRoleId==1 || userData.UserData.UserRoleId==4" style="padding: 15px; min-height: 50px;"></li>
+                <li ng-show="userData.UserData.UserRoleId==1 || userData.UserData.UserRoleId==4" style="padding: 15px; min-height: 50px;"></li>
                 <li class="dropdown" ng-show="userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <span ng-if="serviceStateId==1"><i class="fa fa-file-o fa-fw"></i> <b>Single File Conversion</b></span>
                         <span ng-if="serviceStateId==2"><i class="fa fa-file-archive-o fa-fw"></i> <b>Batch File Conversion</b></span>
                         <span ng-if="serviceStateId==3"><i class="fa fa-hdd-o fa-fw"></i> <b>FTP Conversion</b></span>
                         <span ng-if="serviceStateId==4"><i class="fa fa-envelope-o fa-fw"></i> <b>E-mail Attachment Conversion</b></span>
+                        <span ng-if="serviceStateId==7"><i class="fa fa-exchange fa-fw"></i> <b>Online Web OCR API</b></span>
                         <span ng-if="serviceStateId!=1 && serviceStateId!=2 && serviceStateId!=3 && serviceStateId!=4"><b>Services</b></span>
                         <i class="fa fa-caret-down"></i>
                     </a>
@@ -238,13 +241,15 @@
                         <li>
                             <div class="row">
                                 <div class="col-lg-9">
-                                    <a class="padding-5" ng-click="selectService(6, 'webOcr');">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Online Web OCR API
+                                    <a class="padding-5" href="" ng-click="selectService(7, 'webOcr', userData.ServiceData.OnlineWebOcrApiService);">
+                                        <i class="fa fa fa-exchange fa-fw"></i> Online Web OCR API
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
                                     <a class="padding-5" ng-click="selectService(6, 'webOcr');">
-                                        <span class="text-muted small">Sign up</span>
+                                        <span class="text-muted small" ng-class="userData.ServiceData.OnlineWebOcrApiService?'service-acts':''">
+                                            {{userData.ServiceData.OnlineWebOcrApiService?'Active':'Sign up'}}
+                                        </span>
                                     </a>
                                 </div>
                             </div>
