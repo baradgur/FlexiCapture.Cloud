@@ -1,0 +1,22 @@
+﻿<div ng-controller="logController">
+    <div class="container">
+        
+        <div class="row" ng-show="!loading">
+            <div id="toolbar">
+               
+            </div>
+
+            <div class="form-inline">
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true" data-height="300" data-toggle="table" data-page-list="[5,10, 25, 50, 100, 250, 500, All]">
+                    <thead>
+                    <tr>
+                        <th data-field="id" data-sortable="true">Id</th>
+                        <th data-field="date" data-sortable="true">Date</th>
+                        <th data-field="description" data-sortable="true">Description</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

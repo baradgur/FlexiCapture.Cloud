@@ -61,10 +61,8 @@ namespace FlexiCapture.Cloud.ZipService
         {
             try
             {
-                LogHelper.AddLog("Start ZIP service");
                 Timer = new Timer {Interval = 4000};
                 Timer.Elapsed += Timer_Elapsed;
-                LogHelper.AddLog("Start Timer");
                 Timer.Start();
             }
             catch (Exception exception)

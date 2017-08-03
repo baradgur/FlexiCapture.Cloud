@@ -63,7 +63,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                 {
 
                     var response = FTPHelper.TryLoginToFtp(x.Host, x.UserName,
-                        PasswordHelper.Crypt.DecryptString(x.Password), x.UserId);
+                        PasswordHelper.Crypt.DecryptString(x.Password), x.Path, x.UserId);
 
                     List<Tuple<string, string>> addedFilesInResponse;
 
@@ -71,7 +71,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                     {
                         assist.UserProfile = assist.GetUserProfile(x.UserId, 3);
 
-                        addedFilesInResponse = FTPHelper.ExtractFiles(response, x.Host, x.UserName,
+                        addedFilesInResponse = FTPHelper.ExtractFiles(response, x.Host, x.Path, x.UserName,
                             PasswordHelper.Crypt.DecryptString(x.Password));
 
                         addedFilesInResponse.ForEach(af =>

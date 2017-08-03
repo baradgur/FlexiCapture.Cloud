@@ -215,6 +215,7 @@
     <Content Include="PartialViews\BatchLibrary.html" />
     <Content Include="PartialViews\BatchProfile.html" />
     <Content Include="PartialViews\BatchSettings.html" />
+    <Content Include="PartialViews\Log.html" />
     <Content Include="PartialViews\Communication.html" />
     <Content Include="PartialViews\ConfirmEmail.html" />
     <Content Include="PartialViews\Dashboard.html" />
@@ -230,6 +231,7 @@
     <Content Include="PartialViews\AdminSettings.html" />
     <Content Include="PartialViews\Modals\NewPlan.html" />
     <Content Include="PartialViews\NotificationsPreferences.html" />
+    <Content Include="PartialViews\OnlineWebOcrSettings.html" />
     <Content Include="PartialViews\SingleFileConversion.html" />
     <Content Include="PartialViews\SingleLibrary.html" />
     <Content Include="PartialViews\SingleProfile.html" />
@@ -263,6 +265,7 @@
     <Content Include="Scripts\app\Controllers\batchLibraryController.js" />
     <Content Include="Scripts\app\Controllers\batchProfileController.js" />
     <Content Include="Scripts\app\Controllers\batchSettingsController.js" />
+    <Content Include="Scripts\app\Controllers\logController.js" />
     <Content Include="Scripts\app\Controllers\communicationController.js" />
     <Content Include="Scripts\app\Controllers\dashBoardController.js" />
     <Content Include="Scripts\app\Controllers\emailConfirmController.js" />
@@ -278,10 +281,12 @@
     <Content Include="Scripts\app\Controllers\loginController.js" />
     <Content Include="Scripts\app\Controllers\downloadResultsController.js" />
     <Content Include="Scripts\app\Controllers\notificationsPreferencesController.js" />
+    <Content Include="Scripts\app\Controllers\onlineWebOcrSettingsController.js" />
     <Content Include="Scripts\app\Controllers\singleFileConversionController.js" />
     <Content Include="Scripts\app\Controllers\singleLibraryController.js" />
     <Content Include="Scripts\app\Controllers\singleProfileController.js" />
     <Content Include="Scripts\app\Controllers\singleSettingsController.js" />
+    <Content Include="Scripts\app\Controllers\statisticController.js" />
     <Content Include="Scripts\app\Controllers\storeController.js" />
     <Content Include="Scripts\app\Controllers\subscriptionsPlansLibraryController.js" />
     <Content Include="Scripts\app\Controllers\userProfileController.js" />
@@ -296,11 +301,14 @@
     <Content Include="Scripts\app\Scripts\disposable.js" />
     <Content Include="Scripts\app\Scripts\mapAreaConfigurator.js" />
     <Content Include="Scripts\app\Scripts\routeConfigurator.js" />
+    <Content Include="Scripts\app\Services\logHttpService.js" />
     <Content Include="Scripts\app\Services\documentsHttpService.js" />
     <Content Include="Scripts\app\Services\emailSettingsHttpService.js" />
     <Content Include="Scripts\app\Services\ftpSettingsHttpService.js" />
     <Content Include="Scripts\app\Services\manageFilesHttpService.js" />
     <Content Include="Scripts\app\Services\manageUserProfileHttpService.js" />
+    <Content Include="Scripts\app\Services\onlineWebOcrSettingsHttpService.js" />
+    <Content Include="Scripts\app\Services\statisticHttpService.js" />
     <Content Include="Scripts\app\Services\storeHttpService.js" />
     <Content Include="Scripts\app\Services\communicationHttpService.js" />
     <Content Include="Scripts\app\Services\subscriptionsPlansHttpService.js" />

@@ -46,6 +46,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return null;
             }
         }
@@ -220,6 +224,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(new UserViewModel()
                 {
@@ -275,8 +283,12 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     return model;
                 }
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return null;
             }
         }
@@ -298,10 +310,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.Users.Users2)
                         .Include(x => x.UserLoginStates)
                         .Include(x => x.UserRoleTypes)
-                        .Where(x => x.Users.FirstName.ToLower().Contains(userValue.ToLower()) 
+                        .Where(x => x.Users.FirstName.ToLower().Contains(userValue.ToLower())
                         || x.Users.LastName.ToLower().Contains(userValue.ToLower())
                         || x.Users.Email.ToLower().Contains(userValue.ToLower())
-                        || (x.Users.FirstName+" "+x.Users.LastName).ToLower().Contains(userValue.ToLower())
+                        || (x.Users.FirstName + " " + x.Users.LastName).ToLower().Contains(userValue.ToLower())
                         || (x.Users.LastName + " " + x.Users.FirstName).ToLower().Contains(userValue.ToLower())
                         );
 
@@ -329,8 +341,12 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     return models;
                 }
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return null;
             }
         }
@@ -380,8 +396,12 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 }
                 return models;
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return null;
             }
         }
@@ -415,6 +435,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return new UserViewModel()
                 {
                     Error = new ErrorModel()
@@ -498,6 +522,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(new UserProfileModel()
                 {
@@ -640,6 +668,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(new UserViewModel()
                 {
@@ -765,6 +797,10 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 ErrorModel model = new ErrorModel();
                 model.Name = "Error reset password";
                 model.FullDescription = exception.Message;
@@ -794,6 +830,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.UserProfiles.Select(xx => xx.UserProfileServiceDefault))
                         .Include(x => x.UserProfiles.Select(xx => xx.UserProfilePrintTypes))
                         .Include(x => x.UserProfiles.Select(xx => xx.UserProfileLanguages))
+                        .Include(x => x.Notifications)
+                        .Include(x => x.Notifications1)
+                        .Include(x => x.OcrApiKeys)
 
                         .Include(y => y.Users1.Select(x => x.UserLogins.Select(xx => xx.UserConfirmationEmails)))
                         .Include(y => y.Users1.Select(x => x.UserSettings))
@@ -807,6 +846,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(y => y.Users1.Select(x => x.UserProfiles.Select(xx => xx.UserProfileServiceDefault)))
                         .Include(y => y.Users1.Select(x => x.UserProfiles.Select(xx => xx.UserProfilePrintTypes)))
                         .Include(y => y.Users1.Select(x => x.UserProfiles.Select(xx => xx.UserProfileLanguages)))
+                        .Include(y => y.Users1.Select(x => x.Notifications))
+                        .Include(y => y.Users1.Select(x => x.Notifications1))
+                        .Include(y => y.Users1.Select(x => x.OcrApiKeys))
 
                         .FirstOrDefault(x => x.Id == id);
 
@@ -856,16 +898,18 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         db.UserLogins.RemoveRange(child.UserLogins);
                         db.UserSettings.RemoveRange(child.UserSettings);
                         db.UserServiceSubscribes.RemoveRange(child.UserServiceSubscribes);
-
+                        db.Notifications.RemoveRange(child.Notifications);
+                        db.Notifications.RemoveRange(child.Notifications1);
+                        db.OcrApiKeys.RemoveRange(child.OcrApiKeys);
                     }
 
                     db.Users.RemoveRange(user.Users1);
-
+                    
                     foreach (var task in user.ZipTasks)
                     {
                         db.ZipDocuments.RemoveRange(task.ZipDocuments);
                     }
-                    db.SaveChanges();
+                    
                     db.ZipTasks.RemoveRange(user.ZipTasks);
 
                     foreach (var task in user.Tasks)
@@ -886,19 +930,22 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     }
 
                     db.UserProfiles.RemoveRange(user.UserProfiles);
-
+                    
                     db.FTPSettings.RemoveRange(user.FTPSettings);
                     db.EmailSettings.RemoveRange(user.EmailSettings);
                     db.EmailResponseSettings.RemoveRange(user.EmailResponseSettings);
-
+                    
                     foreach (var login in user.UserLogins)
                     {
                         db.UserConfirmationEmails.RemoveRange(login.UserConfirmationEmails);
                     }
-
+                    
                     db.UserLogins.RemoveRange(user.UserLogins);
                     db.UserSettings.RemoveRange(user.UserSettings);
                     db.UserServiceSubscribes.RemoveRange(user.UserServiceSubscribes);
+                    db.Notifications.RemoveRange(user.Notifications);
+                    db.Notifications.RemoveRange(user.Notifications1);
+                    db.OcrApiKeys.RemoveRange(user.OcrApiKeys);
 
                     db.Users.Remove(user);
 

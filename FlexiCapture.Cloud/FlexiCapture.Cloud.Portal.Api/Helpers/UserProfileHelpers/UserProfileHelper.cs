@@ -39,8 +39,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
                 }
                
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return false;
             }
         }
@@ -115,6 +119,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(new UserProfileModel()
                 {
@@ -170,6 +178,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.UserProfileHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(new UserProfileModel()
                 {

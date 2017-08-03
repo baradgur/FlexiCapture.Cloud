@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.StatisticModels;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.StatisticHelpers
@@ -20,8 +21,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.StatisticHelpers
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 return serializer.Serialize(new StatisticRequestModel(1));
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return "";
             }
         }
@@ -48,8 +53,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.StatisticHelpers
 
                 return data;
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return "";
             }
         }

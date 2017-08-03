@@ -143,7 +143,9 @@
                 function (response) { // optional
                     // failed
                     usSpinnerService.stop('spinner-1');
-                    showNotify("Успех", "Error occurred while adding user", "danger");
+                    var notificationT = "adding";
+                    if (isEdit) notificationT = "updating";
+                    showNotify("Успех", "Error occurred while " + notificationT + " user", "danger");
                     $('#table').bootstrapTable('resetWidth');
                     callback(responseSuccess, responseNoError);
                 });

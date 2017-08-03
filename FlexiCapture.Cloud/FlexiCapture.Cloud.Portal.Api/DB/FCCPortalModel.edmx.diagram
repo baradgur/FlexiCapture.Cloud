@@ -81,6 +81,8 @@
         <AssociationConnector Association="FCCPortalModel.FK_Notifications_UserRoleTypes" />
         <AssociationConnector Association="FCCPortalModel.FK_Notifications_Users" />
         <AssociationConnector Association="FCCPortalModel.FK_Notifications_Users1" />
+        <EntityTypeShape EntityType="FCCPortalModel.OcrApiKeys" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="FCCPortalModel.FK_OcrApiKeys_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

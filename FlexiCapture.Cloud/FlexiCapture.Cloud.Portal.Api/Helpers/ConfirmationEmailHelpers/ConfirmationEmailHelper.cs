@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.ConfirmationEmailHelpers
 {
@@ -23,8 +24,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ConfirmationEmailHelpers
                 if (!string.IsNullOrEmpty(email))
                 EmailHelpers.EmailHelper.SendConfirmationEmail(email,url);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
             }
         }
     }

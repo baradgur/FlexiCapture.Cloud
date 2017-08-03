@@ -3,8 +3,28 @@
     <div class="container">
 
         <div class="row" ng-show="!loading">
+            <div id="toolbar">
+                <button type="button" class="btn btn-primary orange-tooltip" ng-click="addNewKey();" data-toggle="tooltip" title="Add New OcrApi Key" data-placement="bottom">
 
-            This Service does not require any global settings
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+
+            <!--<div class="alert alert-success" id="eventsResult">
+                Here is the result of event.
+            </div>-->
+            <div class="form-inline">
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-columns="true" data-pagination="true" data-height="300" data-toggle="table" data-page-list="[5,10, 25, 50, 100, 250, 500, All]">
+                    <thead>
+                        <tr>
+                            <th data-field="viewId" data-sortable="true">Id</th>
+                            <th data-field="keyKey" data-sortable="true">Key</th>
+                            <th data-field="keyState" data-sortable="true">State</th>
+                            <th data-field="update" data-formatter="actionFormatterKey" data-events="actionEventsKey" data-width="5%" style="text-align:center;"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 </div>

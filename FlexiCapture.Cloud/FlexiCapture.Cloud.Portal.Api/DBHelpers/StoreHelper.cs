@@ -6,6 +6,8 @@ using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.Models.GeneralModels;
 using FlexiCapture.Cloud.Portal.Api.Models.StoreModels;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
+using Microsoft.Ajax.Utilities;
+using System.Data.Entity;
 
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
@@ -35,45 +37,63 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         //                                              select sub).ToList();
 
                         List<DB.UserServiceSubscribes> subscribess = (from sub in db.UserServiceSubscribes
-                                                               //join u in db.Users on sub.UserId equals u.ParentUserId
-                                                               where sub.UserId == model.UserId /*&& u.ParentUserId == model.UserId*/
-                                                               && sub.ServiceId == model.ServiceId
-                                                               select sub).ToList();
-
-                        DB.UserServiceSubscribes subscribes = (from sub in db.UserServiceSubscribes
-                                                                      //join u in db.Users on sub.UserId equals u.ParentUserId
+                                                                          //join u in db.Users on sub.UserId equals u.ParentUserId
                                                                       where sub.UserId == model.UserId /*&& u.ParentUserId == model.UserId*/
                                                                       && sub.ServiceId == model.ServiceId
-                                                                      select sub).SingleOrDefault();
+                                                                      select sub).ToList();
 
-                       // DB.UserServiceSubscribes abscentSubscribe = subscribes.SingleOrDefault(x => x.ServiceId == model.ServiceId);
+                        DB.UserServiceSubscribes subscribes = (from sub in db.UserServiceSubscribes
+                                                                   //join u in db.Users on sub.UserId equals u.ParentUserId
+                                                               where sub.UserId == model.UserId /*&& u.ParentUserId == model.UserId*/
+                                                               && sub.ServiceId == model.ServiceId
+                                                               select sub).SingleOrDefault();
+
+                        // DB.UserServiceSubscribes abscentSubscribe = subscribes.SingleOrDefault(x => x.ServiceId == model.ServiceId);
 
 
 
 
 
                         if (subscribes != null)
-                        { 
-                                subscribes.SubscribeStateId = 1;
-                                db.SaveChanges();
-                            
+                        {
+                            subscribes.SubscribeStateId = 1;
+                            db.SaveChanges();
                         }
                         else
                         {
-                            IList<DB.Users> users = (from u in db.Users
-                                where
-                                u.Id == model.UserId || u.ParentUserId == model.UserId
-                                select u).ToList();
+                            // generating subscribe only!!! for account owner
+                            var subscribe = new UserServiceSubscribes();
+                            subscribe.UserId = model.UserId;
+                            subscribe.ServiceId = model.ServiceId;
+                            subscribe.SubscribeStateId = 1;
+                            db.UserServiceSubscribes.Add(subscribe);
 
+                            if (model.ServiceId == 5)
+                            {
+                                string devKeyForOcrApi = Guid.NewGuid().ToString().ToUpper();
+                                string guid = OcrApiHelper.InsertGuid(devKeyForOcrApi);
+
+                                if (!guid.IsNullOrWhiteSpace())
+                                {
+                                    var dbApiKey = new DB.OcrApiKeys()
+                                    {
+                                        UserId = model.UserId,
+                                        Key = guid,
+                                        IsActive = true
+                                    };
+                                    db.OcrApiKeys.Add(dbApiKey);
+                                }
+                                else { return; }//stop method executing and no saves to db
+                            }
+
+                            IList<DB.Users> users = (from u in db.Users
+                                                     where
+                                                     u.Id == model.UserId || u.ParentUserId == model.UserId
+                                                     select u).ToList();
+
+                            //create default conversion profiles for all users
                             foreach (var item in users)
                             {
-
-                                var subscribe = new UserServiceSubscribes();
-                                subscribe.UserId = item.Id;
-                                subscribe.ServiceId = model.ServiceId;
-                                subscribe.SubscribeStateId = 1;
-                                db.UserServiceSubscribes.Add(subscribe);
-
                                 var profile = new NewProfileModel();
                                 profile.UserId = item.Id;
                                 var name = "";
@@ -88,16 +108,6 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                                     case 4:
                                         name = "Email Service";
                                         break;
-
-                                   
-                                }
-
-                                Guid devKeyForOcrApi = new Guid();
-                                if (model.ServiceId == 5)
-                                {
-                                    devKeyForOcrApi = Guid.NewGuid();
-
-                                    string guid = OcrApiHelper.InsertGuid();
                                 }
 
                                 profile.ProfileName = name + " Default Capture Profile ";
@@ -118,23 +128,44 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     else
                     {
                         DB.UserServiceSubscribes subscribes = (from sub in db.UserServiceSubscribes
-                                                                      //join u in db.Users on sub.UserId equals u.ParentUserId
-                                                                      where sub.UserId == model.UserId/* && u.ParentUserId == model.UserId*/
-                                                                      && sub.ServiceId == model.ServiceId
-                                                                      select sub).SingleOrDefault();
+                                                                   //join u in db.Users on sub.UserId equals u.ParentUserId
+                                                               where sub.UserId == model.UserId/* && u.ParentUserId == model.UserId*/
+                                                               && sub.ServiceId == model.ServiceId
+                                                               select sub).SingleOrDefault();
 
                         if (subscribes != null)
                         {
-                            
-                                subscribes.SubscribeStateId = 2;
-                                db.SaveChanges();
-                            
+
+                            subscribes.SubscribeStateId = 2;
+                            if (model.ServiceId == 5)
+                            {
+                                var dbApiKeys = db.OcrApiKeys.Where(x => x.UserId == model.UserId);
+
+                                foreach (var dbApiKey in dbApiKeys)
+                                {
+                                    string guid = OcrApiHelper.UpdateGuid(dbApiKey.Key, false);
+                                    if (!guid.IsNullOrWhiteSpace())
+                                    {
+                                        dbApiKey.IsActive = false;
+                                    }
+                                    else
+                                    {
+                                        return;
+                                    }
+
+                                }
+                            }
+                            db.SaveChanges();
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
             }
         }
     }

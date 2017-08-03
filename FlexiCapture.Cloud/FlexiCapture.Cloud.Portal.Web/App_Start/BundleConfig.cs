@@ -125,6 +125,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/userSubscriptionsController.js",
                 "~/Scripts/app/Controllers/notificationsPreferencesController.js",
                 "~/Scripts/app/Controllers/communicationController.js",
+                "~/Scripts/app/Controllers/logController.js",
                 "~/Scripts/app/Controllers/subscriptionsPlansLibraryController.js",
                 "~/Scripts/app/Controllers/statisticController.js"
 
@@ -142,6 +143,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Services/emailSettingsHttpService.js",
                 "~/Scripts/app/Services/storeHttpService.js",
                 "~/Scripts/app/Services/communicationHttpService.js",
+                "~/Scripts/app/Services/logHttpService.js",
+                "~/Scripts/app/Services/onlineWebOcrSettingsHttpService.js",
                 "~/Scripts/app/Services/subscriptionsPlansHttpService.js",
                 "~/Scripts/app/Services/statisticHttpService.js"
                 //manageFilesHttpService

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using FlexiCapture.Cloud.Portal.Api.DB;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.Catalogs;
 using FlexiCapture.Cloud.Portal.Api.Models.UserProfiles;
 
@@ -75,6 +76,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return null;
             }
         }
@@ -103,8 +108,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ManageUserHelpers
                 string s = serializer.Serialize(models);
                 return s;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return "";
             }
         }

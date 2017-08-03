@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using FlexiCapture.Cloud.Portal.Api.DBHelpers;
 using FlexiCapture.Cloud.Portal.Api.Models.StoreModels;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.StoreHelpers
@@ -17,8 +18,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.StoreHelpers
             {
                 DBHelpers.StoreHelper.SetStoreState(model);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
             }
         }
     }

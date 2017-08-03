@@ -85,6 +85,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 ExceptionHelper.TraceException(System.Reflection.MethodBase.GetCurrentMethod().Name,exception);
                 return new AuthUserModel()
                 {
@@ -108,8 +112,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.LoginHelpers
                     return db.UserLogins.FirstOrDefault(x => x.UserId == userId).Id;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return -1;
             }
         }

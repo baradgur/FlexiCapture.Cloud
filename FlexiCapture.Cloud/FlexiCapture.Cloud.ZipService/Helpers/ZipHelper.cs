@@ -38,7 +38,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers
             try
             {
                 string url = assist.GetSettingValueByName("ApiUrl");
-                LogHelper.AddLog("ZIP Path="+inputZipPath);
+
                 using (ZipArchive archive = ZipFile.OpenRead(inputZipPath))
                 {
                     foreach (ZipArchiveEntry entry in archive.Entries)

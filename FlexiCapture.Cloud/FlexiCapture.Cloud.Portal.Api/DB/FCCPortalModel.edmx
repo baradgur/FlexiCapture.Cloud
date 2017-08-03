@@ -137,6 +137,15 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <EntityType Name="OcrApiKeys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="PrintTypeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -470,6 +479,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Notifications">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OcrApiKeys_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OcrApiKeys" Type="Self.OcrApiKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OcrApiKeys">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -860,6 +881,7 @@
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotificationTypes" EntityType="Self.NotificationTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OcrApiKeys" EntityType="Self.OcrApiKeys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrintTypeCatalog" EntityType="Self.PrintTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" Schema="dbo" store:Type="Tables" />
@@ -924,6 +946,10 @@
           <AssociationSet Name="FK_Notifications_Users1" Association="Self.FK_Notifications_Users1">
             <End Role="Users" EntitySet="Users" />
             <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OcrApiKeys_Users" Association="Self.FK_OcrApiKeys_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OcrApiKeys" EntitySet="OcrApiKeys" />
           </AssociationSet>
           <AssociationSet Name="FK_Tasks_ServiceTypes" Association="Self.FK_Tasks_ServiceTypes">
             <End Role="ServiceTypes" EntitySet="ServiceTypes" />
@@ -1380,6 +1406,7 @@
           <Property Name="GetUsePaymentNotif" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Notifications" Relationship="FCCPortalModel.FK_Notifications_Users" FromRole="Users" ToRole="Notifications" />
           <NavigationProperty Name="Notifications1" Relationship="FCCPortalModel.FK_Notifications_Users1" FromRole="Users" ToRole="Notifications" />
+          <NavigationProperty Name="OcrApiKeys" Relationship="FCCPortalModel.FK_OcrApiKeys_Users" FromRole="Users" ToRole="OcrApiKeys" />
         </EntityType>
         <EntityType Name="UserServiceSubscribes">
           <Key>
@@ -2109,6 +2136,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Notifications" EntitySet="Notifications" />
           </AssociationSet>
+          <EntitySet Name="OcrApiKeys" EntityType="FCCPortalModel.OcrApiKeys" />
+          <AssociationSet Name="FK_OcrApiKeys_Users" Association="FCCPortalModel.FK_OcrApiKeys_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OcrApiKeys" EntitySet="OcrApiKeys" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Notifications">
           <Key>
@@ -2179,6 +2211,28 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Notifications">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OcrApiKeys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="FCCPortalModel.FK_OcrApiKeys_Users" FromRole="OcrApiKeys" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_OcrApiKeys_Users">
+          <End Type="FCCPortalModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="FCCPortalModel.OcrApiKeys" Role="OcrApiKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OcrApiKeys">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2556,6 +2610,16 @@
             <EntityTypeMapping TypeName="FCCPortalModel.NotificationTypes">
               <MappingFragment StoreEntitySet="NotificationTypes">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OcrApiKeys">
+            <EntityTypeMapping TypeName="FCCPortalModel.OcrApiKeys">
+              <MappingFragment StoreEntitySet="OcrApiKeys">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

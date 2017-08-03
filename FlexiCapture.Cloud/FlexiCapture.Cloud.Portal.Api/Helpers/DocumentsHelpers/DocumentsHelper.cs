@@ -44,6 +44,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
             }
             catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return -1;
             }
         }
@@ -87,8 +91,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return false;
             }
         }
@@ -152,8 +160,12 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
                 return false;
             }
         }

@@ -165,8 +165,10 @@
     <Compile Include="Controllers\EmailSettingsController.cs" />
     <Compile Include="Controllers\FTPSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
+    <Compile Include="Controllers\OcrApiKeysController.cs" />
     <Compile Include="Controllers\RestoreDataController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
@@ -245,6 +247,9 @@
     <Compile Include="DB\NotificationTypes.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\OcrApiKeys.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\PrintTypeCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -255,9 +260,6 @@
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Settings.cs">
-      <DependentUpon>FCCPortalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\FCCPortalEntities.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Tasks.cs">
@@ -384,6 +386,7 @@
     <Compile Include="Models\Errors\ErrorModel.cs" />
     <Compile Include="Models\GeneralModels\CaptchaResponseModel.cs" />
     <Compile Include="Models\GeneralModels\NewProfileModel.cs" />
+    <Compile Include="Models\OcrApiKeyModels\OcrApiKeyModel.cs" />
     <Compile Include="Models\SettingsModels\EmailResponseSettingsModel.cs" />
     <Compile Include="Models\SettingsModels\EmailSettingsModel.cs" />
     <Compile Include="Models\SettingsModels\FTPSettingsModel.cs" />
