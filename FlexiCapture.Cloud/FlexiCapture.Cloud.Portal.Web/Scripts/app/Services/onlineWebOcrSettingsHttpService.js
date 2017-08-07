@@ -110,6 +110,8 @@
 
                     showNotify("Успех", "Key was successfully " + notificationT, "success");
                     $('#table').bootstrapTable('resetWidth');
+
+                    $('[data-toggle="tooltip"]').tooltip();
                     // success
                 }
             },
@@ -120,8 +122,65 @@
                     if (isEdit) notificationT = "updating";
                     showNotify("Успех", "Error occurred while "+notificationT+" key", "danger");
                     $('#table').bootstrapTable('resetWidth');
+
+                    $('[data-toggle="tooltip"]').tooltip();
                 });
         $('#table').bootstrapTable('resetWidth');
 
     }
+
+
+
+    //delete key by ID
+    this.deleteKey = function ($http, $scope, usSpinnerService, url, rParams, data) {
+
+
+        usSpinnerService.spin("spinner-1");
+
+        $http.delete(url, {
+            params: rParams
+        })
+            .success(function (result) {
+                if (result != 0) {
+                    data.splice(0, data.length);
+                    usSpinnerService.stop('spinner-1');
+                    showNotify("Success", "Data deleted successfully", "success");
+                    
+                        var index = -1;
+                        for (var j = 0; j < $scope.apiKeys.length; j++) {
+                            if ($scope.apiKeys[j].Id == result) {
+                                index = j;
+                                break;
+                            }
+                        }
+                        if (index != -1) {
+                            $scope.apiKeys.splice(index, 1);
+                        }
+
+                        for (var i = 0; i < $scope.apiKeys.length; i++) {
+                            var dElement = addData($scope.apiKeys[i]);
+                        data.push(dElement);
+                    }
+
+                    $('#table').bootstrapTable('load', data);
+                    $('#table').bootstrapTable('resetWidth');
+
+                    $('[data-toggle="tooltip"]').tooltip();
+                } else {
+                    showNotify("Error", "Error while performing data deletion", "danger");
+                    usSpinnerService.stop('spinner-1');
+                    $scope.loading = false;
+
+                    $('#table').bootstrapTable('resetWidth');
+                }
+            },
+                function (result) {
+                    showNotify("Error", "Error while performing data deletion", "danger");
+                    usSpinnerService.stop('spinner-1');
+                    $scope.loading = false;
+                });
+    }
+
+
+
 });

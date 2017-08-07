@@ -36,8 +36,9 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // DELETE: api/OcrApiKeys/5
-        public void Delete(int id)
+        public int Delete(int id)
         {
+            return OcrApiHelper.DeleteKey(id);
         }
     }
 }

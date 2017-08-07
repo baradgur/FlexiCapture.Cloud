@@ -197,5 +197,70 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                 return null;
             }
         }
+
+        public static int DeleteKey(int id)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities())
+                {
+                    OcrApiKeys dbKey = db.OcrApiKeys.FirstOrDefault(x => x.Id == id);
+
+                    if (dbKey != null)
+                    {
+                        string guid = DeleteGuid(dbKey.Key);
+
+                        if (!guid.IsNullOrWhiteSpace())
+                        {
+                            db.OcrApiKeys.Remove(dbKey);
+                            db.SaveChanges();
+                            return id;
+                        }
+                    }
+                    return 0;
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// delete guid from ocrApi database
+        /// </summary>
+        /// <param name="dbKeyKey"></param>
+        /// <returns></returns>
+        private static string DeleteGuid(string keyStr)
+        {
+            try
+            {
+                using (var db = new OcrApiEntities())
+                {
+
+                    var key = db.ApiKey.FirstOrDefault(x => x.Key == keyStr);
+
+                    if (key != null)
+                    {
+                        db.ApiKey.Remove(key);
+                        db.SaveChanges();
+                    }
+
+                    return keyStr;
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                   innerException);
+                return "";
+            }
+        }
     }
 }

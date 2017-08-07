@@ -21,7 +21,7 @@
 
 
                     <div id="et-info">
-                        <span class="fa fa-phone"></span><span id="et-info-phone">(510)754-9866</span>
+                        <span class="fa fa-phone"></span> <span id="et-info-phone">(510)754-9866</span>
 
                         <span style="margin-left: 10px;" class="fa fa-envelope"></span><a href="mailto:support@datacapture.cloud"><span id="et-info-email">  support@datacapture.cloud</span></a>
 
@@ -465,7 +465,9 @@
 
                     <!--end ADMIN-->
                     <!-- SINGLE FILE Conversion -->
-                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==1">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) 
+                        && ($state.includes('main.dashboard.single')||$state.includes('main.dashboard.library')||$state.includes('main.dashboard.singleprofile'))
+                        && serviceStateId==1">
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.single')}">
                             <a ui-sref="main.dashboard.single"><i class="fa fa-eye fa-fw"></i> Convert Document</a>
@@ -486,7 +488,9 @@
                     </ul>
                     <!--end SFC-->
                     <!-- BATCH Conversion -->
-                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==2">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) 
+                        && ($state.includes('main.dashboard.batch')||$state.includes('main.dashboard.library')||$state.includes('main.dashboard.batchprofile'))
+                        && serviceStateId==2">
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.batch')}">
                             <a ui-sref="main.dashboard.batch"><i class="fa fa-file-archive-o fa-fw"></i> Load Batch</a>
@@ -506,7 +510,9 @@
                     </ul>
                     <!--end BATCh-->
                     <!-- email Attachment -->
-                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==4">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) 
+                        && ($state.includes('main.dashboard.library')||$state.includes('main.dashboard.emailprofile')||$state.includes('main.dashboard.emailsettings'))
+                        && serviceStateId==4">
 
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
@@ -523,7 +529,9 @@
                     </ul>
                     <!--end EMAIL-->
                     <!-- FTP -->
-                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==3">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) 
+                        && ($state.includes('main.dashboard.library')||$state.includes('main.dashboard.ftpprofile')||$state.includes('main.dashboard.ftpsettings'))
+                        && serviceStateId==3">
 
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
@@ -540,7 +548,8 @@
                     </ul>
                     <!--end FTP-->
                     <!--PROFILE -->
-                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) && serviceStateId==5">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2 || userData.UserData.UserRoleId==4) 
+                        && $state.includes('main.dashboard.profile') && serviceStateId==5">
 
                         <li>
                             <a ui-sref="main.dashboard.profile"><i class="fa fa-user fa-fw"></i> Profile Details</a>
@@ -549,7 +558,8 @@
                     </ul>
                     <!--end PROFILE-->
                     <!--STORE -->
-                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2) && serviceStateId==6">
+                    <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2)
+                        && $state.includes('main.dashboard.store') && serviceStateId==6">
 
                         <li>
                             <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart fa-fw"></i> Store Details</a>
