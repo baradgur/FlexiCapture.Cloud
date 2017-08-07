@@ -114,6 +114,15 @@
     <Compile Include="DB\Log.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\Notifications.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\NotificationTypes.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\OcrApiKeys.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\PrintTypeCatalog.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
@@ -130,6 +139,9 @@
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\TaskStates.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\TaskStatistics.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\UserConfirmationEmails.cs">
@@ -175,6 +187,9 @@
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\ZipTasks.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\ZipTaskStatistics.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CatalogHelper.cs" />

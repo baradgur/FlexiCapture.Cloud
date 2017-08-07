@@ -824,7 +824,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.FTPSettings)
                         .Include(x => x.EmailResponseSettings)
                         .Include(x => x.ZipTasks.Select(xx => xx.ZipDocuments))
+                        .Include(x => x.ZipTasks.Select(xx => xx.ZipTaskStatistics))
                         .Include(x => x.Tasks.Select(xx => xx.Documents))
+                        .Include(x => x.Tasks.Select(xx => xx.TaskStatistics))
                         .Include(x => x.UserServiceSubscribes)
                         .Include(x => x.UserProfiles.Select(xx => xx.UserProfileExportFormats))
                         .Include(x => x.UserProfiles.Select(xx => xx.UserProfileServiceDefault))
@@ -834,13 +836,17 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.Notifications1)
                         .Include(x => x.OcrApiKeys)
 
+                        .Include(x=>x.Users2)
+
                         .Include(y => y.Users1.Select(x => x.UserLogins.Select(xx => xx.UserConfirmationEmails)))
                         .Include(y => y.Users1.Select(x => x.UserSettings))
                         .Include(y => y.Users1.Select(x => x.EmailSettings))
                         .Include(y => y.Users1.Select(x => x.FTPSettings))
                         .Include(y => y.Users1.Select(x => x.EmailResponseSettings))
                         .Include(y => y.Users1.Select(x => x.ZipTasks.Select(xx => xx.ZipDocuments)))
+                        .Include(y => y.Users1.Select(x => x.ZipTasks.Select(xx => xx.ZipTaskStatistics)))
                         .Include(y => y.Users1.Select(x => x.Tasks.Select(xx => xx.Documents)))
+                        .Include(y => y.Users1.Select(x => x.Tasks.Select(xx => xx.TaskStatistics)))
                         .Include(y => y.Users1.Select(x => x.UserServiceSubscribes))
                         .Include(y => y.Users1.Select(x => x.UserProfiles.Select(xx => xx.UserProfileExportFormats)))
                         .Include(y => y.Users1.Select(x => x.UserProfiles.Select(xx => xx.UserProfileServiceDefault)))
@@ -863,6 +869,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         foreach (var task in child.ZipTasks)
                         {
                             db.ZipDocuments.RemoveRange(task.ZipDocuments);
+                            db.ZipTaskStatistics.RemoveRange(task.ZipTaskStatistics);
                         }
 
                         db.ZipTasks.RemoveRange(child.ZipTasks);
@@ -870,18 +877,17 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         foreach (var task in child.Tasks)
                         {
                             db.Documents.RemoveRange(task.Documents);
+                            db.TaskStatistics.RemoveRange(task.TaskStatistics);
                         }
 
                         db.Tasks.RemoveRange(child.Tasks);
 
                         foreach (var profile in child.UserProfiles)
                         {
-
                             db.UserProfileServiceDefault.RemoveRange(profile.UserProfileServiceDefault);
                             db.UserProfileExportFormats.RemoveRange(profile.UserProfileExportFormats);
                             db.UserProfileLanguages.RemoveRange(profile.UserProfileLanguages);
                             db.UserProfilePrintTypes.RemoveRange(profile.UserProfilePrintTypes);
-
                         }
 
                         db.UserProfiles.RemoveRange(child.UserProfiles);
@@ -908,16 +914,27 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     foreach (var task in user.ZipTasks)
                     {
                         db.ZipDocuments.RemoveRange(task.ZipDocuments);
+                        db.ZipTaskStatistics.RemoveRange(task.ZipTaskStatistics);
                     }
                     
                     db.ZipTasks.RemoveRange(user.ZipTasks);
 
                     foreach (var task in user.Tasks)
                     {
+                        if (user.Users2 != null)
+                        {
+                            task.UserId = user.Users2.Id;
+                        }
+                        else { 
                         db.Documents.RemoveRange(task.Documents);
+                        db.TaskStatistics.RemoveRange(task.TaskStatistics);
+                        }
                     }
 
-                    db.Tasks.RemoveRange(user.Tasks);
+                    if (user.Users2 == null)
+                    {
+                        db.Tasks.RemoveRange(user.Tasks);
+                    }
 
                     foreach (var profile in user.UserProfiles)
                     {

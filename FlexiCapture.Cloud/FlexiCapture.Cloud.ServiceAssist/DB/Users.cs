@@ -27,6 +27,9 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
             this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
             this.UserSettings = new HashSet<UserSettings>();
             this.ZipTasks = new HashSet<ZipTasks>();
+            this.Notifications = new HashSet<Notifications>();
+            this.Notifications1 = new HashSet<Notifications>();
+            this.OcrApiKeys = new HashSet<OcrApiKeys>();
         }
     
         public int Id { get; set; }
@@ -36,6 +39,8 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public string PhoneNumber { get; set; }
         public string CompanyName { get; set; }
         public Nullable<int> ParentUserId { get; set; }
+        public bool GetReleaseUpdateNotif { get; set; }
+        public bool GetUsePaymentNotif { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailResponseSettings> EmailResponseSettings { get; set; }
@@ -58,5 +63,11 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual ICollection<UserSettings> UserSettings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ZipTasks> ZipTasks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notifications> Notifications { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notifications> Notifications1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OcrApiKeys> OcrApiKeys { get; set; }
     }
 }

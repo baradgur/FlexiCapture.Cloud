@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FCCPortalModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FCCPortalModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -117,6 +117,35 @@
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderId" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserRoleId" Type="int" />
+          <Property Name="NotificationTypeId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OcrApiKeys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="PrintTypeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -164,6 +193,16 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaskStatistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="TotalCharacters" Type="int" Nullable="false" />
+          <Property Name="UncertainCharacters" Type="int" Nullable="false" />
+          <Property Name="PagesArea" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserConfirmationEmails">
           <Key>
@@ -264,6 +303,8 @@
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="70" />
           <Property Name="ParentUserId" Type="int" />
+          <Property Name="GetReleaseUpdateNotif" Type="bit" Nullable="false" />
+          <Property Name="GetUsePaymentNotif" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserServiceSubscribes">
           <Key>
@@ -319,6 +360,16 @@
           <Property Name="ServiceId" Type="int" Nullable="false" />
           <Property Name="ProfileContent" Type="nvarchar(max)" />
           <Property Name="ResponseContent" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ZipTaskStatistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZipTaskId" Type="int" Nullable="false" />
+          <Property Name="TotalCharacters" Type="int" Nullable="false" />
+          <Property Name="UncertainCharacters" Type="int" Nullable="false" />
+          <Property Name="PagesArea" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Documents_DocumentCategories">
           <End Role="DocumentCategories" Type="Self.DocumentCategories" Multiplicity="0..1" />
@@ -404,6 +455,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Notifications_NotificationTypes">
+          <End Role="NotificationTypes" Type="Self.NotificationTypes" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="NotificationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_UserRoleTypes">
+          <End Role="UserRoleTypes" Type="Self.UserRoleTypes" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoleTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OcrApiKeys_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OcrApiKeys" Type="Self.OcrApiKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OcrApiKeys">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tasks_ServiceTypes">
           <End Role="ServiceTypes" Type="Self.ServiceTypes" Multiplicity="1" />
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
@@ -437,6 +548,18 @@
             </Principal>
             <Dependent Role="Tasks">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskStatistics_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="TaskStatistics" Type="Self.TaskStatistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaskStatistics">
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -776,6 +899,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ZipTaskStatistics_ZipTasks">
+          <End Role="ZipTasks" Type="Self.ZipTasks" Multiplicity="1" />
+          <End Role="ZipTaskStatistics" Type="Self.ZipTaskStatistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZipTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ZipTaskStatistics">
+              <PropertyRef Name="ZipTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FCCPortalModel2StoreContainer">
           <EntitySet Name="AnalysisModeCatalog" EntityType="Self.AnalysisModeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentCategories" EntityType="Self.DocumentCategories" Schema="dbo" store:Type="Tables" />
@@ -788,12 +923,16 @@
           <EntitySet Name="FTPSettings" EntityType="Self.FTPSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguagesCatalog" EntityType="Self.LanguagesCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationTypes" EntityType="Self.NotificationTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OcrApiKeys" EntityType="Self.OcrApiKeys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrintTypeCatalog" EntityType="Self.PrintTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskStatistics" EntityType="Self.TaskStatistics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserConfirmationEmails" EntityType="Self.UserConfirmationEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLoginStates" EntityType="Self.UserLoginStates" Schema="dbo" store:Type="Tables" />
@@ -809,6 +948,7 @@
           <EntitySet Name="UserSettings" EntityType="Self.UserSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZipDocuments" EntityType="Self.ZipDocuments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZipTasks" EntityType="Self.ZipTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ZipTaskStatistics" EntityType="Self.ZipTaskStatistics" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Documents_DocumentCategories" Association="Self.FK_Documents_DocumentCategories">
             <End Role="DocumentCategories" EntitySet="DocumentCategories" />
             <End Role="Documents" EntitySet="Documents" />
@@ -837,6 +977,26 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="FTPSettings" EntitySet="FTPSettings" />
           </AssociationSet>
+          <AssociationSet Name="FK_Notifications_NotificationTypes" Association="Self.FK_Notifications_NotificationTypes">
+            <End Role="NotificationTypes" EntitySet="NotificationTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_UserRoleTypes" Association="Self.FK_Notifications_UserRoleTypes">
+            <End Role="UserRoleTypes" EntitySet="UserRoleTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users" Association="Self.FK_Notifications_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users1" Association="Self.FK_Notifications_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OcrApiKeys_Users" Association="Self.FK_OcrApiKeys_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OcrApiKeys" EntitySet="OcrApiKeys" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tasks_ServiceTypes" Association="Self.FK_Tasks_ServiceTypes">
             <End Role="ServiceTypes" EntitySet="ServiceTypes" />
             <End Role="Tasks" EntitySet="Tasks" />
@@ -848,6 +1008,10 @@
           <AssociationSet Name="FK_Tasks_Users" Association="Self.FK_Tasks_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskStatistics_Tasks" Association="Self.FK_TaskStatistics_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="TaskStatistics" EntitySet="TaskStatistics" />
           </AssociationSet>
           <AssociationSet Name="FK_UserConfirmationEmails_UserLogins" Association="Self.FK_UserConfirmationEmails_UserLogins">
             <End Role="UserLogins" EntitySet="UserLogins" />
@@ -961,9 +1125,12 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="ZipTasks" EntitySet="ZipTasks" />
           </AssociationSet>
+          <AssociationSet Name="FK_ZipTaskStatistics_ZipTasks" Association="Self.FK_ZipTaskStatistics_ZipTasks">
+            <End Role="ZipTasks" EntitySet="ZipTasks" />
+            <End Role="ZipTaskStatistics" EntitySet="ZipTaskStatistics" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FCCPortalModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1146,6 +1313,7 @@
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
           <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_Tasks" FromRole="Tasks" ToRole="ZipTasks" />
+          <NavigationProperty Name="TaskStatistics" Relationship="FCCPortalModel2.FK_TaskStatistics_Tasks" FromRole="Tasks" ToRole="TaskStatistics" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -1265,6 +1433,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogins_UserRoleTypes" FromRole="UserRoleTypes" ToRole="UserLogins" />
+          <NavigationProperty Name="Notifications" Relationship="FCCPortalModel2.FK_Notifications_UserRoleTypes" FromRole="UserRoleTypes" ToRole="Notifications" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -1288,6 +1457,11 @@
           <NavigationProperty Name="UserServiceSubscribes" Relationship="Self.FK_UserServiceStates_Users" FromRole="Users" ToRole="UserServiceSubscribes" />
           <NavigationProperty Name="UserSettings" Relationship="Self.FK_UserSettings_Users" FromRole="Users" ToRole="UserSettings" />
           <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_Users" FromRole="Users" ToRole="ZipTasks" />
+          <Property Name="GetReleaseUpdateNotif" Type="Boolean" Nullable="false" />
+          <Property Name="GetUsePaymentNotif" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Notifications" Relationship="FCCPortalModel2.FK_Notifications_Users" FromRole="Users" ToRole="Notifications" />
+          <NavigationProperty Name="Notifications1" Relationship="FCCPortalModel2.FK_Notifications_Users1" FromRole="Users" ToRole="Notifications" />
+          <NavigationProperty Name="OcrApiKeys" Relationship="FCCPortalModel2.FK_OcrApiKeys_Users" FromRole="Users" ToRole="OcrApiKeys" />
         </EntityType>
         <EntityType Name="UserServiceSubscribes">
           <Key>
@@ -1357,6 +1531,7 @@
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_ZipTasks_TaskStates" FromRole="ZipTasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_ZipTasks_Users" FromRole="ZipTasks" ToRole="Users" />
           <NavigationProperty Name="ZipDocuments" Relationship="Self.FK_ZipDocuments_ZipTasks" FromRole="ZipTasks" ToRole="ZipDocuments" />
+          <NavigationProperty Name="ZipTaskStatistics" Relationship="FCCPortalModel2.FK_ZipTaskStatistics_ZipTasks" FromRole="ZipTasks" ToRole="ZipTaskStatistics" />
         </EntityType>
         <Association Name="FK_UserProfiles_AnalysisModeCatalog">
           <End Role="AnalysisModeCatalog" Type="Self.AnalysisModeCatalog" Multiplicity="1" />
@@ -1999,7 +2174,181 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
             <End Role="ZipDocuments" EntitySet="ZipDocuments" />
           </AssociationSet>
+          <EntitySet Name="Notifications" EntityType="FCCPortalModel2.Notifications" />
+          <EntitySet Name="NotificationTypes" EntityType="FCCPortalModel2.NotificationTypes" />
+          <EntitySet Name="OcrApiKeys" EntityType="FCCPortalModel2.OcrApiKeys" />
+          <EntitySet Name="TaskStatistics" EntityType="FCCPortalModel2.TaskStatistics" />
+          <AssociationSet Name="FK_Notifications_NotificationTypes" Association="FCCPortalModel2.FK_Notifications_NotificationTypes">
+            <End Role="NotificationTypes" EntitySet="NotificationTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_UserRoleTypes" Association="FCCPortalModel2.FK_Notifications_UserRoleTypes">
+            <End Role="UserRoleTypes" EntitySet="UserRoleTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users" Association="FCCPortalModel2.FK_Notifications_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users1" Association="FCCPortalModel2.FK_Notifications_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OcrApiKeys_Users" Association="FCCPortalModel2.FK_OcrApiKeys_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OcrApiKeys" EntitySet="OcrApiKeys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskStatistics_Tasks" Association="FCCPortalModel2.FK_TaskStatistics_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="TaskStatistics" EntitySet="TaskStatistics" />
+          </AssociationSet>
+          <EntitySet Name="ZipTaskStatistics" EntityType="FCCPortalModel2.ZipTaskStatistics" />
+          <AssociationSet Name="FK_ZipTaskStatistics_ZipTasks" Association="FCCPortalModel2.FK_ZipTaskStatistics_ZipTasks">
+            <End Role="ZipTasks" EntitySet="ZipTasks" />
+            <End Role="ZipTaskStatistics" EntitySet="ZipTaskStatistics" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderId" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserRoleId" Type="Int32" />
+          <Property Name="NotificationTypeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NotificationTypes" Relationship="FCCPortalModel2.FK_Notifications_NotificationTypes" FromRole="Notifications" ToRole="NotificationTypes" />
+          <NavigationProperty Name="UserRoleTypes" Relationship="FCCPortalModel2.FK_Notifications_UserRoleTypes" FromRole="Notifications" ToRole="UserRoleTypes" />
+          <NavigationProperty Name="Users" Relationship="FCCPortalModel2.FK_Notifications_Users" FromRole="Notifications" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="FCCPortalModel2.FK_Notifications_Users1" FromRole="Notifications" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="NotificationTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Notifications" Relationship="FCCPortalModel2.FK_Notifications_NotificationTypes" FromRole="NotificationTypes" ToRole="Notifications" />
+        </EntityType>
+        <EntityType Name="OcrApiKeys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="FCCPortalModel2.FK_OcrApiKeys_Users" FromRole="OcrApiKeys" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="TaskStatistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="TotalCharacters" Type="Int32" Nullable="false" />
+          <Property Name="UncertainCharacters" Type="Int32" Nullable="false" />
+          <Property Name="PagesArea" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tasks" Relationship="FCCPortalModel2.FK_TaskStatistics_Tasks" FromRole="TaskStatistics" ToRole="Tasks" />
+        </EntityType>
+        <Association Name="FK_Notifications_NotificationTypes">
+          <End Type="FCCPortalModel2.NotificationTypes" Role="NotificationTypes" Multiplicity="1" />
+          <End Type="FCCPortalModel2.Notifications" Role="Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="NotificationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_UserRoleTypes">
+          <End Type="FCCPortalModel2.UserRoleTypes" Role="UserRoleTypes" Multiplicity="0..1" />
+          <End Type="FCCPortalModel2.Notifications" Role="Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoleTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users">
+          <End Type="FCCPortalModel2.Users" Role="Users" Multiplicity="1" />
+          <End Type="FCCPortalModel2.Notifications" Role="Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users1">
+          <End Type="FCCPortalModel2.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="FCCPortalModel2.Notifications" Role="Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OcrApiKeys_Users">
+          <End Type="FCCPortalModel2.Users" Role="Users" Multiplicity="1" />
+          <End Type="FCCPortalModel2.OcrApiKeys" Role="OcrApiKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OcrApiKeys">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskStatistics_Tasks">
+          <End Type="FCCPortalModel2.Tasks" Role="Tasks" Multiplicity="1" />
+          <End Type="FCCPortalModel2.TaskStatistics" Role="TaskStatistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaskStatistics">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ZipTaskStatistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZipTaskId" Type="Int32" Nullable="false" />
+          <Property Name="TotalCharacters" Type="Int32" Nullable="false" />
+          <Property Name="UncertainCharacters" Type="Int32" Nullable="false" />
+          <Property Name="PagesArea" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ZipTasks" Relationship="FCCPortalModel2.FK_ZipTaskStatistics_ZipTasks" FromRole="ZipTaskStatistics" ToRole="ZipTasks" />
+        </EntityType>
+        <Association Name="FK_ZipTaskStatistics_ZipTasks">
+          <End Type="FCCPortalModel2.ZipTasks" Role="ZipTasks" Multiplicity="1" />
+          <End Type="FCCPortalModel2.ZipTaskStatistics" Role="ZipTaskStatistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZipTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ZipTaskStatistics">
+              <PropertyRef Name="ZipTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2283,6 +2632,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FCCPortalModel2.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="GetUsePaymentNotif" ColumnName="GetUsePaymentNotif" />
+                <ScalarProperty Name="GetReleaseUpdateNotif" ColumnName="GetReleaseUpdateNotif" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -2350,6 +2701,60 @@
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="ProfileContent" ColumnName="ProfileContent" />
                 <ScalarProperty Name="ResponseContent" ColumnName="ResponseContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="FCCPortalModel2.Notifications">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="NotificationTypeId" ColumnName="NotificationTypeId" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel2.NotificationTypes">
+              <MappingFragment StoreEntitySet="NotificationTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OcrApiKeys">
+            <EntityTypeMapping TypeName="FCCPortalModel2.OcrApiKeys">
+              <MappingFragment StoreEntitySet="OcrApiKeys">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskStatistics">
+            <EntityTypeMapping TypeName="FCCPortalModel2.TaskStatistics">
+              <MappingFragment StoreEntitySet="TaskStatistics">
+                <ScalarProperty Name="PagesArea" ColumnName="PagesArea" />
+                <ScalarProperty Name="UncertainCharacters" ColumnName="UncertainCharacters" />
+                <ScalarProperty Name="TotalCharacters" ColumnName="TotalCharacters" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZipTaskStatistics">
+            <EntityTypeMapping TypeName="FCCPortalModel2.ZipTaskStatistics">
+              <MappingFragment StoreEntitySet="ZipTaskStatistics">
+                <ScalarProperty Name="PagesArea" ColumnName="PagesArea" />
+                <ScalarProperty Name="UncertainCharacters" ColumnName="UncertainCharacters" />
+                <ScalarProperty Name="TotalCharacters" ColumnName="TotalCharacters" />
+                <ScalarProperty Name="ZipTaskId" ColumnName="ZipTaskId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FlexiCapture.Cloud.OCR.Assist.Models;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
 using FlexiCapture.Cloud.ServiceAssist.Helpers;
@@ -302,6 +303,16 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public void SendEmailResponse(int taskUserId, List<Tuple<int, string>> downloadIds, List<Tuple<string, string>> attachmentsLinks, string ccAddresses, string text)
         {
             EmailHelper.SendEmailResponse(taskUserId, downloadIds, attachmentsLinks, ccAddresses, text);
+        }
+
+        public void AddStatisctics(int taskId, OcrResponseStatisticModel modelStatistics)
+        {
+            TasksHelper.AddStatisctics(taskId, modelStatistics);
+        }
+
+        public void AddZipStatisctics(int taskId, OcrResponseStatisticModel modelStatistics)
+        {
+            TasksHelper.AddZipStatisctics(taskId, modelStatistics);
         }
     }
 }

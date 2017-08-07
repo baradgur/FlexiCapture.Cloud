@@ -83,6 +83,10 @@
         <AssociationConnector Association="FCCPortalModel.FK_Notifications_Users1" />
         <EntityTypeShape EntityType="FCCPortalModel.OcrApiKeys" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="FCCPortalModel.FK_OcrApiKeys_Users" />
+        <EntityTypeShape EntityType="FCCPortalModel.TaskStatistics" Width="1.5" PointX="8.25" PointY="32.25" />
+        <EntityTypeShape EntityType="FCCPortalModel.ZipTaskStatistics" Width="1.5" PointX="13.5" PointY="10.25" />
+        <AssociationConnector Association="FCCPortalModel.FK_TaskStatistics_Tasks" />
+        <AssociationConnector Association="FCCPortalModel.FK_ZipTaskStatistics_ZipTasks" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

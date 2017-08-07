@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Runtime.Remoting.Messaging;
 using FlexiCapture.Cloud.ServiceAssist.Models.UserProfiles;
 using System.IO;
+using FlexiCapture.Cloud.OCR.Assist.Models;
 
 namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 {
@@ -494,7 +495,7 @@ public static List<Tasks> GetToOuterTasks()
             return
                 db.Tasks
                 .Include(x => x.Documents)
-                .Include(x => x.ZipTasks)
+                .Include(x => x.ZipTasks.Select(xx=>xx.ZipTaskStatistics))
                 .Include(x => x.ZipTasks.Select(xx => xx.ZipDocuments))
                 .Where(x => x.TaskStateId == 2 && x.ZipTasks.Count > 0).ToList();
         }
@@ -508,5 +509,57 @@ public static List<Tasks> GetToOuterTasks()
         return null;
     }
 }
+
+        public static void AddStatisctics(int taskId, OcrResponseStatisticModel modelStatistics)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    var stat = new DB.TaskStatistics()
+                    {
+                        TaskId = taskId,
+                        PagesArea = modelStatistics.PagesArea,
+                        TotalCharacters = modelStatistics.TotalCharacters,
+                        UncertainCharacters = modelStatistics.UncertainCharacters
+                    };
+                    db.TaskStatistics.Add(stat);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+            }
+        }
+
+        public static void AddZipStatisctics(int taskId, OcrResponseStatisticModel modelStatistics)
+        {
+            try
+            {
+                using (var db = new FCCPortalEntities2())
+                {
+                    var stat = new DB.ZipTaskStatistics()
+                    {
+                        ZipTaskId = taskId,
+                        PagesArea = modelStatistics.PagesArea,
+                        TotalCharacters = modelStatistics.TotalCharacters,
+                        UncertainCharacters = modelStatistics.UncertainCharacters
+                    };
+                    db.ZipTaskStatistics.Add(stat);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                 innerException);
+            }
+        }
     }
 }

@@ -131,6 +131,8 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     serviceAssist.UpdateTaskState(task.Id,3);
                     //update documents
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id,3);
+                    // add statistics
+                    serviceAssist.AddStatisctics(task.Id, model.Statistics);
                 }
                 else if (model.Status.Equals("Processing"))
                 {

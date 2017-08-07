@@ -19,6 +19,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         {
             this.Documents = new HashSet<Documents>();
             this.ZipTasks = new HashSet<ZipTasks>();
+            this.TaskStatistics = new HashSet<TaskStatistics>();
         }
     
         public int Id { get; set; }
@@ -36,5 +37,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ZipTasks> ZipTasks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskStatistics> TaskStatistics { get; set; }
     }
 }

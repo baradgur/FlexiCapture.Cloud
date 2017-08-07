@@ -75,6 +75,18 @@
         <AssociationConnector Association="FCCPortalModel2.FK_ZipTasks_Users" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel2.FK_UserServiceSubscribes_UserServiceSubscribeStates" ManuallyRouted="false" />
         <AssociationConnector Association="FCCPortalModel2.FK_ZipDocuments_ZipTasks" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FCCPortalModel2.Notifications" Width="1.5" PointX="9" PointY="12.375" />
+        <EntityTypeShape EntityType="FCCPortalModel2.NotificationTypes" Width="1.5" PointX="6.75" PointY="10.25" />
+        <EntityTypeShape EntityType="FCCPortalModel2.OcrApiKeys" Width="1.5" PointX="3" PointY="36.75" />
+        <EntityTypeShape EntityType="FCCPortalModel2.TaskStatistics" Width="1.5" PointX="8.25" PointY="32.25" />
+        <AssociationConnector Association="FCCPortalModel2.FK_Notifications_NotificationTypes" />
+        <AssociationConnector Association="FCCPortalModel2.FK_Notifications_UserRoleTypes" />
+        <AssociationConnector Association="FCCPortalModel2.FK_Notifications_Users" />
+        <AssociationConnector Association="FCCPortalModel2.FK_Notifications_Users1" />
+        <AssociationConnector Association="FCCPortalModel2.FK_OcrApiKeys_Users" />
+        <AssociationConnector Association="FCCPortalModel2.FK_TaskStatistics_Tasks" />
+        <EntityTypeShape EntityType="FCCPortalModel2.ZipTaskStatistics" Width="1.5" PointX="13.5" PointY="10.25" />
+        <AssociationConnector Association="FCCPortalModel2.FK_ZipTaskStatistics_ZipTasks" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -133,6 +133,8 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                     serviceAssist.UpdateZipTaskState(task.Id, 3);
                     //update documents
                     serviceAssist.UpdateZipDocumentStatesByZipTaskId(task.Id, 3);
+                    // add statistics
+                    serviceAssist.AddZipStatisctics(task.Id, model.Statistics);
                 }
                 else if (model.Status.Equals("Processing"))
                 {
@@ -232,6 +234,26 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                         File.Delete(Path.Combine(serverPath, zipDoc.Path));
                     }
                 }
+                // create task statistics from zip tasks
+                var taskStatistics = new OcrResponseStatisticModel()
+                {
+                    UncertainCharacters = 0,
+                    TotalCharacters = 0,
+                    PagesArea = 0
+                };
+                foreach (var zipTask in outerTask.ZipTasks)
+                {
+                    foreach (var zipDoc in zipTask.ZipDocuments)
+                    {
+                        File.Delete(Path.Combine(serverPath, zipDoc.Path));
+                    }
+                    foreach (var zipStat in zipTask.ZipTaskStatistics)
+                    {
+                        taskStatistics.TotalCharacters += zipStat.TotalCharacters;
+                        taskStatistics.PagesArea += zipStat.PagesArea;
+                        taskStatistics.UncertainCharacters += zipStat.UncertainCharacters;
+                    }
+                }
                 // updating task and documents, adding result document
                 assist.UpdateDocumentErrorsFromZipDocs(outerTask.Id);
                 assist.UpdateTaskState(outerTask.Id, hasSuccess ? 3 : 4);
@@ -250,6 +272,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                     {
                         downloadIds.Add(new Tuple<int, string>(resultDocumentId, originalArchiveName));
                     }
+                    assist.AddStatisctics(outerTask.Id, taskStatistics);
                 }
                 if (outerTask.ServiceId == 4) //if email attachment service
                 {

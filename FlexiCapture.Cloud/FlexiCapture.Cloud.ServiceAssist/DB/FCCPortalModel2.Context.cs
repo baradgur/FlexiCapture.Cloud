@@ -57,5 +57,10 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual DbSet<UserSettings> UserSettings { get; set; }
         public virtual DbSet<ZipDocuments> ZipDocuments { get; set; }
         public virtual DbSet<ZipTasks> ZipTasks { get; set; }
+        public virtual DbSet<Notifications> Notifications { get; set; }
+        public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
+        public virtual DbSet<OcrApiKeys> OcrApiKeys { get; set; }
+        public virtual DbSet<TaskStatistics> TaskStatistics { get; set; }
+        public virtual DbSet<ZipTaskStatistics> ZipTaskStatistics { get; set; }
     }
 }
