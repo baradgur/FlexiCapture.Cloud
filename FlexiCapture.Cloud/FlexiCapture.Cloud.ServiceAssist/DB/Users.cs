@@ -30,6 +30,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
             this.Notifications = new HashSet<Notifications>();
             this.Notifications1 = new HashSet<Notifications>();
             this.OcrApiKeys = new HashSet<OcrApiKeys>();
+            this.SubscriptionPlanUses = new HashSet<SubscriptionPlanUses>();
         }
     
         public int Id { get; set; }
@@ -69,5 +70,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual ICollection<Notifications> Notifications1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OcrApiKeys> OcrApiKeys { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubscriptionPlanUses> SubscriptionPlanUses { get; set; }
     }
 }

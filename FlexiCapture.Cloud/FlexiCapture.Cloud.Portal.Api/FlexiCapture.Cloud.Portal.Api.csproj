@@ -172,6 +172,8 @@
     <Compile Include="Controllers\RestoreDataController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Controllers\SubscriptionPlansController.cs" />
+    <Compile Include="Controllers\SubscriptionPlanUsesController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\UserRegistrationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="DBHelpers\SettingsHelper.cs" />
     <Compile Include="DBHelpers\StatisticHelper.cs" />
     <Compile Include="DBHelpers\StoreHelper.cs" />
+    <Compile Include="DBHelpers\SubscriptionPlansHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
@@ -260,6 +263,21 @@
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Settings.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlans.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanStates.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanTypes.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanUses.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanUseStates.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Tasks.cs">
@@ -404,6 +422,13 @@
     <Compile Include="Models\StatisticModels\StatisticRequestModel.cs" />
     <Compile Include="Models\StatisticModels\StatisticTypeModel.cs" />
     <Compile Include="Models\StoreModels\StoreModel.cs" />
+    <Compile Include="Models\SubscriptionPlanModels\SubscriptionPlanUsesViewModel.cs" />
+    <Compile Include="Models\SubscriptionPlanModels\SubscriptionPlanUseModel.cs" />
+    <Compile Include="Models\SubscriptionPlanModels\SubscriptionPlanUseStateModel.cs" />
+    <Compile Include="Models\SubscriptionPlanModels\SubscriptionPlanStateModel.cs" />
+    <Compile Include="Models\SubscriptionPlanModels\SubscriptionPlanTypeModel.cs" />
+    <Compile Include="Models\SubscriptionPlanModels\SubscriptionPlansViewModel.cs" />
+    <Compile Include="Models\SubscriptionPlanModels\SubscriptionPlanModel.cs" />
     <Compile Include="Models\UserProfiles\ManageUserProfileModel.cs" />
     <Compile Include="Models\UserProfiles\ServiceDefaultProfileModel.cs" />
     <Compile Include="Models\UserProfiles\UserProfileModel.cs" />

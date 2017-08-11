@@ -93,7 +93,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/linux_conversion_agent.png">
                     <div class="caption margin-top-10">
-                        <button type="button" class="btn btn-danger btn-lg btn-block">
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ng-disabled="true">
                             Disabled
                         </button>
                         <h4>Windows/Mac/Linux Conversion Agent</h4>
@@ -110,7 +110,7 @@
                 <div class="thumbnail-c">
                     <img class="store-img" src="./Content/gfx/online_web_ocr_api.png">
                     <div class="caption margin-top-10">
-                        <button type="button" ng-class="userData.ServiceData.FTPFileConversionService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(5)">
+                        <button type="button" ng-class="userData.ServiceData.OnlineWebOcrApiService ? 'btn btn-success btn-lg btn-block' : 'btn btn-danger btn-lg btn-block'" ng-click="setServiceState(5)">
                             <span ng-if="userData.ServiceData.OnlineWebOcrApiService">Active</span>
                             <span ng-if="!userData.ServiceData.OnlineWebOcrApiService">Disabled</span>
 

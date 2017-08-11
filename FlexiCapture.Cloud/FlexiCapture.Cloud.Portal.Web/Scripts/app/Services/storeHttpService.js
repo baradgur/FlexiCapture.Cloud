@@ -2,7 +2,7 @@
 
 
     //add or Edit user
-    this.setServiceState = function($http, $scope, url, usSpinnerService, serviceState) {
+    this.setServiceState = function($http, $scope, $window, url, usSpinnerService, serviceState) {
 
 
         usSpinnerService.spin("spinner-1");
@@ -36,6 +36,7 @@
                             break;
 
                     }
+                    $window.sessionStorage.setItem("UserData", JSON.stringify($scope.userData));
                     usSpinnerService.stop('spinner-1');
                     showNotify("Success", "The selected Service Status updated Successfully!", "success");
                 },

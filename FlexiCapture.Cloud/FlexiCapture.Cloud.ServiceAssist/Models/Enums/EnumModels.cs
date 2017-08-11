@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace FlexiCapture.Cloud.Portal.Api.Models.Enums
+namespace FlexiCapture.Cloud.ServiceAssist.Models.Enums
 {
     public enum ServiceTypes
     {

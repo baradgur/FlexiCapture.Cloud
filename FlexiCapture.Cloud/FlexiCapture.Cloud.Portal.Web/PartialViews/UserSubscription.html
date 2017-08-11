@@ -1,20 +1,75 @@
 ﻿<div ng-controller="userSubscriptionsController">
     <hr>
-    <div class="container">
-        <div class="row" style="padding-left: 10%;">
-                    <div ng-class="{'switched': !monthToYearSwitcher}" class="col-md-4" style="padding-top: 1%; text-align: right; font-size: 18px; padding-top: 0.5%">One-time purchase</div>
-                    <div class="col-md-1">
-                        <label class="switch">
-                            <input ng-model="monthToYearSwitcher" type="checkbox">
-                            <div class="slider round"></div>
-                        </label>
+    <div class="container" ng-show="!loading">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Current plan</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row" ng-show="currentPlan">
+                    <div class="col-xs-10 col-sm-offset-1">
+                        <div class="subscr-block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{currentPlan.CostPerPage>0?currentPlan.SubscriptionPlanName:"Free subscription"}}<span class="subscr-pages-number"> </span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="subscr-pages-number">{{currentPlan.PagesCount}} of {{currentPlan.PagesMax}}</span> pages used
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" ng-show="currentPlan.DateExpiry">
+                                    Expires <span class="subscr-pages-number">{{currentPlan.DateExpiry| date:'yyyy-MM-dd'}}</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="subscr-pages-number">{{currentPlan.CostPerPage}}</span> cents per page
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row subscr-block-small">
+                                If Pages are exceeded during the Plan period:
+                            </div>
+                            <div class="row subscr-block-small">
+                                <div class="col-md-6">
+                                    <label>
+                                        <input type="radio" name="endPlanPeriod" ng-click="endPlanPeriodChosen(1)" value="1" ng-model="currentPlan.endPlanPeriod" /> Stop processing and send e-mail notification
+                                    </label>
+                                </div>
+                                <div class="col-md-6" ng-show="!currentPlan.IsDefault">
+                                    <label>
+                                        <input type="radio" name="endPlanPeriod" ng-click="endPlanPeriodChosen(2)" value="2" ng-model="currentPlan.endPlanPeriod" /> {{currentPlan.SubscriptionPlanTypeId==1?"Automatically purchase the same Plan":"Automatically upgrade to:"}}
+                                    </label>
+                                    <div ng-show="currentPlan.endPlanPeriod==2 && currentPlan.SubscriptionPlanTypeId!=1">
+                                        <select name="autoRenSelect" id="autoRenSelect" class="form-control"
+                                                ng-options="option.Id as option.Name for option in plans| filter:{ SubscriptionPlanTypeId: '!1'}" ng-model="currentPlan.NextSubscriptionPlanId"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row subscr-block-small" ng-show="compareNextPlanId != currentPlan.NextSubscriptionPlanId">
+                                <div class="col-md-6">
+                                    <button class="btn btn-info btn-lg" ng-click="managePlanUse();"><i class="glyphicon glyphicon-edit"></i> Update current plan</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div ng-class="{'switched': monthToYearSwitcher}" class="col-md-6" style="padding-top: 1%; font-size: 18px; padding-top: 0.5%">Monthly Subscription</div>
-                
+                </div>
+                <div class="row" ng-show="!currentPlan">There is no current plan. Please choose from panel below</div>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 10%;" ng-show="!currentPlan">
+            <div ng-class="{'switched': !monthToYearSwitcher}" class="col-md-4" style="padding-top: 1%; text-align: right; font-size: 18px; padding-top: 0.5%">One-time purchase</div>
+            <div class="col-md-1">
+                <label class="switch">
+                    <input ng-model="monthToYearSwitcher" type="checkbox">
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <div ng-class="{'switched': monthToYearSwitcher}" class="col-md-6" style="padding-top: 1%; font-size: 18px; padding-top: 0.5%">Subscription</div>
+
         </div>
 
 
-        <div class="row">
+        <div class="row" ng-show="!currentPlan">
             <div id="singleSer" ng-if="!monthToYearSwitcher" class="col-xs-12 col-sm-12 col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -22,22 +77,29 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div ng-repeat="block in oneTimePurchaseBlocks" class="col-md-4">
+                            <div ng-repeat="block in plan1s" class="col-md-4">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="subscr-block">
-                                            <div ng-if="block.cost == 0" class="subscr-type">Free subscription</div>
-                                            <div ng-if="block.cost > 0" class="subscr-type">One-time Purchase</div>
-                                            <div><span class="subscr-pages-number">{{block.pagesCount}}</span> pages</div>
-                                            <div class="subscr-term"><i class="fa fa-calendar" aria-hidden="true"></i> for <span style="font-size: 26px;">{{block.termNum}}</span> {{block.term}}</div>
+                                            <div ng-if="block.CostPerPage == 0" class="subscr-type">Free subscription</div>
+                                            <div ng-if="block.CostPerPage > 0" class="subscr-type">One-time Purchase</div>
+                                            <div>
+                                                <span class="subscr-pages-number">{{block.PagesInInterval}}</span> pages
+                                            </div>
+                                            <div>
+                                                <span class="subscr-pages-number">{{block.CostPerPage}}</span> cents per page
+                                            </div>
+                                            <div class="subscr-term">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i> for <span style="font-size: 26px;">{{block.Expiration}}</span> days
+                                            </div>
                                             <!--<div class="subscr-price">free</div>-->
-                                            <button ng-if="block.cost == 0"  type="button" disabled="true" class="btn btn-default buy-btn">Free</button>
-                                            <button ng-if="block.cost > 0" type="button" class="btn btn-default buy-btn"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.cost}}</span></button>
+                                            <button ng-if="block.CostPerPage == 0" type="button" disabled="true" class="btn btn-default buy-btn">Free</button>
+                                            <button ng-if="block.CostPerPage > 0" type="button" class="btn btn-default buy-btn" ng-click="managePlanUse(block.Id);"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.CostPerPage*block.PagesInInterval/100}}</span></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -50,15 +112,44 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div ng-repeat="block in monthlySubscriptionBlocks" class="col-md-4">
+                            <div ng-repeat="block in plan2s" class="col-md-4">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="subscr-block">
-                                            <div class="subscr-type">Monthly Subscription</div>
-                                            <div><span class="subscr-pages-number">{{block.pagesCount}}</span> pages</div>
-                                            <div class="subscr-term"><i class="fa fa-calendar" aria-hidden="true"></i> per {{block.term}}</div>
+                                            <div class="subscr-type">{{block.SubscriptionPlanTypeName}} Subscription</div>
+                                            <div>
+                                                <span class="subscr-pages-number">{{block.PagesInInterval}}</span> pages
+                                            </div>
+                                            <div>
+                                                <span class="subscr-pages-number">{{block.CostPerPage}}</span> cents per page
+                                            </div>
+                                            <div class="subscr-term">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i> per month
+                                            </div>
                                             <!--<div class="subscr-price">free</div>-->
-                                            <button ng-if="block.cost > 0" type="button" class="btn btn-default buy-btn"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.cost}}</span></button>
+                                            <button ng-if="block.CostPerPage > 0" type="button" class="btn btn-default buy-btn" ng-click="managePlanUse(block.Id);"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.CostPerPage*block.PagesInInterval/100}}</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div ng-repeat="block in plan3s" class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="subscr-block">
+                                            <div class="subscr-type">{{block.SubscriptionPlanTypeName}} Subscription</div>
+                                            <div>
+                                                <span class="subscr-pages-number">{{block.PagesInInterval}}</span> pages
+                                            </div>
+                                            <div>
+                                                <span class="subscr-pages-number">{{block.CostPerPage}}</span> cents per page
+                                            </div>
+                                            <div class="subscr-term">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i> per year
+                                            </div>
+                                            <!--<div class="subscr-price">free</div>-->
+                                            <button ng-if="block.CostPerPage > 0" type="button" class="btn btn-default buy-btn" ng-click="managePlanUse(block.Id);"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.CostPerPage*block.PagesInInterval/100}}</span></button>
                                         </div>
                                     </div>
                                 </div>

@@ -17,22 +17,22 @@
             switch (serviceId) {
                 case 2:
                     serviceState.State = !$scope.userData.ServiceData.BatchFileConversionService;
-                    storeHttpService.setServiceState($http, $scope, url, usSpinnerService, serviceState);
+                    storeHttpService.setServiceState($http, $scope, $window, url, usSpinnerService, serviceState);
                     break;
 
                 case 4:
                     serviceState.State = !$scope.userData.ServiceData.EmailAttachmentFileConversionService;
-                    storeHttpService.setServiceState($http, $scope, url, usSpinnerService, serviceState);
+                    storeHttpService.setServiceState($http, $scope, $window, url, usSpinnerService, serviceState);
                     break;
 
                 case 3:
                     serviceState.State = !$scope.userData.ServiceData.FTPFileConversionService;
-                    storeHttpService.setServiceState($http, $scope, url, usSpinnerService, serviceState);
+                    storeHttpService.setServiceState($http, $scope, $window, url, usSpinnerService, serviceState);
                     break;
 
                 case 5:
                     serviceState.State = !$scope.userData.ServiceData.OnlineWebOcrApiService;
-                    storeHttpService.setServiceState($http, $scope, url, usSpinnerService, serviceState);
+                    storeHttpService.setServiceState($http, $scope, $window, url, usSpinnerService, serviceState);
                     break;
 
             }

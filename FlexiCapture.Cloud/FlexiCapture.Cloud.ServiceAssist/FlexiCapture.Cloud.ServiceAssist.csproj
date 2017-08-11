@@ -65,6 +65,7 @@
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="DBHelpers\EmailSettingsHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\SubscriptionPlansHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DB\AnalysisModeCatalog.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
@@ -133,6 +134,21 @@
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Settings.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlans.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanStates.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanTypes.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanUses.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\SubscriptionPlanUseStates.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\Tasks.cs">
@@ -204,6 +220,7 @@
     <Compile Include="Models\Catalogs\PrintTypeModel.cs" />
     <Compile Include="Models\Catalogs\RotationTypeModel.cs" />
     <Compile Include="Models\Documents\DocumentError.cs" />
+    <Compile Include="Models\Enums\EnumModels.cs" />
     <Compile Include="Models\Errors\ErrorModel.cs" />
     <Compile Include="Models\SettingsModels\EmailResponseSettingsModel.cs" />
     <Compile Include="Models\SettingsModels\EmailSettingsModel.cs" />

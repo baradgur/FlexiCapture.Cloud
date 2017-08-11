@@ -314,5 +314,10 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             TasksHelper.AddZipStatisctics(taskId, modelStatistics);
         }
+
+        public string CheckSubscriptionPlan(int userId, int pagesInTask)
+        {
+            return SubscriptionPlansHelper.CheckSubscriptionPlan(userId, pagesInTask);
+        }
     }
 }

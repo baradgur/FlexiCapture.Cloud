@@ -57,7 +57,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper
                     if (document != null)
                     {
                         string extension = Path.GetExtension(document.OriginalFileName);
-                        if (extension != null && (extension.ToLower().Equals(".zip") || extension.ToLower().Equals(".rar")))
+                        if (extension != null && (extension.ToLower().Equals(".zip") || extension.ToLower().Equals(".rar") || extension.ToLower().Equals(".7z")))
                         {
                             string inputPath = Path.Combine(serverPath, document.Path);
                             ZipHelper.CreateZipTasksFromTasks(serviceAssist, extentions, notExecutedTask, uploadUrl,

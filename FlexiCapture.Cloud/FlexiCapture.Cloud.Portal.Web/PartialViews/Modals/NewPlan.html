@@ -8,49 +8,96 @@
             <div class="row">
                 <form class="form-horizontal" name="addPlanForm" id="addPlanForm" role="form" novalidate>
 
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Plan name:</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="planName" class="form-control" ng-model="vm.name" >
+                    <div class="form-group" ng-class="{ true: 'has-error'}[addPlanForm.planName.$invalid && (addPlanForm.planName.$touched || submitted)]">
+                        <label class="col-sm-5 control-label">Plan name:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="planName" class="form-control" ng-model="plan.Name" maxlength="500" required>
+                            <div class="help-block" ng-messages="addPlanForm.planName.$error" ng-if="addPlanForm.planName.$touched || submitted">
+                                <div ng-message="required">Field "Plan name" must be filled</div>
+                                <div ng-message="maxlength">Plan name must be not more 500 characters</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[addPlanForm.autoRenSelect.$invalid && (addPlanForm.autoRenSelect.$touched || submitted)]">
+                        <label class="col-sm-5 control-label">Plan auto-renewal:</label>
+                        <div class="col-sm-6">
+                            <select name="autoRenSelect" id="autoRenSelect" class="form-control"
+                                    ng-options="option.Id as option.Name for option in types" ng-model="plan.SubscriptionPlanTypeId" required></select>
+                            <div class="help-block" ng-messages="addPlanForm.autoRenSelect.$error" ng-if="addPlanForm.autoRenSelect.$touched || submitted">
+                                <div ng-message="required">Plan auto-renewal must be chosen</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[addPlanForm.planExp.$invalid && (addPlanForm.planExp.$touched || submitted)]" ng-if="plan.SubscriptionPlanTypeId==1">
+                        <label class="col-sm-5 control-label">Plan expiration, days:</label>
+                        <div class="col-sm-6">
+                            <input ng-model="plan.Expiration" min="1" step="1" type="number" name="planExp" class="form-control" ng-required="plan.SubscriptionPlanTypeId==1">
+                            <div class="help-block" ng-messages="addPlanForm.planExp.$error" ng-if="addPlanForm.planExp.$touched || submitted">
+                                <div ng-message="required">Field "Plan expiration" must be filled</div>
+                                <div ng-message="number">Plan name must be a number</div>
+                                <div ng-message="min">Plan name must be a number more or equal 1</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[addPlanForm.costPer.$invalid && (addPlanForm.costPer.$touched || submitted)]">
+                        <label class="col-sm-5 control-label">Cost per page, cents:</label>
+                        <div class="col-sm-6">
+                            <input ng-model="plan.CostPerPage" min="0" step="1" type="number" name="costPer" class="form-control" required>
+                            <div class="help-block" ng-messages="addPlanForm.costPer.$error" ng-if="addPlanForm.costPer.$touched || submitted">
+                                <div ng-message="required">Field "Cost per page" must be filled</div>
+                                <div ng-message="number">Cost per page must be a number</div>
+                                <div ng-message="min">Cost per page must be a number more or equal 0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[addPlanForm.pagesPer.$invalid && (addPlanForm.pagesPer.$touched || submitted)]">
+                        <label class="col-sm-5 control-label">Pages per renewal interval:</label>
+                        <div class="col-sm-6">
+                            <input ng-model="plan.PagesInInterval" min="1" step="1" type="number" name="pagesPer" class="form-control" required>
+                            <div class="help-block" ng-messages="addPlanForm.pagesPer.$error" ng-if="addPlanForm.pagesPer.$touched || submitted">
+                                <div ng-message="required">Field "Pages per renewal interval" must be filled</div>
+                                <div ng-message="number">Pages per renewal interval must be a number</div>
+                                <div ng-message="min">Pages per renewal interval must be a number more or equal 1</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[addPlanForm.AltCostPer.$invalid && (addPlanForm.AltCostPer.$touched || submitted)]" ng-if="plan.SubscriptionPlanTypeId!=1">
+                        <label class="col-sm-5 control-label">Cost per page over plan, cents:</label>
+                        <div class="col-sm-6">
+                            <input ng-model="plan.AltCostPerPage" min="0" step="1" type="number" name="AltCostPer" class="form-control" ng-required="plan.SubscriptionPlanTypeId!=1">
+                            <div class="help-block" ng-messages="addPlanForm.AltCostPer.$error" ng-if="addPlanForm.AltCostPer.$touched || submitted">
+                                <div ng-message="required">Field "Cost per page" must be filled</div>
+                                <div ng-message="number">Cost per page must be a number</div>
+                                <div ng-message="min">Cost per page must be a number more or equal 0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" ng-class="{ true: 'has-error'}[addPlanForm.planState.$invalid && (addPlanForm.planState.$touched || submitted)]">
+                        <label class="col-sm-5 control-label">Plan state:</label>
+                        <div class="col-sm-6">
+                            <select name="planState" id="planState" class="form-control"
+                                    ng-options="option.Id as option.Name for option in states" ng-model="plan.SubscriptionPlanStateId" required></select>
+                            <div class="help-block" ng-messages="addPlanForm.planState.$error" ng-if="addPlanForm.planState.$touched || submitted">
+                                <div ng-message="required">Plan state must be chosen</div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Plan auto-renewal:</label>
-                        <div class="col-sm-8">
-                            <select name="autoRenSelect" class="form-control" ng-model="vm.autoRenewal">
-                                <option value="1">One-time-purchase</option>
-                                <option value="2">Monthly</option>
-                                <option value="3">Annual</option>
-                            </select>
+                        <div class="form-group col-sm-10 text-right">
+                            <button type="button" class="btn btn-primary btn-outline orange-tooltip" ng-click="vm.cancel()" title="Cancel">
+                                Cancel
+                            </button>
+                            <button type="button" class="btn btn-primary orange-tooltip" ng-click="vm.confirm()" title="Submit">
+                                Submit
+                            </button>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Plan expiration:</label>
-                        <div class="col-sm-8">
-                            <input ng-model="vm.planExpiration" type="text" name="planExp" class="form-control">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Cost per page:</label>
-                        <div class="col-sm-8">
-                            <input ng-model="vm.cost" type="text" name="costPer" class="form-control">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Pages per renewal interval:</label>
-                        <div class="col-sm-8">
-                            <input ng-model="vm.pagesInInterval" type="text" name="pagesPer" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="button" class="btn btn-default orange-tooltip" ng-click="vm.addPlan()" title="Submit">
-                            Submit
-                        </button>
                     </div>
                 </form>
             </div>

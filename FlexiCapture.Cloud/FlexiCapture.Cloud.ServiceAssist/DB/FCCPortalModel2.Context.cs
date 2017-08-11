@@ -62,5 +62,10 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual DbSet<OcrApiKeys> OcrApiKeys { get; set; }
         public virtual DbSet<TaskStatistics> TaskStatistics { get; set; }
         public virtual DbSet<ZipTaskStatistics> ZipTaskStatistics { get; set; }
+        public virtual DbSet<SubscriptionPlans> SubscriptionPlans { get; set; }
+        public virtual DbSet<SubscriptionPlanStates> SubscriptionPlanStates { get; set; }
+        public virtual DbSet<SubscriptionPlanTypes> SubscriptionPlanTypes { get; set; }
+        public virtual DbSet<SubscriptionPlanUses> SubscriptionPlanUses { get; set; }
+        public virtual DbSet<SubscriptionPlanUseStates> SubscriptionPlanUseStates { get; set; }
     }
 }

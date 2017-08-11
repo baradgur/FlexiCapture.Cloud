@@ -49,7 +49,7 @@
                 function (response) { // optional
                     // failed
                     usSpinnerService.stop('spinner-1');
-                    showNotify("Успех", "Error occurred, please contact administrator", "danger");
+                    showNotify("Danger", "Error occurred, please contact administrator", "danger");
                 });
     }
 

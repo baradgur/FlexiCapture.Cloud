@@ -175,6 +175,55 @@
           <Property Name="SettingName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="SettingValue" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="SubscriptionPlans">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SubscriptionPlanTypeId" Type="int" Nullable="false" />
+          <Property Name="Expiration" Type="int" />
+          <Property Name="CostPerPage" Type="int" Nullable="false" />
+          <Property Name="PagesInInterval" Type="int" Nullable="false" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="SubscriptionPlanStateId" Type="int" Nullable="false" />
+          <Property Name="AltCostPerPage" Type="int" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanUses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubscriptionPlanId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PagesCount" Type="int" Nullable="false" />
+          <Property Name="DateExpiry" Type="date" />
+          <Property Name="NextSubscriptionPlanId" Type="int" />
+          <Property Name="SubscriptionPlanUseStateId" Type="int" Nullable="false" />
+          <Property Name="AltPagesCount" Type="int" />
+          <Property Name="PaidAltPagesCount" Type="int" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanUseStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
@@ -511,6 +560,78 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OcrApiKeys">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlans_SubscriptionPlanStates">
+          <End Role="SubscriptionPlanStates" Type="Self.SubscriptionPlanStates" Multiplicity="1" />
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlans">
+              <PropertyRef Name="SubscriptionPlanStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlans_SubscriptionPlanTypes">
+          <End Role="SubscriptionPlanTypes" Type="Self.SubscriptionPlanTypes" Multiplicity="1" />
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlans">
+              <PropertyRef Name="SubscriptionPlanTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans">
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlans">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="SubscriptionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans1">
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="0..1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlans">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="NextSubscriptionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
+          <End Role="SubscriptionPlanUseStates" Type="Self.SubscriptionPlanUseStates" Multiplicity="1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanUseStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="SubscriptionPlanUseStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -930,6 +1051,11 @@
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionPlans" EntityType="Self.SubscriptionPlans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionPlanStates" EntityType="Self.SubscriptionPlanStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionPlanTypes" EntityType="Self.SubscriptionPlanTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionPlanUses" EntityType="Self.SubscriptionPlanUses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionPlanUseStates" EntityType="Self.SubscriptionPlanUseStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskStatistics" EntityType="Self.TaskStatistics" Schema="dbo" store:Type="Tables" />
@@ -996,6 +1122,30 @@
           <AssociationSet Name="FK_OcrApiKeys_Users" Association="Self.FK_OcrApiKeys_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="OcrApiKeys" EntitySet="OcrApiKeys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanStates" Association="Self.FK_SubscriptionPlans_SubscriptionPlanStates">
+            <End Role="SubscriptionPlanStates" EntitySet="SubscriptionPlanStates" />
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanTypes" Association="Self.FK_SubscriptionPlans_SubscriptionPlanTypes">
+            <End Role="SubscriptionPlanTypes" EntitySet="SubscriptionPlanTypes" />
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans" Association="Self.FK_SubscriptionPlanUses_SubscriptionPlans">
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans1" Association="Self.FK_SubscriptionPlanUses_SubscriptionPlans1">
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates" Association="Self.FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
+            <End Role="SubscriptionPlanUseStates" EntitySet="SubscriptionPlanUseStates" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_Users" Association="Self.FK_SubscriptionPlanUses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
           </AssociationSet>
           <AssociationSet Name="FK_Tasks_ServiceTypes" Association="Self.FK_Tasks_ServiceTypes">
             <End Role="ServiceTypes" EntitySet="ServiceTypes" />
@@ -1462,6 +1612,7 @@
           <NavigationProperty Name="Notifications" Relationship="FCCPortalModel.FK_Notifications_Users" FromRole="Users" ToRole="Notifications" />
           <NavigationProperty Name="Notifications1" Relationship="FCCPortalModel.FK_Notifications_Users1" FromRole="Users" ToRole="Notifications" />
           <NavigationProperty Name="OcrApiKeys" Relationship="FCCPortalModel.FK_OcrApiKeys_Users" FromRole="Users" ToRole="OcrApiKeys" />
+          <NavigationProperty Name="SubscriptionPlanUses" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_Users" FromRole="Users" ToRole="SubscriptionPlanUses" />
         </EntityType>
         <EntityType Name="UserServiceSubscribes">
           <Key>
@@ -2207,6 +2358,35 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
             <End Role="ZipTaskStatistics" EntitySet="ZipTaskStatistics" />
           </AssociationSet>
+          <EntitySet Name="SubscriptionPlans" EntityType="FCCPortalModel.SubscriptionPlans" />
+          <EntitySet Name="SubscriptionPlanStates" EntityType="FCCPortalModel.SubscriptionPlanStates" />
+          <EntitySet Name="SubscriptionPlanTypes" EntityType="FCCPortalModel.SubscriptionPlanTypes" />
+          <EntitySet Name="SubscriptionPlanUses" EntityType="FCCPortalModel.SubscriptionPlanUses" />
+          <EntitySet Name="SubscriptionPlanUseStates" EntityType="FCCPortalModel.SubscriptionPlanUseStates" />
+          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanStates" Association="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanStates">
+            <End Role="SubscriptionPlanStates" EntitySet="SubscriptionPlanStates" />
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanTypes" Association="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanTypes">
+            <End Role="SubscriptionPlanTypes" EntitySet="SubscriptionPlanTypes" />
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans" Association="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans">
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans1" Association="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans1">
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates" Association="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
+            <End Role="SubscriptionPlanUseStates" EntitySet="SubscriptionPlanUseStates" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_Users" Association="FCCPortalModel.FK_SubscriptionPlanUses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Notifications">
           <Key>
@@ -2346,6 +2526,138 @@
             </Principal>
             <Dependent Role="ZipTaskStatistics">
               <PropertyRef Name="ZipTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubscriptionPlans">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SubscriptionPlanTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Expiration" Type="Int32" />
+          <Property Name="CostPerPage" Type="Int32" Nullable="false" />
+          <Property Name="PagesInInterval" Type="Int32" Nullable="false" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="SubscriptionPlanStateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubscriptionPlanStates" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanStates" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanStates" />
+          <NavigationProperty Name="SubscriptionPlanTypes" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanTypes" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanTypes" />
+          <NavigationProperty Name="SubscriptionPlanUses" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanUses" />
+          <NavigationProperty Name="SubscriptionPlanUses1" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans1" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanUses" />
+          <Property Name="AltCostPerPage" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubscriptionPlans" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanStates" FromRole="SubscriptionPlanStates" ToRole="SubscriptionPlans" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubscriptionPlans" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanTypes" FromRole="SubscriptionPlanTypes" ToRole="SubscriptionPlans" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanUses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriptionPlanId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PagesCount" Type="Int32" Nullable="false" />
+          <Property Name="DateExpiry" Type="DateTime" Precision="0" />
+          <Property Name="NextSubscriptionPlanId" Type="Int32" />
+          <Property Name="SubscriptionPlanUseStateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubscriptionPlans" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlans" />
+          <NavigationProperty Name="SubscriptionPlans1" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans1" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlans" />
+          <NavigationProperty Name="SubscriptionPlanUseStates" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlanUseStates" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlanUseStates" />
+          <NavigationProperty Name="Users" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_Users" FromRole="SubscriptionPlanUses" ToRole="Users" />
+          <Property Name="AltPagesCount" Type="Int32" />
+          <Property Name="PaidAltPagesCount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanUseStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubscriptionPlanUses" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlanUseStates" FromRole="SubscriptionPlanUseStates" ToRole="SubscriptionPlanUses" />
+        </EntityType>
+        <Association Name="FK_SubscriptionPlans_SubscriptionPlanStates">
+          <End Type="FCCPortalModel.SubscriptionPlanStates" Role="SubscriptionPlanStates" Multiplicity="1" />
+          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlans">
+              <PropertyRef Name="SubscriptionPlanStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlans_SubscriptionPlanTypes">
+          <End Type="FCCPortalModel.SubscriptionPlanTypes" Role="SubscriptionPlanTypes" Multiplicity="1" />
+          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlans">
+              <PropertyRef Name="SubscriptionPlanTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans">
+          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="1" />
+          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlans">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="SubscriptionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans1">
+          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="0..1" />
+          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlans">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="NextSubscriptionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
+          <End Type="FCCPortalModel.SubscriptionPlanUseStates" Role="SubscriptionPlanUseStates" Multiplicity="1" />
+          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanUseStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="SubscriptionPlanUseStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_Users">
+          <End Type="FCCPortalModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2754,6 +3066,60 @@
                 <ScalarProperty Name="UncertainCharacters" ColumnName="UncertainCharacters" />
                 <ScalarProperty Name="TotalCharacters" ColumnName="TotalCharacters" />
                 <ScalarProperty Name="ZipTaskId" ColumnName="ZipTaskId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlans">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlans">
+              <MappingFragment StoreEntitySet="SubscriptionPlans">
+                <ScalarProperty Name="AltCostPerPage" ColumnName="AltCostPerPage" />
+                <ScalarProperty Name="SubscriptionPlanStateId" ColumnName="SubscriptionPlanStateId" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="PagesInInterval" ColumnName="PagesInInterval" />
+                <ScalarProperty Name="CostPerPage" ColumnName="CostPerPage" />
+                <ScalarProperty Name="Expiration" ColumnName="Expiration" />
+                <ScalarProperty Name="SubscriptionPlanTypeId" ColumnName="SubscriptionPlanTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanStates">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanStates">
+              <MappingFragment StoreEntitySet="SubscriptionPlanStates">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanTypes">
+              <MappingFragment StoreEntitySet="SubscriptionPlanTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanUses">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanUses">
+              <MappingFragment StoreEntitySet="SubscriptionPlanUses">
+                <ScalarProperty Name="PaidAltPagesCount" ColumnName="PaidAltPagesCount" />
+                <ScalarProperty Name="AltPagesCount" ColumnName="AltPagesCount" />
+                <ScalarProperty Name="SubscriptionPlanUseStateId" ColumnName="SubscriptionPlanUseStateId" />
+                <ScalarProperty Name="NextSubscriptionPlanId" ColumnName="NextSubscriptionPlanId" />
+                <ScalarProperty Name="DateExpiry" ColumnName="DateExpiry" />
+                <ScalarProperty Name="PagesCount" ColumnName="PagesCount" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SubscriptionPlanId" ColumnName="SubscriptionPlanId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanUseStates">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanUseStates">
+              <MappingFragment StoreEntitySet="SubscriptionPlanUseStates">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

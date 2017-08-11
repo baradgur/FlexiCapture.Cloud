@@ -87,6 +87,17 @@
         <AssociationConnector Association="FCCPortalModel2.FK_TaskStatistics_Tasks" />
         <EntityTypeShape EntityType="FCCPortalModel2.ZipTaskStatistics" Width="1.5" PointX="13.5" PointY="10.25" />
         <AssociationConnector Association="FCCPortalModel2.FK_ZipTaskStatistics_ZipTasks" />
+        <EntityTypeShape EntityType="FCCPortalModel2.SubscriptionPlans" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="FCCPortalModel2.SubscriptionPlanStates" Width="1.5" PointX="0.75" PointY="4.875" />
+        <EntityTypeShape EntityType="FCCPortalModel2.SubscriptionPlanTypes" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="FCCPortalModel2.SubscriptionPlanUses" Width="1.5" PointX="5.25" PointY="5.75" />
+        <EntityTypeShape EntityType="FCCPortalModel2.SubscriptionPlanUseStates" Width="1.5" PointX="3" PointY="8.5" />
+        <AssociationConnector Association="FCCPortalModel2.FK_SubscriptionPlans_SubscriptionPlanStates" />
+        <AssociationConnector Association="FCCPortalModel2.FK_SubscriptionPlans_SubscriptionPlanTypes" />
+        <AssociationConnector Association="FCCPortalModel2.FK_SubscriptionPlanUses_SubscriptionPlans" />
+        <AssociationConnector Association="FCCPortalModel2.FK_SubscriptionPlanUses_SubscriptionPlans1" />
+        <AssociationConnector Association="FCCPortalModel2.FK_SubscriptionPlanUses_SubscriptionPlanUseStates" />
+        <AssociationConnector Association="FCCPortalModel2.FK_SubscriptionPlanUses_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

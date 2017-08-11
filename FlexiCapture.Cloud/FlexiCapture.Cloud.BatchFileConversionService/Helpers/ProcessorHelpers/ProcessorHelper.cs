@@ -34,7 +34,7 @@ namespace FlexiCapture.Cloud.BatchFileConversionService.Helpers.ProcessorHelpers
                     if (requestModel.InputFiles != null && requestModel.InputFiles.Count > 0)
                     {
                         string extension = Path.GetExtension(requestModel.InputFiles[0].Name);
-                        if (extension != null && extension != ".zip" && extension != ".rar")
+                        if (extension != null && extension != ".zip" && extension != ".rar" && extension != ".7z")
                         {
                             TaskHelper.ExecuteTask(notExecutedTask);
                         }

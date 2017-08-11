@@ -45,7 +45,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             }
         }
 
-        public static FtpWebResponse TryLoginToFtp(string url, string userName, 
+        public static FtpWebResponse TryLoginToFtp(string url, string userName,
             string userPassword, string localPath, int userId)
         {
             try
@@ -55,25 +55,25 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 if (IsPrivilegedEnough(userId))
                 {
                     Uri uriResult;
-                    bool result = Uri.TryCreate("ftp://" + url+ localPath,
-                                      UriKind.Absolute, out uriResult) && 
+                    bool result = Uri.TryCreate("ftp://" + url + localPath,
+                                      UriKind.Absolute, out uriResult) &&
                                       uriResult.Scheme == Uri.UriSchemeFtp;
 
                     if (!result)
                         return response;
-                    
-                    FtpWebRequest request = (FtpWebRequest) WebRequest.Create(uriResult);
+
+                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uriResult);
                     request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
 
                     request.Credentials = new NetworkCredential(userName, userPassword);
-                    response = (FtpWebResponse) request.GetResponse();
+                    response = (FtpWebResponse)request.GetResponse();
                 }
 
                 //response.ResponseUri
 
                 return response;
-/********************************/
-                
+                /********************************/
+
             }
             catch (Exception exception)
             {
@@ -88,9 +88,9 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
         public static List<Tuple<string, string>> ExtractFiles(FtpWebResponse response, string serverUrl, string localPath, string userName,
             string userPassword)
         {
-            
-                if (AcceptableTypes == null)
-                {
+
+            if (AcceptableTypes == null)
+            {
                 using (var db = new FCCPortalEntities2())
                 {
                     AcceptableTypes = db.DocumentTypes
@@ -101,7 +101,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             Stream responseStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(responseStream);
 
-            List<Tuple<string, string>> fileNameExtensionTuples = 
+            List<Tuple<string, string>> fileNameExtensionTuples =
                 new List<Tuple<string, string>>();
 
             List<Tuple<string, string>> newFileNameExtensionTuples =
@@ -123,7 +123,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                             break;
                         }
                     }
-                    
+
                 }
                 line = reader.ReadLine();
             }
@@ -154,7 +154,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     return "";
                 }
                 FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest) FtpWebRequest.Create(serverUri.AbsoluteUri);
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(serverUri.AbsoluteUri);
                 reqFTP.Credentials = new NetworkCredential(userName, userPassword);
                 reqFTP.KeepAlive = false;
                 reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
@@ -165,7 +165,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 //reqFTP.UseBinary = true;
                 //reqFTP.Proxy = null;
                 //reqFTP.UsePassive = false;
-                FtpWebResponse response = (FtpWebResponse) reqFTP.GetResponse();
+                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 Stream responseStream = response.GetResponseStream();
                 FileStream writeStream =
                     new FileStream(Path.Combine(SettingsHelper.GetSettingsValueByName("MainPath"), "data", "uploads", fileName),
@@ -180,7 +180,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     bytesRead = responseStream.Read(buffer, 0, Length);
                 }
                 writeStream.Close();
-                
+
                 reqFTP = (FtpWebRequest)FtpWebRequest.Create(serverUri.AbsoluteUri);
                 reqFTP.Credentials = new NetworkCredential(userName, userPassword);
                 reqFTP.KeepAlive = false;
@@ -229,18 +229,17 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 using (var db = new FCCPortalEntities2())
                 {
                     query = (from ss in db.UserServiceSubscribes
-                         where ss.UserId.Equals(userId)
-                         select ss).ToList().LastOrDefault();
+                             where ss.UserId.Equals(userId) && ss.ServiceId == FtpProfileId
+                             && ss.SubscribeStateId == FtpSProfileActiveState
+                             select ss).FirstOrDefault();
                 }
 
                 if (query == null)
-                    throw new NullReferenceException();
+                {
+                    return false;
+                }
 
-                isPrivelegedEnough = 
-                    query.ServiceId.Equals(FtpProfileId) &&
-                    query.SubscribeStateId.Equals(FtpSProfileActiveState);
-
-                return isPrivelegedEnough;
+                return true;
             }
             catch (Exception e)
             {
