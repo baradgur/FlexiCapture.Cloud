@@ -66,6 +66,7 @@
     <Compile Include="DBHelpers\EmailSettingsHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
     <Compile Include="DBHelpers\SubscriptionPlansHelper.cs" />
+    <Compile Include="DBHelpers\SubscriptionsHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DB\AnalysisModeCatalog.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>

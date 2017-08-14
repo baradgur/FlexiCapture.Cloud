@@ -319,5 +319,15 @@ namespace FlexiCapture.Cloud.ServiceAssist
         {
             return SubscriptionPlansHelper.CheckSubscriptionPlan(userId, pagesInTask);
         }
+
+        public string CheckSubscriptionPlanAvailability(int userId)
+        {
+            return SubscriptionPlansHelper.CheckSubscriptionPlanAvailability(userId);
+        }
+
+        public void CheckSubscribes()
+        {
+            SubscriptionsHelper.CheckSubscribes();
+        }
     }
 }

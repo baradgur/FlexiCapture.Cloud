@@ -26,6 +26,17 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
                 AssistProcessor assist = new AssistProcessor();
                 Assist serviceAssist = new Assist();
 
+                string planState = serviceAssist.CheckSubscriptionPlanAvailability(task.UserId);
+                if (planState != "OK")
+                {
+                    serviceAssist.AddErrorToDocuments(task.Id, planState);
+                    //update task
+                    serviceAssist.UpdateTaskState(task.Id, 4);
+                    //update documents
+                    serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+                    return;
+                }
+
                 string url = serviceAssist.GetSettingValueByName("ApiUrl");
                 string json = task.ProfileContent;
                 string error = "";
@@ -104,6 +115,17 @@ namespace FlexiCapture.Cloud.EmailAttachmentService.Helpers.TaskHelpers
 
                 if (model.Status.Equals("Finished"))
                 {
+                    string planState = serviceAssist.CheckSubscriptionPlan(task.UserId, model.Statistics.PagesArea);
+                    if (planState != "OK")
+                    {
+                        serviceAssist.AddErrorToDocuments(task.Id, planState);
+                        //update task
+                        serviceAssist.UpdateTaskState(task.Id, 4);
+                        //update documents
+                        serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+                        return;
+                    }
+
                     List<Tuple<int, string>> downloadIds = new List<Tuple<int, string>>();
                     List <Tuple<string, string>> attachmentsLinks = new List<Tuple<string, string>>();
 

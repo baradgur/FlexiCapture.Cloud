@@ -21,6 +21,17 @@ namespace FlexiCapture.Cloud.BatchFileConversionService.Helpers.TasksHelpers
                 AssistProcessor assist = new AssistProcessor();
                 Assist serviceAssist = new Assist();
 
+                string planState = serviceAssist.CheckSubscriptionPlanAvailability(task.UserId);
+                if (planState != "OK")
+                {
+                    serviceAssist.AddErrorToDocuments(task.Id, planState);
+                    //update task
+                    serviceAssist.UpdateTaskState(task.Id, 4);
+                    //update documents
+                    serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+                    return;
+                }
+
                 string url = serviceAssist.GetSettingValueByName("ApiUrl");
                 string json = task.ProfileContent;
                 string error = "";
@@ -84,6 +95,16 @@ namespace FlexiCapture.Cloud.BatchFileConversionService.Helpers.TasksHelpers
 
                 if (model.Status.Equals("Finished"))
                 {
+                    string planState = serviceAssist.CheckSubscriptionPlan(task.UserId, model.Statistics.PagesArea);
+                    if (planState != "OK")
+                    {
+                        serviceAssist.AddErrorToDocuments(task.Id, planState);
+                        //update task
+                        serviceAssist.UpdateTaskState(task.Id, 4);
+                        //update documents
+                        serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+                        return;
+                    }
                     string pathToDownload = serviceAssist.GetSettingValueByName("MainPath");
                     string resultFolder = serviceAssist.GetSettingValueByName("ResultFolder");
                     string jobPattern = serviceAssist.GetSettingValueByName("ApiUrlJobState");

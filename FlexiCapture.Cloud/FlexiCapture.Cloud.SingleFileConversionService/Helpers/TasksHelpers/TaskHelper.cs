@@ -24,7 +24,16 @@ namespace FlexiCapture.Cloud.SingleFileConversionService.Helpers.TasksHelpers
             {
                 AssistProcessor assist = new AssistProcessor();
                 Assist serviceAssist = new Assist();
-                //serviceAssist.CheckSubscriptionPlanAvailability(task.UserId);
+                string planState = serviceAssist.CheckSubscriptionPlanAvailability(task.UserId);
+                if (planState != "OK")
+                {
+                    serviceAssist.AddErrorToDocuments(task.Id, planState);
+                    //update task
+                    serviceAssist.UpdateTaskState(task.Id, 4);
+                    //update documents
+                    serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+                    return;
+                }
                 string url = serviceAssist.GetSettingValueByName("ApiUrl");
                 string json = task.ProfileContent;
                 string error = "";

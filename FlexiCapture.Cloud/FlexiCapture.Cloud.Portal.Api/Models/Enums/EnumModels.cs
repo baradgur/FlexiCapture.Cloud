@@ -82,6 +82,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.Enums
     {
         Pending = 1,
         Active = 2,
-        Disabled = 3
+        Disabled = 3,
+        Blocked = 4
     }
 }
