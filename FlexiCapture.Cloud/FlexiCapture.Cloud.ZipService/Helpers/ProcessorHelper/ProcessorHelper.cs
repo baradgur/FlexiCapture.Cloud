@@ -61,7 +61,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper
                         {
                             string inputPath = Path.Combine(serverPath, document.Path);
                             ZipHelper.CreateZipTasksFromTasks(serviceAssist, extentions, notExecutedTask, uploadUrl,
-                                uploadFolder, uploadZipUrl, inputPath);
+                                uploadFolder, uploadZipUrl, inputPath, extension);
                         }
                     }
                     else

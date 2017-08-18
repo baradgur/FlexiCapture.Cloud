@@ -55,7 +55,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
         }
 
-        private static List<SubscriptionPlanUseModel> GetSubscriptionPlanUses(int userId, bool onlyActive)
+        private static List<SubscriptionPlanUseModel> GetSubscriptionPlanUses(int userId, bool IsActiveOrBlocked)
         {
             try
             {
@@ -67,7 +67,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.SubscriptionPlanUseStates)
                         .Include(x => x.SubscriptionPlans)
                         .Include(x => x.SubscriptionPlans1)
-                        .Where(x => x.UserId == userId && (!onlyActive || x.SubscriptionPlanUseStateId == (int)Models.Enums.SubscriptionPlanUseStates.Active));
+                        .Where(x => x.UserId == userId && (!IsActiveOrBlocked || x.SubscriptionPlanUseStateId == (int)Models.Enums.SubscriptionPlanUseStates.Active
+                                                            || x.SubscriptionPlanUseStateId == (int)Models.Enums.SubscriptionPlanUseStates.Blocked));
 
                     foreach (var plan in plans)
                     {
@@ -87,8 +88,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             SubscriptionPlanTypeId = plan.SubscriptionPlans != null ? plan.SubscriptionPlans.SubscriptionPlanTypeId : 0,
                             IsDefault = plan.SubscriptionPlans != null ? plan.SubscriptionPlans.IsDefault : false,
                             UserId = plan.UserId,
-                            AtlPagesCount = plan.AltPagesCount,
-                            PaidAtlPagesCount = plan.PaidAltPagesCount,
+                            AltPagesCount = plan.AltPagesCount,
+                            PaidAltPagesCount = plan.PaidAltPagesCount,
+                            AltCostPerPage = plan.SubscriptionPlans != null ? plan.SubscriptionPlans.AltCostPerPage: null,
                         };
                         model.Add(mPlan);
                     }
@@ -362,8 +364,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                var activePlans = GetSubscriptionPlanUses(model.UserId, true);
-
+                var inUsePlans = GetSubscriptionPlanUses(model.UserId, true);
+                //blocked and active plans can't go together
+                var currentPlan = inUsePlans.FirstOrDefault();
                 DateTime? dateExpiry = null;
                 using (var db = new FCCPortalEntities())
                 {
@@ -389,22 +392,37 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             break;
                     }
 
+                    int pagesCount = currentPlan != null ? currentPlan.AltPagesCount ?? 0 : 0;
+                    int? altPagesCount = null;
+                    int planUseState = (int)Models.Enums.SubscriptionPlanUseStates.Active;
+
+                    if (pagesCount > dbPlan.PagesInInterval)
+                    {
+                        altPagesCount = pagesCount - dbPlan.PagesInInterval;
+                        pagesCount = dbPlan.PagesInInterval;
+                        planUseState = (int)Models.Enums.SubscriptionPlanUseStates.Blocked;
+                    }
+
                     var dbPlanUse = new DB.SubscriptionPlanUses()
                     {
                         UserId = model.UserId,
                         SubscriptionPlanId = dbPlan.Id,
-                        PagesCount = 0,
+                        PagesCount = pagesCount,
                         NextSubscriptionPlanId = null,
                         DateExpiry = dateExpiry,
-                        SubscriptionPlanUseStateId = activePlans.Count > 0
-                        ? (int)Models.Enums.SubscriptionPlanUseStates.Pending
-                        : (int)Models.Enums.SubscriptionPlanUseStates.Active,
-                        AltPagesCount = null,
+                        SubscriptionPlanUseStateId = planUseState,
+                        AltPagesCount = altPagesCount,
                         PaidAltPagesCount = null
                     };
 
                     db.SubscriptionPlanUses.Add(dbPlanUse);
                     db.SaveChanges();
+                    if (currentPlan != null) { 
+                    currentPlan.AltPagesCount = null;
+                    currentPlan.SubscriptionPlanUseStateId = (int) Models.Enums.SubscriptionPlanUseStates.Disabled;
+                        UpdatePlanUse(currentPlan);
+                    }
+
 
                     model = GetSubscriptionPlanUse(dbPlanUse.Id);
                 }
@@ -437,6 +455,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     dbPlanUse.NextSubscriptionPlanId = model.NextSubscriptionPlanId;
                     dbPlanUse.PagesCount = model.PagesCount >= dbPlanUse.PagesCount ? model.PagesCount : dbPlanUse.PagesCount;
                     dbPlanUse.SubscriptionPlanUseStateId = model.SubscriptionPlanUseStateId;
+                    dbPlanUse.AltPagesCount = model.AltPagesCount;
 
                     db.SaveChanges();
 
@@ -486,8 +505,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             SubscriptionPlanTypeId = plan.SubscriptionPlans != null ? plan.SubscriptionPlans.SubscriptionPlanTypeId : 0,
                             IsDefault = plan.SubscriptionPlans != null ? plan.SubscriptionPlans.IsDefault : false,
                             UserId = plan.UserId,
-                            AtlPagesCount = plan.AltPagesCount,
-                            PaidAtlPagesCount = plan.PaidAltPagesCount,
+                            AltPagesCount = plan.AltPagesCount,
+                            PaidAltPagesCount = plan.PaidAltPagesCount,
+                            AltCostPerPage = plan.SubscriptionPlans != null ? plan.SubscriptionPlans.AltCostPerPage : null,
                         };
                     return mPlan;
                 }

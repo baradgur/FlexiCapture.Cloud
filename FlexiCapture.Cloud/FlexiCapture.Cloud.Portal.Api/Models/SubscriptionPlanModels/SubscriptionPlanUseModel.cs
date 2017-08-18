@@ -62,6 +62,11 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.SubscriptionPlanModels
         /// cost per page
         /// </summary>
         public int CostPerPage { get; set; }
+
+        /// <summary>
+        /// alt cost per page
+        /// </summary>
+        public int? AltCostPerPage { get; set; }
         /// <summary>
         /// is default
         /// </summary>
@@ -69,11 +74,11 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.SubscriptionPlanModels
         /// <summary>
         /// amount of pages used above the pageInInterval by alternative price
         /// </summary>
-        public int? AtlPagesCount { get; set; }
+        public int? AltPagesCount { get; set; }
         /// <summary>
         /// amount of paid pages used above the pageInInterval
         /// </summary>
-        public int? PaidAtlPagesCount { get; set; }
+        public int? PaidAltPagesCount { get; set; }
 
         /// <summary>
         /// user id

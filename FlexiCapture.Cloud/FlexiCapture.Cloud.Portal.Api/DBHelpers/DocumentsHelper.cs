@@ -272,13 +272,38 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     foreach (var model in models)
                     {
                         DB.Documents doc = db.Documents
-                            .Include(x=>x.Tasks)
+                            .Include(x=>x.Tasks.Documents)
                             .FirstOrDefault(x=>x.Id == model.Id);
 
                         if (doc != null)
                         {
-                            db.Tasks.Remove(doc.Tasks);
-                            db.Documents.Remove(doc);
+
+                            string serverPath = SettingsHelper.GetSettingsValueByName("MainPath");
+                            string uploadFolder = SettingsHelper.GetSettingsValueByName("UploadFolder");
+                            string resultFolder = SettingsHelper.GetSettingsValueByName("ResultFolder");
+                            string uploadsPath = Path.Combine(serverPath, uploadFolder);
+                            string resultsPath = Path.Combine(serverPath, resultFolder);
+                            foreach (var outDoc in doc.Tasks.Documents)
+                            {
+                                if (outDoc.DocumentCategoryId.HasValue && outDoc.DocumentCategoryId.Value == 1)
+                                {
+                                    string filePath = Path.Combine(uploadsPath, outDoc.FileName);
+                                    if(File.Exists(filePath))
+                                    {
+                                       File.Delete(filePath); 
+                                    }
+                                }
+                                else if (outDoc.DocumentCategoryId.HasValue && outDoc.DocumentCategoryId.Value == 2)
+                                {
+                                    string filePath = Path.Combine(resultsPath, outDoc.FileName);
+                                    if (File.Exists(filePath))
+                                    {
+                                        File.Delete(filePath);
+                                    }
+                                }
+                            }
+
+                            db.Documents.RemoveRange(doc.Tasks.Documents);
                         }
                     }
                     db.SaveChanges();

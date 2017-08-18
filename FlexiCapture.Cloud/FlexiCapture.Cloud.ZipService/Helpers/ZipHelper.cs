@@ -5,6 +5,8 @@ using FlexiCapture.Cloud.ServiceAssist;
 using System.IO.Compression;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
+using SharpCompress.Archives;
+using SharpCompress.Readers;
 
 namespace FlexiCapture.Cloud.ZipService.Helpers
 {
@@ -33,33 +35,28 @@ namespace FlexiCapture.Cloud.ZipService.Helpers
             }
         }
 
-        public static void CreateZipTasksFromTasks(Assist assist, List<string> extentions, Tasks task, string uploadUrl, string uploadFolder, string uploadZipUrl, string inputZipPath)
+        public static void CreateZipTasksFromTasks(Assist assist, List<string> extentions, Tasks task, string uploadUrl, string uploadFolder, string uploadZipUrl, string inputZipPath, string archiveExtension)
         {
             try
             {
                 string url = assist.GetSettingValueByName("ApiUrl");
-
-                using (ZipArchive archive = ZipFile.OpenRead(inputZipPath))
+                string uZipUrl = SettingsHelper.GetSettingValueByName("UploadZipFolder");
+                var archive = ArchiveFactory.Open(inputZipPath);
+                foreach (var entry in archive.Entries)
                 {
-                    foreach (ZipArchiveEntry entry in archive.Entries)
+                    if (!entry.IsDirectory)
                     {
-                        string entryExtention = Path.GetExtension(entry.FullName);
+                        string entryExtention = Path.GetExtension(entry.Key);
                         if (CheckExtensions(extentions, entryExtention))
                         {
-                            
                             var newNameGuid = Guid.NewGuid();
                             var uploadName = newNameGuid + entryExtention;
 
-                            string uZipUrl = SettingsHelper.GetSettingValueByName("UploadZipFolder");
                             string uZipFilePath = Path.Combine(uZipUrl, uploadName);
                             var filePath = Path.Combine(uploadZipUrl, uploadName);
-                            string originalFileName = Path.GetFileName(entry.FullName);
-                            entry.ExtractToFile(filePath);
-                            assist.AddLog("Unzipped file: " + uploadName);
-                            //add task to db
+                            string originalFileName = Path.GetFileName(entry.Key);
+                            entry.WriteToFile(filePath);
                             var taskId = assist.AddZipTask(assist.UserProfile.UserId, task.ServiceId, task.Id);
-                            assist.AddLog("Add task: " + taskId);
-
                             var md5 = assist.GetMD5HashFromFile(filePath);
                             //add document
                             var fileInfo = new FileInfo(filePath);
@@ -72,9 +69,9 @@ namespace FlexiCapture.Cloud.ZipService.Helpers
                             assist.UpdateZipTaskProfile(taskId, content);
                         }
                     }
-                    assist.UpdateDocumentStatesByTaskId(task.Id, 2);
-                    assist.UpdateTaskState(task.Id, 2);
                 }
+                assist.UpdateDocumentStatesByTaskId(task.Id, 2);
+                assist.UpdateTaskState(task.Id, 2);
             }
             catch (Exception exception)
             {

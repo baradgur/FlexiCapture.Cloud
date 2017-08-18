@@ -5,8 +5,6 @@ using System.IO.Compression;
 using FlexiCapture.Cloud.ServiceAssist;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FlexiCapture.Cloud.OCR.Assist;
 using FlexiCapture.Cloud.OCR.Assist.Models;
 using Newtonsoft.Json;
@@ -26,6 +24,15 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
             {
                 AssistProcessor assist = new AssistProcessor();
                 Assist serviceAssist = new Assist();
+
+                string planState = serviceAssist.CheckSubscriptionPlanAvailability(task.UserId);
+                if (planState != "OK")
+                {
+                    serviceAssist.AddErrorToZipDocuments(task.Id, planState);
+                    serviceAssist.UpdateZipTaskState(task.Id, 4);
+                    serviceAssist.UpdateZipDocumentStatesByZipTaskId(task.Id, 4);
+                    return;
+                }
 
                 string url = serviceAssist.GetSettingValueByName("ApiUrl");
                 string json = task.ProfileContent;
@@ -90,6 +97,17 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
 
                 if (model.Status.Equals("Finished"))
                 {
+                    string planState = serviceAssist.CheckSubscriptionPlan(task.UserId, model.Statistics.PagesArea);
+                    if (planState != "OK")
+                    {
+                        serviceAssist.AddErrorToZipDocuments(task.Id, planState);
+                        //update task
+                        serviceAssist.UpdateZipTaskState(task.Id, 4);
+                        //update documents
+                        serviceAssist.UpdateZipDocumentStatesByZipTaskId(task.Id, 4);
+                        return;
+                    }
+
                     string pathToDownload = serviceAssist.GetSettingValueByName("MainPath");
                     string resultZipFolder = serviceAssist.GetSettingValueByName("ResultZipFolder");
                     string jobPattern = serviceAssist.GetSettingValueByName("ApiUrlJobState");

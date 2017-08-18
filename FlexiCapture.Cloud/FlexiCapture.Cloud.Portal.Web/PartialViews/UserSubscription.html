@@ -25,14 +25,34 @@
                                     <span class="subscr-pages-number">{{currentPlan.CostPerPage}}</span> cents per page
                                 </div>
                             </div>
-                            <hr/>
+
+                            <hr ng-show="currentPlan.AltPagesCount || currentPlan.PaidAltPagesCount"/>
+                            <div class="row" ng-show="currentPlan.AltPagesCount || currentPlan.PaidAltPagesCount">
+                                <div class="col-md-6">
+                                    <span class="subscr-pages-number">{{currentPlan.AltPagesCount}}</span> unpaid pages
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="subscr-pages-number">{{currentPlan.PaidAltPagesCount}}</span> paid pages
+                                </div>
+                            </div>
+                            <div class="row" ng-show="currentPlan.AltPagesCount || currentPlan.PaidAltPagesCount">
+                                <div class="col-md-6">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="subscr-pages-number">{{currentPlan.AltCostPerPage}}</span> cents per page
+                                </div>
+                            </div>
+                            <hr />
                             <div class="row subscr-block-small">
                                 If Pages are exceeded during the Plan period:
                             </div>
                             <div class="row subscr-block-small">
                                 <div class="col-md-6">
                                     <label>
-                                        <input type="radio" name="endPlanPeriod" ng-click="endPlanPeriodChosen(1)" value="1" ng-model="currentPlan.endPlanPeriod" /> Stop processing and send e-mail notification
+                                        <input type="radio" name="endPlanPeriod" ng-click="endPlanPeriodChosen(1)" value="1" ng-model="currentPlan.endPlanPeriod" />
+                                        <span ng-if="currentPlan.SubscriptionPlanTypeId!=1">Continue using subscription with {{currentPlan.AltCostPerPage}} cents per page</span>
+                                        <span ng-if="currentPlan.SubscriptionPlanTypeId==1">Stop processing and send e-mail notification</span>
                                     </label>
                                 </div>
                                 <div class="col-md-6" ng-show="!currentPlan.IsDefault">
@@ -50,13 +70,16 @@
                                     <button class="btn btn-info btn-lg" ng-click="managePlanUse();"><i class="glyphicon glyphicon-edit"></i> Update current plan</button>
                                 </div>
                             </div>
+                            <div class="row" style="color: tomato;" ng-if="currentPlan.SubscriptionPlanUseStateId == 4">This plan is blocked</div>
                         </div>
+
                     </div>
+
                 </div>
-                <div class="row" ng-show="!currentPlan">There is no current plan. Please choose from panel below</div>
+                <div class="row subscr-block" ng-show="!currentPlan">There is no current plan. Please choose from panel below</div>
             </div>
         </div>
-        <div class="row" style="padding-left: 10%;" ng-show="!currentPlan">
+        <div class="row" style="padding-left: 10%;" ng-show="!currentPlan || currentPlan.SubscriptionPlanUseStateId == 4">
             <div ng-class="{'switched': !monthToYearSwitcher}" class="col-md-4" style="padding-top: 1%; text-align: right; font-size: 18px; padding-top: 0.5%">One-time purchase</div>
             <div class="col-md-1">
                 <label class="switch">
@@ -69,7 +92,7 @@
         </div>
 
 
-        <div class="row" ng-show="!currentPlan">
+        <div class="row" ng-show="!currentPlan || currentPlan.SubscriptionPlanUseStateId == 4">
             <div id="singleSer" ng-if="!monthToYearSwitcher" class="col-xs-12 col-sm-12 col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
