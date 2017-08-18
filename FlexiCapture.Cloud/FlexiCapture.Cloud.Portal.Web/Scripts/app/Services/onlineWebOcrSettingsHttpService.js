@@ -5,7 +5,10 @@
         dElement.keyId = apikey.Id;
         dElement.viewId = 110000 + apikey.Id;
         dElement.keyKey = apikey.Key;
-        dElement.keyState = apikey.IsActive?"Active":"Disabled";
+        dElement.keyState = apikey.IsActive ? "Active" : "Disabled";
+        dElement.creationDate = apikey.CreationDate;
+        dElement.appName = apikey.AppName;
+       // dElement.isActive = apikey.IsActive
         return dElement;
     }
 

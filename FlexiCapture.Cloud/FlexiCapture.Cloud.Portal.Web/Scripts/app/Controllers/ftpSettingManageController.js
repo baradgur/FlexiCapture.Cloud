@@ -1,7 +1,6 @@
 ﻿var ftpSettingManageController = function ($scope, $http, $location, $state, $uibModal, $uibModalInstance, $stateParams, usSpinnerService, items) {
     var vm = this;
 
-    
 
     setTimeout(function () {
         var v = document.getElementById("path-toggle");

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FCCPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnalysisModeCatalog">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,6 +87,17 @@
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Extension" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="FTPConversionSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddProcessed" Type="bit" Nullable="false" />
+          <Property Name="ReturnResults" Type="bit" Nullable="false" />
+          <Property Name="MirrorInput" Type="bit" Nullable="false" />
+          <Property Name="MoveProcessed" Type="bit" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="FTPSettings">
           <Key>
             <PropertyRef Name="Id" />
@@ -100,6 +111,16 @@
           <Property Name="Path" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="UseSSL" Type="bit" Nullable="false" />
           <Property Name="DeleteFile" Type="bit" />
+          <Property Name="FtpServiceType" Type="int" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FTPSettingsTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -145,6 +166,8 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Key" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="AppName" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="PrintTypeCatalog">
           <Key>
@@ -489,6 +512,42 @@
             </Principal>
             <Dependent Role="EmailSettings">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FTPConversionSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FTPConversionSettings" Type="Self.FTPConversionSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPConversionSettings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FTPSettings_FTPSettings1">
+          <End Role="FTPSettings" Type="Self.FTPSettings" Multiplicity="0..1" />
+          <End Role="FTPSettings1" Type="Self.FTPSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FTPSettings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPSettings1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FTPSettings_FTPSettingsTypes1">
+          <End Role="FTPSettingsTypes" Type="Self.FTPSettingsTypes" Multiplicity="1" />
+          <End Role="FTPSettings" Type="Self.FTPSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FTPSettingsTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPSettings">
+              <PropertyRef Name="FtpServiceType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1041,7 +1100,9 @@
           <EntitySet Name="EmailResponseSettings" EntityType="Self.EmailResponseSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailSettings" EntityType="Self.EmailSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExportFormatsCatalog" EntityType="Self.ExportFormatsCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FTPConversionSettings" EntityType="Self.FTPConversionSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FTPSettings" EntityType="Self.FTPSettings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FTPSettingsTypes" EntityType="Self.FTPSettingsTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguagesCatalog" EntityType="Self.LanguagesCatalog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
@@ -1098,6 +1159,18 @@
           <AssociationSet Name="FK_EmailSettings_Users" Association="Self.FK_EmailSettings_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="EmailSettings" EntitySet="EmailSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FTPConversionSettings_Users" Association="Self.FK_FTPConversionSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FTPConversionSettings" EntitySet="FTPConversionSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FTPSettings_FTPSettings1" Association="Self.FK_FTPSettings_FTPSettings1">
+            <End Role="FTPSettings" EntitySet="FTPSettings" />
+            <End Role="FTPSettings1" EntitySet="FTPSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FTPSettings_FTPSettingsTypes1" Association="Self.FK_FTPSettings_FTPSettingsTypes1">
+            <End Role="FTPSettingsTypes" EntitySet="FTPSettingsTypes" />
+            <End Role="FTPSettings" EntitySet="FTPSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_FTPSettings_Users" Association="Self.FK_FTPSettings_Users">
             <End Role="Users" EntitySet="Users" />
@@ -1280,7 +1353,8 @@
             <End Role="ZipTaskStatistics" EntitySet="ZipTaskStatistics" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FCCPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1380,6 +1454,18 @@
           <Property Name="Extension" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfileExportFormats" Relationship="Self.FK_UserProfileExportFormats_ExportFormatsCatalog" FromRole="ExportFormatsCatalog" ToRole="UserProfileExportFormats" />
         </EntityType>
+        <EntityType Name="FTPConversionSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddProcessed" Type="Boolean" Nullable="false" />
+          <Property Name="ReturnResults" Type="Boolean" Nullable="false" />
+          <Property Name="MirrorInput" Type="Boolean" Nullable="false" />
+          <Property Name="MoveProcessed" Type="Boolean" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_FTPConversionSettings_Users" FromRole="FTPConversionSettings" ToRole="Users" />
+        </EntityType>
         <EntityType Name="FTPSettings">
           <Key>
             <PropertyRef Name="Id" />
@@ -1393,7 +1479,21 @@
           <Property Name="Path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UseSSL" Type="Boolean" Nullable="false" />
           <Property Name="DeleteFile" Type="Boolean" />
+          <Property Name="FtpServiceType" Type="Int32" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FTPSettings1" Relationship="Self.FK_FTPSettings_FTPSettings1" FromRole="FTPSettings" ToRole="FTPSettings1" />
+          <NavigationProperty Name="FTPSettings2" Relationship="Self.FK_FTPSettings_FTPSettings1" FromRole="FTPSettings1" ToRole="FTPSettings" />
+          <NavigationProperty Name="FTPSettingsTypes" Relationship="Self.FK_FTPSettings_FTPSettingsTypes1" FromRole="FTPSettings" ToRole="FTPSettingsTypes" />
           <NavigationProperty Name="Users" Relationship="Self.FK_FTPSettings_Users" FromRole="FTPSettings" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="FTPSettingsTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FTPSettings" Relationship="Self.FK_FTPSettings_FTPSettingsTypes1" FromRole="FTPSettingsTypes" ToRole="FTPSettings" />
         </EntityType>
         <EntityType Name="LanguagesCatalog">
           <Key>
@@ -1411,6 +1511,43 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderId" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserRoleId" Type="Int32" />
+          <Property Name="NotificationTypeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NotificationTypes" Relationship="Self.FK_Notifications_NotificationTypes" FromRole="Notifications" ToRole="NotificationTypes" />
+          <NavigationProperty Name="UserRoleTypes" Relationship="Self.FK_Notifications_UserRoleTypes" FromRole="Notifications" ToRole="UserRoleTypes" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Notifications_Users" FromRole="Notifications" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="Self.FK_Notifications_Users1" FromRole="Notifications" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="NotificationTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notifications_NotificationTypes" FromRole="NotificationTypes" ToRole="Notifications" />
+        </EntityType>
+        <EntityType Name="OcrApiKeys">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Key" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AppName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_OcrApiKeys_Users" FromRole="OcrApiKeys" ToRole="Users" />
         </EntityType>
         <EntityType Name="PrintTypeCatalog">
           <Key>
@@ -1447,6 +1584,66 @@
           <Property Name="SettingName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SettingValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="SubscriptionPlans">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SubscriptionPlanTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Expiration" Type="Int32" />
+          <Property Name="CostPerPage" Type="Int32" Nullable="false" />
+          <Property Name="PagesInInterval" Type="Int32" Nullable="false" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="SubscriptionPlanStateId" Type="Int32" Nullable="false" />
+          <Property Name="AltCostPerPage" Type="Int32" />
+          <NavigationProperty Name="SubscriptionPlanStates" Relationship="Self.FK_SubscriptionPlans_SubscriptionPlanStates" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanStates" />
+          <NavigationProperty Name="SubscriptionPlanTypes" Relationship="Self.FK_SubscriptionPlans_SubscriptionPlanTypes" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanTypes" />
+          <NavigationProperty Name="SubscriptionPlanUses" Relationship="Self.FK_SubscriptionPlanUses_SubscriptionPlans" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanUses" />
+          <NavigationProperty Name="SubscriptionPlanUses1" Relationship="Self.FK_SubscriptionPlanUses_SubscriptionPlans1" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanUses" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SubscriptionPlans" Relationship="Self.FK_SubscriptionPlans_SubscriptionPlanStates" FromRole="SubscriptionPlanStates" ToRole="SubscriptionPlans" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SubscriptionPlans" Relationship="Self.FK_SubscriptionPlans_SubscriptionPlanTypes" FromRole="SubscriptionPlanTypes" ToRole="SubscriptionPlans" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanUses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriptionPlanId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PagesCount" Type="Int32" Nullable="false" />
+          <Property Name="DateExpiry" Type="DateTime" Precision="0" />
+          <Property Name="NextSubscriptionPlanId" Type="Int32" />
+          <Property Name="SubscriptionPlanUseStateId" Type="Int32" Nullable="false" />
+          <Property Name="AltPagesCount" Type="Int32" />
+          <Property Name="PaidAltPagesCount" Type="Int32" />
+          <NavigationProperty Name="SubscriptionPlans" Relationship="Self.FK_SubscriptionPlanUses_SubscriptionPlans" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlans" />
+          <NavigationProperty Name="SubscriptionPlans1" Relationship="Self.FK_SubscriptionPlanUses_SubscriptionPlans1" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlans" />
+          <NavigationProperty Name="SubscriptionPlanUseStates" Relationship="Self.FK_SubscriptionPlanUses_SubscriptionPlanUseStates" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlanUseStates" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_SubscriptionPlanUses_Users" FromRole="SubscriptionPlanUses" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="SubscriptionPlanUseStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SubscriptionPlanUses" Relationship="Self.FK_SubscriptionPlanUses_SubscriptionPlanUseStates" FromRole="SubscriptionPlanUseStates" ToRole="SubscriptionPlanUses" />
+        </EntityType>
         <EntityType Name="Tasks">
           <Key>
             <PropertyRef Name="Id" />
@@ -1462,8 +1659,8 @@
           <NavigationProperty Name="ServiceTypes" Relationship="Self.FK_Tasks_ServiceTypes" FromRole="Tasks" ToRole="ServiceTypes" />
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_Tasks_TaskStates" FromRole="Tasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tasks_Users" FromRole="Tasks" ToRole="Users" />
+          <NavigationProperty Name="TaskStatistics" Relationship="Self.FK_TaskStatistics_Tasks" FromRole="Tasks" ToRole="TaskStatistics" />
           <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_Tasks" FromRole="Tasks" ToRole="ZipTasks" />
-          <NavigationProperty Name="TaskStatistics" Relationship="FCCPortalModel.FK_TaskStatistics_Tasks" FromRole="Tasks" ToRole="TaskStatistics" />
         </EntityType>
         <EntityType Name="TaskStates">
           <Key>
@@ -1473,6 +1670,17 @@
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskStates" FromRole="TaskStates" ToRole="Tasks" />
           <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_TaskStates" FromRole="TaskStates" ToRole="ZipTasks" />
+        </EntityType>
+        <EntityType Name="TaskStatistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="TotalCharacters" Type="Int32" Nullable="false" />
+          <Property Name="UncertainCharacters" Type="Int32" Nullable="false" />
+          <Property Name="PagesArea" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_TaskStatistics_Tasks" FromRole="TaskStatistics" ToRole="Tasks" />
         </EntityType>
         <EntityType Name="UserConfirmationEmails">
           <Key>
@@ -1582,8 +1790,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notifications_UserRoleTypes" FromRole="UserRoleTypes" ToRole="Notifications" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogins_UserRoleTypes" FromRole="UserRoleTypes" ToRole="UserLogins" />
-          <NavigationProperty Name="Notifications" Relationship="FCCPortalModel.FK_Notifications_UserRoleTypes" FromRole="UserRoleTypes" ToRole="Notifications" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -1596,9 +1804,16 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompanyName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
           <Property Name="ParentUserId" Type="Int32" />
+          <Property Name="GetReleaseUpdateNotif" Type="Boolean" Nullable="false" />
+          <Property Name="GetUsePaymentNotif" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EmailResponseSettings" Relationship="Self.FK_EmailResponseSettings_Users" FromRole="Users" ToRole="EmailResponseSettings" />
           <NavigationProperty Name="EmailSettings" Relationship="Self.FK_EmailSettings_Users" FromRole="Users" ToRole="EmailSettings" />
+          <NavigationProperty Name="FTPConversionSettings" Relationship="Self.FK_FTPConversionSettings_Users" FromRole="Users" ToRole="FTPConversionSettings" />
           <NavigationProperty Name="FTPSettings" Relationship="Self.FK_FTPSettings_Users" FromRole="Users" ToRole="FTPSettings" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notifications_Users" FromRole="Users" ToRole="Notifications" />
+          <NavigationProperty Name="Notifications1" Relationship="Self.FK_Notifications_Users1" FromRole="Users" ToRole="Notifications" />
+          <NavigationProperty Name="OcrApiKeys" Relationship="Self.FK_OcrApiKeys_Users" FromRole="Users" ToRole="OcrApiKeys" />
+          <NavigationProperty Name="SubscriptionPlanUses" Relationship="Self.FK_SubscriptionPlanUses_Users" FromRole="Users" ToRole="SubscriptionPlanUses" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Users" FromRole="Users" ToRole="Tasks" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_UserLogins_Users" FromRole="Users" ToRole="UserLogins" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.FK_UserProfiles_Users" FromRole="Users" ToRole="UserProfiles" />
@@ -1607,12 +1822,6 @@
           <NavigationProperty Name="UserServiceSubscribes" Relationship="Self.FK_UserServiceStates_Users" FromRole="Users" ToRole="UserServiceSubscribes" />
           <NavigationProperty Name="UserSettings" Relationship="Self.FK_UserSettings_Users" FromRole="Users" ToRole="UserSettings" />
           <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTasks_Users" FromRole="Users" ToRole="ZipTasks" />
-          <Property Name="GetReleaseUpdateNotif" Type="Boolean" Nullable="false" />
-          <Property Name="GetUsePaymentNotif" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Notifications" Relationship="FCCPortalModel.FK_Notifications_Users" FromRole="Users" ToRole="Notifications" />
-          <NavigationProperty Name="Notifications1" Relationship="FCCPortalModel.FK_Notifications_Users1" FromRole="Users" ToRole="Notifications" />
-          <NavigationProperty Name="OcrApiKeys" Relationship="FCCPortalModel.FK_OcrApiKeys_Users" FromRole="Users" ToRole="OcrApiKeys" />
-          <NavigationProperty Name="SubscriptionPlanUses" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_Users" FromRole="Users" ToRole="SubscriptionPlanUses" />
         </EntityType>
         <EntityType Name="UserServiceSubscribes">
           <Key>
@@ -1682,7 +1891,18 @@
           <NavigationProperty Name="TaskStates" Relationship="Self.FK_ZipTasks_TaskStates" FromRole="ZipTasks" ToRole="TaskStates" />
           <NavigationProperty Name="Users" Relationship="Self.FK_ZipTasks_Users" FromRole="ZipTasks" ToRole="Users" />
           <NavigationProperty Name="ZipDocuments" Relationship="Self.FK_ZipDocuments_ZipTasks" FromRole="ZipTasks" ToRole="ZipDocuments" />
-          <NavigationProperty Name="ZipTaskStatistics" Relationship="FCCPortalModel.FK_ZipTaskStatistics_ZipTasks" FromRole="ZipTasks" ToRole="ZipTaskStatistics" />
+          <NavigationProperty Name="ZipTaskStatistics" Relationship="Self.FK_ZipTaskStatistics_ZipTasks" FromRole="ZipTasks" ToRole="ZipTaskStatistics" />
+        </EntityType>
+        <EntityType Name="ZipTaskStatistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZipTaskId" Type="Int32" Nullable="false" />
+          <Property Name="TotalCharacters" Type="Int32" Nullable="false" />
+          <Property Name="UncertainCharacters" Type="Int32" Nullable="false" />
+          <Property Name="PagesArea" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ZipTasks" Relationship="Self.FK_ZipTaskStatistics_ZipTasks" FromRole="ZipTaskStatistics" ToRole="ZipTasks" />
         </EntityType>
         <Association Name="FK_UserProfiles_AnalysisModeCatalog">
           <End Role="AnalysisModeCatalog" Type="Self.AnalysisModeCatalog" Multiplicity="1" />
@@ -1816,6 +2036,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FTPConversionSettings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="FTPConversionSettings" Type="Self.FTPConversionSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPConversionSettings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FTPSettings_FTPSettings1">
+          <End Role="FTPSettings" Type="Self.FTPSettings" Multiplicity="0..1" />
+          <End Role="FTPSettings1" Type="Self.FTPSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FTPSettings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPSettings1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FTPSettings_FTPSettingsTypes1">
+          <End Role="FTPSettingsTypes" Type="Self.FTPSettingsTypes" Multiplicity="1" />
+          <End Role="FTPSettings" Type="Self.FTPSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FTPSettingsTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FTPSettings">
+              <PropertyRef Name="FtpServiceType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FTPSettings_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="FTPSettings" Type="Self.FTPSettings" Multiplicity="*" />
@@ -1837,6 +2093,66 @@
             </Principal>
             <Dependent Role="UserProfileLanguages">
               <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_NotificationTypes">
+          <End Role="NotificationTypes" Type="Self.NotificationTypes" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="NotificationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_UserRoleTypes">
+          <End Role="UserRoleTypes" Type="Self.UserRoleTypes" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoleTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notifications_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notifications">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OcrApiKeys_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OcrApiKeys" Type="Self.OcrApiKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OcrApiKeys">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1912,6 +2228,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SubscriptionPlans_SubscriptionPlanStates">
+          <End Role="SubscriptionPlanStates" Type="Self.SubscriptionPlanStates" Multiplicity="1" />
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlans">
+              <PropertyRef Name="SubscriptionPlanStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlans_SubscriptionPlanTypes">
+          <End Role="SubscriptionPlanTypes" Type="Self.SubscriptionPlanTypes" Multiplicity="1" />
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlans">
+              <PropertyRef Name="SubscriptionPlanTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans">
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlans">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="SubscriptionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans1">
+          <End Role="SubscriptionPlans" Type="Self.SubscriptionPlans" Multiplicity="0..1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlans">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="NextSubscriptionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
+          <End Role="SubscriptionPlanUseStates" Type="Self.SubscriptionPlanUseStates" Multiplicity="1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubscriptionPlanUseStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="SubscriptionPlanUseStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubscriptionPlanUses_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="SubscriptionPlanUses" Type="Self.SubscriptionPlanUses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionPlanUses">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tasks_TaskStates">
           <End Role="TaskStates" Type="Self.TaskStates" Multiplicity="1" />
           <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
@@ -1933,6 +2321,18 @@
             </Principal>
             <Dependent Role="Tasks">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskStatistics_Tasks">
+          <End Role="Tasks" Type="Self.Tasks" Multiplicity="1" />
+          <End Role="TaskStatistics" Type="Self.TaskStatistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaskStatistics">
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2140,6 +2540,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ZipTaskStatistics_ZipTasks">
+          <End Role="ZipTasks" Type="Self.ZipTasks" Multiplicity="1" />
+          <End Role="ZipTaskStatistics" Type="Self.ZipTaskStatistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZipTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ZipTaskStatistics">
+              <PropertyRef Name="ZipTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FCCPortalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AnalysisModeCatalog" EntityType="Self.AnalysisModeCatalog" />
           <EntitySet Name="DocumentCategories" EntityType="Self.DocumentCategories" />
@@ -2149,15 +2561,26 @@
           <EntitySet Name="EmailResponseSettings" EntityType="Self.EmailResponseSettings" />
           <EntitySet Name="EmailSettings" EntityType="Self.EmailSettings" />
           <EntitySet Name="ExportFormatsCatalog" EntityType="Self.ExportFormatsCatalog" />
+          <EntitySet Name="FTPConversionSettings" EntityType="Self.FTPConversionSettings" />
           <EntitySet Name="FTPSettings" EntityType="Self.FTPSettings" />
+          <EntitySet Name="FTPSettingsTypes" EntityType="Self.FTPSettingsTypes" />
           <EntitySet Name="LanguagesCatalog" EntityType="Self.LanguagesCatalog" />
           <EntitySet Name="Log" EntityType="Self.Log" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" />
+          <EntitySet Name="NotificationTypes" EntityType="Self.NotificationTypes" />
+          <EntitySet Name="OcrApiKeys" EntityType="Self.OcrApiKeys" />
           <EntitySet Name="PrintTypeCatalog" EntityType="Self.PrintTypeCatalog" />
           <EntitySet Name="RotationTypeCatalog" EntityType="Self.RotationTypeCatalog" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" />
           <EntitySet Name="Settings" EntityType="Self.Settings" />
+          <EntitySet Name="SubscriptionPlans" EntityType="Self.SubscriptionPlans" />
+          <EntitySet Name="SubscriptionPlanStates" EntityType="Self.SubscriptionPlanStates" />
+          <EntitySet Name="SubscriptionPlanTypes" EntityType="Self.SubscriptionPlanTypes" />
+          <EntitySet Name="SubscriptionPlanUses" EntityType="Self.SubscriptionPlanUses" />
+          <EntitySet Name="SubscriptionPlanUseStates" EntityType="Self.SubscriptionPlanUseStates" />
           <EntitySet Name="Tasks" EntityType="Self.Tasks" />
           <EntitySet Name="TaskStates" EntityType="Self.TaskStates" />
+          <EntitySet Name="TaskStatistics" EntityType="Self.TaskStatistics" />
           <EntitySet Name="UserConfirmationEmails" EntityType="Self.UserConfirmationEmails" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogins" />
           <EntitySet Name="UserLoginStates" EntityType="Self.UserLoginStates" />
@@ -2173,6 +2596,7 @@
           <EntitySet Name="UserSettings" EntityType="Self.UserSettings" />
           <EntitySet Name="ZipDocuments" EntityType="Self.ZipDocuments" />
           <EntitySet Name="ZipTasks" EntityType="Self.ZipTasks" />
+          <EntitySet Name="ZipTaskStatistics" EntityType="Self.ZipTaskStatistics" />
           <AssociationSet Name="FK_UserProfiles_AnalysisModeCatalog" Association="Self.FK_UserProfiles_AnalysisModeCatalog">
             <End Role="AnalysisModeCatalog" EntitySet="AnalysisModeCatalog" />
             <End Role="UserProfiles" EntitySet="UserProfiles" />
@@ -2217,6 +2641,18 @@
             <End Role="ExportFormatsCatalog" EntitySet="ExportFormatsCatalog" />
             <End Role="UserProfileExportFormats" EntitySet="UserProfileExportFormats" />
           </AssociationSet>
+          <AssociationSet Name="FK_FTPConversionSettings_Users" Association="Self.FK_FTPConversionSettings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FTPConversionSettings" EntitySet="FTPConversionSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FTPSettings_FTPSettings1" Association="Self.FK_FTPSettings_FTPSettings1">
+            <End Role="FTPSettings" EntitySet="FTPSettings" />
+            <End Role="FTPSettings1" EntitySet="FTPSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FTPSettings_FTPSettingsTypes1" Association="Self.FK_FTPSettings_FTPSettingsTypes1">
+            <End Role="FTPSettingsTypes" EntitySet="FTPSettingsTypes" />
+            <End Role="FTPSettings" EntitySet="FTPSettings" />
+          </AssociationSet>
           <AssociationSet Name="FK_FTPSettings_Users" Association="Self.FK_FTPSettings_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="FTPSettings" EntitySet="FTPSettings" />
@@ -2224,6 +2660,26 @@
           <AssociationSet Name="FK_UserProfileLanguages_LanguagesCatalog" Association="Self.FK_UserProfileLanguages_LanguagesCatalog">
             <End Role="LanguagesCatalog" EntitySet="LanguagesCatalog" />
             <End Role="UserProfileLanguages" EntitySet="UserProfileLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_NotificationTypes" Association="Self.FK_Notifications_NotificationTypes">
+            <End Role="NotificationTypes" EntitySet="NotificationTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_UserRoleTypes" Association="Self.FK_Notifications_UserRoleTypes">
+            <End Role="UserRoleTypes" EntitySet="UserRoleTypes" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users" Association="Self.FK_Notifications_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notifications_Users1" Association="Self.FK_Notifications_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OcrApiKeys_Users" Association="Self.FK_OcrApiKeys_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OcrApiKeys" EntitySet="OcrApiKeys" />
           </AssociationSet>
           <AssociationSet Name="FK_UserProfilePrintTypes_PrintTypeCatalog" Association="Self.FK_UserProfilePrintTypes_PrintTypeCatalog">
             <End Role="PrintTypeCatalog" EntitySet="PrintTypeCatalog" />
@@ -2249,6 +2705,30 @@
             <End Role="ServiceTypes" EntitySet="ServiceTypes" />
             <End Role="ZipTasks" EntitySet="ZipTasks" />
           </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanStates" Association="Self.FK_SubscriptionPlans_SubscriptionPlanStates">
+            <End Role="SubscriptionPlanStates" EntitySet="SubscriptionPlanStates" />
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanTypes" Association="Self.FK_SubscriptionPlans_SubscriptionPlanTypes">
+            <End Role="SubscriptionPlanTypes" EntitySet="SubscriptionPlanTypes" />
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans" Association="Self.FK_SubscriptionPlanUses_SubscriptionPlans">
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans1" Association="Self.FK_SubscriptionPlanUses_SubscriptionPlans1">
+            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates" Association="Self.FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
+            <End Role="SubscriptionPlanUseStates" EntitySet="SubscriptionPlanUseStates" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubscriptionPlanUses_Users" Association="Self.FK_SubscriptionPlanUses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tasks_TaskStates" Association="Self.FK_Tasks_TaskStates">
             <End Role="TaskStates" EntitySet="TaskStates" />
             <End Role="Tasks" EntitySet="Tasks" />
@@ -2256,6 +2736,10 @@
           <AssociationSet Name="FK_Tasks_Users" Association="Self.FK_Tasks_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tasks" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskStatistics_Tasks" Association="Self.FK_TaskStatistics_Tasks">
+            <End Role="Tasks" EntitySet="Tasks" />
+            <End Role="TaskStatistics" EntitySet="TaskStatistics" />
           </AssociationSet>
           <AssociationSet Name="FK_ZipTasks_Tasks" Association="Self.FK_ZipTasks_Tasks">
             <End Role="Tasks" EntitySet="Tasks" />
@@ -2325,342 +2809,11 @@
             <End Role="ZipTasks" EntitySet="ZipTasks" />
             <End Role="ZipDocuments" EntitySet="ZipDocuments" />
           </AssociationSet>
-          <EntitySet Name="Notifications" EntityType="FCCPortalModel.Notifications" />
-          <EntitySet Name="NotificationTypes" EntityType="FCCPortalModel.NotificationTypes" />
-          <AssociationSet Name="FK_Notifications_NotificationTypes" Association="FCCPortalModel.FK_Notifications_NotificationTypes">
-            <End Role="NotificationTypes" EntitySet="NotificationTypes" />
-            <End Role="Notifications" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notifications_UserRoleTypes" Association="FCCPortalModel.FK_Notifications_UserRoleTypes">
-            <End Role="UserRoleTypes" EntitySet="UserRoleTypes" />
-            <End Role="Notifications" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notifications_Users" Association="FCCPortalModel.FK_Notifications_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Notifications" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notifications_Users1" Association="FCCPortalModel.FK_Notifications_Users1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Notifications" EntitySet="Notifications" />
-          </AssociationSet>
-          <EntitySet Name="OcrApiKeys" EntityType="FCCPortalModel.OcrApiKeys" />
-          <AssociationSet Name="FK_OcrApiKeys_Users" Association="FCCPortalModel.FK_OcrApiKeys_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="OcrApiKeys" EntitySet="OcrApiKeys" />
-          </AssociationSet>
-          <EntitySet Name="TaskStatistics" EntityType="FCCPortalModel.TaskStatistics" />
-          <EntitySet Name="ZipTaskStatistics" EntityType="FCCPortalModel.ZipTaskStatistics" />
-          <AssociationSet Name="FK_TaskStatistics_Tasks" Association="FCCPortalModel.FK_TaskStatistics_Tasks">
-            <End Role="Tasks" EntitySet="Tasks" />
-            <End Role="TaskStatistics" EntitySet="TaskStatistics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ZipTaskStatistics_ZipTasks" Association="FCCPortalModel.FK_ZipTaskStatistics_ZipTasks">
+          <AssociationSet Name="FK_ZipTaskStatistics_ZipTasks" Association="Self.FK_ZipTaskStatistics_ZipTasks">
             <End Role="ZipTasks" EntitySet="ZipTasks" />
             <End Role="ZipTaskStatistics" EntitySet="ZipTaskStatistics" />
           </AssociationSet>
-          <EntitySet Name="SubscriptionPlans" EntityType="FCCPortalModel.SubscriptionPlans" />
-          <EntitySet Name="SubscriptionPlanStates" EntityType="FCCPortalModel.SubscriptionPlanStates" />
-          <EntitySet Name="SubscriptionPlanTypes" EntityType="FCCPortalModel.SubscriptionPlanTypes" />
-          <EntitySet Name="SubscriptionPlanUses" EntityType="FCCPortalModel.SubscriptionPlanUses" />
-          <EntitySet Name="SubscriptionPlanUseStates" EntityType="FCCPortalModel.SubscriptionPlanUseStates" />
-          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanStates" Association="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanStates">
-            <End Role="SubscriptionPlanStates" EntitySet="SubscriptionPlanStates" />
-            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubscriptionPlans_SubscriptionPlanTypes" Association="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanTypes">
-            <End Role="SubscriptionPlanTypes" EntitySet="SubscriptionPlanTypes" />
-            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans" Association="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans">
-            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
-            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlans1" Association="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans1">
-            <End Role="SubscriptionPlans" EntitySet="SubscriptionPlans" />
-            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates" Association="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
-            <End Role="SubscriptionPlanUseStates" EntitySet="SubscriptionPlanUseStates" />
-            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubscriptionPlanUses_Users" Association="FCCPortalModel.FK_SubscriptionPlanUses_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="SubscriptionPlanUses" EntitySet="SubscriptionPlanUses" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Notifications">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SenderId" Type="Int32" Nullable="false" />
-          <Property Name="Subject" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserRoleId" Type="Int32" />
-          <Property Name="NotificationTypeId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" />
-          <NavigationProperty Name="NotificationTypes" Relationship="FCCPortalModel.FK_Notifications_NotificationTypes" FromRole="Notifications" ToRole="NotificationTypes" />
-          <NavigationProperty Name="UserRoleTypes" Relationship="FCCPortalModel.FK_Notifications_UserRoleTypes" FromRole="Notifications" ToRole="UserRoleTypes" />
-          <NavigationProperty Name="Users" Relationship="FCCPortalModel.FK_Notifications_Users" FromRole="Notifications" ToRole="Users" />
-          <NavigationProperty Name="Users1" Relationship="FCCPortalModel.FK_Notifications_Users1" FromRole="Notifications" ToRole="Users" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="NotificationTypes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Notifications" Relationship="FCCPortalModel.FK_Notifications_NotificationTypes" FromRole="NotificationTypes" ToRole="Notifications" />
-        </EntityType>
-        <Association Name="FK_Notifications_NotificationTypes">
-          <End Type="FCCPortalModel.NotificationTypes" Role="NotificationTypes" Multiplicity="1" />
-          <End Type="FCCPortalModel.Notifications" Role="Notifications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NotificationTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notifications">
-              <PropertyRef Name="NotificationTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Notifications_UserRoleTypes">
-          <End Type="FCCPortalModel.UserRoleTypes" Role="UserRoleTypes" Multiplicity="0..1" />
-          <End Type="FCCPortalModel.Notifications" Role="Notifications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRoleTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notifications">
-              <PropertyRef Name="UserRoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Notifications_Users">
-          <End Type="FCCPortalModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="FCCPortalModel.Notifications" Role="Notifications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notifications">
-              <PropertyRef Name="SenderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Notifications_Users1">
-          <End Type="FCCPortalModel.Users" Role="Users" Multiplicity="0..1" />
-          <End Type="FCCPortalModel.Notifications" Role="Notifications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notifications">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="OcrApiKeys">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Key" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="FCCPortalModel.FK_OcrApiKeys_Users" FromRole="OcrApiKeys" ToRole="Users" />
-        </EntityType>
-        <Association Name="FK_OcrApiKeys_Users">
-          <End Type="FCCPortalModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="FCCPortalModel.OcrApiKeys" Role="OcrApiKeys" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OcrApiKeys">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TaskStatistics">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <Property Name="TotalCharacters" Type="Int32" Nullable="false" />
-          <Property Name="UncertainCharacters" Type="Int32" Nullable="false" />
-          <Property Name="PagesArea" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tasks" Relationship="FCCPortalModel.FK_TaskStatistics_Tasks" FromRole="TaskStatistics" ToRole="Tasks" />
-        </EntityType>
-        <EntityType Name="ZipTaskStatistics">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ZipTaskId" Type="Int32" Nullable="false" />
-          <Property Name="TotalCharacters" Type="Int32" Nullable="false" />
-          <Property Name="UncertainCharacters" Type="Int32" Nullable="false" />
-          <Property Name="PagesArea" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ZipTasks" Relationship="FCCPortalModel.FK_ZipTaskStatistics_ZipTasks" FromRole="ZipTaskStatistics" ToRole="ZipTasks" />
-        </EntityType>
-        <Association Name="FK_TaskStatistics_Tasks">
-          <End Type="FCCPortalModel.Tasks" Role="Tasks" Multiplicity="1" />
-          <End Type="FCCPortalModel.TaskStatistics" Role="TaskStatistics" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TaskStatistics">
-              <PropertyRef Name="TaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ZipTaskStatistics_ZipTasks">
-          <End Type="FCCPortalModel.ZipTasks" Role="ZipTasks" Multiplicity="1" />
-          <End Type="FCCPortalModel.ZipTaskStatistics" Role="ZipTaskStatistics" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ZipTasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ZipTaskStatistics">
-              <PropertyRef Name="ZipTaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SubscriptionPlans">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SubscriptionPlanTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Expiration" Type="Int32" />
-          <Property Name="CostPerPage" Type="Int32" Nullable="false" />
-          <Property Name="PagesInInterval" Type="Int32" Nullable="false" />
-          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
-          <Property Name="SubscriptionPlanStateId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SubscriptionPlanStates" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanStates" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanStates" />
-          <NavigationProperty Name="SubscriptionPlanTypes" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanTypes" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanTypes" />
-          <NavigationProperty Name="SubscriptionPlanUses" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanUses" />
-          <NavigationProperty Name="SubscriptionPlanUses1" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans1" FromRole="SubscriptionPlans" ToRole="SubscriptionPlanUses" />
-          <Property Name="AltCostPerPage" Type="Int32" />
-        </EntityType>
-        <EntityType Name="SubscriptionPlanStates">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SubscriptionPlans" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanStates" FromRole="SubscriptionPlanStates" ToRole="SubscriptionPlans" />
-        </EntityType>
-        <EntityType Name="SubscriptionPlanTypes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SubscriptionPlans" Relationship="FCCPortalModel.FK_SubscriptionPlans_SubscriptionPlanTypes" FromRole="SubscriptionPlanTypes" ToRole="SubscriptionPlans" />
-        </EntityType>
-        <EntityType Name="SubscriptionPlanUses">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubscriptionPlanId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="PagesCount" Type="Int32" Nullable="false" />
-          <Property Name="DateExpiry" Type="DateTime" Precision="0" />
-          <Property Name="NextSubscriptionPlanId" Type="Int32" />
-          <Property Name="SubscriptionPlanUseStateId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SubscriptionPlans" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlans" />
-          <NavigationProperty Name="SubscriptionPlans1" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlans1" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlans" />
-          <NavigationProperty Name="SubscriptionPlanUseStates" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlanUseStates" FromRole="SubscriptionPlanUses" ToRole="SubscriptionPlanUseStates" />
-          <NavigationProperty Name="Users" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_Users" FromRole="SubscriptionPlanUses" ToRole="Users" />
-          <Property Name="AltPagesCount" Type="Int32" />
-          <Property Name="PaidAltPagesCount" Type="Int32" />
-        </EntityType>
-        <EntityType Name="SubscriptionPlanUseStates">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SubscriptionPlanUses" Relationship="FCCPortalModel.FK_SubscriptionPlanUses_SubscriptionPlanUseStates" FromRole="SubscriptionPlanUseStates" ToRole="SubscriptionPlanUses" />
-        </EntityType>
-        <Association Name="FK_SubscriptionPlans_SubscriptionPlanStates">
-          <End Type="FCCPortalModel.SubscriptionPlanStates" Role="SubscriptionPlanStates" Multiplicity="1" />
-          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubscriptionPlanStates">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubscriptionPlans">
-              <PropertyRef Name="SubscriptionPlanStateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubscriptionPlans_SubscriptionPlanTypes">
-          <End Type="FCCPortalModel.SubscriptionPlanTypes" Role="SubscriptionPlanTypes" Multiplicity="1" />
-          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubscriptionPlanTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubscriptionPlans">
-              <PropertyRef Name="SubscriptionPlanTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans">
-          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="1" />
-          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubscriptionPlans">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubscriptionPlanUses">
-              <PropertyRef Name="SubscriptionPlanId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlans1">
-          <End Type="FCCPortalModel.SubscriptionPlans" Role="SubscriptionPlans" Multiplicity="0..1" />
-          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubscriptionPlans">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubscriptionPlanUses">
-              <PropertyRef Name="NextSubscriptionPlanId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubscriptionPlanUses_SubscriptionPlanUseStates">
-          <End Type="FCCPortalModel.SubscriptionPlanUseStates" Role="SubscriptionPlanUseStates" Multiplicity="1" />
-          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubscriptionPlanUseStates">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubscriptionPlanUses">
-              <PropertyRef Name="SubscriptionPlanUseStateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubscriptionPlanUses_Users">
-          <End Type="FCCPortalModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="FCCPortalModel.SubscriptionPlanUses" Role="SubscriptionPlanUses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SubscriptionPlanUses">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2757,6 +2910,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FTPConversionSettings">
+            <EntityTypeMapping TypeName="FCCPortalModel.FTPConversionSettings">
+              <MappingFragment StoreEntitySet="FTPConversionSettings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AddProcessed" ColumnName="AddProcessed" />
+                <ScalarProperty Name="ReturnResults" ColumnName="ReturnResults" />
+                <ScalarProperty Name="MirrorInput" ColumnName="MirrorInput" />
+                <ScalarProperty Name="MoveProcessed" ColumnName="MoveProcessed" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FTPSettings">
             <EntityTypeMapping TypeName="FCCPortalModel.FTPSettings">
               <MappingFragment StoreEntitySet="FTPSettings">
@@ -2769,6 +2934,17 @@
                 <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="UseSSL" ColumnName="UseSSL" />
                 <ScalarProperty Name="DeleteFile" ColumnName="DeleteFile" />
+                <ScalarProperty Name="FtpServiceType" ColumnName="FtpServiceType" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FTPSettingsTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel.FTPSettingsTypes">
+              <MappingFragment StoreEntitySet="FTPSettingsTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2787,6 +2963,40 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="FCCPortalModel.Notifications">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="NotificationTypeId" ColumnName="NotificationTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel.NotificationTypes">
+              <MappingFragment StoreEntitySet="NotificationTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OcrApiKeys">
+            <EntityTypeMapping TypeName="FCCPortalModel.OcrApiKeys">
+              <MappingFragment StoreEntitySet="OcrApiKeys">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2823,6 +3033,60 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlans">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlans">
+              <MappingFragment StoreEntitySet="SubscriptionPlans">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SubscriptionPlanTypeId" ColumnName="SubscriptionPlanTypeId" />
+                <ScalarProperty Name="Expiration" ColumnName="Expiration" />
+                <ScalarProperty Name="CostPerPage" ColumnName="CostPerPage" />
+                <ScalarProperty Name="PagesInInterval" ColumnName="PagesInInterval" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="SubscriptionPlanStateId" ColumnName="SubscriptionPlanStateId" />
+                <ScalarProperty Name="AltCostPerPage" ColumnName="AltCostPerPage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanStates">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanStates">
+              <MappingFragment StoreEntitySet="SubscriptionPlanStates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanTypes">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanTypes">
+              <MappingFragment StoreEntitySet="SubscriptionPlanTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanUses">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanUses">
+              <MappingFragment StoreEntitySet="SubscriptionPlanUses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubscriptionPlanId" ColumnName="SubscriptionPlanId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PagesCount" ColumnName="PagesCount" />
+                <ScalarProperty Name="DateExpiry" ColumnName="DateExpiry" />
+                <ScalarProperty Name="NextSubscriptionPlanId" ColumnName="NextSubscriptionPlanId" />
+                <ScalarProperty Name="SubscriptionPlanUseStateId" ColumnName="SubscriptionPlanUseStateId" />
+                <ScalarProperty Name="AltPagesCount" ColumnName="AltPagesCount" />
+                <ScalarProperty Name="PaidAltPagesCount" ColumnName="PaidAltPagesCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionPlanUseStates">
+            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanUseStates">
+              <MappingFragment StoreEntitySet="SubscriptionPlanUseStates">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="FCCPortalModel.Tasks">
               <MappingFragment StoreEntitySet="Tasks">
@@ -2841,6 +3105,17 @@
               <MappingFragment StoreEntitySet="TaskStates">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskStatistics">
+            <EntityTypeMapping TypeName="FCCPortalModel.TaskStatistics">
+              <MappingFragment StoreEntitySet="TaskStatistics">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="TotalCharacters" ColumnName="TotalCharacters" />
+                <ScalarProperty Name="UncertainCharacters" ColumnName="UncertainCharacters" />
+                <ScalarProperty Name="PagesArea" ColumnName="PagesArea" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2944,8 +3219,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FCCPortalModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="GetUsePaymentNotif" ColumnName="GetUsePaymentNotif" />
-                <ScalarProperty Name="GetReleaseUpdateNotif" ColumnName="GetReleaseUpdateNotif" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -2953,6 +3226,8 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="ParentUserId" ColumnName="ParentUserId" />
+                <ScalarProperty Name="GetReleaseUpdateNotif" ColumnName="GetReleaseUpdateNotif" />
+                <ScalarProperty Name="GetUsePaymentNotif" ColumnName="GetUsePaymentNotif" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3016,111 +3291,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="FCCPortalModel.Notifications">
-              <MappingFragment StoreEntitySet="Notifications">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="NotificationTypeId" ColumnName="NotificationTypeId" />
-                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NotificationTypes">
-            <EntityTypeMapping TypeName="FCCPortalModel.NotificationTypes">
-              <MappingFragment StoreEntitySet="NotificationTypes">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OcrApiKeys">
-            <EntityTypeMapping TypeName="FCCPortalModel.OcrApiKeys">
-              <MappingFragment StoreEntitySet="OcrApiKeys">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Key" ColumnName="Key" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TaskStatistics">
-            <EntityTypeMapping TypeName="FCCPortalModel.TaskStatistics">
-              <MappingFragment StoreEntitySet="TaskStatistics">
-                <ScalarProperty Name="PagesArea" ColumnName="PagesArea" />
-                <ScalarProperty Name="UncertainCharacters" ColumnName="UncertainCharacters" />
-                <ScalarProperty Name="TotalCharacters" ColumnName="TotalCharacters" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ZipTaskStatistics">
             <EntityTypeMapping TypeName="FCCPortalModel.ZipTaskStatistics">
               <MappingFragment StoreEntitySet="ZipTaskStatistics">
-                <ScalarProperty Name="PagesArea" ColumnName="PagesArea" />
-                <ScalarProperty Name="UncertainCharacters" ColumnName="UncertainCharacters" />
-                <ScalarProperty Name="TotalCharacters" ColumnName="TotalCharacters" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ZipTaskId" ColumnName="ZipTaskId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubscriptionPlans">
-            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlans">
-              <MappingFragment StoreEntitySet="SubscriptionPlans">
-                <ScalarProperty Name="AltCostPerPage" ColumnName="AltCostPerPage" />
-                <ScalarProperty Name="SubscriptionPlanStateId" ColumnName="SubscriptionPlanStateId" />
-                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
-                <ScalarProperty Name="PagesInInterval" ColumnName="PagesInInterval" />
-                <ScalarProperty Name="CostPerPage" ColumnName="CostPerPage" />
-                <ScalarProperty Name="Expiration" ColumnName="Expiration" />
-                <ScalarProperty Name="SubscriptionPlanTypeId" ColumnName="SubscriptionPlanTypeId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubscriptionPlanStates">
-            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanStates">
-              <MappingFragment StoreEntitySet="SubscriptionPlanStates">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubscriptionPlanTypes">
-            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanTypes">
-              <MappingFragment StoreEntitySet="SubscriptionPlanTypes">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubscriptionPlanUses">
-            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanUses">
-              <MappingFragment StoreEntitySet="SubscriptionPlanUses">
-                <ScalarProperty Name="PaidAltPagesCount" ColumnName="PaidAltPagesCount" />
-                <ScalarProperty Name="AltPagesCount" ColumnName="AltPagesCount" />
-                <ScalarProperty Name="SubscriptionPlanUseStateId" ColumnName="SubscriptionPlanUseStateId" />
-                <ScalarProperty Name="NextSubscriptionPlanId" ColumnName="NextSubscriptionPlanId" />
-                <ScalarProperty Name="DateExpiry" ColumnName="DateExpiry" />
-                <ScalarProperty Name="PagesCount" ColumnName="PagesCount" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="SubscriptionPlanId" ColumnName="SubscriptionPlanId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubscriptionPlanUseStates">
-            <EntityTypeMapping TypeName="FCCPortalModel.SubscriptionPlanUseStates">
-              <MappingFragment StoreEntitySet="SubscriptionPlanUseStates">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TotalCharacters" ColumnName="TotalCharacters" />
+                <ScalarProperty Name="UncertainCharacters" ColumnName="UncertainCharacters" />
+                <ScalarProperty Name="PagesArea" ColumnName="PagesArea" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

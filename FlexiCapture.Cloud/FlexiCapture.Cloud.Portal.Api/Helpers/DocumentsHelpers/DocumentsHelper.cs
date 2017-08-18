@@ -153,6 +153,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.DocumentsHelpers
                 //add document
                 var documentId = DBHelpers.DocumentsHelper.AddDocument(taskId, filename, contentLength, newNameGuid, uploadName, localName,
                     md5, 1);
+                
 
                 List<Documents> documents = DBHelpers.DocumentsHelper.GetDocumentsByTaskId(taskId);
                 string content = ProfileToRequestModelConverter.ConvertProfileToRequestModel(documents, profile);

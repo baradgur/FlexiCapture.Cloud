@@ -40,15 +40,15 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // POST: api/FTPSettings
-        public FTPSettingsModel Post(FTPSettingsModel model)
+        public FTPSettingsAggregateModel Post(FTPSettingsAggregateModel model)
         {
             try
             {
-                return FTPSettingsHelper.AddFTPSettings(model);
+                return FTPSettingsHelper.AddFtpSettingModel(model);
             }
             catch (Exception exception)
             {
-                return new FTPSettingsModel()
+                return new FTPSettingsAggregateModel()
                 {
                     Error = new ErrorModel()
                     {
@@ -61,15 +61,15 @@ namespace FlexiCapture.Cloud.Portal.Api.Controllers
         }
 
         // PUT: api/FTPSettings/5
-        public FTPSettingsModel Put(FTPSettingsModel model)
+        public FTPSettingsAggregateModel Put(FTPSettingsAggregateModel model)
         {
             try
             {
-                return FTPSettingsHelper.UpdateFTPSettings(model);
+                return FTPSettingsHelper.UpdateFtpSettingModel(model);
             }
             catch (Exception exception)
             {
-                return new FTPSettingsModel()
+                return new FTPSettingsAggregateModel()
                 {
                     Error = new ErrorModel()
                     {

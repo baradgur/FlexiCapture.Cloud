@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FlexiCapture.Cloud.OCR.Assist;
 using FlexiCapture.Cloud.OCR.Assist.Models;
+using FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper;
 using FlexiCapture.Cloud.ServiceAssist;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
@@ -46,7 +47,6 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 {
                     serviceAssist.UpdateTaskState(task.Id, 2);
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id,2);
-                    
                 }
                 else
                 {
@@ -81,6 +81,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 Assist serviceAssist = new Assist();
                 OcrResponseModel model = new OcrResponseModel();
                 model = JsonConvert.DeserializeObject<OcrResponseModel>(task.ResponseContent);
+                FileInfo fileInfo = null;
 
                 string jobStatus = assist.GetJobStatus(model.JobUrl);
 
@@ -111,6 +112,18 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 
                         originalName = originalName + fileExt;
                         string filePath = Path.Combine(downloadPath,newName);
+
+                        fileInfo = new FileInfo(filePath);
+
+                        var settings = SettingsTasksUnionHelper.GetSettingsByTaskId(task.Id);
+                        var outputSettings =
+                            FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers.FTPHelper.GetFtpOutputSettings(
+                                settings.Id);
+
+                        FTPHelper.PutFileOnFtpServer(fileInfo, newName, outputSettings);
+
+
+
                         string error = "";
                         assist.DownloadFile(file.Uri,filePath,ref error);
                         if (!File.Exists(filePath))
@@ -133,6 +146,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id,3);
                     // add statistics
                     serviceAssist.AddStatisctics(task.Id, model.Statistics);
+
                 }
                 else if (model.Status.Equals("Processing"))
                 {

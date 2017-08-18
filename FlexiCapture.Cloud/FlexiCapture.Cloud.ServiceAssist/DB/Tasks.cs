@@ -18,8 +18,9 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public Tasks()
         {
             this.Documents = new HashSet<Documents>();
-            this.ZipTasks = new HashSet<ZipTasks>();
+            this.FTPSettingsTasksUnion = new HashSet<FTPSettingsTasksUnion>();
             this.TaskStatistics = new HashSet<TaskStatistics>();
+            this.ZipTasks = new HashSet<ZipTasks>();
         }
     
         public int Id { get; set; }
@@ -32,12 +33,14 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documents> Documents { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FTPSettingsTasksUnion> FTPSettingsTasksUnion { get; set; }
         public virtual ServiceTypes ServiceTypes { get; set; }
         public virtual TaskStates TaskStates { get; set; }
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ZipTasks> ZipTasks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskStatistics> TaskStatistics { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ZipTasks> ZipTasks { get; set; }
     }
 }

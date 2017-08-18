@@ -19,7 +19,12 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         {
             this.EmailResponseSettings = new HashSet<EmailResponseSettings>();
             this.EmailSettings = new HashSet<EmailSettings>();
+            this.FTPConversionSettings = new HashSet<FTPConversionSettings>();
             this.FTPSettings = new HashSet<FTPSettings>();
+            this.Notifications = new HashSet<Notifications>();
+            this.Notifications1 = new HashSet<Notifications>();
+            this.OcrApiKeys = new HashSet<OcrApiKeys>();
+            this.SubscriptionPlanUses = new HashSet<SubscriptionPlanUses>();
             this.Tasks = new HashSet<Tasks>();
             this.UserLogins = new HashSet<UserLogins>();
             this.UserProfiles = new HashSet<UserProfiles>();
@@ -27,10 +32,6 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
             this.UserServiceSubscribes = new HashSet<UserServiceSubscribes>();
             this.UserSettings = new HashSet<UserSettings>();
             this.ZipTasks = new HashSet<ZipTasks>();
-            this.Notifications = new HashSet<Notifications>();
-            this.Notifications1 = new HashSet<Notifications>();
-            this.OcrApiKeys = new HashSet<OcrApiKeys>();
-            this.SubscriptionPlanUses = new HashSet<SubscriptionPlanUses>();
         }
     
         public int Id { get; set; }
@@ -48,7 +49,17 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmailSettings> EmailSettings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FTPConversionSettings> FTPConversionSettings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FTPSettings> FTPSettings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notifications> Notifications { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notifications> Notifications1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OcrApiKeys> OcrApiKeys { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubscriptionPlanUses> SubscriptionPlanUses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tasks> Tasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -64,13 +75,5 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual ICollection<UserSettings> UserSettings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ZipTasks> ZipTasks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Notifications> Notifications { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Notifications> Notifications1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OcrApiKeys> OcrApiKeys { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubscriptionPlanUses> SubscriptionPlanUses { get; set; }
     }
 }

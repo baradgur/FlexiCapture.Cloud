@@ -18,6 +18,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DB
         public int UserId { get; set; }
         public string Key { get; set; }
         public bool IsActive { get; set; }
+        public System.DateTime CreationDate { get; set; }
+        public string AppName { get; set; }
     
         public virtual Users Users { get; set; }
     }

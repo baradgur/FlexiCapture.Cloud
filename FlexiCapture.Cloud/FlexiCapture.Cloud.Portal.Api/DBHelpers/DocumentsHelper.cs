@@ -38,7 +38,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         Path = path,
                         OriginalFileName = filename,
                         TaskId = taskId,
-                        DocumentCategoryId = categoryId
+                        DocumentCategoryId = categoryId,
+                        IsShown = true
                     };
                     db.Documents.Add(document);
                     db.SaveChanges();
@@ -96,7 +97,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         .Include(x => x.DocumentTypes)
                         .Include(x => x.Tasks)
                         .Include(x => x.Tasks)
-                        .Where(x => userIds.Contains(x.Tasks.UserId) && x.DocumentCategoryId == 1).ToList();
+                        .Where(x => userIds.Contains(x.Tasks.UserId) && x.DocumentCategoryId == 1 && x.IsShown).ToList();
 
                     foreach (var document in documents)
                     {

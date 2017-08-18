@@ -1,9 +1,38 @@
-﻿<div ng-controller="ftpSettingsController">
+﻿<div>
 
-    <div class="container">
+    <div class="panel panel-default" ng-controller="ftpConversionSettingsController">
+        <div class="panel-heading">FTP Conversion Settings</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="form-horizontal" name="ftpConvForm">
+                        <div class="checkbox">
+                            <label><input ng-model="ftpConversionSetting.AddProcessed" name="addProcessed" type="checkbox"> Add processed documents to Conversion Library</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input ng-model="ftpConversionSetting.ReturnResults" name="returnResults" type="checkbox"> Return conversion results back to FTP (FTP Output and FTP Exceptions locations must be specified)</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input ng-disabled="!ftpConversionSetting.ReturnResults" ng-model="ftpConversionSetting.MirrorInput" name="mirrorInput" type="checkbox">  Mirror Input location sub-folder structure in Output/Exceptions locations (otherwise only root location is processed</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input ng-model="ftpConversionSetting.MoveProcessed" name="moveProcessed" type="checkbox"> Move processed images to “DCC_Processed” sub-folder on FTP location (otherwise processed images are deleted from FTP)</label>
+                        </div>
+                        <button type="submit" style="margin: 20px;" ng-click="updateSetting()" class="btn btn-default"><span ng-show="compareFtpConversionSettings();">Saved</span><span ng-show="!compareFtpConversionSettings();">Save</span></button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="container" ng-controller="ftpSettingsController">
+
+
 
         <div class="row" ng-show="!loading">
-            <div id="toolbar"  ng-show="userData.UserData.UserRoleId == 1 || userData.UserData.UserRoleId == 2">
+            <div id="toolbar" ng-show="userData.UserData.UserRoleId == 1 || userData.UserData.UserRoleId == 2">
                 <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add New Settings Item" data-placement="bottom">
 
                     <span class="glyphicon glyphicon-plus"></span>
@@ -26,11 +55,29 @@
                             <th data-field="settingUserName" data-sortable="true">User Name</th>
                             <th data-field="settingPath" data-sortable="true">Path</th>
                             <th data-field="settingUseSSL" data-sortable="true">Use SSL</th>
+                            <th data-field="settingCustomOutExc" data-sortable="true">Custom Out/Exc.</th>
                             <th data-field="settingDeleteFile" data-sortable="true">Delete File</th>
-                            <th data-field="action" ng-show="userData.UserData.UserRoleId == 1||userData.UserData.UserRoleId == 2" data-formatter="actionFormatterFTPSetting" data-events="actionEventsFTPSetting" data-width="5%" style="text-align:center;"></th>
+                            <th data-field="action" ng-show="userData.UserData.UserRoleId == 1||userData.UserData.UserRoleId == 2" data-formatter="actionFormatterFTPSetting" data-events="actionEventsFTPSetting" data-width="5%" style="text-align: center;"></th>
                         </tr>
                     </thead>
                 </table>
             </div>
         </div>
-    </div></div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Instructions</div>
+        <div class="panel-body">
+            <div>This service can monitor FTP location for new images and PDFs and convert them automatically to text results.</div>
+            <br />
+            <div>Text files and Searchable PDF output files can be placed into the Conversion Library and/or returned back to FTP location.</div>
+            <br />
+            <div>The service will use OCR settings and produce export file formats indicated in the default Conversion Profile.</div>
+            <br />
+            <div>
+                Supported input file formats are PDF, JPG, TIF, BMP, PCX, DCX, PNG.
+                Please use settings below to configure your FTP processing preferences.
+            </div>
+        </div>
+    </div>
+</div>

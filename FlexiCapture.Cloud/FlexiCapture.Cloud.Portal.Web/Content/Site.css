@@ -753,3 +753,23 @@ input:checked + .slider:before {
 .highlighted-service-menu {
     background-color: #eeeeee;
 }
+
+#table tr {
+    height: 20px;
+    /*min-width: 0px;*/
+}
+
+#ftpSettingstable tr {
+    height: 20px;
+    /*min-width: 0px;*/
+}
+
+td p {
+    margin-bottom: 0px;
+}
+
+td .btn {
+    height: 22px;
+    padding-top: 1px;
+}
+

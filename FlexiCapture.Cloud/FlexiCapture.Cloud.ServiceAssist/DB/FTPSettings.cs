@@ -14,6 +14,13 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
     
     public partial class FTPSettings
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public FTPSettings()
+        {
+            this.FTPSettings1 = new HashSet<FTPSettings>();
+            this.FTPSettingsTasksUnion = new HashSet<FTPSettingsTasksUnion>();
+        }
+    
         public int Id { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
@@ -23,7 +30,16 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public string Path { get; set; }
         public bool UseSSL { get; set; }
         public Nullable<bool> DeleteFile { get; set; }
+        public int FtpServiceType { get; set; }
+        public Nullable<int> ParentId { get; set; }
+        public bool Enabled { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FTPSettings> FTPSettings1 { get; set; }
+        public virtual FTPSettings FTPSettings2 { get; set; }
+        public virtual FTPSettingsTypes FTPSettingsTypes { get; set; }
         public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FTPSettingsTasksUnion> FTPSettingsTasksUnion { get; set; }
     }
 }

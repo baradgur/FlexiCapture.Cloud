@@ -47,7 +47,7 @@
                 $scope.responseSettingToCompare = angular.copy($scope.responseSetting);
                 showNotify("Успех", "Setting were successfully updated", "success");
             } else {
-                showNotify("Успех", "Problems while updating settings", "danger");
+                showNotify("Ошибка", "Problems while updating settings", "danger");
             }
         });
     }

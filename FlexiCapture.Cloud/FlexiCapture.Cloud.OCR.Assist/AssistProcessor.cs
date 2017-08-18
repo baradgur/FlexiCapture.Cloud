@@ -17,7 +17,7 @@ namespace FlexiCapture.Cloud.OCR.Assist
         {
             try
             {
-                return PostHelper.MakePostRequest(url,json,ref error);
+                return PostHelper. MakePostRequest(url,json,ref error);
             }
             catch (Exception exception)
             {

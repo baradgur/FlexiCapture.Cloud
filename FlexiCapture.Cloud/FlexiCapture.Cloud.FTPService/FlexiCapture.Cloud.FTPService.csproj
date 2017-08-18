@@ -59,6 +59,7 @@
     <Compile Include="Helpers\ProcessorHelper.cs" />
     <Compile Include="Helpers\TasksHelpers\FTPHelper.cs" />
     <Compile Include="Helpers\TasksHelpers\TaskHelper.cs" />
+    <Compile Include="Models\FTPConversionSettingModel.cs" />
     <Compile Include="Models\FTPSetting.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

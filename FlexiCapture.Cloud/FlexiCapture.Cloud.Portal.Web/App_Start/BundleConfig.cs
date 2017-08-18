@@ -107,6 +107,7 @@ namespace FlexiCapture.Cloud.Portal.Web
                   "~/Scripts/app/Controllers/ftpLibraryController.js",
                   "~/Scripts/app/Controllers/ftpProfileController.js",
                 "~/Scripts/app/Controllers/ftpSettingsController.js",
+                "~/Scripts/app/Controllers/ftpConversionSettingsController.js",
                 "~/Scripts/app/Controllers/ftpSettingManageController.js",
 
                   "~/Scripts/app/Controllers/emailLibraryController.js",

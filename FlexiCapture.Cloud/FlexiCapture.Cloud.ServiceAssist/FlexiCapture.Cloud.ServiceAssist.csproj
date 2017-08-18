@@ -65,6 +65,7 @@
     <Compile Include="DBHelpers\ManageUserProfileHelper.cs" />
     <Compile Include="DBHelpers\EmailSettingsHelper.cs" />
     <Compile Include="DBHelpers\SettingsHelper.cs" />
+    <Compile Include="DBHelpers\SettingsTasksUnionHelper.cs" />
     <Compile Include="DBHelpers\SubscriptionPlansHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
     <Compile Include="DB\AnalysisModeCatalog.cs">
@@ -106,7 +107,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FCCPortalModel2.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\FTPConversionSettings.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\FTPSettings.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FTPSettingsTasksUnion.cs">
+      <DependentUpon>FCCPortalModel2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FTPSettingsTypes.cs">
       <DependentUpon>FCCPortalModel2.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\LanguagesCatalog.cs">

@@ -7,9 +7,16 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using FlexiCapture.Cloud.FTPService.Models;
+//using FlexiCapture.Cloud.FTPService.Models;
 using FlexiCapture.Cloud.OCR.Assist.Models;
+using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.DBHelpers;
+using FlexiCapture.Cloud.Portal.Api.Helpers.FtpConversionSettingsHelpers;
+using FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper;
+using FlexiCapture.Cloud.Portal.Api.Models.SettingsModels;
 using FlexiCapture.Cloud.ServiceAssist.DB;
+using DocumentTypes = FlexiCapture.Cloud.ServiceAssist.DB.DocumentTypes;
+using UserServiceSubscribes = FlexiCapture.Cloud.ServiceAssist.DB.UserServiceSubscribes;
 
 namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 {
@@ -18,7 +25,13 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
         private const int FtpProfileId = 3;
         private const int FtpSProfileActiveState = 1;
         private static List<DocumentTypes> AcceptableTypes;
-        public static List<FTPSetting> GetFtpSettings()
+
+
+        /// <summary>
+        /// Получаем список ФТП настроек Input
+        /// </summary>
+        /// <returns></returns>
+        public static List<FTPSetting> GetFtpInputSettings()
         {
             using (var db = new FCCPortalEntities2())
             {
@@ -26,10 +39,10 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 {
                     List<FTPSetting> settings = new List<FTPSetting>();
 
-                    db.FTPSettings.Select(x => x).ToList().ForEach(x =>
+                    db.FTPSettings.Where(x => x.FtpServiceType == 1).ToList().ForEach(x =>
                     {
                         settings.Add(new FTPSetting(x.Id, x.UserId, x.UserName, x.Host, x.Port ?? 0, x.Password, x.Path,
-                            x.UseSSL, (bool)x.DeleteFile));
+                            x.UseSSL, (bool)x.DeleteFile, x.Enabled, x.FtpServiceType));
                     });
 
                     return settings;
@@ -45,14 +58,162 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             }
         }
 
+
+        /// <summary>
+        /// Получаем Аутпут настройку по айдишнику инпут настройки
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
+        public static FTPSetting GetFtpOutputSettings(int parentId)
+        {
+            using (var db = new FCCPortalEntities())
+            {
+                try
+                {
+                    List<FTPSetting> settings = new List<FTPSetting>();
+
+                    var setting = db.FTPSettings.SingleOrDefault(x => 
+                    x.ParentId.Value == parentId && x.FtpServiceType == 2);
+                    return new FTPSetting(setting.Id, setting.UserId, setting.UserName, 
+                        setting.Host, setting.Port ?? 0, setting.Password, setting.Path,
+                            setting.UseSSL, (bool)setting.DeleteFile, setting.Enabled, 
+                            setting.FtpServiceType);
+                }
+                catch (Exception exception)
+                {
+                    string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                    string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                    LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                       innerException);
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Получаем Эксепшон настройку по айдишнику инпут настройки
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
+        public static FTPSetting GetFtpExceptionSettings(int parentId)
+        {
+            using (var db = new FCCPortalEntities())
+            {
+                try
+                {
+                    List<FTPSetting> settings = new List<FTPSetting>();
+
+                    var setting = db.FTPSettings.SingleOrDefault(x =>
+                    x.ParentId.Value == parentId && x.FtpServiceType == 3);
+                    return new FTPSetting(setting.Id, setting.UserId, setting.UserName,
+                        setting.Host, setting.Port ?? 0, setting.Password, setting.Path,
+                            setting.UseSSL, (bool)setting.DeleteFile, setting.Enabled,
+                            setting.FtpServiceType);
+                }
+                catch (Exception exception)
+                {
+                    string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                    string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                    LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                       innerException);
+                    return null;
+                }
+            }
+        }
+
+        public static string PutFileOnFtpServer(FileInfo file, string newName, FlexiCapture.Cloud.FTPService.Models.FTPSetting setting)
+        {
+            try
+            {
+                // CONVERSION SETING MODEL!!!
+                FlexiCapture.Cloud.Portal.Api.Models.SettingsModels.FTPConversionSettingModel conversionSetting =
+                 FlexiCapture.Cloud.Portal.Api.
+                    Helpers.FtpConversionSettingsHelpers.
+                    FtpConversionSettingsHelper.GetSettingsByUserId(setting.UserId);
+
+                
+                string bbaseUri = "ftp://" + setting.Host;
+                string uri = Path.Combine(setting.Path, newName);
+                Uri baseUri = new Uri(bbaseUri);
+                Uri serverUri = new Uri(baseUri, uri);
+                if (serverUri.Scheme != Uri.UriSchemeFtp)
+                {
+                    return "";
+                }
+                FtpWebRequest ftpClient;
+                ftpClient = (FtpWebRequest)FtpWebRequest.Create(serverUri.AbsoluteUri);
+                ftpClient.Credentials = new System.Net.NetworkCredential(setting.UserName, setting.Password);
+                ftpClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
+                ftpClient.UseBinary = true;
+                ftpClient.KeepAlive = true;
+               
+                ftpClient.ContentLength = file.Length;
+                byte[] buffer = new byte[4097];
+                int bytes = 0;
+                int total_bytes = (int)file.Length;
+                System.IO.FileStream fs = file.OpenRead();
+                System.IO.Stream rs = ftpClient.GetRequestStream();
+                while (total_bytes > 0)
+                {
+                    bytes = fs.Read(buffer, 0, buffer.Length);
+                    rs.Write(buffer, 0, bytes);
+                    total_bytes = total_bytes - bytes;
+                }
+                //fs.Flush();
+                fs.Close();
+                rs.Close();
+                FtpWebResponse uploadResponse = (FtpWebResponse)ftpClient.GetResponse();
+                var value = uploadResponse.StatusDescription;
+                uploadResponse.Close();
+
+                return value;
+
+            }
+            catch (Exception ex)
+            {
+                string innerException = ex.InnerException == null ? "" : ex.InnerException.Message;
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + ex.Message + " Innner Exception: " +
+                                   innerException);
+                return "";
+            }
+        }
+
+        public static FTPConversionSettingModel GetFtpConersionSettings(int userId)
+        {
+            using (var db = new FCCPortalEntities2())
+            {
+                try
+                {
+
+                     var dbSetting = db.FTPConversionSettings.SingleOrDefault(x => x.UserId == userId);
+
+                    return new FTPConversionSettingModel(dbSetting.Id, 
+                        dbSetting.AddProcessed,
+                        dbSetting.ReturnResults, 
+                        dbSetting.MirrorInput, 
+                        dbSetting.MoveProcessed,
+                        dbSetting.UserId);
+                }
+                catch (Exception exception)
+                {
+                    string innerException = exception.InnerException == null ? "" : exception.InnerException.Message;
+                    string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                    LogHelper.AddLog("Error in method: " + methodName + "; Exception: " + exception.Message + " Innner Exception: " +
+                                       innerException);
+                    return null;
+                }
+            }
+        }
+
         public static FtpWebResponse TryLoginToFtp(string url, string userName,
-            string userPassword, string localPath, int userId)
+            string userPassword, string localPath, int userId, int serviceType)
         {
             try
             {
                 FtpWebResponse response = null;
 
-                if (IsPrivilegedEnough(userId))
+                if (IsPrivilegedEnough(userId) && serviceType == 1)
                 {
                     Uri uriResult;
                     bool result = Uri.TryCreate("ftp://" + url + localPath,
@@ -67,6 +228,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 
                     request.Credentials = new NetworkCredential(userName, userPassword);
                     response = (FtpWebResponse)request.GetResponse();
+                    
                 }
 
                 //response.ResponseUri

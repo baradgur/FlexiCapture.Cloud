@@ -33,15 +33,27 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual DbSet<EmailResponseSettings> EmailResponseSettings { get; set; }
         public virtual DbSet<EmailSettings> EmailSettings { get; set; }
         public virtual DbSet<ExportFormatsCatalog> ExportFormatsCatalog { get; set; }
+        public virtual DbSet<FTPConversionSettings> FTPConversionSettings { get; set; }
         public virtual DbSet<FTPSettings> FTPSettings { get; set; }
+        public virtual DbSet<FTPSettingsTasksUnion> FTPSettingsTasksUnion { get; set; }
+        public virtual DbSet<FTPSettingsTypes> FTPSettingsTypes { get; set; }
         public virtual DbSet<LanguagesCatalog> LanguagesCatalog { get; set; }
         public virtual DbSet<Log> Log { get; set; }
+        public virtual DbSet<Notifications> Notifications { get; set; }
+        public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
+        public virtual DbSet<OcrApiKeys> OcrApiKeys { get; set; }
         public virtual DbSet<PrintTypeCatalog> PrintTypeCatalog { get; set; }
         public virtual DbSet<RotationTypeCatalog> RotationTypeCatalog { get; set; }
         public virtual DbSet<ServiceTypes> ServiceTypes { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
+        public virtual DbSet<SubscriptionPlans> SubscriptionPlans { get; set; }
+        public virtual DbSet<SubscriptionPlanStates> SubscriptionPlanStates { get; set; }
+        public virtual DbSet<SubscriptionPlanTypes> SubscriptionPlanTypes { get; set; }
+        public virtual DbSet<SubscriptionPlanUses> SubscriptionPlanUses { get; set; }
+        public virtual DbSet<SubscriptionPlanUseStates> SubscriptionPlanUseStates { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<TaskStates> TaskStates { get; set; }
+        public virtual DbSet<TaskStatistics> TaskStatistics { get; set; }
         public virtual DbSet<UserConfirmationEmails> UserConfirmationEmails { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserLoginStates> UserLoginStates { get; set; }
@@ -57,15 +69,6 @@ namespace FlexiCapture.Cloud.ServiceAssist.DB
         public virtual DbSet<UserSettings> UserSettings { get; set; }
         public virtual DbSet<ZipDocuments> ZipDocuments { get; set; }
         public virtual DbSet<ZipTasks> ZipTasks { get; set; }
-        public virtual DbSet<Notifications> Notifications { get; set; }
-        public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
-        public virtual DbSet<OcrApiKeys> OcrApiKeys { get; set; }
-        public virtual DbSet<TaskStatistics> TaskStatistics { get; set; }
         public virtual DbSet<ZipTaskStatistics> ZipTaskStatistics { get; set; }
-        public virtual DbSet<SubscriptionPlans> SubscriptionPlans { get; set; }
-        public virtual DbSet<SubscriptionPlanStates> SubscriptionPlanStates { get; set; }
-        public virtual DbSet<SubscriptionPlanTypes> SubscriptionPlanTypes { get; set; }
-        public virtual DbSet<SubscriptionPlanUses> SubscriptionPlanUses { get; set; }
-        public virtual DbSet<SubscriptionPlanUseStates> SubscriptionPlanUseStates { get; set; }
     }
 }

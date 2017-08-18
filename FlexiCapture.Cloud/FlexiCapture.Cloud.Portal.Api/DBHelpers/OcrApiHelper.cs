@@ -103,6 +103,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             UserId = dbKey.UserId,
                             Key = dbKey.Key,
                             IsActive = dbKey.IsActive,
+                            CreationDate = dbKey.CreationDate.ToString(),
+                            AppName = dbKey.AppName
                         };
                         models.Add(model);
                     }
@@ -129,7 +131,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     {
                         UserId = model.UserId,
                         Key = Guid.NewGuid().ToString().ToUpper(),
-                        IsActive = true
+                        IsActive = true,
+                        CreationDate = DateTime.Now,
+                        AppName = model.AppName
                     };
 
                     string guid = InsertGuid(dbKey.Key);
@@ -142,6 +146,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         model.Id = dbKey.Id;
                         model.Key = dbKey.Key;
                         model.IsActive = dbKey.IsActive;
+                        model.CreationDate = dbKey.CreationDate.ToString();
+                        model.AppName = dbKey.AppName;
+
                         return model;
                     }
                     else
@@ -182,6 +189,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                             model.Id = dbKey.Id;
                             model.Key = dbKey.Key;
                             model.IsActive = dbKey.IsActive;
+                            model.CreationDate = dbKey.CreationDate.ToString();
+                            model.AppName = dbKey.AppName;
+
                             return model;
                         }
                     }

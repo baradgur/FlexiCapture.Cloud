@@ -163,6 +163,8 @@
     <Compile Include="Controllers\DownloadFileController.cs" />
     <Compile Include="Controllers\EmailResponseSettingsController.cs" />
     <Compile Include="Controllers\EmailSettingsController.cs" />
+    <Compile Include="Controllers\FTPAccessTestController.cs" />
+    <Compile Include="Controllers\FTPConversionSettingsController.cs" />
     <Compile Include="Controllers\FTPSettingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
@@ -235,7 +237,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\FTPConversionSettings.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\FTPSettings.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FTPSettingsTypes.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\LanguagesCatalog.cs">
@@ -383,6 +391,8 @@
     <Compile Include="Helpers\EmailHelpers\EmailHelper.cs" />
     <Compile Include="Helpers\EmailHelpers\EmailResponseSettingsHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
+    <Compile Include="Helpers\FTPAccessTestHelpers\FTPAccessTestHelper.cs" />
+    <Compile Include="Helpers\FtpConversionSettingsHelpers\FtpConversionSettingsHelper.cs" />
     <Compile Include="Helpers\LoginHelpers\LoginHelper.cs" />
     <Compile Include="Helpers\ManageUserHelpers\ManageUserHelper.cs" />
     <Compile Include="Helpers\ManageUserHelpers\ManageUserProfileHelper.cs" />
@@ -413,6 +423,9 @@
     <Compile Include="Models\OcrApiKeyModels\OcrApiKeyModel.cs" />
     <Compile Include="Models\SettingsModels\EmailResponseSettingsModel.cs" />
     <Compile Include="Models\SettingsModels\EmailSettingsModel.cs" />
+    <Compile Include="Models\SettingsModels\FTPConnectionCheckResultModel.cs" />
+    <Compile Include="Models\SettingsModels\FTPConversionSettingModel.cs" />
+    <Compile Include="Models\SettingsModels\FTPSettingsAggregateModel.cs" />
     <Compile Include="Models\SettingsModels\FTPSettingsModel.cs" />
     <Compile Include="Models\SettingsModels\EmailSettingsViewModel.cs" />
     <Compile Include="Models\SettingsModels\FTPSettingsViewModel.cs" />
@@ -482,19 +495,19 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="DB\FCCPortalModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FCCPortalModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DB\FCCPortalModel.edmx.diagram">
-      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="DB_OcrApi\OcrApiModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OcrApiModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="DB_OcrApi\OcrApiModel.edmx.diagram">
       <DependentUpon>OcrApiModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="DB\FCCPortalModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FCCPortalModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DB\FCCPortalModel.edmx.diagram">
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

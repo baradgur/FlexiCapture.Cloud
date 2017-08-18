@@ -31,11 +31,17 @@ function actionFormatterFTPSetting(value, row, index) {
             var singleSetting = {};
             var settingId = row.settingId;
             for (var i = 0; i < $scope.settings.length; i++) {
-                if ($scope.settings[i].Id == settingId) {
+                if ($scope.settings[i].InputFtpSettingsModel.Id == settingId) {
                     singleSetting = angular.copy($scope.settings[i]);
                 }
             }
             $scope.gotoAddNewSetting(singleSetting);
+        }
+
+        $scope.saveButtonAvailable = false;
+
+        $scope.testFtpAccess = function () {
+            ftpSettingsHttpService.testFtpAccess($http, $scope, $state, data, $$ApiUrl + "/FTPAccessTest", usSpinnerService);
         }
 
         //add new user btn event

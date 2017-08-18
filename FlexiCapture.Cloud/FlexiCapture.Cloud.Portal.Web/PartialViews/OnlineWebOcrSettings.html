@@ -1,5 +1,17 @@
 ﻿<div ng-controller="onlineWebOcrSettingsController">
 
+    <div class="panel panel-info">
+        <div class="panel-heading">Instructions</div>
+        <div class="panel-body">
+            <div>Online OCR API Conversion Service is designed to automatically process images (PDF, JPG, TIF, BMP, PCX, DCX, PNG) and PDFs into text-based results (TXT, RTF, DOC, XLS, etc.) and Searchable PDFs via REST API.</div>
+            <br />
+
+            <div>
+                <a target="blank" href="https://docs.google.com/document/d/1ZC88rQQEPxDxGp4FWdPHcUuGQd6BX69gzkpR5m9YKKQ/edit?usp=sharing">Online Documentation for Developers</a>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
 
         <div class="row" ng-show="!loading">
@@ -20,8 +32,11 @@
                             <th data-field="viewId" data-sortable="true">Id</th>
                             <th data-field="keyKey" data-sortable="true">Key</th>
                             <th data-field="keyState" data-sortable="true">State</th>
-                            <th data-field="update" data-formatter="actionFormatterKey" data-events="actionEventsKey" data-width="5%" style="text-align:center;"></th>
-                            <th data-field="delete" data-formatter="actionFormatterDeleteKey" data-events="actionEventsKey" data-width="5%" style="text-align:center;"></th>
+                            <th data-field="isActive" data-sortable="true">Is Active</th>
+                            <th data-field="creationDate" data-sortable="true">Creation Date</th>
+                            <th data-field="appName" data-sortable="true">App Name</th>
+                            <th data-field="update" data-switchable="false" data-formatter="actionFormatterKey" data-events="actionEventsKey" data-width="5%" style="text-align: center;"></th>
+                            <th data-field="delete" data-switchable="false" data-formatter="actionFormatterDeleteKey" data-events="actionEventsKey" data-width="5%" style="text-align: center;"></th>
                         </tr>
                     </thead>
                 </table>

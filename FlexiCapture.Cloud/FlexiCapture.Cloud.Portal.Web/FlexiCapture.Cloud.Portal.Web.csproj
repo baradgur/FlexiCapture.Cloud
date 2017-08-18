@@ -265,6 +265,7 @@
     <Content Include="Scripts\app\Controllers\batchLibraryController.js" />
     <Content Include="Scripts\app\Controllers\batchProfileController.js" />
     <Content Include="Scripts\app\Controllers\batchSettingsController.js" />
+    <Content Include="Scripts\app\Controllers\ftpConversionSettingsController.js" />
     <Content Include="Scripts\app\Controllers\logController.js" />
     <Content Include="Scripts\app\Controllers\communicationController.js" />
     <Content Include="Scripts\app\Controllers\dashBoardController.js" />

@@ -49,6 +49,21 @@ fccApp.controller("emailResponseSettingsController", ["$scope", "$http", "$locat
         if (!$scope.responseSetting.CCResponse) {
             $scope.responseSetting.Addresses = "";
         }
+
+        var emailRegex = /^[^@^;\s]+@[^@\s]+\.[^@^;\s]+$/g;
+
+        var emailAddressesToValidate = $scope.responseSetting.Addresses.split(';');
+        var ifPassed = false;
+
+        for (var i in emailAddressesToValidate) {
+            ifPassed = emailRegex.test(emailAddressesToValidate[i]);
+        }
+
+        if (($scope.responseSetting.CCResponse && $scope.responseSetting.Addresses == "")||!ifPassed) {
+            showNotify("Ошибка", "You need at least one e-mail address!", "danger");
+            return;
+        }
+
         emailSettingsHttpService.addResponseEmailSettings($http, $scope, $state, data, url, usSpinnerService);
         $scope.mustChooseRespSetting = false;
 

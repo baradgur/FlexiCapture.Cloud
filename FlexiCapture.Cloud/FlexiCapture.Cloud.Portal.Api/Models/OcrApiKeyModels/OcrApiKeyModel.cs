@@ -11,5 +11,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.OcrApiKeyModels
         public int UserId { get; set; }
         public string Key { get; set; }
         public bool IsActive { get; set; }
+        public string CreationDate { get; set; }
+        public string AppName { get; set; }
     }
 }

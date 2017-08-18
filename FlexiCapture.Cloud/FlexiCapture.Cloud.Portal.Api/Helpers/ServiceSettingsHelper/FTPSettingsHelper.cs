@@ -11,6 +11,13 @@ using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
 
 namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
 {
+    public enum FtpSettingsTypes
+    {
+        InputType = 1,
+        OutputType = 2,
+        ExceptionsType = 3
+    }
+
     public class FTPSettingsHelper
     {
         /// <summary>
@@ -23,40 +30,67 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
             try
             {
                 FTPSettingsViewModel model = new FTPSettingsViewModel();
-                model.Settings = new List<FTPSettingsModel>();
+                model.Settings = new List<FTPSettingsAggregateModel>();
 
                 using (var db = new FCCPortalEntities())
                 {
-                    var settings = (from s in db.FTPSettings
-                                    where s.UserId == userId
-                                    select s).ToList();
+                    // возьмем из базы все-все настройки для дальнейшего 
+                    // разбиения на тройки
+                    var settingsAll = (from s in db.FTPSettings
+                                       where s.UserId == userId || (s.UserId == userId &&
+                                       s.ParentId == userId)
+                                       select s).ToList();
 
-                    //if (settings.Count == 0)
-                    //{
-                    //    model.Error = new ErrorModel()
-                    //    {
-                    //        Name = "No settings found",
-                    //        ShortDescription = "No settings found in the database.",
-                    //        FullDescription = "No settings found in the database. Please add settings to use FTP File Conversion Service."
-                    //    };
-                    //    return model;
-                    //}
+                    // вычленим основные настройки (input settings)
+                    var inputSettings = (from s in settingsAll
+                                         where s.ParentId == null
+                                         select s).ToList();
 
-                    foreach (var setting in settings)
+                    // вычленим тройку настроек
+                    foreach (var settingItem in inputSettings)
                     {
-                        var settingModel = new FTPSettingsModel()
+                        FTPSettingsAggregateModel aggregateModel = new FTPSettingsAggregateModel();
+
+                        var settingsTriple = (from s in settingsAll
+                            where s.Id == settingItem.Id ||
+                                  s.ParentId == settingItem.Id
+                            select s).ToList();
+
+                        foreach (var settingTripleItem in settingsTriple)
                         {
-                            Id = setting.Id,
-                            UserId = setting.UserId,
-                            UserName = setting.UserName,
-                            Password = PasswordHelper.Crypt.DecryptString(setting.Password),
-                            Path = setting.Path,
-                            Port = setting.Port??21,
-                            Host = setting.Host,
-                            UseSSL = setting.UseSSL,
-                            DeleteFile = setting.DeleteFile == null ? false : (bool)setting.DeleteFile
-                        };
-                        model.Settings.Add(settingModel);
+                            FTPSettingsModel settingsModel = new FTPSettingsModel()
+                            {
+                                Id = settingTripleItem.Id,
+                                DeleteFile = settingTripleItem.DeleteFile ?? false,
+                                Host = settingTripleItem.Host,
+                                Password = PasswordHelper.Crypt.DecryptString(settingTripleItem.Password),
+                                Path = settingTripleItem.Path,
+                                Port = settingTripleItem.Port ?? 0,
+                                UserId = settingTripleItem.UserId,
+                                UserName = settingTripleItem.UserName,
+                                UseSSL = settingTripleItem.UseSSL,
+                                Enabled = settingTripleItem.Enabled
+                            };
+
+                            switch (settingTripleItem.FtpServiceType)
+                            {
+                                case 1:
+                                    aggregateModel.InputFtpSettingsModel = settingsModel;
+                                    break;
+                                case 2:
+                                    aggregateModel.OutputFtpSettingsModel = settingsModel;
+                                    break;
+                                case 3:
+                                    aggregateModel.ExceptionFtpSettingsModel = settingsModel;
+                                    break;
+
+                            }
+
+
+
+                        }
+
+                        model.Settings.Add(aggregateModel);
                     }
                     return model;
                 }
@@ -71,15 +105,28 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
             }
         }
 
-        public static FTPSettingsModel UpdateFTPSettings(FTPSettingsModel model)
+        public static FTPSettingsAggregateModel UpdateFtpSettingModel(FTPSettingsAggregateModel model)
+        {
+            model.InputFtpSettingsModel = UpdateFTPSettings(model.InputFtpSettingsModel,
+                FtpSettingsTypes.InputType);
+            model.OutputFtpSettingsModel = UpdateFTPSettings(model.OutputFtpSettingsModel,
+                FtpSettingsTypes.OutputType);
+            model.ExceptionFtpSettingsModel = UpdateFTPSettings(model.ExceptionFtpSettingsModel,
+                FtpSettingsTypes.ExceptionsType);
+
+            return model;
+
+        }
+
+        public static FTPSettingsModel UpdateFTPSettings(FTPSettingsModel model, FtpSettingsTypes type)
         {
             try
             {
                 using (var db = new FCCPortalEntities())
                 {
                     var setting = (from s in db.FTPSettings
-                        where s.Id == model.Id
-                        select s).FirstOrDefault();
+                                   where s.Id == model.Id
+                                   select s).FirstOrDefault();
 
                     if (setting == null)
                     {
@@ -94,6 +141,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                     setting.Host = model.Host;
                     setting.UseSSL = model.UseSSL;
                     setting.DeleteFile = model.DeleteFile;
+                    setting.Enabled = model.Enabled;
 
                     db.SaveChanges();
 
@@ -110,7 +158,20 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
             }
         }
 
-        public static FTPSettingsModel AddFTPSettings(FTPSettingsModel model)
+        public static FTPSettingsAggregateModel AddFtpSettingModel(FTPSettingsAggregateModel model)
+        {
+            model.InputFtpSettingsModel = AddFTPSettings(model.InputFtpSettingsModel,
+                FtpSettingsTypes.InputType);
+            model.OutputFtpSettingsModel = AddFTPSettings(model.OutputFtpSettingsModel,
+                FtpSettingsTypes.OutputType);
+            model.ExceptionFtpSettingsModel = AddFTPSettings(model.ExceptionFtpSettingsModel,
+                FtpSettingsTypes.ExceptionsType);
+
+            return model;
+
+        }
+
+        public static FTPSettingsModel AddFTPSettings(FTPSettingsModel model, FtpSettingsTypes type)
         {
             try
             {
@@ -125,6 +186,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                         Port = model.Port,
                         Host = model.Host,
                         UseSSL = model.UseSSL,
+                        Enabled = model.Enabled,
                         DeleteFile = (bool)model.DeleteFile
                     };
 
@@ -151,8 +213,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                 using (var db = new FCCPortalEntities())
                 {
                     var setting = (from s in db.FTPSettings
-                        where s.Id == id
-                        select s).FirstOrDefault();
+                                   where s.Id == id
+                                   select s).FirstOrDefault();
 
                     if (setting == null)
                     {
@@ -168,7 +230,8 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                         Port = setting.Port ?? 21,
                         Host = setting.Host,
                         UseSSL = setting.UseSSL,
-                        DeleteFile = (bool)setting.DeleteFile
+                        DeleteFile = (bool)setting.DeleteFile,
+                        Enabled = setting.Enabled
                     };
                     return model;
                 }
@@ -182,6 +245,24 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper
                 throw exception;
             }
 
+        }
+
+        /// <summary>
+        /// Через этот ни разу не костыльный метод проверяем 
+        /// наличие Аутпут/Эксепшон настроек 
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public static bool CheckOutputExceptionSettings(int parentId)
+        {
+            using (var db = new FCCPortalEntities())
+            {
+                var q = (from st in db.FTPSettings
+                    where st.ParentId == parentId
+                    select st).ToList().Count();
+
+                return q == 2;
+            }
         }
     }
 }

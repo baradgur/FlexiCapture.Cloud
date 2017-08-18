@@ -9,6 +9,7 @@ using FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers;
 using FlexiCapture.Cloud.FTPService.Models;
 using FlexiCapture.Cloud.OCR.Assist.Models;
 using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
+using FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper;
 using FlexiCapture.Cloud.ServiceAssist;
 using FlexiCapture.Cloud.ServiceAssist.DB;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
@@ -58,70 +59,90 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                 List<string> extensions = assist.GetToAvailableFileExtensions();
                 
                 List<FtpWebResponse> responses = new List<FtpWebResponse>();
-                
-                FTPHelper.GetFtpSettings().ForEach(x =>
+
+                string pathToDownload = assist.GetSettingValueByName("MainPath");
+                string resultFolder = assist.GetSettingValueByName("ResultFolder");
+
+                FTPHelper.GetFtpInputSettings().ForEach(x =>
                 {
-
-                    var response = FTPHelper.TryLoginToFtp(x.Host, x.UserName,
-                        PasswordHelper.Crypt.DecryptString(x.Password), x.Path, x.UserId);
-
-                    List<Tuple<string, string>> addedFilesInResponse;
-
-                    if (response != null)
+                    if (x.Enabled )
                     {
-                        assist.UserProfile = assist.GetUserProfile(x.UserId, 3);
+                        var response = FTPHelper.TryLoginToFtp(x.Host, x.UserName,
+                            PasswordHelper.Crypt.DecryptString(x.Password), 
+                            x.Path, x.UserId, x.ServiceType);
 
-                        addedFilesInResponse = FTPHelper.ExtractFiles(response, x.Host, x.Path, x.UserName,
-                            PasswordHelper.Crypt.DecryptString(x.Password));
+                        var ftpConversionSettings = 
+                        FTPHelper.GetFtpConersionSettings(x.UserId);
+                        
 
-                        addedFilesInResponse.ForEach(af =>
+                        List<Tuple<string, string>> addedFilesInResponse;
+
+                        if (response != null )
                         {
+                            assist.UserProfile = assist.GetUserProfile(x.UserId, 3);
 
-                            if (CheckExtensions(extensions, af.Item2))
+                            addedFilesInResponse = FTPHelper.ExtractFiles(response, x.Host, x.Path, x.UserName,
+                                PasswordHelper.Crypt.DecryptString(x.Password));
+
+                            addedFilesInResponse.ForEach(af =>
                             {
 
-
-                                var newNameGuid = Guid.NewGuid();
-                                var uploadName = newNameGuid + af.Item2;
-                                var localName = Path.Combine(Path.Combine("data", "uploads"), uploadName);
-
-                                string originalFileName = af.Item1;
-                                var filePathOld = Path.Combine(assist.GetSettingValueByName("MainPath"), "data",
-                                    "uploads", af.Item1);
-                                var filePathNew = Path.Combine(assist.GetSettingValueByName("MainPath"), "data",
-                                    "uploads", newNameGuid.ToString() + af.Item2);
-
-
-
-                                //add task to db
-                                var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
-
-                                var md5 = assist.GetMD5HashFromFile(filePathOld);
-                                //add document
-                                var fileInfo = new FileInfo(filePathOld);
-
-
-                                var documentId = assist.AddDocument(taskId, fileInfo, originalFileName, newNameGuid,
-                                    uploadName, localName, md5, 1, true);
-
-                                System.IO.File.Move(filePathOld, filePathNew);
-                                if (File.Exists(filePathOld))
-                                    File.Delete(filePathOld);
-
-                                assist.Documents = assist.GetDocumentsByTaskId(taskId);
-
-                                string content = assist.ConvertProfileToRequestModel(assist.Documents,
-                                    assist.UserProfile);
-                                assist.UpdateTaskProfile(taskId, content);
-
-                                if (x.DeleteFile)
+                                if (CheckExtensions(extensions, af.Item2))
                                 {
-                                    if (File.Exists(filePathNew))
-                                        File.Delete(filePathNew);
-                                }
-                            }
-                        });
 
+
+                                    var newNameGuid = Guid.NewGuid();
+                                    var uploadName = newNameGuid + af.Item2;
+                                    var localName = Path.Combine(Path.Combine("data", "uploads"), uploadName);
+
+                                    string originalFileName = af.Item1;
+                                    var filePathOld = Path.Combine(assist.GetSettingValueByName("MainPath"), "data",
+                                        "uploads", af.Item1);
+                                    var filePathNew = Path.Combine(assist.GetSettingValueByName("MainPath"), "data",
+                                        "uploads", newNameGuid.ToString() + af.Item2);
+
+
+
+                                    //add task to db
+                                    var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
+
+                                    if (FTPSettingsHelper.CheckOutputExceptionSettings(x.Id))
+                                        SettingsTasksUnionHelper.AddNewItem(taskId, x.Id);
+
+                                    var md5 = assist.GetMD5HashFromFile(filePathOld);
+                                    //add document
+                                    var fileInfo = new FileInfo(filePathOld);
+
+
+                                    var documentId = assist.AddDocument(taskId, fileInfo, originalFileName, newNameGuid,
+                                        uploadName, localName, md5, 1, ftpConversionSettings.AddProcessed);
+
+                                    if (x.ServiceType == 2)
+                                        assist.ConnectTaskAndFtpSetting(taskId, x.Id);
+
+                                   // var fileUploadStatus = 
+
+                                    System.IO.File.Move(filePathOld, filePathNew);
+                                    if (File.Exists(filePathOld))
+                                        File.Delete(filePathOld);
+
+
+
+                                    assist.Documents = assist.GetDocumentsByTaskId(taskId);
+
+                                    string content = assist.ConvertProfileToRequestModel(assist.Documents,
+                                        assist.UserProfile);
+                                    assist.UpdateTaskProfile(taskId, content);
+
+                                    if (x.DeleteFile)
+                                    {
+                                        if (File.Exists(filePathNew))
+                                            File.Delete(filePathNew);
+                                    }
+                                }
+                            });
+
+                        }
                     }
 
 
@@ -154,6 +175,8 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                 foreach (var processedTask in processedTasks)
                 {
                     TaskHelper.CheckStateTask(processedTask);
+                    //FTPHelper.PutFileOnFtpServer(fInfo, processedTask);
+                    
                 }
                 //update states
             }

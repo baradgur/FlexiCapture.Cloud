@@ -510,7 +510,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         {
             try
             {
-                string name = "Default Capture Profile";
+                // Убрал слово Capture, вроде как надо
+                string name = "Default Profile";
 
                 NewProfileModel model = new NewProfileModel() {UserId = userId, ProfileName = name};
                 CreateNewProfile(model);

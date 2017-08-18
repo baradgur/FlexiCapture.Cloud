@@ -247,6 +247,12 @@ namespace FlexiCapture.Cloud.ServiceAssist
             return DocumentsHelper.AddDocument(taskId, attachment, originalFileName, newNameGuid, uploadName, localName, md5, categoryId, showJob);
         }
 
+        public int ConnectTaskAndFtpSetting(int taskId, int settingId)
+        {
+            SettingsTasksUnionHelper.AddNewItem(taskId, settingId);
+            return 0;
+        }
+
         public void UpdateTaskProfile(int taskId, string content)
         {
             TasksHelper.UpdateTaskProfile(taskId, content);

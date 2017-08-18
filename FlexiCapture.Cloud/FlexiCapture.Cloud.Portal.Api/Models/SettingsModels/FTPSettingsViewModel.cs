@@ -11,7 +11,7 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.SettingsModels
         /// <summary>
         /// list of settings
         /// </summary>
-        public List<FTPSettingsModel> Settings { get; set; }
+        public List<FTPSettingsAggregateModel> Settings { get; set; }
         /// <summary>
         /// model providing errors to user
         /// </summary>

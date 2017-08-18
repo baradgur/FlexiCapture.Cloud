@@ -2,17 +2,76 @@
     //добавляем данные user в для таблицы
     function addData(setting) {
         var dElement = {};
-        dElement.settingId = setting.Id;
-        dElement.settingUserId = setting.UserId;
-        dElement.settingUserName = setting.UserName;
-        dElement.settingHost = setting.Host;
-        dElement.settingPort = setting.Port;
-        dElement.settingPassword = setting.Password;
-        dElement.settingPath = setting.Path;
-        dElement.settingUseSSL = setting.UseSSL;
-        dElement.settingDeleteFile = setting.DeleteFile;
+        dElement.settingId = setting.InputFtpSettingsModel.Id;
+        dElement.settingUserId = setting.InputFtpSettingsModel.UserId;
+        dElement.settingUserName = setting.InputFtpSettingsModel.UserName;
+        dElement.settingHost = setting.InputFtpSettingsModel.Host;
+        dElement.settingPort = setting.InputFtpSettingsModel.Port;
+        dElement.settingPassword = setting.InputFtpSettingsModel.Password;
+        dElement.settingPath = setting.InputFtpSettingsModel.Path;
+        dElement.settingUseSSL = setting.InputFtpSettingsModel.UseSSL;
+        dElement.settingCustomOutExc = (setting.OutputFtpSettingsModel == null && setting.ExceptionFtpSettingsModel)
+            ? "No"
+            : "Yes";
+        dElement.settingDeleteFile = setting.InputFtpSettingsModel.DeleteFile;
+        dElement.settingEnabled = setting.InputFtpSettingsModel.Enabled;
 
         return dElement;
+    }
+
+    this.testFtpAccess = function ($http, $scope, $state, data, url, usSpinnerService) {
+        $http.post(
+            url,
+            JSON.stringify($scope.setting),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        ).then(function(resp) {
+            $scope.saveButtonAvailable = true;
+            showNotify("Tested successful", "FTP settings are valid", "success");
+        },
+        function(resp) {
+            switch(resp.data.Message) {
+                case "1":
+                    showNotify("Setting not valid", "Input setting is not valid", "danger");
+                    break;
+                case "2":
+                    showNotify("Setting not valid", "Output setting is not valid", "danger");
+                    break;
+                case "3":
+                    showNotify("Setting not valid", "Exception setting is not valid", "danger");
+                    break;
+            }
+        });
+    }
+
+    this.getFtpConversionSettings = function ($http, $scope, $state, data, url, usSpinnerService) {
+        $http.get(url,
+        {
+            params: { userId: $scope.userData.UserData.Id }
+        }).then(function (response) {
+            $scope.ftpConversionSetting = response.data;
+          
+        });
+    }
+
+    this.addFtpConversionSettings = function ($http, $scope, $state, data, url, usSpinnerService) {
+        $http({
+            url: url,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify($scope.responseSetting)
+        }).then(function (response) {
+            if (response.data != null) {
+                $scope.ftpConversionSetting = response.data;
+                $scope.ftpConversionSettingToCompare = angular.copy($scope.ftpConversionSetting);
+                showNotify("Успех", "Setting were successfully updated", "success");
+            } else {
+                showNotify("Ошибка", "Problems while updating settings", "danger");
+            }
+        });
     }
 
 

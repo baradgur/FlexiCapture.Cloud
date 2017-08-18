@@ -5,47 +5,51 @@
     </div>
     <div class="modal-body">
         <div class="container">
+            <p3>Input source</p3>
             <div class="row">
                 <form class="form-horizontal" name="settingForm" id="settingForm" role="form" novalidate>
 
-                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.host.$invalid && (settingForm.host.$touched || submitted)]">
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.input.host.$invalid && (settingForm.input.host.$touched || submitted)]">
                         <label class="col-sm-4 control-label">Host<i class="red-star">*</i></label>
                         <div class="col-sm-7">
-                            <input id="host-toggle" type="text" name="host" class="form-control" placeholder="Host" data-toggle="tooltip" data-placement="top" title="e. g.: ftp.wisetrend.com" ng-model="setting.Host" required>
-                            <div class="help-block" ng-messages="settingForm.host.$error" ng-if="settingForm.host.$touched || submitted">
+                            <input id="host-toggle" type="text" name="host" class="form-control" placeholder="Host" 
+                                   data-toggle="tooltip" data-placement="top"
+                                   title="e. g.: ftp.wisetrend.com"
+                                   ng-model="setting.InputFtpSettingsModel.Host" required>
+                            <div class="help-block" ng-messages="settingForm.input.host.$error" ng-if="settingForm.input.host.$touched || submitted">
                                 <div ng-message="required">Field "Host" must be filled</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.port.$invalid && (settingForm.port.$touched || submitted)]">
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.input.port.$invalid && (settingForm.input.port.$touched || submitted)]">
                         <label class="col-sm-4 control-label">Port</label>
                         <div class="col-sm-7">
-                            <input type="number" name="port" class="form-control" placeholder="21" ng-model="setting.Port">
-                            <div class="help-block" ng-messages="settingForm.port.$error" ng-if="settingForm.port.$touched || submitted">
+                            <input type="number" name="port" class="form-control" placeholder="21" ng-model="setting.InputFtpSettingsModel.Port">
+                            <div class="help-block" ng-messages="settingForm.input.port.$error" ng-if="settingForm.input.port.$touched || submitted">
                                 <div ng-message="number">Please enter correct port</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.user_name.$invalid && (settingForm.user_name.$touched || submitted)]">
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.input.user_name.$invalid && (settingForm.input.user_name.$touched || submitted)]">
                         <label class="col-sm-4 control-label">User Name<i class="red-star">*</i></label>
                         <div class="col-sm-7">
-                            <input type="text" name="user_name" class="form-control" placeholder="User Name" ng-model="setting.UserName" required>
-                            <div class="help-block" ng-messages="settingForm.user_name.$error" ng-if="settingForm.user_name.$touched || submitted">
+                            <input type="text" name="user_name" class="form-control" placeholder="User Name" ng-model="setting.InputFtpSettingsModel.UserName" required>
+                            <div class="help-block" ng-messages="settingForm.input.user_name.$error" ng-if="settingForm.input.user_name.$touched || submitted">
                                 <div ng-message="required">Field "User Name" must be filled</div>
                             </div>
                         </div>
                     </div>
-                    
 
-                    
-                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.password.$invalid && (settingForm.password.$touched || submitted)]">
+
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.input.password.$invalid && (settingForm.input.password.$touched || submitted)]">
                         <label class="col-sm-4 control-label">Password<i class="red-star">*</i></label>
                         <div class="col-sm-7">
-                            <input type="password" name="password" class="form-control" placeholder="Password" ng-model="setting.Password"  
-                                        minlength="3" ng-maxlength="30" pattern="\S+" required>
-                            <div class="help-block" ng-messages="settingForm.password.$error" ng-if="settingForm.password.$touched || submitted">
+                            <input type="password" name="password" class="form-control" placeholder="Password" ng-model="setting.InputFtpSettingsModel.Password"
+                                   minlength="3" ng-maxlength="30" pattern="\S+" required>
+                            <div class="help-block" ng-messages="settingForm.input.password.$error" ng-if="settingForm.input.password.$touched || submitted">
                                 <div ng-message="required">Field "Password" must be filled</div>
                                 <div ng-message="minlength">Password length must be at least 3 characters </div>
                                 <div ng-message="maxlength">Password length must be no more than 30 characters</div>
@@ -53,22 +57,22 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.path.$invalid && (settingForm.path.$touched || submitted)]">
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.input.path.$invalid && (settingForm.input.path.$touched || submitted)]">
                         <label class="col-sm-4 control-label">Path<i class="red-star">*</i></label>
                         <div class="col-sm-7">
-                            <input id="path-toggle" type="text" ng-pattern="/\/.+/"  data-toggle="tooltip" data-placement="top" title="e. g.: /public_html/ftp_service_test/input/ for root folder use /." 
-                                   name="path" class="form-control" placeholder="/public_html/ftp_service_test/input/" ng-model="setting.Path" required>
-                            <div class="help-block" ng-messages="settingForm.path.$error" ng-if="settingForm.path.$touched || submitted || settingForm.path.$error.pattern">
+                            <input id="path-toggle" type="text" ng-pattern="/\/.+/" data-toggle="tooltip" data-placement="top" title="e. g.: /public_html/ftp_service_test/input/ for root folder use /."
+                                   name="path" class="form-control" placeholder="/public_html/ftp_service_test/input/" ng-model="setting.InputFtpSettingsModel.Path" required>
+                            <div class="help-block" ng-messages="settingForm.input.path.$error" ng-if="settingForm.input.path.$touched || submitted || settingForm.input.path.$error.pattern">
                                 <div ng-message="required">Field "Path" must be filled</div>
                             </div>
-                            
-                            <div class="help-block"  ng-if="settingForm.path.$error.pattern">
+
+                            <div class="help-block" ng-if="settingForm.input.path.$error.pattern">
                                 <div>Correct input value</div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Delete input image after successful processing</label>
                         <div class="col-sm-1">
@@ -83,7 +87,107 @@
                                 <li class="list-group-item">
                                     Use SSL
                                     <div class="material-switch pull-right">
-                                        <input id="useSSL" type="checkbox" ng-model="setting.UseSSL" />
+                                        <input id="useSSL" type="checkbox" ng-model="setting.InputFtpSettingsModel.UseSSL" />
+                                        <label for="useSSL" class="label-success"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+
+                    <br />
+                <!--<div class="form-group">
+                        <div class="form-group col-sm-10 text-right">
+                            <!-- Indicates a successful or positive action -->
+                      <!--  <button type="submit" class="btn btn-primary" ng-click="vm.confirm(settingForm.path);">Save</button>
+                            <button type="button" class="btn btn-primary btn-outline" ng-click="vm.cancel();">Cancel</button>
+                        </div>
+                    </div>-->
+                </form>
+                <hr />
+            </div>
+            <p3>Output Destination</p3>
+            <div class="row">
+                <form class="form-horizontal" name="settingForm" id="settingForm" role="form" novalidate>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.output.host.$invalid && (settingForm.output.host.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Host<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input id="host-toggle" type="text" name="host" class="form-control" placeholder="Host" data-toggle="tooltip" data-placement="top" title="e. g.: ftp.wisetrend.com" ng-model="setting.OutputFtpSettingsModel.Host" required>
+                            <div class="help-block" ng-messages="settingForm.output.host.$error" ng-if="settingForm.output.host.$touched || submitted">
+                                <div ng-message="required">Field "Host" must be filled</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.output.port.$invalid && (settingForm.output.port.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Port</label>
+                        <div class="col-sm-7">
+                            <input type="number" name="port" class="form-control" placeholder="21" ng-model="setting.OutputFtpSettingsModel.Port">
+                            <div class="help-block" ng-messages="settingForm.output.port.$error" ng-if="settingForm.output.port.$touched || submitted">
+                                <div ng-message="number">Please enter correct port</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.output.user_name.$invalid && (settingForm.output.user_name.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">User Name<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input type="text" name="user_name" class="form-control" placeholder="User Name" ng-model="setting.OutputFtpSettingsModel.UserName" required>
+                            <div class="help-block" ng-messages="settingForm.output.user_name.$error" ng-if="settingForm.output.user_name.$touched || submitted">
+                                <div ng-message="required">Field "User Name" must be filled</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.output.password.$invalid && (settingForm.output.password.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Password<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input type="password" name="password" class="form-control" placeholder="Password" ng-model="setting.OutputFtpSettingsModel.Password"
+                                   minlength="3" ng-maxlength="30" pattern="\S+" required>
+                            <div class="help-block" ng-messages="settingForm.output.password.$error" ng-if="settingForm.output.password.$touched || submitted">
+                                <div ng-message="required">Field "Password" must be filled</div>
+                                <div ng-message="minlength">Password length must be at least 3 characters </div>
+                                <div ng-message="maxlength">Password length must be no more than 30 characters</div>
+                                <div ng-message="pattern">Password must not contain spaces</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.output.path.$invalid && (settingForm.output.path.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Path<i class="red-star">*</i></label>
+                        <div class="col-sm-7">
+                            <input id="path-toggle" type="text" ng-pattern="/\/.+/" data-toggle="tooltip" data-placement="top" title="e. g.: /public_html/ftp_service_test/input/ for root folder use /."
+                                   name="path" class="form-control" placeholder="/public_html/ftp_service_test/input/" ng-model="setting.OutputFtpSettingsModel.Path" required>
+                            <div class="help-block" ng-messages="settingForm.output.path.$error" ng-if="settingForm.output.path.$touched || submitted || settingForm.output.path.$error.pattern">
+                                <div ng-message="required">Field "Path" must be filled</div>
+                            </div>
+
+                            <div class="help-block" ng-if="settingForm.output.path.$error.pattern">
+                                <div>Correct input value</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Delete input image after successful processing</label>
+                        <div class="col-sm-1">
+                            <input type="checkbox" ng-model="setting.OutputFtpSettingsModel.DeleteFile" name="deleteFile" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">SSL Setings</label>
+                        <div class="col-sm-7">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    Use SSL
+                                    <div class="material-switch pull-right">
+                                        <input id="useSSL" type="checkbox" ng-model="setting.OutputFtpSettingsModel.UseSSL" />
                                         <label for="useSSL" class="label-success"></label>
                                     </div>
                                 </li>
@@ -92,19 +196,120 @@
                     </div>
 
                     <br />
-                    <div class="form-group">
-                        <div class="form-group col-sm-10 text-right">
+                    <!--<div class="form-group">
+                        <div class="form-group col-sm-10 text-right">-->
                             <!-- Indicates a successful or positive action -->
-                            <button type="submit" class="btn btn-primary" ng-click="vm.confirm(settingForm.path);">Save</button>
+                            <!--<button type="submit" class="btn btn-primary" ng-click="vm.confirm(settingForm.output.path);">Save</button>
                             <button type="button" class="btn btn-primary btn-outline" ng-click="vm.cancel();">Cancel</button>
                         </div>
-                    </div>
+                    </div>-->
                 </form>
                 <hr />
-                <div>
-                    <p class="form-description-text">Signed fields <i class="red-star">*</i> must be filled</p>
-                </div>
             </div>
+            <p3>Exceptions</p3>
+            <div class="row">
+            <form class="form-horizontal" name="settingForm" id="settingForm" role="form" novalidate>
+
+                <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.exception.host.$invalid && (settingForm.exception.host.$touched || submitted)]">
+                    <label class="col-sm-4 control-label">Host<i class="red-star">*</i></label>
+                    <div class="col-sm-7">
+                        <input id="host-toggle" type="text" name="host" class="form-control" placeholder="Host" data-toggle="tooltip" data-placement="top" title="e. g.: ftp.wisetrend.com" ng-model="setting.ExceptionFtpSettingsModel.Host" required>
+                        <div class="help-block" ng-messages="settingForm.exception.host.$error" ng-if="settingForm.exception.host.$touched || submitted">
+                            <div ng-message="required">Field "Host" must be filled</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.exception.port.$invalid && (settingForm.exception.port.$touched || submitted)]">
+                    <label class="col-sm-4 control-label">Port</label>
+                    <div class="col-sm-7">
+                        <input type="number" name="port" class="form-control" placeholder="21" ng-model="setting.ExceptionFtpSettingsModel.Port">
+                        <div class="help-block" ng-messages="settingForm.exception.port.$error" ng-if="settingForm.exception.port.$touched || submitted">
+                            <div ng-message="number">Please enter correct port</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.exception.user_name.$invalid && (settingForm.exception.user_name.$touched || submitted)]">
+                    <label class="col-sm-4 control-label">User Name<i class="red-star">*</i></label>
+                    <div class="col-sm-7">
+                        <input type="text" name="user_name" class="form-control" placeholder="User Name" ng-model="setting.ExceptionFtpSettingsModel.UserName" required>
+                        <div class="help-block" ng-messages="settingForm.exception.user_name.$error" ng-if="settingForm.exception.user_name.$touched || submitted">
+                            <div ng-message="required">Field "User Name" must be filled</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.exception.password.$invalid && (settingForm.exception.password.$touched || submitted)]">
+                    <label class="col-sm-4 control-label">Password<i class="red-star">*</i></label>
+                    <div class="col-sm-7">
+                        <input type="password" name="password" class="form-control" placeholder="Password" ng-model="setting.ExceptionFtpSettingsModel.Password"
+                               minlength="3" ng-maxlength="30" pattern="\S+" required>
+                        <div class="help-block" ng-messages="settingForm.exception.password.$error" ng-if="settingForm.exception.password.$touched || submitted">
+                            <div ng-message="required">Field "Password" must be filled</div>
+                            <div ng-message="minlength">Password length must be at least 3 characters </div>
+                            <div ng-message="maxlength">Password length must be no more than 30 characters</div>
+                            <div ng-message="pattern">Password must not contain spaces</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.exception.path.$invalid && (settingForm.exception.path.$touched || submitted)]">
+                    <label class="col-sm-4 control-label">Path<i class="red-star">*</i></label>
+                    <div class="col-sm-7">
+                        <input id="path-toggle" type="text" ng-pattern="/\/.+/" data-toggle="tooltip" data-placement="top" title="e. g.: /public_html/ftp_service_test/input/ for root folder use /."
+                               name="path" class="form-control" placeholder="/public_html/ftp_service_test/input/" ng-model="setting.ExceptionFtpSettingsModel.Path" required>
+                        <div class="help-block" ng-messages="settingForm.exception.path.$error" ng-if="settingForm.exception.path.$touched || submitted || settingForm.exception.path.$error.pattern">
+                            <div ng-message="required">Field "Path" must be filled</div>
+                        </div>
+
+                        <div class="help-block" ng-if="settingForm.exception.path.$error.pattern">
+                            <div>Correct input value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Delete input image after successful processing</label>
+                    <div class="col-sm-1">
+                        <input type="checkbox" ng-model="setting.ExceptionFtpSettingsModel.DeleteFile" name="deleteFile" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">SSL Setings</label>
+                    <div class="col-sm-7">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Use SSL
+                                <div class="material-switch pull-right">
+                                    <input id="useSSL" type="checkbox" ng-model="setting.ExceptionFtpSettingsModel.UseSSL" />
+                                    <label for="useSSL" class="label-success"></label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div class="form-group col-sm-10 text-right">
+                        <!-- Indicates a successful or positive action -->
+                        <button type="submit" class="btn btn-primary" ng-click="vm.confirm(settingForm.exception.path);">Save</button>
+                        <button type="button" class="btn btn-primary btn-outline" ng-click="vm.cancel();">Cancel</button>
+                    </div>
+                </div>
+            </form>
+            <hr />
+            <div>
+                <p class="form-description-text">
+                    Signed fields <i class="red-star">*</i> must be filled
+                </p>
+            </div>
+        </div>
+            <button class="btn btn-default" ng-click="testFtpAccess();" type="button">Test FTP Access</button>
         </div>
     </div>
 </div>

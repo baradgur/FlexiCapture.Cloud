@@ -42,6 +42,10 @@ namespace FlexiCapture.Cloud.Portal.Api.Models.SettingsModels
         public bool UseSSL { get; set; }
         public bool DeleteFile { get; set; }
         /// <summary>
+        /// Enabling usage of that setting
+        /// </summary>
+        public bool Enabled { get; set; }
+        /// <summary>
         /// model providing errors to user
         /// </summary>
         public ErrorModel Error { get; set; }
