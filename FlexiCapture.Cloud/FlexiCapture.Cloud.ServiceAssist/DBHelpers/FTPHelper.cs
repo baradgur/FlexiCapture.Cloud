@@ -6,20 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using FlexiCapture.Cloud.FTPService.Models;
 //using FlexiCapture.Cloud.FTPService.Models;
 using FlexiCapture.Cloud.OCR.Assist.Models;
-using FlexiCapture.Cloud.Portal.Api.DB;
-using FlexiCapture.Cloud.Portal.Api.DBHelpers;
-using FlexiCapture.Cloud.Portal.Api.Helpers.CryptHelpers;
-using FlexiCapture.Cloud.Portal.Api.Helpers.FtpConversionSettingsHelpers;
-using FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper;
-using FlexiCapture.Cloud.Portal.Api.Models.SettingsModels;
 using FlexiCapture.Cloud.ServiceAssist.DB;
+using FlexiCapture.Cloud.ServiceAssist.Helpers;
+using FlexiCapture.Cloud.ServiceAssist.Models.SettingsModels;
 using DocumentTypes = FlexiCapture.Cloud.ServiceAssist.DB.DocumentTypes;
 using UserServiceSubscribes = FlexiCapture.Cloud.ServiceAssist.DB.UserServiceSubscribes;
 
-namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
+namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
 {
     public static class FTPHelper
     {
@@ -67,7 +62,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
         /// <returns></returns>
         public static FTPSetting GetFtpOutputSettings(int parentId)
         {
-            using (var db = new FCCPortalEntities())
+            using (var db = new FCCPortalEntities2())
             {
                 try
                 {
@@ -98,7 +93,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
         /// <returns></returns>
         public static FTPSetting GetFtpExceptionSettings(int parentId)
         {
-            using (var db = new FCCPortalEntities())
+            using (var db = new FCCPortalEntities2())
             {
                 try
                 {
@@ -122,16 +117,14 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             }
         }
 
-        public static string PutFileOnFtpServer(FileInfo file, string newName, FlexiCapture.Cloud.FTPService.Models.FTPSetting setting, string pathToPut)
+        public static string PutFileOnFtpServer(FileInfo file, string newName, FlexiCapture.Cloud.ServiceAssist.Models.SettingsModels.FTPSetting setting, string pathToPut)
         {
             try
             {
 
                 // CONVERSION SETING MODEL!!!
-                FlexiCapture.Cloud.Portal.Api.Models.SettingsModels.FTPConversionSettingModel conversionSetting =
-                 FlexiCapture.Cloud.Portal.Api.
-                    Helpers.FtpConversionSettingsHelpers.
-                    FtpConversionSettingsHelper.GetSettingsByUserId(setting.UserId);
+                FlexiCapture.Cloud.ServiceAssist.Models.SettingsModels.FTPConversionSettingModel conversionSetting =
+                 FtpConversionSettingsHelper.GetSettingsByUserId(setting.UserId);
 
 
                 string bbaseUri = "ftp://" + setting.Host;
@@ -184,7 +177,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             }
         }
 
-        private static bool CheckPathToPut(string path, FlexiCapture.Cloud.FTPService.Models.FTPSetting setting)
+        private static bool CheckPathToPut(string path, FlexiCapture.Cloud.ServiceAssist.Models.SettingsModels.FTPSetting setting)
         {
             string bbaseUri = "ftp://" + setting.Host;
             string uri = "";
@@ -193,32 +186,32 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 
 
             string[] pathFolders = path.Split('/');
-            
 
-           
-                foreach (var pathItem in pathFolders)
+
+
+            foreach (var pathItem in pathFolders)
+            {
+                try
                 {
-                    try
+
+                    if (string.IsNullOrEmpty(pathItem) ||
+                        string.IsNullOrWhiteSpace(pathItem))
+                        continue;
+
+                    uri = Path.Combine(uri, "/", pathItem);
+
+                    serverUri = new Uri(baseUri, uri);
+
+                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+                    request.Method = WebRequestMethods.Ftp.MakeDirectory;
+                    request.Credentials = new NetworkCredential(setting.UserName,
+                        PasswordHelper.Crypt.DecryptString(setting.Password));
+
+                    using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                     {
-
-                        if (string.IsNullOrEmpty(pathItem) ||
-                            string.IsNullOrWhiteSpace(pathItem))
-                            continue;
-
-                        uri = Path.Combine(uri, "/", pathItem);
-
-                        serverUri = new Uri(baseUri, uri);
-
-                        FtpWebRequest request = (FtpWebRequest) WebRequest.Create(serverUri);
-                        request.Method = WebRequestMethods.Ftp.MakeDirectory;
-                        request.Credentials = new NetworkCredential(setting.UserName,
-                            PasswordHelper.Crypt.DecryptString(setting.Password));
-
-                        using (FtpWebResponse response = (FtpWebResponse) request.GetResponse())
-                        {
-                            var st = response.StatusCode;
-                        }
+                        var st = response.StatusCode;
                     }
+                }
                 catch (WebException ex)
                 {
                     continue;
@@ -246,7 +239,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 return true;
 
             }
-            
+
             return true;
         }
         public static FTPConversionSettingModel GetFtpConersionSettings(int userId)
@@ -351,7 +344,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
             string line = reader.ReadLine();
             while (!string.IsNullOrEmpty(line))
             {
-                var fileName = line;//.Split(' ').LastOrDefault();
+                var fileName = line.Split(' ').LastOrDefault();
 
                 foreach (var type in AcceptableTypes)
                 {
@@ -413,7 +406,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 Stream responseStream = response.GetResponseStream();
                 FileStream writeStream =
-                    new FileStream(Path.Combine(SettingsHelper.GetSettingsValueByName("MainPath"), "data", "uploads", fileName),
+                    new FileStream(Path.Combine(SettingsHelper.GetSettingValueByName("MainPath"), "data", "uploads", fileName),
                         FileMode.Create);
 
                 int Length = 2048;
@@ -426,17 +419,16 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 }
                 writeStream.Close();
                 string pathToPut = "/.";
-                if (ftpConvSettings.MoveProcessed && ftpSettings.ServiceType == 1)
+                if (ftpConvSettings.MoveProcessed)
                 {
                     pathToPut = "/DCC_Processed/.";
                 }
-               
-                
-                    PutFileOnFtpServer(
-                        new FileInfo(Path.Combine(
-                            SettingsHelper.GetSettingsValueByName("MainPath"), "data", "uploads",
-                            fileName)), fileName, ftpSettings, pathToPut);
-                
+
+                PutFileOnFtpServer(
+                    new FileInfo(Path.Combine(
+                        SettingsHelper.GetSettingValueByName("MainPath"), "data", "uploads",
+                        fileName)), fileName, ftpSettings, pathToPut);
+
                 reqFTP = (FtpWebRequest)FtpWebRequest.Create(serverUri.AbsoluteUri);
                 reqFTP.Credentials = new NetworkCredential(userName,
                     PasswordHelper.Crypt.DecryptString(userPassword));

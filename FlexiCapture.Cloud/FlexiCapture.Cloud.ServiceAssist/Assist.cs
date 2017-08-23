@@ -190,7 +190,7 @@ namespace FlexiCapture.Cloud.ServiceAssist
         /// <returns></returns>
         public string GetSettingValueByName(string settingName)
         {
-            return SettingsHelper.GetSettingValueByName(settingName);
+            return FlexiCapture.Cloud.ServiceAssist.DBHelpers.SettingsHelper.GetSettingValueByName(settingName);
         }
 
         public void AddErrorToZipDocuments(int taskId, string errorText)
@@ -334,6 +334,11 @@ namespace FlexiCapture.Cloud.ServiceAssist
         public void CheckSubscribes()
         {
             SubscriptionsHelper.CheckSubscribes();
+        }
+
+        public void PutFileToFtp(FileInfo file, string newName, FTPSetting setting, string pathToPut)
+        {
+            FTPHelper.PutFileOnFtpServer(file, newName, setting, pathToPut);
         }
     }
 }

@@ -28,12 +28,13 @@
                     'Content-Type': 'application/json'
                 }
             }
-        ).then(function(resp) {
+        ).then(function (resp) {
             $scope.saveButtonAvailable = true;
             showNotify("Tested successful", "FTP settings are valid", "success");
+            $scope.showSaveButton = true;
         },
-        function(resp) {
-            switch(resp.data.Message) {
+        function (resp) {
+            switch (resp.data.Message) {
                 case "1":
                     showNotify("Setting not valid", "Input setting is not valid", "danger");
                     break;
@@ -53,7 +54,7 @@
             params: { userId: $scope.userData.UserData.Id }
         }).then(function (response) {
             $scope.ftpConversionSetting = response.data;
-          
+
         });
     }
 
@@ -81,7 +82,7 @@
         usSpinnerService.spin("spinner-1");
 
         $http.get(url, {
-            params: { userId: $scope.choosedUserId?$scope.choosedUserId:$scope.userData.UserData.Id }
+            params: { userId: $scope.choosedUserId ? $scope.choosedUserId : $scope.userData.UserData.Id }
         }).then(function (response) {
             if (response.data.Error) {
                 BootstrapDialog.show({

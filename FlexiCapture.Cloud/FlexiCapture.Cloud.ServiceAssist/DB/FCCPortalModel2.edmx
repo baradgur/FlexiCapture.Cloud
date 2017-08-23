@@ -119,9 +119,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskId" Type="int" Nullable="false" />
-          <Property Name="SettingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SettingId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FTPSettingsTypes">
           <Key>
@@ -1533,9 +1533,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <Property Name="SettingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SettingId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FTPSettings" Relationship="Self.FK_FTPSettingsTasksUnion_FTPSettings" FromRole="FTPSettingsTasksUnion" ToRole="FTPSettings" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_FTPSettingsTasksUnion_Tasks" FromRole="FTPSettingsTasksUnion" ToRole="Tasks" />
         </EntityType>

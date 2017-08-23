@@ -41,7 +41,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
             try
             {
                 OcrRequestModel requestModel = new OcrRequestModel();
-                requestModel.ApiKey = SettingsHelper.GetSettingValueByName("ApiKey");
+                requestModel.ApiKey = SettingsHelper.GetSettingsValueByName("ApiKey");
                 requestModel.CleanupSettings = new CleanupSettingsModel()
                 {
                     Deskew = profile.Deskew,
@@ -104,8 +104,8 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
                     ExportFormat = exportFormats
                 };
 
-                string serverPath = SettingsHelper.GetSettingValueByName("MainPath");
-                string url = SettingsHelper.GetSettingValueByName("ServerPathApi");
+                string serverPath = SettingsHelper.GetSettingsValueByName("MainPath");
+                string url = SettingsHelper.GetSettingsValueByName("ServerPathApi");
                 foreach (var document in documents)
                 {
                    string filePath = Path.Combine(serverPath, document.Path);
@@ -143,7 +143,7 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
             try
             {
                 OcrRequestModel requestModel = new OcrRequestModel();
-                requestModel.ApiKey = SettingsHelper.GetSettingValueByName("ApiKey");
+                requestModel.ApiKey = SettingsHelper.GetSettingsValueByName("ApiKey");
                 requestModel.CleanupSettings = new CleanupSettingsModel()
                 {
                     Deskew = profile.Deskew,
@@ -206,8 +206,8 @@ namespace FlexiCapture.Cloud.ServiceAssist.Helpers
                     ExportFormat = exportFormats
                 };
 
-                string serverPath = SettingsHelper.GetSettingValueByName("MainPath");
-                string url = SettingsHelper.GetSettingValueByName("ServerPathApi");
+                string serverPath = SettingsHelper.GetSettingsValueByName("MainPath");
+                string url = SettingsHelper.GetSettingsValueByName("ServerPathApi");
                 foreach (var document in documents)
                 {
                     string filePath = Path.Combine(serverPath, document.Path);

@@ -137,14 +137,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 
                         fileInfo = new FileInfo(filePath);
 
-                        var settings = SettingsTasksUnionHelper.GetSettingsByTaskId(task.Id);
-                        var outputSettings =
-                            FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers.FTPHelper.GetFtpOutputSettings(
-                                settings.Id);
-
-                        FTPHelper.PutFileOnFtpServer(fileInfo, newName, outputSettings);
-
-
+                        var settings = SettingsTasksUnionHelper.GetSettingsByTaskId(task.Id);                        
 
                         string error = "";
                         assist.DownloadFile(file.Uri,filePath,ref error);
@@ -159,7 +152,23 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                             return;
                         }
                         //add document
-                        serviceAssist.AddResultDocument(task.Id,g,originalName,newName,filePath);
+                        serviceAssist.AddResultDocument(task.Id, g, originalName, newName, filePath);
+
+                        if (settings != null)
+                        {
+                            var outputSettings =
+                                FlexiCapture.Cloud.FTPService
+                                .Helpers.TasksHelpers.FTPHelper
+                                .GetFtpOutputSettings(settings.Id);
+
+                            var ftpConvSetting = FlexiCapture.Cloud.
+                                ServiceAssist.DBHelpers.FtpConversionSettingsHelper
+                                .GetSettingsByUserId(settings.UserId);
+
+                            string pathToPut = ftpConvSetting.MirrorInput ? settings.Path : outputSettings.Path;
+
+                            FTPHelper.PutFileOnFtpServer(fileInfo, originalName, outputSettings, pathToPut);
+                        }
                     }
 
                     //update task

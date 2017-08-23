@@ -31,6 +31,8 @@ namespace FlexiCapture.Cloud.ServiceAssist.DBHelpers
                         TaskId = taskId,
                         SettingId = settingId
                     });
+
+                    db.SaveChanges();
                 }
             }
             catch (Exception e)

@@ -91,9 +91,6 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.ProcessorHelper
                 {
                     TaskHelper.CheckStateTask(outerTask, serviceAssist, serverPath, resultZipFolder, resultFolder);
                 }
-
-
-
             }
             catch (Exception exception)
             {

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bcc9c94149d5445295052947b29fcc48" Name="Diagram1">
+      <Diagram DiagramId="15e2e056149c4f71ba3023cdde0501de" Name="Diagram1">
         <EntityTypeShape EntityType="FCCPortalModel.AnalysisModeCatalog" Width="1.5" PointX="6.75" PointY="25.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.DocumentCategories" Width="1.5" PointX="14.25" PointY="32.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FCCPortalModel.Documents" Width="1.5" PointX="11.25" PointY="41" IsExpanded="true" />

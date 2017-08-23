@@ -63,15 +63,17 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                 string pathToDownload = assist.GetSettingValueByName("MainPath");
                 string resultFolder = assist.GetSettingValueByName("ResultFolder");
 
-                FTPHelper.GetFtpInputSettings().ForEach(x =>
+                FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers.FTPHelper.GetFtpInputSettings().ForEach(x =>
                 {
                     if (x.Enabled )
                     {
-                        var response = FTPHelper.TryLoginToFtp(x.Host, x.UserName,
+                        var response = FlexiCapture.Cloud.FTPService.
+                        Helpers.TasksHelpers.FTPHelper.TryLoginToFtp(x.Host, x.UserName,
                             PasswordHelper.Crypt.DecryptString(x.Password), 
                             x.Path, x.UserId, x.ServiceType);
 
-                        var ftpConversionSettings = 
+                        var ftpConversionSettings =
+                        FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers.
                         FTPHelper.GetFtpConersionSettings(x.UserId);
                         
 
@@ -81,8 +83,8 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                         {
                             assist.UserProfile = assist.GetUserProfile(x.UserId, 3);
 
-                            addedFilesInResponse = FTPHelper.ExtractFiles(response, x.Host, x.Path, x.UserName,
-                                PasswordHelper.Crypt.DecryptString(x.Password));
+                            addedFilesInResponse = FlexiCapture.Cloud.FTPService.Helpers.
+                            TasksHelpers.FTPHelper.ExtractFiles(response, x);
 
                             addedFilesInResponse.ForEach(af =>
                             {
@@ -106,7 +108,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                                     //add task to db
                                     var taskId = assist.AddTask(assist.UserProfile.UserId, serviceId);
 
-                                    if (FTPSettingsHelper.CheckOutputExceptionSettings(x.Id))
+                                    if (FlexiCapture.Cloud.ServiceAssist.DBHelpers.FTPSettingsHelper.CheckOutputExceptionSettings(x.Id))
                                         SettingsTasksUnionHelper.AddNewItem(taskId, x.Id);
 
                                     var md5 = assist.GetMD5HashFromFile(filePathOld);
@@ -117,16 +119,14 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                                     var documentId = assist.AddDocument(taskId, fileInfo, originalFileName, newNameGuid,
                                         uploadName, localName, md5, 1, ftpConversionSettings.AddProcessed);
 
-                                    if (x.ServiceType == 2)
-                                        assist.ConnectTaskAndFtpSetting(taskId, x.Id);
+                                    //if (x.ServiceType == 2)
+                                    //    assist.ConnectTaskAndFtpSetting(taskId, x.Id);
 
                                    // var fileUploadStatus = 
 
                                     System.IO.File.Move(filePathOld, filePathNew);
                                     if (File.Exists(filePathOld))
                                         File.Delete(filePathOld);
-
-
 
                                     assist.Documents = assist.GetDocumentsByTaskId(taskId);
 

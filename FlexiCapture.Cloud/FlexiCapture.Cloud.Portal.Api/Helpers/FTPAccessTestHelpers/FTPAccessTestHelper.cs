@@ -19,44 +19,53 @@ namespace FlexiCapture.Cloud.Portal.Api.Helpers.FTPAccessTestHelpers
                 FtpWebResponse response = null;
 
                 Uri uriResult;
+
+                //---------
+
                 currentConnectionFlag = 1;
                 bool result = Uri.TryCreate("ftp://" + model.InputFtpSettingsModel.Host,
                                   UriKind.Absolute, out uriResult) &&
                                   uriResult.Scheme == Uri.UriSchemeFtp;
 
-                //if (!result)
-                //    return response;
 
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uriResult);
                 request.Method = WebRequestMethods.Ftp.ListDirectory;
-
-               
-
                 request.Credentials = new NetworkCredential(model.InputFtpSettingsModel.UserName, model.InputFtpSettingsModel.Password);
-                response = (FtpWebResponse)request.GetResponse();
 
-                
+                response = (FtpWebResponse)request.GetResponse();
                 response.Close();
 
-                request = (FtpWebRequest)WebRequest.Create(uriResult);
-
-                result = Uri.TryCreate("ftp://" + model.OutputFtpSettingsModel.Host,
-                                 UriKind.Absolute, out uriResult) &&
-                                 uriResult.Scheme == Uri.UriSchemeFtp;
+                //---------
 
                 currentConnectionFlag = 2;
+                result = Uri.TryCreate("ftp://" + model.OutputFtpSettingsModel.Host,
+                                  UriKind.Absolute, out uriResult) &&
+                                  uriResult.Scheme == Uri.UriSchemeFtp;
 
+
+                request = (FtpWebRequest)WebRequest.Create(uriResult);
+                request.Method = WebRequestMethods.Ftp.ListDirectory;
                 request.Credentials = new NetworkCredential(model.OutputFtpSettingsModel.UserName, model.OutputFtpSettingsModel.Password);
-                response = (FtpWebResponse)request.GetResponse();
 
-                result = Uri.TryCreate("ftp://" + model.ExceptionFtpSettingsModel.Host,
-                                 UriKind.Absolute, out uriResult) &&
-                                 uriResult.Scheme == Uri.UriSchemeFtp;
+                response = (FtpWebResponse)request.GetResponse();
+                response.Close();
+
+                //---------
 
                 currentConnectionFlag = 3;
+                result = Uri.TryCreate("ftp://" + model.InputFtpSettingsModel.Host,
+                                  UriKind.Absolute, out uriResult) &&
+                                  uriResult.Scheme == Uri.UriSchemeFtp;
 
+
+                request = (FtpWebRequest)WebRequest.Create(uriResult);
+                request.Method = WebRequestMethods.Ftp.ListDirectory;
                 request.Credentials = new NetworkCredential(model.ExceptionFtpSettingsModel.UserName, model.ExceptionFtpSettingsModel.Password);
+
                 response = (FtpWebResponse)request.GetResponse();
+                response.Close();
+
+                //---------
 
                 return 0;
 

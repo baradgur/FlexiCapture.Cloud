@@ -40,6 +40,8 @@ function actionFormatterFTPSetting(value, row, index) {
 
         $scope.saveButtonAvailable = false;
 
+        $scope.showSaveButton = false;
+
         $scope.testFtpAccess = function () {
             ftpSettingsHttpService.testFtpAccess($http, $scope, $state, data, $$ApiUrl + "/FTPAccessTest", usSpinnerService);
         }

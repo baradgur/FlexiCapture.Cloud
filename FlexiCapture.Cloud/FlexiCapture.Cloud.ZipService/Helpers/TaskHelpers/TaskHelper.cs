@@ -7,7 +7,9 @@ using FlexiCapture.Cloud.ServiceAssist.DB;
 using System.Linq;
 using FlexiCapture.Cloud.OCR.Assist;
 using FlexiCapture.Cloud.OCR.Assist.Models;
+using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
 using Newtonsoft.Json;
+using FTPSettingsHelper = FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper.FTPSettingsHelper;
 using LogHelper = FlexiCapture.Cloud.ServiceAssist.DBHelpers.LogHelper;
 using Tasks = FlexiCapture.Cloud.ServiceAssist.DB.Tasks;
 
@@ -311,6 +313,18 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                         {
                             assist.SendEmailResponseFail(outerTask.UserId, "DataCapture.Cloud received a conversion request form this e - mail address. Error occured while processing request.", "");
                         }
+                    }
+                }
+                if (outerTask.ServiceId == 3)
+                {
+                    var parentSetting = FlexiCapture.Cloud.ServiceAssist.DBHelpers.FTPSettingsHelper.GetToSettingByUserId(outerTask.UserId);
+                    var settings = FlexiCapture.Cloud.ServiceAssist.DBHelpers.FTPHelper.GetFtpOutputSettings(parentSetting.Id);
+
+                    var convSettings = FtpConversionSettingsHelper.GetSettingsByUserId(outerTask.UserId);
+
+                    if (convSettings.ReturnResults)
+                    {
+                        assist.PutFileToFtp(new FileInfo(filePath), originalArchiveName, settings, settings.Path);
                     }
                 }
             }
