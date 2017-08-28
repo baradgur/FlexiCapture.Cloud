@@ -3,8 +3,8 @@
     <div class="container">
 
     <div class="row" ng-show="!loadData">
-        <div class="panel panel-info">
-        <div class="panel-heading">
+        <div class="panel panel-info sharp-panel">
+        <div class="panel-heading sharp-orange-header">
             <div class="row">
                 <div class="col-lg-7"> <strong>Customize your OCR settings or create an existing Profile</strong>
                 </div>
@@ -20,8 +20,8 @@
                 </div>
             </div>
         </div>
-        <div class="panel-body">
-            <div class="input-group">
+        <div class="panel-body sharp-panel">
+            <div class="input-group sharp-orange-header">
                 <span class="input-group-addon input-group-addon-same-width">
                     <input type="checkbox" aria-label="Checkbox for following text input"
                            ng-model="currentProfile.isDefault" ng-change="changeDefaultProfile()" ng-disabled="currentProfile.isDefault"> Is Default
@@ -59,8 +59,8 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">Cleanup Settings</div>
+                    <div class="panel panel-info sharp-panel">
+                        <div class="panel-heading sharp-orange-header">Cleanup Settings</div>
                         <!--<div class="panel-body">-->
 
                         <ul class="list-group">
@@ -132,8 +132,8 @@
                         </ul>
 
                         <!--</div>-->
-                        <div class="panel panel-info form-group">
-                            <div class="panel-heading">Print Types</div>
+                        <div class="panel panel-info form-group sharp-panel">
+                            <div class="panel-heading sharp-orange-header">Print Types</div>
 
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
@@ -149,8 +149,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">OCR Settings</div>
+                    <div class="panel panel-info sharp-panel">
+                        <div class="panel-heading sharp-orange-header">OCR Settings</div>
                         <!--<div class="panel-body">-->
                         <li class="list-group-item">
                             Speed OCR
@@ -177,8 +177,8 @@
                             </div>
                         </li>
 
-                        <div class="panel panel-info form-group">
-                            <div class="panel-heading">Languages</div>
+                        <div class="panel panel-info form-group sharp-panel">
+                            <div class="panel-heading sharp-orange-header">Languages</div>
                             <input type="text" class="form-control" placeholder="Filter" ng-model="searchLangText">
                             <ul class="list-group" style="height: 200px; overflow-y: scroll;">
                                 <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages | filter:searchLangText">
@@ -196,8 +196,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">Output Settings</div>
+                    <div class="panel panel-info sharp-panel">
+                        <div class="panel-heading sharp-orange-header">Output Settings</div>
                         <!--<div class="panel-body">-->
                         <ul class="list-group">
                             <li class="list-group-item" ng-repeat="format in currentProfile.AvailableExportFormats">

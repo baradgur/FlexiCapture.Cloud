@@ -23,8 +23,22 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
         {
             try
             {
+                
                 AssistProcessor assist = new AssistProcessor();
                 Assist serviceAssist = new Assist();
+
+                FileInfo fileInfo = null;
+
+                Documents document = serviceAssist.GetToDocumentByTaskId(task.Id);
+                var settings = SettingsTasksUnionHelper.GetSettingsByTaskId(task.Id);
+
+                string mainPath = serviceAssist.GetSettingValueByName("MainPath");
+                string resultFolder = serviceAssist.GetSettingValueByName("ResultFolder");
+                string jobPattern = serviceAssist.GetSettingValueByName("ApiUrlJobState");
+                string uploadFolder = serviceAssist.GetSettingValueByName("UploadFolder");
+
+                string downloadPath = Path.Combine(mainPath, resultFolder);
+                //string uploadPath = Path.Combine(mainPath, uploadFolder);
 
                 string planState = serviceAssist.CheckSubscriptionPlanAvailability(task.UserId);
                 if (planState != "OK")
@@ -43,10 +57,31 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 string response = assist.MakeOcr(url, json, ref error);
                 if (string.IsNullOrEmpty(response))
                 {
+                    /// Error! Put to exc. ftp
                     LogHelper.AddLog(error);
                     serviceAssist.AddErrorToDocuments(task.Id, error);
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
                     serviceAssist.UpdateTaskState(task.Id, 4);
+
+                    if (settings != null)
+                    {
+                        string filePath = Path.Combine(mainPath, document.Path);
+
+                        fileInfo = new FileInfo(filePath);
+                        var exceptionSettings =
+                            FlexiCapture.Cloud.FTPService
+                                .Helpers.TasksHelpers.FTPHelper
+                                .GetFtpExceptionSettings(settings.Id);
+
+                        var ftpConvSetting = FlexiCapture.Cloud.
+                            ServiceAssist.DBHelpers.FtpConversionSettingsHelper
+                            .GetSettingsByUserId(settings.UserId);
+
+                        string pathToPut = ftpConvSetting.MirrorInput ? settings.Path : exceptionSettings.Path;
+
+                        FTPHelper.PutFileOnFtpServer(fileInfo, document.OriginalFileName, exceptionSettings, pathToPut);
+                    }
+
                     return;
                 }
 
@@ -61,6 +96,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 }
                 else
                 {
+                    // Error! 
                     string errorText = "";
                     foreach (var ocrError in model.Errors)
                     {
@@ -69,6 +105,25 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     serviceAssist.AddErrorToDocuments(task.Id, errorText);
                     serviceAssist.UpdateTaskState(task.Id,4);
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+
+                    if (settings != null)
+                    {
+                        string filePath = Path.Combine(mainPath, document.Path);
+
+                        fileInfo = new FileInfo(filePath);
+                        var exceptionSettings =
+                            FlexiCapture.Cloud.FTPService
+                                .Helpers.TasksHelpers.FTPHelper
+                                .GetFtpExceptionSettings(settings.Id);
+
+                        var ftpConvSetting = FlexiCapture.Cloud.
+                            ServiceAssist.DBHelpers.FtpConversionSettingsHelper
+                            .GetSettingsByUserId(settings.UserId);
+
+                        string pathToPut = ftpConvSetting.MirrorInput ? settings.Path : exceptionSettings.Path;
+
+                        FTPHelper.PutFileOnFtpServer(fileInfo, document.OriginalFileName, exceptionSettings, pathToPut);
+                    }
 
                 }
             }
@@ -94,6 +149,17 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 model = JsonConvert.DeserializeObject<OcrResponseModel>(task.ResponseContent);
                 FileInfo fileInfo = null;
 
+                Documents document = serviceAssist.GetToDocumentByTaskId(task.Id);
+                var settings = SettingsTasksUnionHelper.GetSettingsByTaskId(task.Id);
+
+                string mainPath = serviceAssist.GetSettingValueByName("MainPath");
+                string resultFolder = serviceAssist.GetSettingValueByName("ResultFolder");
+                string jobPattern = serviceAssist.GetSettingValueByName("ApiUrlJobState");
+                string uploadFolder = serviceAssist.GetSettingValueByName("UploadFolder");
+
+                string downloadPath = Path.Combine(mainPath, resultFolder);
+                string uploadPath = Path.Combine(mainPath, uploadFolder);
+
                 string jobStatus = assist.GetJobStatus(model.JobUrl);
 
                 model= JsonConvert.DeserializeObject<OcrResponseModel>(jobStatus);
@@ -103,24 +169,43 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     string planState = serviceAssist.CheckSubscriptionPlan(task.UserId, model.Statistics.PagesArea);
                     if (planState != "OK")
                     {
+                        // Error!
                         serviceAssist.AddErrorToDocuments(task.Id, planState);
                         //update task
                         serviceAssist.UpdateTaskState(task.Id, 4);
                         //update documents
                         serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+
+                        if (settings != null)
+                        {
+                            string filePath = Path.Combine(uploadPath, document.Path);
+
+                            fileInfo = new FileInfo(filePath);
+                            var exceptionSettings =
+                                FlexiCapture.Cloud.FTPService
+                                    .Helpers.TasksHelpers.FTPHelper
+                                    .GetFtpExceptionSettings(settings.Id);
+
+                            var ftpConvSetting = FlexiCapture.Cloud.
+                                ServiceAssist.DBHelpers.FtpConversionSettingsHelper
+                                .GetSettingsByUserId(settings.UserId);
+
+                            string pathToPut = ftpConvSetting.MirrorInput ? settings.Path : exceptionSettings.Path;
+
+                            FTPHelper.PutFileOnFtpServer(fileInfo, document.OriginalFileName, exceptionSettings, pathToPut);
+                        }
+
+                        
+
                         return;
                     }
 
-                    string pathToDownload = serviceAssist.GetSettingValueByName("MainPath");
-                    string resultFolder = serviceAssist.GetSettingValueByName("ResultFolder");
-                    string jobPattern = serviceAssist.GetSettingValueByName("ApiUrlJobState");
-
-                    string downloadPath = Path.Combine(pathToDownload, resultFolder);
+                    
 
                     foreach (var file in model.Download)
                     {
                         string jobId = model.JobUrl.Replace(jobPattern, string.Empty);
-                        Documents document = serviceAssist.GetToDocumentByTaskId(task.Id);
+                        
                         if (document == null)
                         {
                             serviceAssist.UpdateTaskState(task.Id,4);
@@ -137,7 +222,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
 
                         fileInfo = new FileInfo(filePath);
 
-                        var settings = SettingsTasksUnionHelper.GetSettingsByTaskId(task.Id);                        
+                                               
 
                         string error = "";
                         assist.DownloadFile(file.Uri,filePath,ref error);
@@ -184,6 +269,8 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                 }
                 else if (!model.Status.Equals("Submitted"))
                 {
+                    // Error!
+                    
                     LogHelper.AddLog("Error in JobStatus: " + jobStatus);
                     string errorText = "";
                     foreach (var ocrError in model.Errors)
@@ -195,6 +282,25 @@ namespace FlexiCapture.Cloud.FTPService.Helpers.TasksHelpers
                     serviceAssist.UpdateTaskState(task.Id, 4);
                     //update documents
                     serviceAssist.UpdateDocumentStatesByTaskId(task.Id, 4);
+
+                    if (settings != null)
+                    {
+                        string filePath = Path.Combine(uploadPath, document.Path);
+
+                        fileInfo = new FileInfo(filePath);
+                        var exceptionSettings =
+                            FlexiCapture.Cloud.FTPService
+                                .Helpers.TasksHelpers.FTPHelper
+                                .GetFtpExceptionSettings(settings.Id);
+
+                        var ftpConvSetting = FlexiCapture.Cloud.
+                            ServiceAssist.DBHelpers.FtpConversionSettingsHelper
+                            .GetSettingsByUserId(settings.UserId);
+
+                        string pathToPut = ftpConvSetting.MirrorInput ? settings.Path : exceptionSettings.Path;
+
+                        FTPHelper.PutFileOnFtpServer(fileInfo, document.OriginalFileName, exceptionSettings, pathToPut);
+                    }
                 }
 
             }

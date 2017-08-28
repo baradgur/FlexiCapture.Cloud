@@ -75,3 +75,34 @@
     margin-right: 0px;
 }
 
+.btn.btn-lg.btn-primary.btn-block {
+    color: #fcbf00 !important;
+    background: #2b2c2a;
+    border-color: #2b2c2a;
+    border-radius: 0px;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-family: 'Oswald', Helvetica, Arial, Lucida, sans-serif !important;
+    text-transform: uppercase !important;
+}
+
+.btn.btn-lg.btn-success.btn-block {
+    color: #fcbf00 !important;
+    background: #2b2c2a;
+    border-color: #2b2c2a;
+    border-radius: 0px;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-family: 'Oswald', Helvetica, Arial, Lucida, sans-serif !important;
+    text-transform: uppercase !important;
+}
+
+.sharp-orange-header {
+       background-color: #edb059 !important;
+            border-top-right-radius: 0px !important; 
+     border-top-left-radius: 0px !important;
+    color: white !important;
+}
+
+
+

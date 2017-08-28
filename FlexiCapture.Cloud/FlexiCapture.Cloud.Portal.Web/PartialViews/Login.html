@@ -68,11 +68,11 @@
             </div> <!-- .container -->
         </div>
         <div class="wp-header" style="min-height: 70px;">
-            <img class="pull-left" style="width: 130px; padding-left: 10px; padding-right: 10px; margin-bottom: -15px;" src="Content/icons/Logo-OCR.-Data-capture-Cloud-Service-ABBYY-FineReader-Nuance-AnyDoc-Kofax-logo-500x300.png" />
+            <img class="pull-left" style="width: 130px; padding-left: 10px; padding-right: 10px; margin-bottom: -15px;" src="Content/icons/DataCapture.Cloud-Logo-100pixels.png" />
             <nav class="navbar portal-header pull-left" style="margin-top: 10px;">
                 <div class="container-fluid">
                     <ul class="nav navbar-nav">
-                        <li><a href="javascript:void(0)">DataCapture.cloud Portal</a></li>
+                        <li><a href="javascript:void(0)"><b>DataCapture.cloud Portal</b></a></li>
                     </ul>
                 </div>
             </nav>
@@ -90,14 +90,14 @@
             </nav>
         </div>
         <div class="container clearfix"></div>
-        
+
     </nav>
     <div class="container" id="login-container">
         <div class="row">
             <span us-spinner spinner-key="spinner-1" spinner-start-active="false"></span>
             <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
+                <div style="margin-top: 25%;" class="sharp-panel panel panel-default">
+                    <div class="panel-heading sharp-orange-header">
                         <h3 class="panel-title">Sign In</h3>
                     </div>
                     <div class="panel-body">
@@ -124,16 +124,30 @@
 
                             </div>
                             <!-- Change this to a button or input when using this as a form -->
-                            <a ng-click="loginUser()" class="btn btn-lg btn-success btn-block">Sign In</a>
+                            <div class="row">
+                                <div class="col-md-4 pull-right">
+                                    <a ng-click="loginUser()" class="btn btn-lg btn-success btn-block">Log In</a>
+                                </div>
+                            </div>
                             <!--<span us-spinner spinner-key="spinner-2"></span>-->
-
-                            <a ng-click="registrationUser()" class="btn btn-lg btn-primary btn-block">Sign Up</a>
-                            <a ng-click="restoreUser()">Forgot your passsword?</a>
-
                         </form>
                     </div>
                 </div>
             </div>
+            <!-- <div class="row">-->
+            
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="margin-left: 33.33%">
+                <div style="margin-bottom: 5px;">
+                    <a ng-click="registrationUser()" class="btn btn-lg btn-primary btn-block">New Account - Sign Up!</a>
+                </div>
+                <div>
+                    <a ng-click="restoreUser()" class="btn btn-lg btn-primary btn-block">Forgot passsword?</a>
+                </div>
+                <!--   </div>-->
+            </div>
         </div>
     </div>
+
 </div>

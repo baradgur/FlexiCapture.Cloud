@@ -8,6 +8,7 @@ using System.Linq;
 using FlexiCapture.Cloud.OCR.Assist;
 using FlexiCapture.Cloud.OCR.Assist.Models;
 using FlexiCapture.Cloud.ServiceAssist.DBHelpers;
+using FlexiCapture.Cloud.ServiceAssist.Models.SettingsModels;
 using Newtonsoft.Json;
 using FTPSettingsHelper = FlexiCapture.Cloud.Portal.Api.Helpers.ServiceSettingsHelper.FTPSettingsHelper;
 using LogHelper = FlexiCapture.Cloud.ServiceAssist.DBHelpers.LogHelper;
@@ -217,17 +218,25 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                 var originalDoc = outerTask.Documents.FirstOrDefault();
                 if (originalDoc != null)
                 {
-                    originalArchiveName = Path.GetFileNameWithoutExtension(originalDoc.OriginalFileName)+"_result";
+                    originalArchiveName = Path.GetFileNameWithoutExtension(originalDoc.OriginalFileName) + "_result";
                 }
                 else
                 { return; }
                 string fileExt = ".zip";
 
+                originalArchiveName
+
                 Guid archiveGuid = Guid.NewGuid();
                 string newName = archiveGuid.ToString() + fileExt;
+                string errorNewName = archiveGuid.ToString() + "_err" + fileExt;
+
 
                 originalArchiveName = originalArchiveName + fileExt;
+                string errorOriginalArchiveName = originalArchiveName + fileExt;
+
                 string filePath = Path.Combine(serverPath, resultFolder, newName);
+                string errorFilePath = Path.Combine(serverPath, resultFolder, errorNewName);
+                
 
                 if (hasSuccess)
                 {
@@ -246,6 +255,34 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                         }
                     }
                 }
+
+                using (ZipArchive errorZipArchive = ZipFile.Open(errorFilePath, ZipArchiveMode.Create))
+                {
+                    foreach (var zipTask in outerTask.ZipTasks)
+                    {
+                        foreach (var zipDoc in zipTask.ZipDocuments)
+                        {
+                            if (zipDoc.DocumentCategoryId == 1 && zipDoc.DocumentStateId == 4)
+                            {
+                                errorZipArchive.CreateEntryFromFile(Path
+                                    .Combine(SettingsHelper
+                                        .GetSettingValueByName("MainPath"),zipDoc.Path), 
+                                        zipDoc.OriginalFileName);
+                            }
+                            //File.Delete(Path.Combine(serverPath, zipDoc.Path));
+                        }
+                    }
+                   // ZipFile.
+
+                    
+                }
+
+                var parentErrorArchSettings = FlexiCapture.Cloud.ServiceAssist.DBHelpers.FTPSettingsHelper.GetToSettingByUserId(outerTask.UserId);
+                var errorArchSettings = FlexiCapture.Cloud.ServiceAssist.DBHelpers.FTPHelper.GetFtpExceptionSettings(parentErrorArchSettings.Id);
+
+                FTPHelper.PutFileOnFtpServer(new FileInfo(errorFilePath), errorOriginalArchiveName,
+                    errorArchSettings, errorArchSettings.Path);
+
                 // delete all unpacked files and result zip docs
                 foreach (var zipTask in outerTask.ZipTasks)
                 {

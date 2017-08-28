@@ -164,6 +164,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                         string extension = Path.GetExtension(requestModel.InputFiles[0].Name);
                         if (extension != null && extension != ".zip" && extension != ".rar" && extension != ".7z")
                         {
+                            ////////////
                             TaskHelper.ExecuteTask(notExecutedTask);
                         }
                     }
@@ -174,6 +175,7 @@ namespace FlexiCapture.Cloud.FTPService.Helpers
                 //download files
                 foreach (var processedTask in processedTasks)
                 {
+                    ////////////
                     TaskHelper.CheckStateTask(processedTask);
                     //FTPHelper.PutFileOnFtpServer(fInfo, processedTask);
                     
