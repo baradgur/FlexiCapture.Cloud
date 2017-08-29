@@ -5,7 +5,7 @@
 
 
 
-        <div class="panel panel-info">
+        <div class="panel panel-info sharp-panel">
             <div class="panel-heading sharp-orange-header"><strong>STEP1: Provide a compressed archive with images and PDFs to process</strong></div>
             <div class="panel-body row" id="tformdiv">
                 <div class="col-md-4">
@@ -54,7 +54,7 @@
             
         </div>
         <!--PROFILES-->
-        <div class="panel panel-info">
+        <div class="panel panel-info sharp-panel">
             <div class="panel-heading sharp-orange-header">
                 <div class="row">
                     <div class="col-lg-7"> <strong>STEP 2: Customize your OCR settings or select an existing Capture Profile</strong></div>
@@ -122,8 +122,8 @@
                         <!--PROFILE DETAILS-->
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">Cleanup Settings</div>
+                                <div class="panel panel-info sharp-panel">
+                                    <div class="panel-heading sharp-orange-header">Cleanup Settings</div>
                                     <!--<div class="panel-body">-->
 
                                     <ul class="list-group">
@@ -193,26 +193,26 @@
 
                                         </li>-->
                                     </ul>
-                                    <div class="panel panel-info form-group">
-                                        <div class="panel-heading">Print Types</div>
-
-                                        <ul class="list-group">
-                                            <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
-                                                {{print.Name}}
-                                                <div class="material-switch pull-right">
-                                                    <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
-                                                           checklist-change="imChanged()" />
-                                                    <label for="{{print.Name}}" class="label-success"></label>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
                                     <!--</div>-->
+                                </div>
+                                <div class="panel panel-info form-group sharp-panel">
+                                    <div class="panel-heading sharp-orange-header">Print Types</div>
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="print in currentProfile.AvailablePrintTypes">
+                                            {{print.Name}}
+                                            <div class="material-switch pull-right">
+                                                <input id="{{print.Name}}" type="checkbox" checklist-model="currentProfile.SelectedPrintTypes" checklist-value="print" checklist-comparator=".Id"
+                                                       checklist-change="imChanged()" />
+                                                <label for="{{print.Name}}" class="label-success"></label>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">OCR Settings</div>
+                                <div class="panel panel-info sharp-panel">
+                                    <div class="panel-heading sharp-orange-header">OCR Settings</div>
                                     <!--<div class="panel-body">-->
                                     <li class="list-group-item">
                                         Speed OCR
@@ -238,28 +238,27 @@
                                                     ng-model="currentProfile.SelectedAnalysisModel" aria-describedby="sizing-addon_analysis_mode"></select>
                                         </div>
                                     </li>
+                                </div>
+                                <div class="panel panel-info form-group sharp-panel">
+                                    <div class="panel-heading sharp-orange-header">Languages</div>
+                                    <input type="text" class="form-control" placeholder="Filter" ng-model="searchLangText">
+                                    <ul class="list-group" style="height: 200px; overflow-y: scroll;">
+                                        <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages | filter:searchLangText">
+                                            {{lang.Name}}
+                                            <div class="material-switch pull-right">
+                                                <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
+                                                       checklist-change="imChanged()" />
+                                                <label for="{{lang.Name}}" class="label-success"></label>
+                                            </div>
+                                        </li>
+                                    </ul>
 
-                                    <div class="panel panel-info form-group">
-                                        <div class="panel-heading">Languages</div>
-                                        <input type="text" class="form-control" placeholder="Filter" ng-model="searchLangText">
-                                        <ul class="list-group" style="height: 200px; overflow-y: scroll;">
-                                            <li class="list-group-item" ng-repeat="lang in currentProfile.AvailableLanguages | filter:searchLangText">
-                                                {{lang.Name}}
-                                                <div class="material-switch pull-right">
-                                                    <input id="{{lang.Name}}" type="checkbox" checklist-model="currentProfile.SelectedLanguages" checklist-value="lang" checklist-comparator=".Id"
-                                                           checklist-change="imChanged()"/>
-                                                    <label for="{{lang.Name}}" class="label-success"></label>
-                                                </div>
-                                            </li>
-                                        </ul>
-
-                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">Output Settings</div>
+                                <div class="panel panel-info sharp-panel">
+                                    <div class="panel-heading sharp-orange-header">Output Settings</div>
                                     <!--<div class="panel-body">-->
                                     <ul class="list-group">
                                         <li class="list-group-item" ng-repeat="format in currentProfile.AvailableExportFormats">
@@ -284,7 +283,7 @@
             </div>
         </div>
 
-        <div class="panel panel-info">
+        <div class="panel panel-info sharp-panel">
             <div class="panel-heading sharp-orange-header"><strong>STEP 3: Start Recognition</strong></div>
             <div class="panel-body">
                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadImages()" ng-disabled="files.length==0 && !pastedUrl">STEP 3: Start Conversion</button>

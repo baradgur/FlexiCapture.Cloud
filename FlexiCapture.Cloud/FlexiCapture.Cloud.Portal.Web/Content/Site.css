@@ -795,7 +795,7 @@ td .btn {
     
 }
 
-.btn {
+.btn-black-yellow {
     font-family: 'Oswald', Helvetica, Arial, Lucida, sans-serif !important;
 }
 
@@ -819,4 +819,12 @@ body {
 
 .fcc-footer > a:link {
     color: #777;
+}
+
+.panel-info {
+    border-color: #edb059 !important;
+}
+
+.panel-default {
+    border-color: #edb059 !important;
 }
