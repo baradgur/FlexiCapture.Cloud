@@ -1,10 +1,24 @@
 ﻿<div>
-
+    <div class="panel panel-info  sharp-panel">
+        <div class="panel-heading sharp-orange-header">Instructions</div>
+        <div class="panel-body">
+            <div>This service can monitor FTP location for new images and PDFs and convert them automatically to text results.</div>
+            <br />
+            <div>Text files and Searchable PDF output files can be placed into the Conversion Library and/or returned back to FTP location.</div>
+            <br />
+            <div>The service will use OCR settings and produce export file formats indicated in the default Conversion Profile.</div>
+            <br />
+            <div>
+                Supported input file formats are PDF, JPG, TIF, BMP, PCX, DCX, PNG.
+                Please use settings below to configure your FTP processing preferences.
+            </div>
+        </div>
+    </div>
     <div class="panel panel-default sharp-panel" ng-controller="ftpConversionSettingsController">
         <div class="panel-heading sharp-orange-header">FTP Conversion Settings</div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <form class="form-horizontal" name="ftpConvForm">
                         <div class="checkbox">
                             <label><input ng-model="ftpConversionSetting.AddProcessed" name="addProcessed" type="checkbox"> Add processed documents to Conversion Library</label>
@@ -18,7 +32,7 @@
                         <div class="checkbox">
                             <label><input ng-model="ftpConversionSetting.MoveProcessed" name="moveProcessed" type="checkbox"> Move processed images to “DCC_Processed” sub-folder on FTP location (otherwise processed images are deleted from FTP)</label>
                         </div>
-                        <button type="submit" style="margin: 20px;" ng-click="updateSetting()" class="btn btn-default"><span ng-show="compareFtpConversionSettings();">Saved</span><span ng-show="!compareFtpConversionSettings();">Save</span></button>
+                        <button type="submit" style="margin: 20px;" ng-click="updateSetting()" class="save-btn btn-black-yellow"><span ng-show="compareFtpConversionSettings();">Saved</span><span ng-show="!compareFtpConversionSettings();">Save</span></button>
                     </form>
                 </div>
             </div>
@@ -33,9 +47,8 @@
 
         <div class="row" ng-show="!loading">
             <div id="toolbar" ng-show="userData.UserData.UserRoleId == 1 || userData.UserData.UserRoleId == 2">
-                <button type="button" class="btn btn-primary orange-tooltip" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add New Settings Item" data-placement="bottom">
-
-                    <span class="glyphicon glyphicon-plus"></span>
+                <button type="button" class="save-btn btn-black-yellow" ng-click="gotoAddNewSetting();" data-toggle="tooltip" title="Add FTP Server Settings" data-placement="bottom">
+                    Add FTP Server Settings
                 </button>
 
             </div>
@@ -61,22 +74,6 @@
                         </tr>
                     </thead>
                 </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel panel-info  sharp-panel">
-        <div class="panel-heading sharp-orange-header">Instructions</div>
-        <div class="panel-body">
-            <div>This service can monitor FTP location for new images and PDFs and convert them automatically to text results.</div>
-            <br />
-            <div>Text files and Searchable PDF output files can be placed into the Conversion Library and/or returned back to FTP location.</div>
-            <br />
-            <div>The service will use OCR settings and produce export file formats indicated in the default Conversion Profile.</div>
-            <br />
-            <div>
-                Supported input file formats are PDF, JPG, TIF, BMP, PCX, DCX, PNG.
-                Please use settings below to configure your FTP processing preferences.
             </div>
         </div>
     </div>

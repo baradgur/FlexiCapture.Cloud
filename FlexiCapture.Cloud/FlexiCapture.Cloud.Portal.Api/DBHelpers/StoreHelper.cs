@@ -79,7 +79,8 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                                     {
                                         UserId = model.UserId,
                                         Key = guid,
-                                        IsActive = true
+                                        IsActive = true,
+                                        AppName = "Default"
                                     };
                                     db.OcrApiKeys.Add(dbApiKey);
                                 }

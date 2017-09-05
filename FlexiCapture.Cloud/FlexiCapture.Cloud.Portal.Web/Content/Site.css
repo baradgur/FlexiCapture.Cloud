@@ -809,7 +809,7 @@ body {
 }
 
 .fcc-footer {
-    margin-right: 60%;
+    margin-left: 70%;
     margin-top: 25px;
 }
 
@@ -827,4 +827,20 @@ body {
 
 .panel-default {
     border-color: #edb059 !important;
+}
+
+.ref-underline-space {
+    margin-right: 5px;
+}
+
+.save-btn.btn-black-yellow {
+    /*width: 100px;*/
+    color: #fcbf00 !important;
+    background: #2b2c2a;
+    border-color: #2b2c2a;
+    border-radius: 0px;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-family: 'Oswald', Helvetica, Arial, Lucida, sans-serif !important;
+    text-transform: uppercase !important;
 }

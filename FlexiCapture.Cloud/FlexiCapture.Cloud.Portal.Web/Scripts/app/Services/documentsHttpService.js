@@ -43,7 +43,7 @@ fccApp.service('documentsHttpService', function () {
             var origFilename = doc.OriginalFileName;
             var url = doc.Url;
             link += "<p><a id='" + doc.Id + "' href='javascript: void(0);' class='download-link'>" + ((doc.TypeName == "ZIP") ? "Results (Zip)" : doc.TypeName) +
-                " <i class='fa fa-download' aria-hidden='true'></i></a>" +
+                "<i class='fa fa-download' style='margin-left: 5px;' aria-hidden='true'></i></a>" +
                 "<a class='download-link preview' style='margin-left: 25px;' id='" + doc.Id + "' href='javascript: void(0);'><i class='fa fa-sticky-note-o'></i></a>"
                 + "</p>";//"<p><a href='" + doc.Url + "'> <i class='fa fa-download' aria-hidden='true'></i>" + doc.OriginalFileName + "</a></p>"
 
@@ -161,6 +161,7 @@ fccApp.service('documentsHttpService', function () {
             $('#table').bootstrapTable({
                 data: data,
                 height: '100%',
+                pageList: [10, 25, 50, 100],
                 onPostBody: function () {
                     $('#table').bootstrapTable('resetView');
                 }

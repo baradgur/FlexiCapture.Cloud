@@ -224,7 +224,7 @@ namespace FlexiCapture.Cloud.ZipService.Helpers.TaskHelpers
                 { return; }
                 string fileExt = ".zip";
 
-                originalArchiveName
+                //originalArchiveName
 
                 Guid archiveGuid = Guid.NewGuid();
                 string newName = archiveGuid.ToString() + fileExt;

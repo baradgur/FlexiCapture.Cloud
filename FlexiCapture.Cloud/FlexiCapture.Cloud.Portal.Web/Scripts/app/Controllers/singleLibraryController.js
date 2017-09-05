@@ -9,7 +9,7 @@ function actionFormatterSingleLibrary(value, row, index) {
 
 function downloadFormatterLibrary(value, row, index) {
     return [
-        "<a class='download-link' href ='javascript: void(0)'><i class='fa fa-download' aria-hidden='true'></i> Original File</a>"
+        "<a id='table3' class='download-link' href ='javascript: void(0)'><i class='fa fa-download' style='margin-right: 3px;' aria-hidden='true'></i>Original File</a>"
        
         
     ].join('');

@@ -18,7 +18,7 @@ function deleteFormatterFileBatchLibrary(value, row, index) {
 
 function downloadFormatterLibrary(value, row, index) {
     return [
-        "<a class='download-link' href ='javascript: void(0)'><i class='fa fa-download' aria-hidden='true'></i> Original File(s)</a>"
+        "<a id='table4' class='download-link' href ='javascript: void(0)'><i class='fa fa-download' aria-hidden='true'></i> Original File(s)</a>"
 
     ].join('');
 }

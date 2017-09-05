@@ -38,6 +38,8 @@
             $('#table').bootstrapTable({
                 data: data,
                 height: '100%',
+                pagination: true,
+                pageList: [10, 25, 50, 100],
                 onPostBody: function () {
                     $('#table').bootstrapTable('resetView');
                 }

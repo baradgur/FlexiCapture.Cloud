@@ -1,5 +1,5 @@
 function actionFormatterKey(value, row, index) {
-    if (row.keyState == "Active") {
+    if (row.keyState != "Active") {
         return [
         '<button class="btn btn-warning orange-tooltip edit-key" href="javascript:void(0)" title="Disable key" style=" text-align: center;" ',
         'data-toggle="tooltip" title="Disable key"  data-placement="bottom">',
@@ -31,6 +31,10 @@ var onlineWebOcrSettingsController = function ($scope, $http, $location, $state,
     var url = $$ApiUrl + "/OcrApiKeys";
     $scope.apiKeys = [];
 
+    $scope.apiKey = {
+        AppName: ""
+    }
+
     $window.actionEventsKey = {
         'click .edit-key': function (e, value, row, index) {
             $scope.updateKey(row);
@@ -57,7 +61,32 @@ var onlineWebOcrSettingsController = function ($scope, $http, $location, $state,
 
     $scope.addNewKey = function () {
         $scope.apiKey = { UserId: $scope.userData.UserData.Id };
-        onlineWebOcrSettingsHttpService.manageKey($http, $scope, data, url, usSpinnerService, false);
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'PartialViews/OcrKeyManagement.html',
+            controller: onlineWebOcrSettingsManagementController,
+            controllerAs: 'vm',
+            scope: $scope,
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
+            }
+        });
+
+        modalInstance.result.then(function () {
+
+            //$scope.apiKey = ($scope.apiKey !== undefined)
+            //    ? $scope.choosedUserId
+            //    : $scope.userData.UserData.Id;
+
+
+            onlineWebOcrSettingsHttpService.manageKey($http, $scope, data, url, usSpinnerService, false);
+        }, function () {
+
+        });
+
+        
     }
 
     var onlineWebOcrSettings = function() {

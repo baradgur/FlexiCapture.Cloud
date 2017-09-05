@@ -1,0 +1,33 @@
+﻿<div>
+    <div class="modal-header-primary">
+        <h3>New Ocr API Key</h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" name="settingForm" id="settingForm" role="form" novalidate>
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[settingForm.appName.$invalid && (settingForm.appName.$touched || submitted)]">
+                        <label style="margin-top: 5px;" class="col-sm-3 text-left">App Name</label>
+                        <div class="col-sm-9">
+                            <input id="app-name" type="text" name="appName" class="form-control" placeholder="App name"
+                                   data-toggle="tooltip" data-placement="top"
+                                   ng-model="apiKey.AppName" required>
+                            <div class="help-block" ng-messages="settingForm.appName.$error" ng-if="settingForm.appName.$touched || submitted">
+                                <div ng-message="required">Field "Host" must be filled</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div style="padding-right: 0px;" class="form-group col-md-12 text-right">
+                            <button style="width: 70px;" type="submit" ng-click="vm.confirm(settingForm.appName);" class="btn btn-default">Add</button>
+                            <button type="button" class="btn btn-primary btn-outline" ng-click="vm.cancel();">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

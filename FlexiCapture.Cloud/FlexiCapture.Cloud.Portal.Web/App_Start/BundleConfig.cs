@@ -115,7 +115,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/emailSettingsController.js",
                 "~/Scripts/app/Controllers/emailSettingManageController.js",
                 "~/Scripts/app/Controllers/emailResponseSettingsController.js",
-                
+
+                "~/Scripts/app/Controllers/onlineWebOcrSettingsManagementController.js",
                 "~/Scripts/app/Controllers/onlineWebOcrSettingsController.js",
 
                 "~/Scripts/app/Controllers/storeController.js",

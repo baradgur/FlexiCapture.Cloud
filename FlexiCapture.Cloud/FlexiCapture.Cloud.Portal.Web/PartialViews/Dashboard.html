@@ -125,11 +125,11 @@
                 <li ng-show="userData.UserData.UserRoleId==1 || userData.UserData.UserRoleId==4" style="padding: 15px; min-height: 50px;"></li>
                 <li class="dropdown" ng-show="userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        <span ng-if="serviceStateId==1"><i class="fa fa-file-o fa-fw"></i> <b>Single File Conversion</b></span>
-                        <span ng-if="serviceStateId==2"><i class="fa fa-file-archive-o fa-fw"></i> <b>Batch File Conversion</b></span>
-                        <span ng-if="serviceStateId==3"><i class="fa fa-hdd-o fa-fw"></i> <b>FTP Conversion</b></span>
-                        <span ng-if="serviceStateId==4"><i class="fa fa-envelope-o fa-fw"></i> <b>E-mail Attachment Conversion</b></span>
-                        <span ng-if="serviceStateId==7"><i class="fa fa-exchange fa-fw"></i> <b>Online Web OCR API</b></span>
+                        <span ng-if="serviceStateId==1"><i class="fa fa-file-o fa-fw ref-underline-space"></i><b>Single File Conversion</b></span>
+                        <span ng-if="serviceStateId==2"><i class="fa fa-file-archive-o fa-fw ref-underline-space"></i><b>Batch File Conversion</b></span>
+                        <span ng-if="serviceStateId==3"><i class="fa fa-hdd-o fa-fw ref-underline-space"></i><b>FTP Conversion</b></span>
+                        <span ng-if="serviceStateId==4"><i class="fa fa-envelope-o fa-fw ref-underline-space"></i><b>E-mail Attachment Conversion</b></span>
+                        <span ng-if="serviceStateId==7"><i class="fa fa-exchange fa-fw ref-underline-space"></i><b>Online Web OCR API</b></span>
                         <!--<span ng-if="serviceStateId!=1 && serviceStateId!=2 && serviceStateId!=3 && serviceStateId!=4"><b>Services</b></span>-->
                         <i class="fa fa-caret-down"></i>
                     </a>
@@ -139,7 +139,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" href="" ng-click="selectService(1, 'singleSer', userData.ServiceData.SingleFileConversionService);">
-                                        <i class="fa fa-file-o fa-fw"></i> Single File Conversion
+                                        <i class="fa fa-file-o fa-fw ref-underline-space"></i>Single File Conversion
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -156,7 +156,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" href="" ng-click="selectService(2, 'batchCon', userData.ServiceData.BatchFileConversionService);">
-                                        <i class="fa fa-file-archive-o fa-fw"></i> Batch File Conversion
+                                        <i class="fa fa-file-archive-o fa-fw ref-underline-space"></i>Batch File Conversion
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -174,7 +174,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" href="" ng-click="selectService(4, 'emailAtt', userData.ServiceData.EmailAttachmentFileConversionService);">
-                                        <i class="fa fa-envelope-o fa-fw"></i> E-mail Attachment Conversion
+                                        <i class="fa fa-envelope-o fa-fw ref-underline-space"></i>E-mail Attachment Conversion
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -192,7 +192,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" href="" ng-click="selectService(3, 'ftpCon', userData.ServiceData.FTPFileConversionService);">
-                                        <i class="fa fa-hdd-o fa-fw"></i> FTP Conversion
+                                        <i class="fa fa-hdd-o fa-fw ref-underline-space"></i>FTP Conversion
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -210,7 +210,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'cloudCon');">
-                                        <i class="fa fa-cloud-upload fa-fw"></i> Cloud Storage Conversion
+                                        <i class="fa fa-cloud-upload fa-fw ref-underline-space"></i>Cloud Storage Conversion
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -226,7 +226,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'agentCon');">
-                                        <i class="fa fa-desktop fa-fw"></i> Windows/Mac/Linux Conversion Agent
+                                        <i class="fa fa-desktop fa-fw ref-underline-space"></i>Windows/Mac/Linux Conversion Agent
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -242,7 +242,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" href="" ng-click="selectService(7, 'webOcr', userData.ServiceData.OnlineWebOcrApiService);">
-                                        <i class="fa fa fa-exchange fa-fw"></i> Online Web OCR API
+                                        <i class="fa fa fa-exchange fa-fw ref-underline-space"></i>Online Web OCR API
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -260,7 +260,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'dataForm')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Data Capture & Form Processing
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space"></i>Data Capture & Form Processing
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -276,7 +276,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'mobileCap')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Mobile Image Capture Front End
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space"></i>Mobile Image Capture Front End
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -292,7 +292,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'verVal')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Verification & Validation Front End
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space"></i>Verification & Validation Front End
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -308,7 +308,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'mailRoom')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Document Sorting/Mailroom
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space"></i>Document Sorting/Mailroom
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -324,7 +324,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'efCap')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Electronic Forms Capture
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space"></i>Electronic Forms Capture
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -340,7 +340,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'scrapNorm')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Data Scraping and Normalization
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space ref-underline-space"></i>Data Scraping and Normalization
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -356,7 +356,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'translation')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> Translation
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space"></i>Translation
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -372,7 +372,7 @@
                             <div class="row">
                                 <div class="col-lg-9">
                                     <a class="padding-5" ng-click="selectService(6, 'digitEye')">
-                                        <i class="fa fa-file-text-o fa-fw"></i> DigitEYE Desktop Lamp & Document Scanner
+                                        <i class="fa fa-file-text-o fa-fw ref-underline-space"></i>DigitEYE Desktop Lamp & Document Scanner
                                     </a>
                                 </div>
                                 <div class="col-lg-3">
@@ -392,27 +392,27 @@
             </ul>
 
             <ul class="nav navbar-top-links navbar-right hidden-xs">
-                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart fa-fw"></i> Services Store</a>
+                <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart fa-fw ref-underline-space"></i>Services Store</a>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw ref-underline-space"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b> </a>
+                            <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw ref-underline-space ref-underline-space"></i>Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b> </a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId==2">
-                            <a ui-sref="main.dashboard.users"><i class="fa fa-users fa-fw"></i> Users</a>
+                            <a ui-sref="main.dashboard.users"><i class="fa fa-users fa-fw ref-underline-space ref-underline-space"></i>Users</a>
                         </li>
 
                         <li ng-if="userData.UserData.UserRoleId == 2">
-                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications Preferences</a>
+                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell fa-fw ref-underline-space" aria-hidden="true"></i>Notifications Preferences</a>
                         </li>
 
                         <li ng-if="userData.UserData.UserRoleId == 2">
-                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd fa-fw" aria-hidden="true"></i> Upgrade to Paid Plan</a>
+                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd fa-fw ref-underline-space" aria-hidden="true"></i>Upgrade to Paid Plan</a>
                         </li>
                         <li class="divider visible-sm"></li>
                         <li class="visible-sm"><a href="http://www.datacapture.cloud/">Home</a></li>
@@ -422,7 +422,7 @@
                         <li class="visible-sm"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="divider"></li>
                         <li>
-                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
+                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw ref-underline-space"></i>Exit</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -437,29 +437,29 @@
                     <ul class="nav" id="side-menu" ng-show="userData.UserData.UserRoleId==1">
 
                         <li>
-                            <a ui-sref="main.dashboard.users"><i class="fa fa-users fa-fw"></i> Users</a>
+                            <a ui-sref="main.dashboard.users"><i class="fa fa-users fa-fw ref-underline-space"></i>Users</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.adminSettings"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            <a ui-sref="main.dashboard.adminSettings"><i class="fa fa-gear fa-fw ref-underline-space"></i>Settings</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.systemSettings"><i class="fa fa-database fa-fw"></i> System Settings</a>
+                            <a ui-sref="main.dashboard.systemSettings"><i class="fa fa-database fa-fw ref-underline-space"></i>System Settings</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.adminStatistics"><i class="fa fa-pie-chart fa-fw"></i> Statistics</a>
+                            <a ui-sref="main.dashboard.adminStatistics"><i class="fa fa-pie-chart fa-fw ref-underline-space"></i>Statistics</a>
                         </li>
 
                         <li>
-                            <a ui-sref="main.dashboard.subscriptionsPlansLibrary"><i class="fa fa-bell fa-fw"></i> Subscription plans</a>
+                            <a ui-sref="main.dashboard.subscriptionsPlansLibrary"><i class="fa fa-bell fa-fw ref-underline-space"></i>Subscription plans</a>
                         </li>
                         <li>
-                            <a ui-sref="main.dashboard.communication"><i class="fa fa-commenting fa-fw"></i> Communication</a>
+                            <a ui-sref="main.dashboard.communication"><i class="fa fa-commenting fa-fw ref-underline-space"></i>Communication</a>
                         </li>
                         <li>
-                            <a ui-sref="main.dashboard.log"><i class="fa fa-list-alt fa-fw"></i> Log</a>
+                            <a ui-sref="main.dashboard.log"><i class="fa fa-list-alt fa-fw ref-underline-space"></i>Log</a>
                         </li>
                     </ul>
 
@@ -470,19 +470,19 @@
                         && serviceStateId==1">
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.single')}">
-                            <a ui-sref="main.dashboard.single"><i class="fa fa-eye fa-fw"></i> Convert Document</a>
+                            <a ui-sref="main.dashboard.single"><i class="fa fa-eye fa-fw ref-underline-space"></i>Convert Document</a>
                         </li>
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw ref-underline-space"></i>Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.singleprofile')}">
-                            <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.singleprofile"><i class="fa fa-bolt fa-fw ref-underline-space"></i>Conversion Profile(s)</a>
                         </li>
 
                         <!--<li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.singlesettings')}">
-                            <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear"></i> Service Settings</a>
+                            <a ui-sref="main.dashboard.singlesettings"><i class="fa fa-gear ref-underline-space"></i>Service Settings</a>
                         </li>-->
 
                     </ul>
@@ -493,19 +493,19 @@
                         && serviceStateId==2">
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.batch')}">
-                            <a ui-sref="main.dashboard.batch"><i class="fa fa-file-archive-o fa-fw"></i> Load Batch</a>
+                            <a ui-sref="main.dashboard.batch"><i class="fa fa-file-archive-o fa-fw ref-underline-space"></i>Load Batch</a>
                         </li>
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw ref-underline-space"></i>Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.batchprofile')}">
-                            <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.batchprofile"><i class="fa fa-bolt fa-fw ref-underline-space"></i>Conversion Profile(s)</a>
                         </li>
 
                         <!--<li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.batchsettings')}">
-                            <a ui-sref="main.dashboard.batchsettings"><i class="fa fa-gear"></i> Service Settings</a>
+                            <a ui-sref="main.dashboard.batchsettings"><i class="fa fa-gear ref-underline-space"></i>Service Settings</a>
                         </li>-->
                     </ul>
                     <!--end BATCh-->
@@ -516,15 +516,15 @@
 
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw ref-underline-space"></i>Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.emailprofile')}">
-                            <a ui-sref="main.dashboard.emailprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.emailprofile"><i class="fa fa-bolt fa-fw ref-underline-space"></i>Conversion Profile(s)</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.emailsettings')}">
-                            <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear fa-fw"></i> Service Settings</a>
+                            <a ui-sref="main.dashboard.emailsettings"><i class="fa fa-gear fa-fw ref-underline-space"></i>Service Settings</a>
                         </li>
                     </ul>
                     <!--end EMAIL-->
@@ -535,15 +535,15 @@
 
 
                         <li ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.library')}">
-                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw"></i> Conversion Library</a>
+                            <a ui-sref="main.dashboard.library"><i class="fa fa-list fa-fw ref-underline-space"></i>Conversion Library</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId!=4" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.ftpprofile')}">
-                            <a ui-sref="main.dashboard.ftpprofile"><i class="fa fa-bolt fa-fw"></i> Conversion Profile(s)</a>
+                            <a ui-sref="main.dashboard.ftpprofile"><i class="fa fa-bolt fa-fw ref-underline-space"></i>Conversion Profile(s)</a>
                         </li>
 
                         <li ng-show="userData.UserData.UserRoleId==2" ng-class="{'highlighted-service-menu': $state.includes('main.dashboard.ftpsettings')}">
-                            <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear fa-fw"></i> Service Settings</a>
+                            <a ui-sref="main.dashboard.ftpsettings"><i class="fa fa-gear fa-fw ref-underline-space"></i>Service Settings</a>
                         </li>
                     </ul>
                     <!--end FTP-->
@@ -552,7 +552,7 @@
                         && $state.includes('main.dashboard.profile') && serviceStateId==5">
 
                         <li>
-                            <a ui-sref="main.dashboard.profile"><i class="fa fa-user fa-fw"></i> Profile Details</a>
+                            <a ui-sref="main.dashboard.profile"><i class="fa fa-user fa-fw ref-underline-space"></i>Profile Details</a>
                         </li>
 
                     </ul>
@@ -562,29 +562,29 @@
                         && $state.includes('main.dashboard.store') && serviceStateId==6">
 
                         <li>
-                            <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart fa-fw"></i> Store Details</a>
+                            <a ui-sref="main.dashboard.store"><i class="fa fa-shopping-cart fa-fw ref-underline-space"></i>Store Details</a>
                         </li>
 
                     </ul>
                     <ul class="nav" id="side-menu" ng-show="(userData.UserData.UserRoleId==3 || userData.UserData.UserRoleId==2)">
                         <li class="divider visible-xs"></li>
                         <li class="visible-xs">
-                            <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart"></i> Services Store</a>
+                            <a ng-click="selectService(6);" ng-if="userData.UserData.UserRoleId==2"><i class="fa fa-shopping-cart ref-underline-space"></i>Services Store</a>
                         </li>
                         <li class="visible-xs">
-                            <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw"></i> Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b> </a>
-                        </li>
-
-                        <li class="visible-xs">
-                            <a href="javascript: void(0);"><i class="fa fa-gear fa-fw"></i> Account Settings</a>
+                            <a ui-sref="main.dashboard.profile"> <i class="fa fa-user fa-fw ref-underline-space"></i>Profile <b>{{userData.UserData.FirstName}} {{userData.UserData.LastName}}</b> </a>
                         </li>
 
                         <li class="visible-xs">
-                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell fa-fw" aria-hidden="true"></i> Notifications Preferences</a>
+                            <a href="javascript: void(0);"><i class="fa fa-gear fa-fw ref-underline-space"></i>Account Settings</a>
                         </li>
 
                         <li class="visible-xs">
-                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd fa-fw" aria-hidden="true"></i> Upgrade to Paid Plan</a>
+                            <a ui-sref="main.dashboard.notifPref"><i class="fa fa-bell fa-fw" aria-hidden="true ref-underline-space"></i>Notifications Preferences</a>
+                        </li>
+
+                        <li class="visible-xs">
+                            <a ui-sref="main.dashboard.subscr"><i class="fa fa-usd fa-fw" aria-hidden="true ref-underline-space"></i>Upgrade to Paid Plan</a>
                         </li>
                     </ul>
                     <ul class="nav" id="side-menu">
@@ -596,7 +596,7 @@
                         <li class="visible-xs"><a href="#"><i class="fa fa-search fa-fw"></i></a></li>
                         <li class="divider visible-xs"></li>
                         <li class="visible-xs">
-                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw"></i> Exit</a>
+                            <a ng-click="exitQuestion();"><i class="fa fa-sign-out fa-fw ref-underline-space"></i>Exit</a>
                         </li>
                     </ul>
                     <!--end PROFILE-->

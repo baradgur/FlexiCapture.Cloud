@@ -231,6 +231,7 @@
     <Content Include="PartialViews\AdminSettings.html" />
     <Content Include="PartialViews\Modals\NewPlan.html" />
     <Content Include="PartialViews\NotificationsPreferences.html" />
+    <Content Include="PartialViews\OcrKeyManagement.html" />
     <Content Include="PartialViews\OnlineWebOcrSettings.html" />
     <Content Include="PartialViews\SingleFileConversion.html" />
     <Content Include="PartialViews\SingleLibrary.html" />
@@ -283,6 +284,7 @@
     <Content Include="Scripts\app\Controllers\downloadResultsController.js" />
     <Content Include="Scripts\app\Controllers\notificationsPreferencesController.js" />
     <Content Include="Scripts\app\Controllers\onlineWebOcrSettingsController.js" />
+    <Content Include="Scripts\app\Controllers\onlineWebOcrSettingsManagementController.js" />
     <Content Include="Scripts\app\Controllers\singleFileConversionController.js" />
     <Content Include="Scripts\app\Controllers\singleLibraryController.js" />
     <Content Include="Scripts\app\Controllers\singleProfileController.js" />

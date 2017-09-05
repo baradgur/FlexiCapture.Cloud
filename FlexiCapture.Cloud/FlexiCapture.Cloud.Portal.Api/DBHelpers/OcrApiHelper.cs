@@ -19,7 +19,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
         /// insert guid to user in ocr.api database
         /// </summary>
         /// <returns></returns>
-        public static string InsertGuid(string guid)
+        public static string InsertGuid(string guid, string appName = "Default")
         {
             try
             {
@@ -29,7 +29,9 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                     ApiKey key = new ApiKey()
                     {
                         IsActive = true,
-                        Key = guid
+                        Key = guid,
+                        AppName = appName,
+                        CreationDate = DateTime.Now
                     };
 
                     db.ApiKey.Add(key);
@@ -136,7 +138,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         AppName = model.AppName
                     };
 
-                    string guid = InsertGuid(dbKey.Key);
+                    string guid = InsertGuid(dbKey.Key, dbKey.AppName);
 
                     if (!guid.IsNullOrWhiteSpace())
                     {

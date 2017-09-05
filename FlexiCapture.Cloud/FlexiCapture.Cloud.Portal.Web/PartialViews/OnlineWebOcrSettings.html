@@ -16,9 +16,9 @@
 
         <div class="row" ng-show="!loading">
             <div id="toolbar">
-                <button type="button" class="btn btn-primary orange-tooltip" ng-click="addNewKey();" data-toggle="tooltip" title="Add New OcrApi Key" data-placement="bottom">
-
-                    <span class="glyphicon glyphicon-plus"></span>
+                <button type="button" class="save-btn btn-black-yellow" ng-click="addNewKey();">
+                    Add OCR API Key
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
                 </button>
             </div>
 
@@ -32,10 +32,10 @@
                             <th data-field="viewId" data-sortable="true">Id</th>
                             <th data-field="keyKey" data-sortable="true">Key</th>
                             <th data-field="keyState" data-sortable="true">State</th>
-                            <th data-field="isActive" data-sortable="true">Is Active</th>
+                            <!--<th data-field="isActive" data-sortable="true">Is Active</th>-->
                             <th data-field="creationDate" data-sortable="true">Creation Date</th>
                             <th data-field="appName" data-sortable="true">App Name</th>
-                            <th data-field="update" data-switchable="false" data-formatter="actionFormatterKey" data-events="actionEventsKey" data-width="5%" style="text-align: center;"></th>
+                            <th data-field="update" data-switchable="false" data-formatter="actionFormatterKey" data-events="actionEventsKey" data-width="5%" style="text-align: center;">Turn On/Off</th>
                             <th data-field="delete" data-switchable="false" data-formatter="actionFormatterDeleteKey" data-events="actionEventsKey" data-width="5%" style="text-align: center;"></th>
                         </tr>
                     </thead>
