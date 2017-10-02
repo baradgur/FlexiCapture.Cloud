@@ -157,3 +157,6 @@ $RECYCLE.BIN/
 /FlexiCapture.Cloud/.vs/config/applicationhost.config
 /FlexiCapture.Cloud/FlexiCapture.Cloud.Portal.Api/data
 /FlexiCapture.Cloud/FlexiCapture.Cloud.Portal.Api/DB_OcrApi
+/FlexiCapture.Cloud/FlexiCapture.Cloud.PaymentAgent
+/FlexiCapture.Cloud/FlexiCapture.Cloud.Portal.Api/DB
+/FlexiCapture.Cloud/FlexiCapture.Cloud.Portal.Api/DB_PaymentAgent

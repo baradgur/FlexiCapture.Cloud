@@ -171,6 +171,11 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageUserProfileController.cs" />
     <Compile Include="Controllers\OcrApiKeysController.cs" />
+    <Compile Include="Controllers\PaymentControllers\TransactionsController.cs" />
+    <Compile Include="Controllers\PaymentControllers\RecurringTransactionsController.cs" />
+    <Compile Include="Controllers\PaymentControllers\MerchantDetailsController.cs" />
+    <Compile Include="Controllers\PaymentControllers\CardsController.cs" />
+    <Compile Include="Controllers\PaymentControllers\VaultController.cs" />
     <Compile Include="Controllers\RestoreDataController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
@@ -181,6 +186,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UsersManagmentController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DBHelpers\CardHelper.cs" />
     <Compile Include="DBHelpers\CommunicationHelper.cs" />
     <Compile Include="DBHelpers\ConfirmationEmailHelper.cs" />
     <Compile Include="DBHelpers\DefaultProfileHelper.cs" />
@@ -196,6 +202,12 @@
     <Compile Include="DBHelpers\StoreHelper.cs" />
     <Compile Include="DBHelpers\SubscriptionPlansHelper.cs" />
     <Compile Include="DBHelpers\TasksHelper.cs" />
+    <Compile Include="DBHelpers\UoF\Interfaces\IRepository.cs" />
+    <Compile Include="DBHelpers\UoF\PaymentRepoUoF.cs" />
+    <Compile Include="DBHelpers\UoF\Repositories\CardRepository.cs" />
+    <Compile Include="DBHelpers\UoF\Repositories\MerchantDetailRepository.cs" />
+    <Compile Include="DBHelpers\UoF\Repositories\RecurringTransactionRepository.cs" />
+    <Compile Include="DBHelpers\UoF\Repositories\TransactionRepository.cs" />
     <Compile Include="DBHelpers\UserServiceDataHelper.cs" />
     <Compile Include="DBHelpers\UsersHelper.cs" />
     <Compile Include="DB\AnalysisModeCatalog.cs">
@@ -222,7 +234,22 @@
     <Compile Include="DB\ExportFormatsCatalog.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\FCCPortalEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCPortalEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\FCCPortalModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCPortalEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FCCPortalEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCPortalEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FCCPortalModel.Context1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FCCPortalModel.Context.tt</DependentUpon>
@@ -237,10 +264,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB\FCCPortalModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FCCPortalModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\FTPConversionSettings.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\FTPSettings.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\FTPSettingsTasksUnion.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DB\FTPSettingsTypes.cs">
@@ -336,6 +376,9 @@
     <Compile Include="DB\UserSettings.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\Vault.cs">
+      <DependentUpon>FCCPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\ZipDocuments.cs">
       <DependentUpon>FCCPortalModel.tt</DependentUpon>
     </Compile>
@@ -378,6 +421,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OcrApiModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DB_PaymentAgent\PaymentAgentModels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaymentAgentModels.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -407,6 +455,7 @@
     <Compile Include="Helpers\StoreHelpers\StoreHelper.cs" />
     <Compile Include="Helpers\UserProfileHelpers\UserProfileHelper.cs" />
     <Compile Include="Helpers\UserServiceDataHelpers\UserServiceDataHelper.cs" />
+    <Compile Include="Helpers\PaymentAndTransactionsHelpers\VaultHelper.cs" />
     <Compile Include="Models\Areas\AreaMapModel.cs" />
     <Compile Include="Models\Catalogs\RotationTypeModel.cs" />
     <Compile Include="Models\Catalogs\AnalysisModeModel.cs" />
@@ -421,6 +470,8 @@
     <Compile Include="Models\GeneralModels\CaptchaResponseModel.cs" />
     <Compile Include="Models\GeneralModels\NewProfileModel.cs" />
     <Compile Include="Models\OcrApiKeyModels\OcrApiKeyModel.cs" />
+    <Compile Include="Models\PaypalModels\Transaction.cs" />
+    <Compile Include="Models\PaypalModels\VaultUserPair.cs" />
     <Compile Include="Models\SettingsModels\EmailResponseSettingsModel.cs" />
     <Compile Include="Models\SettingsModels\EmailSettingsModel.cs" />
     <Compile Include="Models\SettingsModels\FTPConnectionCheckResultModel.cs" />
@@ -459,15 +510,23 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DB\FCCPortalModel.Context.tt">
+    <Content Include="DB\FCCPortalEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel.Context.cs</LastGenOutput>
+      <LastGenOutput>FCCPortalEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\FCCPortalEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FCCPortalEntities.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\FCCPortalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FCCPortalModel.Context1.cs</LastGenOutput>
     </Content>
     <Content Include="DB\FCCPortalModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
-      <LastGenOutput>FCCPortalModel.cs</LastGenOutput>
+      <LastGenOutput>FCCPortalModel1.cs</LastGenOutput>
     </Content>
     <Content Include="DB_OcrApi\OcrApiModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -504,10 +563,17 @@
     </Content>
     <EntityDeploy Include="DB\FCCPortalModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FCCPortalModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>FCCPortalModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="DB\FCCPortalModel.edmx.diagram">
       <DependentUpon>FCCPortalModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="DB_PaymentAgent\PaymentAgentModels.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PaymentAgentModels.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DB_PaymentAgent\PaymentAgentModels.edmx.diagram">
+      <DependentUpon>PaymentAgentModels.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -552,6 +618,10 @@
     <ProjectReference Include="..\FlexiCapture.Cloud.OCR.Assist\FlexiCapture.Cloud.OCR.Assist.csproj">
       <Project>{5cdf763b-ee3e-4d85-a30b-1d37019aa39d}</Project>
       <Name>FlexiCapture.Cloud.OCR.Assist</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlexiCapture.Cloud.PaymentAssist\FlexiCapture.Cloud.PaymentAssist.csproj">
+      <Project>{eb73f51e-7b52-4e38-923d-f85aae2d7ede}</Project>
+      <Name>FlexiCapture.Cloud.PaymentAssist</Name>
     </ProjectReference>
     <ProjectReference Include="..\FlexiCapture.Cloud.ServiceAssist\FlexiCapture.Cloud.ServiceAssist.csproj">
       <Project>{C1E88B07-11E1-4421-8577-818DD384B5EA}</Project>

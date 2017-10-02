@@ -1,0 +1,162 @@
+﻿<div>
+    <div class="modal-header-primary">
+        <h3>Card info adding</h3>
+
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                
+                <form class="form-horizontal" name="cardForm" id="cardForm" role="form" novalidate>
+                    
+                    <!--
+                        *
+                        * CARD NUMBER
+                        *
+                    -->
+
+                    <div class="form-group" ng-class="{ true: 'has-error'}[cardForm.number.$invalid && (cardForm.number.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Number</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                   name="creditCard"
+                                   ng-model="cardInfo.number"
+                                   required
+                                   data-credit-card-type
+                                   data-ng-pattern="/^[0-9]+$/"
+                                   data-ng-minlength="15"
+                                   maxlength="19"
+                                   placeholder="Card Number" ><!--{{cardInfo.type}}-->
+                            <!--<li ng-show="paymentForm.creditCard.$error.minlength">Credit card must be 15-19 digits</li>
+                            <li ng-show="paymentForm.creditCard.$error.pattern">Credit card must consist of only numbers</li>
+                            <li ng-show="paymentForm.creditCard.$error.invalid">Credit card must be a valid Amex, Visa, Discover, or Master Card</li>
+                            <li ng-show="paymentForm.creditCard.$error.required">Credit card required</li>-->
+                            <div class="help-block" ng-messages="cardForm.number.$error.minlength" ng-if="cardForm.number.$touched || submitted">
+                                <div ng-message="required">Credit card must be 15-19 digits</div>
+                            </div>
+                            <div class="help-block" ng-messages="cardForm.number.$error.pattern" ng-if="cardForm.number.$touched || submitted">
+                                <div ng-message="required">Credit card must consist of only numbers</div>
+                            </div>
+                            <div class="help-block" ng-messages="cardForm.number.$error.invalid" ng-if="cardForm.number.$touched || submitted">
+                                <div ng-message="required">Credit card must be a valid Amex, Visa, Discover, or Master Card</div>
+                            </div>
+                            <div class="help-block" ng-messages="cardForm.number.$error.required" ng-if="cardForm.number.$touched || submitted">
+                                <div ng-message="required">Credit card required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+                        *
+                        * FIRST NAME
+                        *
+                    -->
+                    <div class="form-group" ng-class="{ true: 'has-error'}[cardForm.firstName.$invalid && (cardForm.firstName.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">First Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" 
+                                   name="firstName" class="form-control" placeholder="" ng-model="cardInfo.first_name" required>
+                            <div class="help-block" ng-messages="cardForm.firstName.$error" ng-if="cardForm.firstName.$touched || submitted || cardForm.firstName.$error.pattern">
+                                <div ng-message="required">Field "First Name" must be filled</div>
+                            </div>
+
+                            <div class="help-block" ng-if="cardForm.firstName.$error.pattern">
+                                <div>Correct input value</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+                        *
+                        * LAST NAME
+                        *
+                    -->
+                    <div class="form-group" ng-class="{ true: 'has-error'}[cardForm.lastName.$invalid && (cardForm.lastName.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Last Name</label>
+                        <div class="col-sm-7">
+                            <input id="path-toggle" type="text" data-toggle="tooltip" data-placement="top" title="e. g.: /public_html/ftp_service_test/input/ for root folder use /."
+                                   name="path" class="form-control" ng-model="cardInfo.last_name" required>
+                            <div class="help-block" ng-messages="cardForm.lastName.$error" ng-if="cardForm.lastName.$touched || submitted || cardForm.lastName.$error.pattern">
+                                <div ng-message="required">Field "Path" must be filled</div>
+                            </div>
+
+                            <div class="help-block" ng-if="cardForm.lastName.$error.pattern">
+                                <div>Correct input value</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--
+                        *
+                        * SECURITY CODE
+                        *
+                    -->
+                    <div class="form-group" ng-class="{ true: 'has-error'}[cardForm.securityCode.$invalid && (cardForm.securityCode.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Security code</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                   name="securityCode"
+                                   ng-model="cardInfo.cvv2"
+                                   placeholder="CCV"
+                                   required
+                                   data-ng-pattern="/^[0-9]+$/"
+                                   data-ng-minlength="3"
+                                   maxlength="4">
+                            <div class="help-block" ng-messages="cardForm.securityCode.$error" ng-if="cardForm.securityCode.$touched || submitted">
+                                <div ng-message="number">Please enter correct port</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+                        *
+                        * EXPIRATION MONTH
+                        *
+                    -->
+                    <div class="form-group" ng-class="{ true: 'has-error'}[cardForm.expMonth.$invalid && (cardForm.expMonth.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Expiration month</label>
+                        <div class="col-sm-7">
+                            <select ng-model="cardInfo.expire_month" name="month" data-card-expiration required>
+                                <option disabled selected value="">Month</option>
+                                <option ng-repeat="month in months" value="{{$index+1}}"> {{$index+1}} - {{month}}</option>
+                            </select>
+                            <div class="help-block" ng-messages="cardForm.expMonth.$error" ng-if="cardForm.expMonth.$touched || submitted">
+                                <div ng-message="number">Please enter correct port</div>
+                            </div>
+                        </div>
+                    </div>       
+
+                    <!--
+                        *
+                        * EXPIRATION YEAR
+                        *
+                    -->
+                    <div class="form-group" ng-class="{ true: 'has-error'}[cardForm.expYear.$invalid && (cardForm.expYear.$touched || submitted)]">
+                        <label class="col-sm-4 control-label">Expiration month</label>
+                        <div class="col-sm-7">
+                            <select ng-model="cardInfo.expire_year" name="year" required>
+                                <option disabled selected value="">Year</option>
+                                <option ng-repeat="year in [] | range:currentYear:currentYear+13">{{year}}</option>
+                            </select>
+                            <div class="help-block" ng-messages="cardForm.expYear.$error" ng-if="cardForm.expYear.$touched || submitted">
+                                <div ng-message="number">Please enter correct port</div>
+                            </div>
+                        </div>
+                    </div>       
+
+                    <br />
+                    <div class="form-group row">
+                        <div class="form-group col-sm-6 text-right">
+                            <!-- Indicates a successful or positive action -->
+                            <button type="submit" class="btn btn-success" ng-click="cardForm.submitAttempt=true;vm.confirm(cardForm);">Save</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancel();">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <!-------------------------------------------------------->
+                
+            </div>
+
+        </div>
+    </div>
+</div>

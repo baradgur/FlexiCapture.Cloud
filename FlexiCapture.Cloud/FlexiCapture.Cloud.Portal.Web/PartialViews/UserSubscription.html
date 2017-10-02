@@ -117,7 +117,12 @@
                                             </div>
                                             <!--<div class="subscr-price">free</div>-->
                                             <button ng-if="block.CostPerPage == 0" type="button" disabled="true" class="btn btn-default buy-btn">Free</button>
-                                            <button ng-if="block.CostPerPage > 0" type="button" class="btn btn-default buy-btn" ng-click="managePlanUse(block.Id);"><span style="padding-right: 20px;">Buy</span><span style="padding-left: 20px;" class="buy-btn-price">${{block.CostPerPage*block.PagesInInterval/100}}</span></button>
+                                            <button ng-if="block.CostPerPage > 0" type="button" class="btn btn-default buy-btn" 
+                                                    ng-click="managePlanUse(block.Id, block.CostPerPage*block.PagesInInterval/100, false, 1);">
+                                                <span style="padding-right: 20px;">Buy</span>
+                                                <span style="padding-left: 20px;" 
+                                                      class="buy-btn-price">${{block.CostPerPage*block.PagesInInterval/100}}</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -128,6 +133,7 @@
                 </div>
 
             </div>
+            <div id="paypal-button"></div>
             <div id="singleSer" ng-if="monthToYearSwitcher" class="col-xs-12 col-sm-12 col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -135,6 +141,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            
                             <div ng-repeat="block in plan2s" class="col-md-4">
                                 <div class="panel panel-default">
                                     <div class="panel-body">

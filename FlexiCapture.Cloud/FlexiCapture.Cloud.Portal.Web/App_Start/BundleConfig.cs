@@ -74,7 +74,9 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/angularjs-dropdown-multiselect.min.js",
                 "~/Scripts/chk-multi-select.js",
                 "~/Scripts/angular-recaptcha.js",
-                "~/Scripts/angular-animate.min.js"
+                "~/Scripts/angular-animate.min.js",
+                "~/Scripts/checkout.js"
+
                 //angularjs-dropdown-multiselect.min.js
                 ));
 
@@ -129,7 +131,8 @@ namespace FlexiCapture.Cloud.Portal.Web
                 "~/Scripts/app/Controllers/communicationController.js",
                 "~/Scripts/app/Controllers/logController.js",
                 "~/Scripts/app/Controllers/subscriptionsPlansLibraryController.js",
-                "~/Scripts/app/Controllers/statisticController.js"
+                "~/Scripts/app/Controllers/statisticController.js",
+                "~/Scripts/app/Controllers/cardInfoManageController.js"
 
 
 

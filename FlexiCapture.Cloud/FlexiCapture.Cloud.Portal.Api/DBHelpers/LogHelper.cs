@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FlexiCapture.Cloud.Portal.Api.DB;
 using FlexiCapture.Cloud.Portal.Api.Models.Users;
+using FlexiCapture.Cloud.ServiceAssist.DB;
 
 namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
 {
@@ -26,7 +27,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
                         db.Log.RemoveRange(db.Log.Select(x => x));
                     }
 
-                    db.Log.Add(new Log() { Date = DateTime.UtcNow, Message = message });
+                    db.Log.Add(new DB.Log() { Date = DateTime.UtcNow, Message = message });
                     db.SaveChanges();
                 }
             }
@@ -35,7 +36,7 @@ namespace FlexiCapture.Cloud.Portal.Api.DBHelpers
             }
         }
 
-        public static List<Log> GetToLogs()
+        public static List<DB.Log> GetToLogs()
         {
             try
             {

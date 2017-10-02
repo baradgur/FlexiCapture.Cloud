@@ -210,7 +210,6 @@
 
     }
 
-
     //add or Edit plan
     this.managePlanUse = function ($http, $scope, url, usSpinnerService) {
 
@@ -254,4 +253,81 @@
                 });
     }
 
+    // check if user's card info is already in vault
+    this.checkPaypal = function ($http, $scope, url, usSpinnerService) {
+        var dfd = jQuery.Deferred();
+
+        usSpinnerService.spin("spinner-1");
+
+        $http({
+            url: url + "?userId=" + $scope.userData.UserData.Id,
+            method: "GET"
+            //contentType: "application/json",
+            //data: { userId: JSON.stringify($scope.userData.UserData.Id) }
+            })
+            .then(function (response) {
+                return dfd.resolve(response.data);
+            }, function(response) {
+                return dfd.resolve(null);
+            });
+
+        return dfd.promise();
+    }
+
+    this.sendInfoToVault = function ($http, $scope, url, usSpinnerService) {
+        var dfd = jQuery.Deferred();
+
+        usSpinnerService.spin("spinner-1");
+
+        $http({
+            url: url,
+            method: "POST",
+            contentType: "application/json",
+            headers: {
+                'Authorization': "Basic QVZpdGdIT0hfclgwSnBrRm5BdUljRTNYVlJRU0laZU1rSHJzZGNPRnU1RUIzS0NtRWlVczYxNlZ1emFuUWY1NmFjN052amtqTEt4NWFEbi06RUtyc2MtQUI2OFpueENSVXNMWk42Rl9ZVzRHQUdWZkhMek9vRkVURUJtYzJCM0JQdW1sMWZqeEtTU2xEY3ZnaXFGVnkyNV9OZThkVDhMSGY="
+                    //"Bearer " + "A21AAG0P7Pim83FX_OwNT9Ez5GAUM59LjC_mn4dVmqp93NjU38gRaM5qJoPDg-VVyCw-UYzYoWWbOPmFVvuQPVXuOih4uYAYw"
+            },
+            data: JSON.stringify($scope.cardInfo)
+        })
+            .then(function (response) {
+
+                return dfd.resolve(response.data);
+            });
+
+        return dfd.promise();
+    }
+
+    this.putVaultInfoToDb = function ($http, $scope, url, usSpinnerService, pairToPut) {
+        var dfd = jQuery.Deferred();
+
+        usSpinnerService.spin("spinner-1");
+
+        $http({
+            url: url,
+            method: "POST",
+            dataType: "application/json",
+            data: JSON.stringify(pairToPut)
+        }).then(function(response) {
+            return dfd.resolve(response);
+        });
+
+        return dfd.promise();
+    }
+
+    this.sendPayment = function ($http, $scope, url, usSpinnerService, payment) {
+        var dfd = jQuery.Deferred();
+
+        usSpinnerService.spin("spinner-1");
+
+        $http({
+            url: url,
+            method: "POST",
+            dataType: "application/json",
+            data: JSON.stringify(payment)
+        }).then(function(repsonse) {
+            return dfd.resolve(response.data);
+        });
+
+        return dfd.promise();
+    }
 });
